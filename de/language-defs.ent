@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 345662 Maintainer: xatenev Status: ready -->
+
+<!-- Part titles used mostly in manual.xml itself -->
+<!ENTITY PHPManual          "PHP-Handbuch">
+<!ENTITY Seealso            "Siehe auch">
+<!ENTITY Date               "Datum:">
+<!ENTITY GettingStarted     "Einführung">
+<!ENTITY InstallAndConfigure "Installation und Konfiguration">
+<!ENTITY Installation       "Installation">
+<!ENTITY LanguageReference  "Sprachreferenz">
+<!ENTITY Features           "Features">
+<!ENTITY Security           "Sicherheit">
+<!ENTITY FunctionReference  "Funktionsreferenz">
+<!ENTITY VariableandTypeRelatedExtensions         "Variablen- und typbezogene Erweiterungen">
+<!ENTITY TextProcessing                           "Textverarbeitung">
+<!ENTITY AffectingPHPsBehaviour                   "Das Verhalten von PHP beeinflussen">
+<!ENTITY SessionExtensions                        "Session-Erweiterungen">
+<!ENTITY OtherBasicExtensions                     "Sonstige Grunderweiterungen">
+<!ENTITY DatabaseExtensions                       "Datenbankerweiterungen">
+<!ENTITY AbstractionLayers                        "Abstraktionsebenen">
+<!ENTITY VendorSpecificDatabaseExtensions         "Anbieterspezifische Datenbankerweiterungen">
+<!ENTITY XMLManipulation                          "XML-Manipulation">
+<!ENTITY WebServices                              "Web Services">
+<!ENTITY CreditCardProcessing                     "Kreditkartendaten-Verarbeitung">
+<!ENTITY MathematicalExtensions                   "Mathematische Erweiterungen">
+<!ENTITY CryptographyExtensions                   "Kryptografische Erweiterungen">
+<!ENTITY HumanLanguageandCharacterEncodingSupport "Unterstützung menschlicher Sprache und Zeichenkodierung">
+<!ENTITY FileSystemRelatedExtensions              "Dateisystemrelevante Erweiterungen">
+<!ENTITY ProcessControlExtensions                 "Erweiterungen zur Prozesskontrolle">
+<!ENTITY MailRelatedExtensions                    "E-Mail-relevante Erweiterungen">
+<!ENTITY AuthenticationServices                   "Authentifizierungsdienste">
+<!ENTITY OtherServices                            "Sonstige Dienste">
+<!ENTITY CompressionExtensions                    "Erweiterungen zur Datenkompression und Archivierung">
+<!ENTITY CalendarandEventRelatedExtensions        "Datums- und zeitrelevante Erweiterungen">
+<!ENTITY NonTextMIMEOutput                        "Non-Text MIME-Ausgaben">
+<!ENTITY ImageProcessingandGeneration             "Bildverarbeitung und -generierung">
+<!ENTITY AudioFormatsManipulation                 "Manipulation von Audioformaten">
+<!ENTITY CommandLineSpecificExtensions            "Eingabezeilenspezifische Erweiterungen">
+<!ENTITY WindowsOnlyExtensions                    "Windowsbasierte Erweiterungen">
+<!ENTITY ServerSpecificExtensions                 "Serverspezifische Erweiterungen">
+<!ENTITY SearchEngineExtensions                   "Suchmaschinenerweiterungen">
+<!ENTITY MiscExtensions                           "Sonstige Erweiterungen">
+<!ENTITY UIExtensions                             "GUI Erweiterungen">
+<!ENTITY Appendixes         "Anhang">
+<!ENTITY PEAR               "PEAR: the PHP Extension and Application Repository">
+<!ENTITY FAQ                "FAQ: Frequently Asked Questions">
+<!ENTITY FAQabbrev          "FAQ">
+<!ENTITY Internals          "PHP- und Zend Engine-Interna">
+<!ENTITY Internals2         "PHP im Kern: Das Entwicklerhandbuch für die Zend Engine">
+<!ENTITY ZendAPI            "Zend API: Hacking the Core of PHP">
+<!ENTITY IndexListing       "Verzeichnis der Inhaltsverzeichnisse">
+<!ENTITY FunctionListing    "Funktions- und Methodenverzeichnis">
+<!ENTITY FunctionListingDescription   "Verzeichnis aller Funktionen und Methoden im Handbuch">
+<!ENTITY ExampleListing     "Verzeichnis der Beispiele">
+<!ENTITY ExampleListingDescription   "Verzeichnis aller Beispiele im Handbuch">
+<!ENTITY ChangelogListingTitle "Changelog">
+<!ENTITY ChangelogListingDescription "Folgende Änderungen wurden an den Klassen/Funktionen/Methoden dieser Extension vorgenommen.">
+<!ENTITY ChangelogListingBundledDescription "Folgende Änderungen wurden an den Funktionen der gebündelten Extensions vorgenommen.">
+<!ENTITY CHMEdition         "Windows HTML-Hilfe">
+<!ENTITY ReservedConstants  "Vordefinierte Konstanten">
+<!ENTITY MissingStuff       "Fehlendes">
+<!ENTITY AndSeveralOthers   "Und etliche andere">
+<!ENTITY Version            "Version">
+<!ENTITY Description        "Beschreibung">
+<!ENTITY Changeable         "Veränderbar">
+<!ENTITY ConfigureOptions   "Konfigurationsoptionen">
+<!ENTITY Default            "Standard">
+<!ENTITY Definition         "Definition">
+<!ENTITY Functions          "Funktionen">
+<!ENTITY Name               "Name">
+<!ENTITY Alias              "Alias von">
+<!ENTITY Type               "Typ">
+<!ENTITY Changelog          "Changelog">
+<!ENTITY Methods            "Methoden">
+<!ENTITY InheritedMethods   "Geerbte Methoden">
+<!ENTITY InheritedProperties "Geerbte Eigenschaften">
+<!ENTITY Properties         "Eigenschaften">
+<!ENTITY InheritedConstants "Geerbte Konstanten">
+<!ENTITY Constants          "Konstanten">
+<!ENTITY NotAvailable       "Nicht verfügbar">
+
+<!-- These are used in reference/$extname/reference.xml and other
+supplemental files to mark section titles -->
+<!ENTITY reftitle.changelog     '<title xmlns="http://docbook.org/ns/docbook">&Changelog;</title>'>
+<!ENTITY reftitle.classes       '<title xmlns="http://docbook.org/ns/docbook">Vordefinierte Klassen</title>'>
+<!ENTITY reftitle.classsynopsis '<title xmlns="http://docbook.org/ns/docbook">Klassenbeschreibung</title>'>
+<!ENTITY reftitle.constants     '<title xmlns="http://docbook.org/ns/docbook">Vordefinierte Konstanten</title>'>
+<!ENTITY reftitle.constructor   '<title xmlns="http://docbook.org/ns/docbook">Konstruktor</title>'>
+<!ENTITY reftitle.description   '<title xmlns="http://docbook.org/ns/docbook">Beschreibung</title>'>
+<!ENTITY reftitle.encoding      '<title xmlns="http://docbook.org/ns/docbook">Encoding</title>'>
+<!ENTITY reftitle.examples      '<title xmlns="http://docbook.org/ns/docbook">Beispiele</title>'>
+<!ENTITY reftitle.exceptions    '<title xmlns="http://docbook.org/ns/docbook">Exceptions</title>'>
+<!ENTITY reftitle.errors        '<title xmlns="http://docbook.org/ns/docbook">Fehler/Exceptions</title>'>
+<!ENTITY reftitle.faq           '<title xmlns="http://docbook.org/ns/docbook">&FAQ;</title>'>
+<!ENTITY reftitle.install       '<title xmlns="http://docbook.org/ns/docbook">Installation</title>'>
+<!ENTITY reftitle.intro         '<title xmlns="http://docbook.org/ns/docbook">Einführung</title>'>
+<!ENTITY reftitle.indices       '<title xmlns="http://docbook.org/ns/docbook">Indizes</title>'>
+<!ENTITY reftitle.interfacesynopsis '<title xmlns="http://docbook.org/ns/docbook">Interface-Übersicht</title>'>
+<!ENTITY reftitle.methods       '<title xmlns="http://docbook.org/ns/docbook">Methoden</title>'>
+<!ENTITY reftitle.mysqlnd '<title xmlns="http://docbook.org/ns/docbook">Ausschließlich native MySQL-Treiber</title>'>
+<!ENTITY reftitle.notes         '<title xmlns="http://docbook.org/ns/docbook">Anmerkungen</title>'>
+<!ENTITY reftitle.parameters    '<title xmlns="http://docbook.org/ns/docbook">Parameter-Liste</title>'>
+<!ENTITY reftitle.options       '<title xmlns="http://docbook.org/ns/docbook">Optionen</title>'>
+<!ENTITY reftitle.properties    '<title xmlns="http://docbook.org/ns/docbook">Eigenschaften</title>'>
+<!ENTITY reftitle.required      '<title xmlns="http://docbook.org/ns/docbook">Anforderungen</title>'>
+<!ENTITY reftitle.resources     '<title xmlns="http://docbook.org/ns/docbook">Ressource-Typen</title>'>
+<!ENTITY reftitle.runtime       '<title xmlns="http://docbook.org/ns/docbook">Laufzeit-Konfiguration</title>'>
+<!ENTITY reftitle.returnvalues  '<title xmlns="http://docbook.org/ns/docbook">Rückgabewerte</title>'>
+<!ENTITY reftitle.seealso       '<title xmlns="http://docbook.org/ns/docbook">Siehe auch</title>'>
+<!ENTITY reftitle.setup         '<title xmlns="http://docbook.org/ns/docbook">Installation/Konfiguration</title>'>
+<!ENTITY reftitle.unicode       '<title xmlns="http://docbook.org/ns/docbook">Unicode</title>'>
+<!ENTITY reftitle.usage         '<title xmlns="http://docbook.org/ns/docbook">Verwendung</title>'>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 332824 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes Maintainer: sergey -->
+<!-- $Revision$ -->
+<chapter xml:id="oci8.datatypes" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Поддерживаемые типы данных</title>
+ <table>
+  <title>Данный драйвер поддерживает следующие типы данных при использовании
+   функции <function>oci_bind_by_name</function> для связки параметров:</title>
+  <tgroup cols="2">
+   <thead>
+    <row>
+     <entry>Тип</entry>
+     <entry>Отображение</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry><constant>SQLT_NTY</constant></entry>
+     <entry>Связывает оригинальный тип коллекции из объекта коллекции
+      PHP, например, создаваемых функцией <function>oci_new_collection</function>.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_BFILEE</constant></entry>
+     <entry>Связывает оригинальный дескриптор, например, полученный
+      с помощью функции <function>oci_new_descriptor</function>.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_CFILEE</constant></entry>
+     <entry>Связывает оригинальный дескриптор, например, полученный
+      с помощью функции <function>oci_new_descriptor</function>.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_CLOB</constant></entry>
+     <entry>Связывает оригинальный дескриптор, например, полученный
+      с помощью функции <function>oci_new_descriptor</function>.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_BLOB</constant></entry>
+     <entry>Связывает оригинальный дескриптор, например, полученный
+      с помощью функции <function>oci_new_descriptor</function>.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_RDD</constant></entry>
+     <entry>Связывает оригинальный дескриптор, например, полученный
+      с помощью функции <function>oci_new_descriptor</function>.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_NUM</constant></entry>
+     <entry>Конвертирует параметр PHP в тип long языка 'C',
+      и привязывает к этому значению.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_RSET</constant></entry>
+     <entry>Связывает оригинальный дескриптор выражения, например, полученный
+      из функции <function>oci_parse</function> или из других запросов
+      OCI.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_BOL</constant></entry>
+     <entry>Связывает PHP параметр с PL/SQL BOOLEAN</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_CHR</constant> и любой другой тип</entry>
+     <entry>Преобразует параметр PHP к строковому типу и привязывает его
+      в виде строки.</entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+
+ <table>
+  <title>Поддерживаются следующие типы при извлечении столбцов из набора данных:</title>
+  <tgroup cols="2">
+   <thead>
+    <row>
+     <entry>Тип</entry>
+     <entry>Отображение</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry><constant>SQLT_RSET</constant></entry>
+     <entry>Создает ресурс выражения oci для представления курсора.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_RDD</constant></entry>
+     <entry>Создает объект ROWID.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_BLOB</constant></entry>
+     <entry>Создает объект LOB.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_CLOB</constant></entry>
+     <entry>Создает объект LOB.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_BFILE</constant></entry>
+     <entry>Создает объект LOB.</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_LNG</constant></entry>
+     <entry>Связывает в виде SQLT_CHR, возвращается в виде строки</entry>
+    </row>
+    <row>
+     <entry><constant>SQLT_LBI</constant></entry>
+     <entry>Связывает в виде <constant>SQLT_BIN</constant>, возвращается в виде строки</entry>
+    </row>
+    <row>
+     <entry>Любой другой тип</entry>
+     <entry>Связывает в виде <constant>SQLT_CHR</constant>, возвращается в виде строки</entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+
+

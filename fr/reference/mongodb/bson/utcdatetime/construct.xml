@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+<refentry xml:id="mongodb-bson-utcdatetime.construct" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>MongoDB\BSON\UTCDateTime::__construct</refname>
+  <refpurpose>Construit un nouveau UTCDateTime</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>final</modifier> <modifier>public</modifier> <methodname>MongoDB\BSON\UTCDateTime::__construct</methodname>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>float</type><type>string</type><type>DateTimeInterface</type></type><parameter>milliseconds</parameter><initializer>&null;</initializer></methodparam>
+  </methodsynopsis>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <variablelist>
+   <varlistentry>
+    <term><parameter>milliseconds</parameter> (<type class="union"><type>int</type><type>float</type><type>string</type><type>DateTimeInterface</type></type>)</term>
+    <listitem>
+     <para>
+      Nombre de millisecondes depuis l'époque UNIX (1 janvier 1970). Les valeurs 
+      négatives représentent des dates avant le 1970. Cette valeur peut être 
+      fournie en tant qu'&integer; 64 bits. Pour la compatibilité sur les 
+      systèmes 32 bits, ce paramètre peut également être fourni comme un 
+      &float; ou une &string;.
+     </para>
+     <para>
+      Si l'argument est un <classname>DateTimeInterface</classname>, le nombre 
+      de millisecondes depuis l'époque UNIX sera dérivé de cette valeur. Notez 
+      que dans les versions de versions PHP avant 7.1.0, les objets 
+      <classname>DateTime</classname> et <classname>DateTimeImmutable</classname> 
+      construits à partir de l'heure actuelle 
+      <link linkend="migration71.incompatible.datetime-microseconds">n'incorporaient pas de précision micro-seconde</link>.
+     </para>
+     <para>
+      Si cet arguement est &null;, la l'heure actuelle sera utilisée par défaut.
+     </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <simplelist>
+   &mongodb.throws.argumentparsing;
+  </simplelist>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>PECL mongodb 1.2.0</entry>
+       <entry>
+        <para>
+         L'argument <parameter>milliseconds</parameter> est facultatif et par 
+         défaut à &null; (c'est-à-dire l'heure actuelle). L'argument accepte 
+         également un <classname>DateTimeInterface</classname>, qui peut être 
+         utilisé pour calculer le nombre de millisecondes depuis l'époque UNIX. 
+         Auparavant, seuls les types &integer;, &float; et &string; étaient acceptés.
+        </para>
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <example>
+   <title>Exemple avec <function>MongoDB\BSON\UTCDatetime::__construct</function></title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+var_dump(new MongoDB\BSON\UTCDateTime);
+
+var_dump(new MongoDB\BSON\UTCDateTime(new DateTime));
+
+var_dump(new MongoDB\BSON\UTCDateTime(1416445411987));
+
+?>
+]]>
+   </programlisting>
+   &example.outputs.similar;
+   <screen>
+<![CDATA[
+object(MongoDB\BSON\UTCDateTime)#1 (1) {
+  ["milliseconds"]=>
+  string(13) "1484852905560"
+}
+object(MongoDB\BSON\UTCDateTime)#1 (1) {
+  ["milliseconds"]=>
+  string(13) "1484852905560"
+}
+object(MongoDB\BSON\UTCDateTime)#1 (1) {
+  ["milliseconds"]=>
+  string(13) "1416445411987"
+}
+]]>
+   </screen>
+  </example>
+ </refsect1>
+
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><link xlink:href="&url.mongodb.docs.bson;#date">BSON Types: Date</link></member>
+  </simplelist>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

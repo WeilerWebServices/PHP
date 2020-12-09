@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 332271 Maintainer: shimooka Status: ready -->
+<refentry xml:id="function.oci-new-connect" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>oci_new_connect</refname>
+  <refpurpose>一意な接続を使って Oracle サーバーへ接続する</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>oci_new_connect</methodname>
+   <methodparam><type>string</type><parameter>username</parameter></methodparam>
+   <methodparam><type>string</type><parameter>password</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>connection_string</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>character_set</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>session_mode</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Oracle サーバーへの新規接続を確立し、ログオンします。
+  </para>
+  <para>
+   <function>oci_connect</function> や <function>oci_pconnect</function>
+   と異なり、<function>oci_new_connect</function>
+   は接続をキャッシュしません。また、
+   常に新しくオープンされた接続ハンドルを返します。
+   これは、もしアプリケーションが
+   2 セットのクエリ間でトランザクション的な独立を必要とする場合に有効です。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>username</parameter></term>
+     <listitem>
+      <para>
+       Oracle のユーザー名。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>password</parameter></term>
+     <listitem>
+      <para>
+       <parameter>username</parameter> のパスワード。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>connection_string</parameter></term>
+     <listitem>
+      &oci.db;
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>character_set</parameter></term>
+     <listitem>
+      &oci.charset;
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>session_mode</parameter></term>
+     <listitem>
+      &oci.sessionmode;
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   接続 ID、あるいはエラー時に &false; を返します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   以下の例は、接続がどのように分割されるかを示すものです。
+   <example>
+    <title><function>oci_new_connect</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// create table mytab (mycol number);
+
+function query($name, $c)
+{
+    echo "Querying $name\n";
+    $s = oci_parse($c, "select * from mytab");
+    oci_execute($s, OCI_NO_AUTO_COMMIT);
+    $row = oci_fetch_array($s, OCI_ASSOC);
+    if (!$row) {
+        echo "No rows\n";
+    } else {
+        do {
+            foreach ($row as $item)
+                echo $item . " ";
+            echo "\n";
+        } while (($row = oci_fetch_array($s, OCI_ASSOC)) != false);
+    }
+}
+
+$c1 = oci_connect("hr", "welcome", "localhost/orcl");
+$c2 = oci_new_connect("hr", "welcome", "localhost/orcl");
+
+$s = oci_parse($c1, "insert into mytab values(1234)");
+oci_execute($s, OCI_NO_AUTO_COMMIT);
+
+query("basic connection", $c1);
+query("new connection", $c2);
+oci_commit($c1);
+query("new connection after commit", $c2);
+
+// 出力:
+//   Querying basic connection
+//   1234 
+//   Querying new connection
+//   No rows
+//   Querying new connection after commit
+//   1234 
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+    パラメータの使いかたについては、<function>oci_connect</function> の例も参照ください。
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>oci_connect</function></member>
+    <member><function>oci_pconnect</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

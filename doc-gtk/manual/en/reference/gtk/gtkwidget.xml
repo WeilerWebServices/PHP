@@ -1,0 +1,4283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.34 $ -->
+<classentry id="gtk.gtkwidget">
+ <classmeta>
+  <classtitle>GtkWidget</classtitle>
+  <classparent>GtkObject</classparent>
+  <shortdesc>
+   Base class for all widgets.
+  </shortdesc>
+  <desc>
+   <simpara>
+    A widget is any class which inherits from <classname>GtkWidget</classname>.
+    Widgets are classes which can listen for and react to user events. Widgets
+    are usually associated with display and/or layout.
+   </simpara>
+  </desc>
+ </classmeta>
+
+ <methods>
+  <method id="gtk.gtkwidget.method.activate">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>activate</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Activates the widget.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Activates the widget if it is activatable, such as
+     <classname>GtkButton</classname> or <classname>GtkMenuItem</classname>.
+     Activation is what happens when the <literal>Enter</literal> key is
+     pressed on a focused widget.
+    </simpara>
+    <simpara>
+     If the widget is activatable, this method will return
+     <literal>true</literal>, otherwise it will return
+     <literal>false</literal>.
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.add_accelerator">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_accelerator</function></funcdef>
+     <paramdef>string <parameter>signal</parameter></paramdef>
+     <paramdef>
+      <classname>GtkAccelGroup</classname> <parameter>group</parameter>
+     </paramdef>
+     <paramdef>int <parameter>accel_key</parameter></paramdef>
+     <paramdef><enumname>GdkModifyerType</enumname> <parameter>modifiers</parameter></paramdef>
+     <paramdef><enumname>GtkAccelFlags</enumname> <parameter>flags</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Adds an accelerator for the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Adds an accelerator (shortcut key) for the widget, so that the
+     button/widget can be accessed by using the keyboard, without moving
+     the mouse or tabbing through widgets.
+    </para>
+    <para>
+     <parameter>signal</parameter> is the name of a signal that should
+     be invoked on the widget once the accelerator is pressed. For a button,
+     you most likely want to pass <literal>clicked</literal> here.
+    </para>
+    <para>
+     <parameter>group</parameter> is a <classname>GtkAccelGroup</classname>
+     and should be the one set active for the window. Maybe you
+     need to create the group and add it to the window first via
+     <function class="GtkWindow">add_accel_group</function> to be
+     able to use it here.
+    </para>
+    <para>
+     <parameter>accel_key</parameter> defines the key to be pressed, see
+     <link linkend="appendix.keysyms">Symbolic names for keys</link> to
+     find the right one.
+    </para>
+    <para>
+     <parameter>modifiers</parameter> tells which additional button
+     has to be pressed to emit the signal. Normally, you want to use
+     <literal>Gdk::CONTROL_MASK</literal> (<literal>Ctrl</literal> key)
+     or <literal>Gdk::MOD1_MASK</literal> (<literal>Alt</literal> key).
+    </para>
+
+    <example>
+     <title>Adding a shortcut for a button</title>
+     <programlisting role="php"><![CDATA[
+//Our window
+$wnd = new GtkWindow();
+//Accelerator group
+$group = new GtkAccelGroup();
+//Add group to window, making it active
+$wnd->add_accel_group($group);
+
+//"back" button
+$btn = GtkButton::new_from_stock(Gtk::STOCK_GO_BACK);
+$btn->add_accelerator(
+    'clicked', $group, Gdk::KEY_Left, Gdk::MOD1_MASK, 0
+);
+$wnd->add($btn);
+]]></programlisting>
+     <para>
+      In this example, you can use the shortcut <literal>Alt+Left</literal>
+      to activate the back-button.
+     </para>
+    </example>
+    <para>
+     &seealso;
+     <function class="GtkWidget">remove_accelerator</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.add_events">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_events</function></funcdef>
+     <paramdef><enumname>GdkEventMask</enumname> <parameter>events</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Let the widget receive more events.
+   </shortdesc>
+   <desc>
+    <para>
+     Lets the widget receive more events by adding the event
+     masks to the list of to-be-notified-of event types.
+    </para>
+    <para>
+     With that, you can let e.g. a <classname>GtkButton</classname>
+     receive
+     <signalname class="GtkWidget">motion-notify-event</signalname>s
+     which it doesn't do by default.
+    </para>
+    <example>
+     <title>Tracking mouse movement on a button with add_events</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkwidget/add_events.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_events</function>, 
+     <function class="GtkWidget">set_events</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.add_mnemonic_label">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_mnemonic_label</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>label</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Adds a widget to the list of mnemonic labels for this widget.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">remove_mnemonic_label</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.can_activate_accel">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>can_activate_accel</function></funcdef>
+     <paramdef>int <parameter>signal_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether or not the signal can be activated by its associated
+    accelerator.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.child_focus">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>child_focus</function></funcdef>
+     <paramdef><enumname>GtkDirectionType</enumname> <parameter>direction</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Invokes the focus signal when a widgets child has the focus.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">grab_focus</function>, 
+     <function class="GtkWidget">is_focus</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.child_notify">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>child_notify</function></funcdef>
+     <paramdef>string <parameter>child_property</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emits a child-notify signal for the given child property.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.class_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>class_path</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the class path of the widget
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the path of the widget through the packaging
+     hierarchy, from the root parent to the widget itself.
+     The single class names are separated by dots.
+    </para>
+    <para>
+     It is the same as <function class="GtkWidget">path</function>,
+     just that always the class names, not widget names are used.
+    </para>
+    <example>
+     <title>Getting a widget's path</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkwidget/path.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+    <para>
+     &seealso;
+     <function class="GtkWidget">path</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.create_pango_context">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>create_pango_context</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>PangoContext</classname> with the appropriate font map, font
+    description, and base direction for drawing text for this widget.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_pango_context</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.create_pango_layout">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>create_pango_layout</function></funcdef>
+     <paramdef>string <parameter>text</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>PangoLayout</classname> with the appropriate font 
+    map, font description, and base direction for drawing text for this widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  
+<!--
+  <method id="gtk.gtkwidget.method.destroyed">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>destroyed</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Not implemented or not public.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+-->
+  <method id="gtk.gtkwidget.method.drag_begin">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GdkDragContext</classname> <function>drag_begin</function></funcdef>
+     <paramdef>array <parameter>targets</parameter></paramdef>
+     <paramdef><enumname>GdkDragAction</enumname> <parameter>actions</parameter></paramdef>
+     <paramdef>int <parameter>button</parameter></paramdef>
+     <paramdef><classname>GdkEvent</classname> <parameter>event</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Initiates a drag on the source side.
+   </shortdesc>
+   <desc>
+    <para>
+     Initiates a drag on the source side. The function only needs to be used
+     when the application is starting drags itself, and is not needed when
+     <function class="GtkWidget">drag_source_set</function> is used.
+    </para>
+    <table>
+      <title>Method parameters</title>
+      <tgroup cols="2">
+       <tbody>
+        <row>
+         <entry>targets</entry>
+         <entry>
+          The targets (data formats) in which the source can provide the data.
+         </entry>
+        </row>
+        <row>
+         <entry>actions</entry>
+         <entry>
+          A bitmask of the allowed drag actions for this drag.
+         </entry>
+        </row>
+        <row>
+         <entry>button</entry>
+         <entry>
+          The button the user clicked to start the drag.
+         </entry>
+        </row>
+        <row>
+         <entry>event</entry>
+         <entry>
+          The event that triggered the start of the drag.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+    </table>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_check_threshold">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>drag_check_threshold</function></funcdef>
+     <paramdef>int <parameter>start_x</parameter></paramdef>
+     <paramdef>int <parameter>start_y</parameter></paramdef>
+     <paramdef>int <parameter>current_x</parameter></paramdef>
+     <paramdef>int <parameter>current_y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Checks to see if a mouse drag has crossed the widgets drag threshold and
+    should therefore trigger a drag and drop operation.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_dest_add_image_targets">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_dest_add_image_targets</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_dest_add_text_targets">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_dest_add_text_targets</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Add the image targets supported by <classname>GtkSelection</classname> to
+    the target list of the drag destination. 
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_dest_add_uri_targets">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_dest_add_uri_targets</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Add the URI targets supported by <classname>GtkSelection</classname> to
+    the target list of the drag destination. 
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_dest_find_target">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>drag_dest_find_target</function></funcdef>
+     <paramdef><classname>GdkDragContext</classname> <parameter>context</parameter></paramdef>
+     <paramdef><parameter><optional>targets</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Looks for a match between the context targets and the destination target
+    list.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_dest_get_target_list">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>drag_dest_get_target_list</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the list of targets this widget can accept from a drag and drop.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_dest_set">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_dest_set</function></funcdef>
+     
+     <paramdef><parameter>flags</parameter></paramdef>
+     <paramdef><parameter>targets</parameter></paramdef>
+     <paramdef><parameter>actions</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the widget as a potential drop destination.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_dest_set_proxy">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_dest_set_proxy</function></funcdef>
+     <paramdef><classname>GdkWindow</classname> <parameter>proxy_window</parameter></paramdef>
+     <paramdef><parameter>protocol</parameter></paramdef>
+     <paramdef><parameter>use_coordinates</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets this widget as a proxy for drops to another window.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_dest_set_target_list">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_dest_set_target_list</function></funcdef>
+     <paramdef><parameter>targets</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the list of targets that this widget can accept from a drag and drop.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_dest_unset">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_dest_unset</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Unsets this widget as a potential drop destination.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_get_data">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_get_data</function></funcdef>
+     
+     <paramdef><classname>GdkDragContext</classname> <parameter>context</parameter></paramdef>
+     <paramdef><parameter>target</parameter></paramdef>
+     <paramdef><parameter><optional>time</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the data associated with the drag.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_highlight">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_highlight</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Draws a highlight around the widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_source_add_text_targets">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_source_add_text_targets</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Add the text targets supported by <classname>GtkSelection</classname> to
+    the target list of the drag destination.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_source_get_target_list">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>drag_source_get_target_list</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the list of targets this widget can provide for drag and drop.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_source_set">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_source_set</function></funcdef>
+     <paramdef><parameter>sbmask</parameter></paramdef>
+     <paramdef><parameter>targets</parameter></paramdef>
+     <paramdef><parameter>actions</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets widget to be the source of a drag operation.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_source_set_icon">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_source_set_icon</function></funcdef>
+     <paramdef><classname>GdkColormap</classname> <parameter>colormap</parameter></paramdef>
+     <paramdef><classname>GdkPixmap</classname> <parameter>pixmap</parameter></paramdef>
+     <paramdef><parameter><optional>mask</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the icon that will be displayed when the user drags the widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_source_set_icon_pixbuf">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_source_set_icon_pixbuf</function></funcdef>
+     <paramdef><classname>GdkPixbuf</classname> <parameter>pixbuf</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the icon that will be displayed when the user drags the widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_source_set_icon_stock">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_source_set_icon_stock</function></funcdef>
+     <paramdef>string <parameter>stock_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets a stock icon that will be displayed when the user drags the widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_source_set_target_list">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_source_set_target_list</function></funcdef>
+     
+     <paramdef><parameter>targets</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the target types that the widget offers for drag and drop.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_source_unset">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_source_unset</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Unsets the widget as a potential source for drag and drop.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_unhighlight">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_unhighlight</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Removes the highlight around a widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.draw">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw</function></funcdef>
+     <paramdef>GdkRectangle <parameter>area</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Invalidates, then updates a region of the widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.ensure_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>ensure_style</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Ensures that the widget has a style.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_style</function>, 
+     <function class="GtkWidget">modify_style</function>, 
+     <function class="GtkWidget">set_style</function>, 
+     <fieldname class="GtkWidget">style</fieldname>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.event">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>event</function></funcdef>
+     <paramdef><classname>GdkEvent</classname> <parameter>event</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emit an event signal on the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Rarely-used function. This function is used to emit the event signals
+     on a widget (those signals should never be emitted without using this
+     function to do so). If you want to synthesize an event though, don't
+     use this function; instead, use
+     <function class="Gtk">main_do_event</function> so the event will behave
+     as if it were in the event queue. Don't synthesize expose events;
+     instead, use <function class="GdkWindow">invalidate_rect</function>
+     to invalidate a region of the window.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.freeze_child_notify">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>freeze_child_notify</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Stops emission of child-notify signals.
+   </shortdesc>
+   <desc>
+    <para>
+     Stops emission of
+     <signalname class="GtkContainer">child-notify</signalname> signals on
+     the widget. The signals are queued until
+     <function class="GtkWidget">thaw_child_notify</function> is called.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">thaw_child_notify</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_accessible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>AtkNoOpObject</classname> <function>get_accessible</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_allocation">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GdkRectangle</classname> <function>get_allocation</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the current allocation.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the current allocation (size) of the widget.
+    </para>
+    <example>
+     <title>Displaying a widget's size</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkwidget/get_allocation.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+    <para>
+     &seealso;
+     <fieldname class="GtkWidget">allocation</fieldname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_ancestor">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkWidget</classname> <function>get_ancestor</function></funcdef>
+     <paramdef><classname>GType</classname> <parameter>widget_type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the first ancestor of the given type.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the first ancestor of the widget of type
+     <parameter>widget_type</parameter>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">is_ancestor</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_child_requisition">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_child_requisition</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_child_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_child_visible</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns value set with set_child_visible().
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the value set with
+     <function class="GtkWidget">set_child_visible</function>. If you feel
+     a need to use this function, your code probably needs reorganization.
+    </para>
+    <para>
+     This function is only useful for container implementations and
+     never should be called by an application.
+    </para>
+    <para>
+     Returns <literal>true</literal> if the widget is mapped with the parent.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_child_visible</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_clipboard">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkClipboard</classname> <function>get_clipboard</function></funcdef>
+     
+     <paramdef><parameter>selection</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_colormap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_colormap</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">pop_colormap</function>, 
+     <function class="GtkWidget">push_colormap</function>, 
+     <function class="GtkWidget">set_colormap</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_composite_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_composite_name</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_composite_name</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_default_colormap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_default_colormap</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_default_colormap</function>
+    </para>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_default_direction">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkTextDirection <function>get_default_direction</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_default_direction</function>
+    </para>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_default_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkStyle <function>get_default_style</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_default_visual">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_default_visual</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_direction">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkTextDirection <function>get_direction</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_direction</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_display">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GdkDisplay</classname> <function>get_display</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the GdkDisplay for the toplevel of this widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Get the <classname>GdkDisplay</classname> for the toplevel window
+     associated with this widget. This function can only be called after
+     the widget has been added to a widget hierarchy with a
+     <classname>GtkWindow</classname> at the top.
+    </para>
+    <para>
+     In general, you should only create display specific resources when
+     a widget has been realized.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_events">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GdkEventMask</enumname> <function>get_events</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the event mask for the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the event mask for the widget (a bitfield containing flags
+     from the <enumname>GdkEventMask</enumname> enumeration).
+     These are the events that the widget will receive.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">add_events</function>, 
+     <function class="GtkWidget">set_events</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_extension_events">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_extension_events</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_extension_events</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_modifier_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkRcStyle <function>get_modifier_style</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_name</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the custom widget name.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the custom widget name.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_name</function>,
+     <fieldname class="GtkWidget">name</fieldname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_no_show_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_no_show_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_no_show_all</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_pango_context">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_pango_context</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">create_pango_context</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_parent">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkWidget</classname> <function>get_parent</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the widget's parent widget.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Returns the widget's parent widget. The parent widget is the
+     container which holds the widget. Usually, the only widgets in
+     an application that do not have a parent are windows.
+    </simpara>
+    <para>
+     The widget returned will be a <classname>GtkContainer</classname>
+     descendant.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_parent</function>, 
+     <fieldname class="GtkWidget">parent</fieldname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_parent_window">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GdkWindow</classname> <function>get_parent_window</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the widget's parent GdkWindow.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the widget's parent GdkWindow.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_parent_window</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_pointer">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_pointer</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the mouse coordinates relative to the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Obtains the location of the mouse pointer in widget coordinates.
+    </para>
+    <para>
+     Widget coordinates are a bit odd; for historical reasons, they are
+     defined as widget-&gt;window coordinates for widgets that are not
+     <literal>Gtk::NO_WINDOW</literal> widgets, and are relative to
+     widget-&gt;allocation.x, widget-&gt;allocation.y for widgets that are
+     <literal>Gtk::NO_WINDOW</literal> widgets.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_root_window">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GdkWindow</classname> <function>get_root_window</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the root GdkWindow.
+   </shortdesc>
+   <desc>
+    <para>
+     Get the root window where this widget is located. This function
+     can only be called after the widget has been added to a widget
+     hierarchy with GtkWindow at the top.
+    </para>
+    <para>
+     The root window is useful for such purposes as creating a popup
+     <classname>GdkWindow</classname> associated with the window.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_screen">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GdkScreen</classname> <function>get_screen</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the GdkScreen of the toplevel parent.
+   </shortdesc>
+   <desc>
+    <para>
+     Get the <classname>GdkScreen</classname> from the toplevel window
+     associated with this widget. This function can only be called after
+     the widget has been added to a widget hierarchy with a
+     <classname>GtkWindow</classname> at the top.
+    </para>
+    <para>
+     In general, you should only create screen specific resources when
+     a widget has been realized, and you should free those resources
+     when the widget is unrealized.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">has_screen</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_settings">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkSettings</classname> <function>get_settings</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_size_request">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_size_request</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_size_request</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkStyle</classname> <function>get_style</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the <classname>GtkStyle</classname> object for the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the <classname>GtkStyle</classname> object for the widget.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">ensure_style</function>, 
+     <function class="GtkWidget">modify_style</function>, 
+     <function class="GtkWidget">set_style</function>, 
+     <fieldname class="GtkWidget">style</fieldname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_toplevel">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkWidget</classname> <function>get_toplevel</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the toplevel ancestor widget of the current widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the toplevel ancestor widget of the current widget.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.get_visual">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_visual</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.grab_add">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>grab_add</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.grab_default">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>grab_default</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.grab_focus">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>grab_focus</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">child_focus</function>, 
+     <function class="GtkWidget">is_focus</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.grab_remove">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>grab_remove</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.has_screen">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>has_screen</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Checks whether a GdkScreen is associated with the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Checks whether there is a <classname>GdkScreen</classname> is associated
+     with this widget. All toplevel widgets have an associated screen, and
+     all widgets added into a hierarchy with a toplevel window at the top.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_screen</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.hide">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>hide</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Removes the widget from being displayed on the screen.
+   </shortdesc>
+   <desc>
+    <para>
+     Hides the widget.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">show</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.hide_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>hide_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Removes the widget and all of its children from being displayed on the
+    screen.
+   </shortdesc>
+   <desc>
+    <para>
+     Hides the widget and all of its children.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">show_all</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.hide_on_delete">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>hide_on_delete</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Hides the widget when it receives the <signalname>delete-event</signalname>
+    signal instead of deleting it.
+   </shortdesc>
+   <desc>
+    <para>
+     Hides the widget when it receives the
+     <signalname>delete-event</signalname>
+     signal instead of deleting it.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.intersect">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>intersect</function></funcdef>
+     
+     
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether or not the widget and the area intersect.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether or not the widget and <parameter>area</parameter>
+     intersect.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.is_ancestor">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>is_ancestor</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>ancestor</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether or not the calling widget is an ancestor of the given
+    widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether or not the calling widget is an ancestor
+     of the given widget.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_ancestor</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.is_focus">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>is_focus</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether the widget is the focus widget within its toplevel.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether or not the widget is
+     the focus widget within its toplevel.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">child_focus</function>, 
+     <function class="GtkWidget">grab_focus</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.is_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>is_visible</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether or not the widget is currently visible.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether or not the widget is currently visible.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_visible</function>
+    </para>
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkwidget.method.list_mnemonic_labels">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>list_mnemonic_labels</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns an array of widgets for which the current widget is a mnemonic
+    target.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns an array of widgets for which the current widget is a mnemonic
+     target.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.map">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>map</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Maps the widget to the screen.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkwidget.method.mnemonic_activate">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>mnemonic_activate</function></funcdef>
+     <paramdef>bool <parameter>group_cycling</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Activates the mnemonic for the widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.modify_base">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>modify_base</function></funcdef>
+     <paramdef>
+      <enumname>GtkStateType</enumname> <parameter>state</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GdkColor</classname> <parameter>color</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the base color for the widget when in state
+    <parameter>state</parameter>.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.modify_bg">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>modify_bg</function></funcdef>
+     <paramdef>
+      <enumname>GtkStateType</enumname> <parameter>state</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GdkColor</classname> <parameter>color</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the background color for the widget when in state
+    <parameter>state</parameter>.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.modify_fg">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>modify_fg</function></funcdef>
+     <paramdef>
+      <enumname>GtkStateType</enumname> <parameter>state</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GdkColor</classname> <parameter>color</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the foreground color for the widget when in state
+    <parameter>state</parameter>.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.modify_font">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>modify_font</function></funcdef>
+     <paramdef>
+      <classname>PangoFontDescription</classname> <parameter>font</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the font for the widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.modify_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>modify_style</function></funcdef>
+     <paramdef>GtkRcStyle <parameter>style</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Modifies style values for the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">ensure_style</function>, 
+     <function class="GtkWidget">get_style</function>, 
+     <function class="GtkWidget">set_style</function>, 
+     <fieldname class="GtkWidget">style</fieldname>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.modify_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>modify_text</function></funcdef>
+     <paramdef>
+      <enumname>GtkStateType</enumname> <parameter>state</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GdkColor</classname> <parameter>color</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the text color for the widget when in state
+    <parameter>state</parameter>.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>path</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the widget path.
+   </shortdesc>
+   <desc>
+    <para>
+     Obtains the full path to the widget. The path is simply the name
+     of a widget and all its parents in the container hierarchy, separated
+     by periods. The name of a widget comes from
+     <function class="GtkWidget">get_name</function>.
+     Paths are used to apply styles to a widget in <filename>gtkrc</filename>
+     configuration files.
+     Widget names are the type of the widget by default (e.g. "GtkButton")
+     or can be set to an application-specific value with
+     <function class="GtkWidget">set_name</function>. By setting the name
+     of a widget, you allow users or theme authors to apply styles to that
+     specific widget in their gtkrc file.
+    </para>
+    <example>
+     <title>Getting a widget's path</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkwidget/path.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+    <para>
+     &seealso;
+     <function class="GtkWidget">path</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.pop_colormap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>pop_colormap</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Removes a colormap pushed with <function class="GtkWidget">push_colormap</function>.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_colormap</function>, 
+     <function class="GtkWidget">push_colormap</function>, 
+     <function class="GtkWidget">set_colormap</function>
+    </para>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.pop_composite_child">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>pop_composite_child</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Pops a composite child pushed with <function class="GtkWidget">push_composite_child</function>.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">push_composite_child</function>
+    </para>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkwidget.method.push_colormap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>push_colormap</function></funcdef>
+     <paramdef>
+      <classname>GdkColormap</classname> <parameter>colormap</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Pushes a colormap onto a global stack of colormaps.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_colormap</function>, 
+     <function class="GtkWidget">pop_colormap</function>, 
+     <function class="GtkWidget">set_colormap</function>
+    </para>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.push_composite_child">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>push_composite_child</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Makes all newly-created widgets as composite children until the
+    corresponding <function class="GtkWidget">pop_composite_child</function>
+    call.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">pop_composite_child</function>
+    </para>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.queue_clear">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>queue_clear</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Alias for <function class="GtkWidget">queue_draw</function>.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">selection_clear</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.queue_clear_area">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>queue_clear_area</function></funcdef>
+     <paramdef>int <parameter>x</parameter></paramdef>
+     <paramdef>int <parameter>y</parameter></paramdef>
+     <paramdef>int <parameter>width</parameter></paramdef>
+     <paramdef>int <parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Alias for <function class="GtkWidget">queue_draw_area</function>.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.queue_draw">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>queue_draw</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Queues the widget to be redrawn.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.queue_draw_area">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>queue_draw_area</function></funcdef>
+     <paramdef>int <parameter>x</parameter></paramdef>
+     <paramdef>int <parameter>y</parameter></paramdef>
+     <paramdef>int <parameter>width</parameter></paramdef>
+     <paramdef>int <parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Queues an area of the widget to be redrawn by invalidating it.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.queue_resize">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>queue_resize</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Flags the widget to have its size renegotiated.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.queue_resize_no_redraw">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>queue_resize_no_redraw</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Flags the widget to have its size renegotiated without invalidating the
+    widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.rc_get_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkStyle <function>rc_get_style</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Use <function class="GtkWidget">get_style</function> instead.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.realize">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>realize</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Realizes the widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.remove_accelerator">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>remove_accelerator</function></funcdef>
+     
+     <paramdef><classname>GtkAccelGroup</classname> <parameter>accel_group</parameter></paramdef>
+     <paramdef><parameter>accel_key</parameter></paramdef>
+     <paramdef><parameter>accel_mods</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">add_accelerator</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.remove_mnemonic_label">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>remove_mnemonic_label</function></funcdef>
+     <paramdef>GtkWidget <parameter>label</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">add_mnemonic_label</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.render_icon">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GdkPixbuf</classname> <function>render_icon</function></funcdef>
+     <paramdef><enumname>GtkStockItems</enumname> <parameter>stock_id</parameter></paramdef>
+     <paramdef><enumname>GtkIconSize</enumname> <parameter>size</parameter></paramdef>
+     <paramdef>string <parameter><optional>detail = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a GdkPixbuf from a stock item.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a <classname>GdkPixbuf</classname> from a given
+     stock item enum and at the given <parameter>size</parameter>.
+    </para>
+    <para>
+     See <function class="GtkWindow">set_icon</function> for a usage example.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.reparent">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>reparent</function></funcdef>
+     <paramdef>GtkWidget <parameter>new_parent</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Moves the widget from its current parent container to another container
+    widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.reset_rc_styles">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>reset_rc_styles</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.selection_add_target">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>selection_add_target</function></funcdef>
+     
+     <paramdef><parameter>selection</parameter></paramdef>
+     <paramdef><parameter>target</parameter></paramdef>
+     <paramdef><parameter>info</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.selection_clear">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>selection_clear</function></funcdef>
+     
+     <paramdef><parameter>event</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">queue_clear</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.selection_clear_targets">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>selection_clear_targets</function></funcdef>
+     
+     <paramdef><parameter>selection</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.selection_convert">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>selection_convert</function></funcdef>
+     
+     <paramdef><parameter>selection</parameter></paramdef>
+     <paramdef><parameter>target</parameter></paramdef>
+     <paramdef><parameter><optional>time</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.selection_owner_set">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>selection_owner_set</function></funcdef>
+     
+     <paramdef><parameter>selection</parameter></paramdef>
+     <paramdef><parameter><optional>time</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.selection_remove_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>selection_remove_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.send_expose">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>send_expose</function></funcdef>
+     
+     <paramdef><classname>GdkEvent</classname> <parameter>event</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_accel_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_accel_path</function></funcdef>
+     <paramdef>string <parameter>accel_path</parameter></paramdef>
+     <paramdef>GtkAccelGroup <parameter>accel_group</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_app_paintable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_app_paintable</function></funcdef>
+     <paramdef>bool <parameter>app_paintable</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_child_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_child_visible</function></funcdef>
+     <paramdef>bool <parameter>is_visible</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_child_visible</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_colormap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_colormap</function></funcdef>
+     
+     <paramdef><classname>GdkColormap</classname> <parameter>colormap</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_colormap</function>, 
+     <function class="GtkWidget">pop_colormap</function>, 
+     <function class="GtkWidget">push_colormap</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_composite_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_composite_name</function></funcdef>
+     <paramdef>string <parameter>name</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_composite_name</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_default_colormap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_default_colormap</function></funcdef>
+     
+     <paramdef><classname>GdkColormap</classname> <parameter>colormap</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_default_colormap</function>
+    </para>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_default_direction">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_default_direction</function></funcdef>
+     <paramdef>GtkTextDirection <parameter>dir</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_default_direction</function>
+    </para>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_direction">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_direction</function></funcdef>
+     <paramdef>GtkTextDirection <parameter>dir</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_direction</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_double_buffered">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_double_buffered</function></funcdef>
+     <paramdef>bool <parameter>double_buffered</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_events">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_events</function></funcdef>
+     <paramdef>int <parameter>events</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">add_events</function>, 
+     <function class="GtkWidget">get_events</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_extension_events">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_extension_events</function></funcdef>
+     
+     <paramdef><parameter>mode</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_extension_events</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_name</function></funcdef>
+     <paramdef>string <parameter>name</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the name of the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_name</function>, 
+     <fieldname class="GtkWidget">name</fieldname>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_no_show_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_no_show_all</function></funcdef>
+     <paramdef>bool <parameter>no_show_all</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_no_show_all</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_parent">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_parent</function></funcdef>
+     <paramdef>GtkWidget <parameter>parent</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the parent container for the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_parent</function>, 
+     <fieldname class="GtkWidget">parent</fieldname>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_parent_window">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_parent_window</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>parent_window</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_parent_window</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_redraw_on_allocate">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_redraw_on_allocate</function></funcdef>
+     <paramdef>bool <parameter>redraw_on_allocate</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_scroll_adjustments">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>set_scroll_adjustments</function></funcdef>
+     <paramdef>GtkAdjustment <parameter>hadjustment</parameter></paramdef>
+     <paramdef>GtkAdjustment <parameter>vadjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_sensitive">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_sensitive</function></funcdef>
+     <paramdef>bool <parameter>sensitive</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets wether or not the widget will react to events.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_size_request">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_size_request</function></funcdef>
+     <paramdef>int <parameter>width</parameter></paramdef>
+     <paramdef>int <parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Requests a new size for the widget.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Requests that the widget's size be changed to 
+     <parameter>width</parameter> pixels wide by 
+     <parameter>height</parameter> pixels high.
+    </simpara>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_size_request</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_state">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_state</function></funcdef>
+     <paramdef><enumname>GtkStateType</enumname> <parameter>state</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <fieldname class="GtkWidget">state</fieldname>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_style</function></funcdef>
+     <paramdef>GtkStyle <parameter>style</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the <classname>GtkStyle</classname> object for the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">ensure_style</function>, 
+     <function class="GtkWidget">get_style</function>, 
+     <function class="GtkWidget">modify_style</function>, 
+     <fieldname class="GtkWidget">style</fieldname>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_uposition">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_uposition</function></funcdef>
+     <paramdef>int <parameter>x</parameter></paramdef>
+     <paramdef>int <parameter>y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the widgets position relative to its parent.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_usize">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_usize</function></funcdef>
+     <paramdef>int <parameter>width</parameter></paramdef>
+     <paramdef>int <parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets a widgets size.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Requests that the widget's size be changed to 
+     <parameter>width</parameter> pixels wide by 
+     <parameter>height</parameter> pixels high.
+    </simpara>
+    <note>
+     This method is DEPRECATED. It should not be used in any newly
+     written code and should be phased out of any existing code.
+     Instead used <function class="GtkWidget">set_size_request</function>.
+    </note>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.set_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>boolean <function>set_visible</function></funcdef>
+     <paramdef>boolean <parameter>visible</parameter></paramdef>
+     <paramdef>
+      boolean
+      <parameter><optional>all = <literal>true</literal></optional></parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Hides or shows the widget depending on the value of
+    <parameter>visible</parameter>.
+   </shortdesc>
+   <desc>
+    <para>
+     Hides or shows the widget depending on the value of
+     <parameter>visible</parameter>. If <parameter>visible</parameter> is
+     <literal>true</literal> the widget will be shown. If it is
+     <literal>false</literal> it will be hidden.
+    </para>
+    <para>
+     The optional parameter <parameter>all</parameter> can be used to hide or
+     show all children under the widget. If <parameter>all</parameter> is
+     <literal>true</literal>, <function class="GtkWidget">show_all</function>
+     or <function class="GtkWidget">hide_all</function> will be called instead
+     of <function class="GtkWidget">show</function> or <function class="GtkWidget">hide</function>.
+    </para>
+    <para>
+     <function class="GtkWidget">set_visible</function> returns
+     <literal>true</literal> if the widget is now visible and
+     <literal>false</literal>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">show</function>,
+     <function class="GtkWidget">hide</function>,
+     <function class="GtkWidget">is_visible</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.shape_combine_mask">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>shape_combine_mask</function></funcdef>
+     
+     <paramdef><parameter>shape_mask</parameter></paramdef>
+     <paramdef><parameter>offset_x</parameter></paramdef>
+     <paramdef><parameter>offset_y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.show">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>show</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Displays the widget on the screen.
+   </shortdesc>
+   <desc>
+    <para>
+     Displays the widget on the screen.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">hide</function>,
+     <function class="GtkWidget">show_all</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.show_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>show_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Displays the widget and all of its children on the screen.
+   </shortdesc>
+   <desc>
+    <para>
+     Displays the widget and all of its children on the screen.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkWidget">show</function>,
+     <function class="GtkWidget">hide_all</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.show_now">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>show_now</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets a widget visible and wait until it is shown.
+   </shortdesc>
+   <desc>
+    <para>
+     Shows a widget. If the widget is an unmapped toplevel widget
+     (i.e. a GtkWindow that has not yet been shown),
+     enter the main loop and wait for the window to actually be mapped.
+     Be careful; because the main loop is running, anything can happen
+     during this function.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.size_allocate">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>size_allocate</function></funcdef>
+     
+     <paramdef><parameter>allocation</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.size_request">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>size_request</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.thaw_child_notify">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>thaw_child_notify</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">freeze_child_notify</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.translate_coordinates">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>translate_coordinates</function></funcdef>
+     
+     <paramdef><classname>GtkWidget</classname> <parameter>dest_widget</parameter></paramdef>
+     <paramdef><parameter>src_x</parameter></paramdef>
+     <paramdef><parameter>src_y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.unmap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unmap</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.unparent">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unparent</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Removes the widget from its parent container.
+   </shortdesc>
+   <desc>
+    <para>
+     Removes the widget from its parent container.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.unrealize">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unrealize</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Unrealizes the widget.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  
+ <method id="gtk.gtkwidget.method.drag_source_add_image_targets">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>drag_source_add_image_targets</function></funcdef>
+     
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkwidget.method.drag_source_add_uri_targets">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>drag_source_add_uri_targets</function></funcdef>
+     
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  </methods>
+
+ <fields>
+  <field id="gtk.gtkwidget.field.allocation" type="ro">
+   <fieldname>allocation</fieldname>
+   <fieldtype>GdkRectangle</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_allocation</function>
+    </para>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkwidget.field.name" type="ro">
+   <fieldname>name</fieldname>
+   <fieldtype>string</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_name</function>, 
+     <function class="GtkWidget">set_name</function>
+    </para>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkwidget.field.parent" type="ro">
+   <fieldname>parent</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">get_parent</function>, 
+     <function class="GtkWidget">set_parent</function>
+    </para>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkwidget.field.saved_state" type="ro">
+   <fieldname>saved_state</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkwidget.field.state" type="ro">
+   <fieldname>state</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">set_state</function>
+    </para>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkwidget.field.style" type="ro">
+   <fieldname>style</fieldname>
+   <fieldtype>GtkStyle</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkWidget">ensure_style</function>, 
+     <function class="GtkWidget">get_style</function>, 
+     <function class="GtkWidget">modify_style</function>, 
+     <function class="GtkWidget">set_style</function>
+    </para>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkwidget.field.window" type="ro">
+   <fieldname>window</fieldname>
+   <fieldtype/>
+   <shortdesc>
+    The GdkWindow for the widget.
+   </shortdesc>
+   <desc>
+    <para>
+    The <fieldname>window</fieldname> property is a 
+    <classname>GdkWindow</classname> object. It is only available
+    after the widget has been realized. 
+    </para>
+   </desc>
+  </field>
+ </fields>
+
+ <signals>
+  <signal id="gtk.gtkwidget.signal.accel-closures-changed">
+   <signalname>accel-closures-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.button-press-event">
+   <signalname>button-press-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkEvent</classname> <parameter>event</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Mouse button has been pressed down.
+   </shortdesc>
+   <desc>
+    <para>
+     This signal is emitted when a mouse button has been pressed down.
+    </para>
+    <para>
+     Useful event properties are:
+     <itemizedlist>
+      <listitem>
+       <literal>x, y</literal> - The x and y widget coordinates at which
+       the cursor is.
+      </listitem>
+      <listitem>
+       <literal>button</literal> - Mouse button (1 - left, 2 - middle, 3 - right)
+      </listitem>
+      <listitem>
+       <literal>state</literal> - Bitmask of other keys that were
+       pressed (e.g. Ctrl or Shift) - <enumname>GdkModifierType</enumname>
+      </listitem>
+      <listitem>
+       <literal>type</literal> - Event type, e.g. normal press, double click
+       or so - <enumname>GdkEventType</enumname>.
+      </listitem>
+     </itemizedlist>
+    </para>
+    <para>
+     <example>
+      <title>Using the key-press-event signal</title>
+      <programlisting role="php">
+       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkwidget/button-press-event.phpw" parse="text">
+        <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+       </xi:include>
+      </programlisting>
+     </example>
+    </para>
+
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.button-release-event">
+   <signalname>button-release-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkEvent</classname> <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Mouse button has been released.
+   </shortdesc>
+   <desc>
+    <para>
+     This signal is emitted whenever a mouse button is released.
+    </para>
+    <para>
+     See <signalname class="GtkWidget">button-press-event</signalname>
+     for an example.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.can-activate-accel">
+   <signalname>can-activate-accel</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.child-notify">
+   <signalname>child-notify</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GParam -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.client-event">
+   <signalname>client-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.configure-event">
+   <signalname>configure-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.delete-event">
+   <signalname>delete-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.destroy-event">
+   <signalname>destroy-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.direction-changed">
+   <signalname>direction-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>GtkTextDirection <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.drag-begin">
+   <signalname>drag-begin</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkDragContext</classname> <parameter>context</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Dragging from the widget has been started.
+   </shortdesc>
+   <desc>
+    <para>
+     The <literal>drag-begin</literal> signal is emitted on the drag source
+     when a drag is started. A typical reason to connect to this signal is
+     to set up a custom drag icon with
+     <function class="GtkWidget">drag_source_set_icon</function>.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.drag-data-delete">
+   <signalname>drag-data-delete</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkDragContext</classname> <parameter>context</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Drag move has been completed.
+   </shortdesc>
+   <desc>
+    <para>
+     The <literal>drag-data-delete</literal> signal is emitted on the drag
+     source when a drag with the action <literal>Gdk::ACTION_MOVE</literal>
+     is successfully completed. The signal handler is responsible for deleting
+     the data that has been dropped. What "delete" means, depends on the
+     context of the drag operation.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.drag-data-get">
+   <signalname>drag-data-get</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkDragContext</classname> <parameter>context</parameter></paramdef>
+     <paramdef><classname>GtkSelectionData</classname> <parameter>data</parameter></paramdef>
+     <paramdef>int <parameter>info</parameter></paramdef>
+     <paramdef>int <parameter>time</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Drag data need to be supplied.
+   </shortdesc>
+   <desc>
+    <para>
+     The <literal>drag-data-get</literal> signal is emitted on the drag
+     source when the drop site requests the data which is dragged. It
+     is the responsibility of the signal handler to fill data with the
+     data in the format which is indicated by info. See
+     <function class="GtkSelectionData">set</function> and
+     <function class="GtkSelectionData">set_text</function>.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.drag-data-received">
+   <signalname>drag-data-received</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkDragContext</classname> <parameter>context</parameter></paramdef>
+     <paramdef>int <parameter>x</parameter></paramdef>
+     <paramdef>int <parameter>y</parameter></paramdef>
+     <paramdef><classname>GtkSelectionData</classname> <parameter>data</parameter></paramdef>
+     <paramdef>int <parameter>info</parameter></paramdef>
+     <paramdef>int <parameter>time</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Drop data receive in the application.
+   </shortdesc>
+   <desc>
+    <para>
+     The <literal>drag-data-received</literal> signal is emitted on the drop
+     site when the dragged data has been received. If the data was received
+     in order to determine whether the drop will be accepted, the handler
+     is expected to call
+     <function class="GtkDragContext">drag_status</function> and not finish
+     the drag. If the data was received in response to a
+     <signalname class="GtkWidget">drag-drop</signalname> signal (and this
+     is the last target to be received), the handler for this signal is
+     expected to process the received data and then call
+     <function class="GtkDragContext">drag_finish</function>, setting the
+     success parameter depending on whether the data was processed successfully.
+    </para>
+    <para>
+     The handler may inspect and modify <literal>drag_context-&gt;action</literal>
+     before calling <function class="GtkDragContext">drag_finish</function>,
+     e.g. to implement <literal>Gdk::ACTION_ASK</literal>.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.drag-drop">
+   <signalname>drag-drop</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkDragContext</classname> <parameter>context</parameter></paramdef>
+     <paramdef>int <parameter>x</parameter></paramdef>
+     <paramdef>int <parameter>y</parameter></paramdef>
+     <paramdef>int <parameter>time</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    A drop occured.
+   </shortdesc>
+   <desc>
+    <para>
+     The <literal>drag-drop</literal> signal is emitted on the drop site when
+     the user drops the data onto the widget. The signal handler must determine
+     whether the cursor position is in a drop zone or not. If it is not in a
+     drop zone, it returns <literal>false</literal> and no further processing
+     is necessary. Otherwise, the handler returns <literal>true</literal>.
+     In this case, the handler must ensure that
+     <function class="GdkDragContext">drop_finish</function> is called to let
+     the source know that the drop is done. The call to
+     <function class="GdkDragContext">drop_finish</function> can be done either
+     directly or in a
+     <signalname class="GtkWidget">drag-data-received</signalname> handler
+     which gets triggered by calling
+     <function class="GdkDragContext">get_data</function> to receive
+     the data for one or more of the supported targets.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.drag-end">
+   <signalname>drag-end</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkDragContext</classname> <parameter>context</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+    <para>
+     The <literal>drag-end</literal> signal is emitted on the drag source
+     when a drag is finished. A typical reason to connect to this signal
+     is to undo things done in
+     <signalname class="GtkWidget">drag-begin</signalname>.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.drag-leave">
+   <signalname>drag-leave</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkDragContext</classname> <parameter>context</parameter></paramdef>
+     <paramdef>int <parameter>time</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.drag-motion">
+   <signalname>drag-motion</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkDragContext</classname> <parameter>context</parameter></paramdef>
+     <paramdef>int <parameter>x</parameter></paramdef>
+     <paramdef>int <parameter>y</parameter></paramdef>
+     <paramdef>int <parameter>time</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.enter-notify-event">
+   <signalname>enter-notify-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.event">
+   <signalname>event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.event-after">
+   <signalname>event-after</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.expose-event">
+   <signalname>expose-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.focus">
+   <signalname>focus</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>GtkDirectionType <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.focus-in-event">
+   <signalname>focus-in-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.focus-out-event">
+   <signalname>focus-out-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.grab-focus">
+   <signalname>grab-focus</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.grab-notify">
+   <signalname>grab-notify</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>bool <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.hide">
+   <signalname>hide</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.hierarchy-changed">
+   <signalname>hierarchy-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>GtkWidget <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.key-press-event">
+   <signalname>key-press-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkEvent</classname> <parameter>event</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    A key has been pressed.
+   </shortdesc>
+   <desc>
+    <para>
+     This signal is emitted when a key has been pressed down.
+    </para>
+    <note>
+     This signal is emitted before any changes to the widget are made. For
+     example, if you are using a <classname>GtkEntry</classname>, the signal
+     will be emitted before the text of the entry is changed.
+    </note>
+    <para>
+     Useful event properties are:
+     <itemizedlist>
+      <listitem>
+       <literal>keyval</literal> - integer that can be compared to
+       the <link linkend="appendix.keysyms">key symbols</link> to check which
+       key has been pressed down.
+      </listitem>
+      <listitem>
+       <literal>state</literal> - a bitmask of
+       <enumname>GdkModifierType</enumname>s that can be used to check if
+       <literal>Ctrl</literal> or <literal>Alt</literal> have been hold down
+       additional to the pressed key.
+      </listitem>
+     </itemizedlist>
+    </para>
+    <para>
+     <example>
+      <title>Using the key-press-event signal</title>
+      <programlisting role="php">
+       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkwidget/key-press-event.phpw" parse="text">
+        <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+       </xi:include>
+      </programlisting>
+     </example>
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.key-release-event">
+   <signalname>key-release-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><classname>GdkEvent</classname> <parameter>event</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    A key has been released
+   </shortdesc>
+   <desc>
+    <para>
+     This signal is emitted whenever a key has been released.
+    </para>
+    <para>
+     See the <signalname class="GtkWidget">key-press-event</signalname>
+     documentation for an example.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkwidget.signal.leave-notify-event">
+   <signalname>leave-notify-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.map">
+   <signalname>map</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.map-event">
+   <signalname>map-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.mnemonic-activate">
+   <signalname>mnemonic-activate</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>bool <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.motion-notify-event">
+   <signalname>motion-notify-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.no-expose-event">
+   <signalname>no-expose-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.parent-set">
+   <signalname>parent-set</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>GtkWidget <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when a widget's parent is changed.
+   </shortdesc>
+   <desc>
+    The <signalname>parent-set</signalname> signal is emitted when a widget's
+    parent is set OR unset. The call back is passed widget which 
+    emitted the signal and some value whose purpose and origin is
+    unknown.
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.popup-menu">
+   <signalname>popup-menu</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.property-notify-event">
+   <signalname>property-notify-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.proximity-in-event">
+   <signalname>proximity-in-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.proximity-out-event">
+   <signalname>proximity-out-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.realize">
+   <signalname>realize</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.screen-changed">
+   <signalname>screen-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkScreen -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.scroll-event">
+   <signalname>scroll-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.selection-clear-event">
+   <signalname>selection-clear-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.selection-get">
+   <signalname>selection-get</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GtkSelectionData -->XXX <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.selection-notify-event">
+   <signalname>selection-notify-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.selection-received">
+   <signalname>selection-received</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GtkSelectionData -->XXX <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.selection-request-event">
+   <signalname>selection-request-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.show">
+   <signalname>show</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.show-help">
+   <signalname>show-help</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>GtkWidgetHelpType <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.size-allocate">
+   <signalname>size-allocate</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>GdkRectangle <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.size-request">
+   <signalname>size-request</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GtkRequisition -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.state-changed">
+   <signalname>state-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>GtkStateType <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.style-set">
+   <signalname>style-set</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef>GtkStyle <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.unmap">
+   <signalname>unmap</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.unmap-event">
+   <signalname>unmap-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.unrealize">
+   <signalname>unrealize</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.visibility-notify-event">
+   <signalname>visibility-notify-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkwidget.signal.window-state-event">
+   <signalname>window-state-event</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

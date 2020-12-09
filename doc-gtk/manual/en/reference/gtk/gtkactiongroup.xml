@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.10 $ -->
+<classentry id="gtk.gtkactiongroup">
+ <classmeta>
+  <classtitle>GtkActionGroup</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   A group of action objects.
+  </shortdesc>
+  <desc>
+   <para>
+    Actions are organised into groups in this manner. An action groups can be
+    understood as a map from action names to <classname>GtkAction</classname> 
+    objects.
+   </para>
+   <para>
+    All actions that you feel make sense under a partiular context may be 
+    grouped under a single action group. Of course, all actions cannot be 
+    grouped under a single name, you may use multiple action groups for a 
+    particular user interface. In fact, most nontrivial applications will 
+    make use of multiple action groups.
+   </para>
+   <para>
+    As an example, consider an application that edits multiple documents. One 
+    group may hold global actions such as new, about and quit; and another 
+    group can be used to hold actions that are specific to one document, like 
+    save, cut, copy and paste.
+  </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkactiongroup.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkActionGroup</function></funcdef>
+    <paramdef>string <parameter>name</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Creates a new action group.
+   </shortdesc>
+   <desc>
+     Use the constructor to create a new action group with the specified name. 
+     You can then use other methods of the class to add actions to the group.
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkactiongroup.method.add_action">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_action</function></funcdef>
+     <paramdef><classname>GtkAction</classname> <parameter>action</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Adds an action to the action group.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to add an action object to the specified action group. 
+     Note that the usage of this method does not setup the accel path of the 
+     action. This may cause trouble when you try to modify the accelerator of 
+     the widget associated with the action.
+    </para>
+    <para>
+     To workaround this problem, either set the accel path manually using 
+     <function classname="GtkAction">set_accel_path</function> or add the 
+     function to the group using <function classname="GtkActionGroup">
+     add_action_with_accel</function>
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkActionGroup">get_action</function>, 
+     <function class="GtkActionGroup">remove_action</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkactiongroup.method.add_action_with_accel">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_action_with_accel</function></funcdef>
+     <paramdef><classname>GtkAction</classname> <parameter>action</parameter></paramdef>
+     <paramdef>string <parameter>accelerator</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Adds an action to the action group and sets up its accelerator.
+   </shortdesc>
+   <desc>
+     This performs the same function as <function classname="GtkActionGroup">
+     add_action</function> with the extra functionality of setting up the 
+     action's accelerator.
+   </desc>
+  </method>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <method id="gtk.gtkactiongroup.method.get_action">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkAction</classname> <function>get_action</function></funcdef>
+     <paramdef>string <parameter>action_name</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Looks up an action in a group.
+   </shortdesc>
+   <desc>
+    <para>
+     You can use this method to lookup an action by its name in a specified 
+     action group. Pass the action group and action name as parameters to the 
+     function. It will return the action object, or <literal>null</literal> if 
+     no action by that name exists in the group.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkActionGroup">add_action</function>, 
+     <function class="GtkActionGroup">remove_action</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkactiongroup.method.get_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_name</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Returns the name of the action group.
+   </shortdesc>
+   <desc>
+     This method will simply return the name of the specified action group.
+   </desc>
+  </method>
+
+  <method id="gtk.gtkactiongroup.method.get_sensitive">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_sensitive</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkActionGroup">set_sensitive</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkactiongroup.method.get_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_visible</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkActionGroup">set_visible</function>
+    </para>
+
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkactiongroup.method.remove_action">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>remove_action</function></funcdef>
+     <paramdef><classname>GtkAction</classname> <parameter>action</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Removes an action object from the action group.
+   </shortdesc>
+   <desc>
+     <para>
+      Use this method to remove an action object from the specified action 
+      group. 
+     </para>
+     <note>
+      This method does NOT result in the action object being destroyed. It is 
+      simply disassociated with the action group. You may add the action to 
+      other action groups after using this method.
+     </note>
+    <para>
+     &seealso;
+     <function class="GtkActionGroup">add_action</function>, 
+     <function class="GtkActionGroup">get_action</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkactiongroup.method.set_sensitive">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_sensitive</function></funcdef>
+     <paramdef>bool <parameter>sensitive</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkActionGroup">get_sensitive</function>
+    </para>
+
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkactiongroup.method.set_translation_domain">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_translation_domain</function></funcdef>
+     <paramdef>string <parameter>domain</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkactiongroup.method.set_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_visible</function></funcdef>
+     <paramdef>bool <parameter>visible</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkActionGroup">get_visible</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkactiongroup.method.translate_string">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>translate_string</function></funcdef>
+     <paramdef>string <parameter>string</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkactiongroup.signal.connect-proxy">
+   <signalname>connect-proxy</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkActionGroup</classname> <parameter>actiongroup</parameter></paramdef>
+     <paramdef><classname>GtkAction</classname> <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkactiongroup.signal.disconnect-proxy">
+   <signalname>disconnect-proxy</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkActionGroup</classname> <parameter>actiongroup</parameter></paramdef>
+     <paramdef><classname>GtkAction</classname> <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkactiongroup.signal.post-activate">
+   <signalname>post-activate</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkActionGroup</classname> <parameter>actiongroup</parameter></paramdef>
+     <paramdef><classname>GtkAction</classname> <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkactiongroup.signal.pre-activate">
+   <signalname>pre-activate</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkActionGroup</classname> <parameter>actiongroup</parameter></paramdef>
+     <paramdef><classname>GtkAction</classname> <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

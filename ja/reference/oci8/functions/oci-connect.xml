@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 331842 Maintainer: satoruyoshida Status: ready -->
+<!-- CREDITS: shimooka -->
+<refentry xml:id="function.oci-connect" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>oci_connect</refname>
+  <refpurpose>Oracle データベースに接続する</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>oci_connect</methodname>
+   <methodparam><type>string</type><parameter>username</parameter></methodparam>
+   <methodparam><type>string</type><parameter>password</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>connection_string</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>character_set</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>session_mode</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   他のほとんどの OCI8 コールで必要な接続 ID を返します。
+  </para>
+  <para>
+   接続の管理及び接続プーリングについての一般的な情報は
+   <link linkend="oci8.connection">接続のハンドリング</link>をご覧下さい。
+  </para>
+  <para>
+   PHP 5.1.2 (PECL OCI8 1.1) 以降で、接続を閉じるために
+   <function>oci_close</function>を使用できます。
+  </para>
+  <para>
+   同一の引数で <function>oci_connect</function> を呼び出すと、
+   ２回目以降は最初の呼び出しで返された接続ハンドルを返します。
+   これは、あるハンドル内のトランザクションが、他のハンドル内にも
+   あることを意味します、なぜなら、それらは<emphasis>同一の</emphasis>
+   基礎となるデータベース接続を使用するからです。
+   もし２つのハンドルを互いにトランザクション的に分離する必要があれば、
+   替わりに <function>oci_new_connect</function> を使用してください。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>username</parameter></term>
+     <listitem>
+      <para>
+       Oracle ユーザー名
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>password</parameter></term>
+     <listitem>
+      <para>
+       <parameter>username</parameter> に対するパスワード
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>connection_string</parameter></term>
+     <listitem>
+      &oci.db;
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>character_set</parameter></term>
+     <listitem>
+      &oci.charset;
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>session_mode</parameter></term>
+     <listitem>
+      &oci.sessionmode;
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   接続 ID、もしくはエラー時は &false; を返します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Easy Connect 構文を使った基本的な <function>oci_connect</function> の使用例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// "localhost" マシン上の XE サービス(例えばデータベース)に接続します。
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+$stid = oci_parse($conn, 'SELECT * FROM employees');
+oci_execute($stid);
+
+echo "<table border='1'>\n";
+while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    echo "<tr>\n";
+    foreach ($row as $item) {
+        echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
+    }
+    echo "</tr>\n";
+}
+echo "</table>\n";
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Network Connect 名を使った基本的な <function>oci_connect</function> の使用例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// tnsnames.ora ファイルに記載された MYDB データベースに接続します。
+// MYDB 用の tnsnames.ora エントリーの一例です。
+//   MYDB =
+//     (DESCRIPTION =
+//       (ADDRESS = (PROTOCOL = TCP)(HOST = mymachine.oracle.com)(PORT = 1521))
+//       (CONNECT_DATA =
+//         (SERVER = DEDICATED)
+//         (SERVICE_NAME = XE)
+//       )
+//     )
+
+$conn = oci_connect('hr', 'welcome', 'MYDB');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+$stid = oci_parse($conn, 'SELECT * FROM employees');
+oci_execute($stid);
+
+echo "<table border='1'>\n";
+while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    echo "<tr>\n";
+    foreach ($row as $item) {
+        echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
+    }
+    echo "</tr>\n";
+}
+echo "</table>\n";
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>oci_connect</function> での明示的な文字セットの指定</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE', 'AL32UTF8');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+$stid = oci_parse($conn, 'SELECT * FROM employees');
+oci_execute($stid);
+
+echo "<table border='1'>\n";
+while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    echo "<tr>\n";
+    foreach ($row as $item) {
+        echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
+    }
+    echo "</tr>\n";
+}
+echo "</table>\n";
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>oci_connect</function> での複数コールの使用</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$c1 = oci_connect("hr", "welcome", 'localhost/XE');
+$c2 = oci_connect("hr", "welcome", 'localhost/XE');
+
+// 同一の基礎となるデータベース接続を使用することを意味する、
+// 同一の PHP リソース id を $c1 及び $c2 の両方が示します。
+echo "c1 is $c1<br>\n";
+echo "c2 is $c2<br>\n";
+
+function create_table($conn)
+{
+    $stmt = oci_parse($conn, "create table hallo (test varchar2(64))");
+    oci_execute($stmt);
+    echo "Created table<br>\n";
+}
+
+function drop_table($conn)
+{
+    $stmt = oci_parse($conn, "drop table hallo");
+    oci_execute($stmt);
+    echo "Dropped table<br>\n";
+}
+
+function insert_data($connname, $conn)
+{
+    $stmt = oci_parse($conn, "insert into hallo
+              values(to_char(sysdate,'DD-MON-YY HH24:MI:SS'))");
+    oci_execute($stmt, OCI_DEFAULT);
+    echo "$connname inserted row without committing<br>\n";
+}
+
+function rollback($connname, $conn)
+{
+    oci_rollback($conn);
+    echo "$connname rollback<br>\n";
+}
+
+function select_data($connname, $conn)
+{
+    $stmt = oci_parse($conn, "select * from hallo");
+    oci_execute($stmt, OCI_DEFAULT);
+    echo "$connname ----selecting<br>\n";
+    while (oci_fetch($stmt)) {
+        echo "    " . oci_result($stmt, "TEST") . "<br>\n";
+    }
+    echo "$connname ----done<br>\n";
+}
+
+create_table($c1);
+
+insert_data('c1', $c1);   // c1 を使用して行を挿入
+sleep(2);                 // ２行目で異なるタイムスタンプを表示するためにスリープします
+insert_data('c2', $c2);   // c2 を使用して行を挿入
+
+select_data('c1', $c1);   // 両方の挿入結果が返されます
+select_data('c2', $c2);   // 両方の挿入結果が返されます
+
+rollback('c1', $c1);      // c1 を使用してロールパック
+
+select_data('c1', $c1);   // 両方の挿入行為がロールバックされました
+select_data('c2', $c2);
+
+drop_table($c1);
+
+// 接続のうちの一つを閉じると、その PHP 変数が利用できなくなりますが、
+// もう一つは使用できます。
+oci_close($c1);
+echo "c1 is $c1<br>\n";
+echo "c2 is $c2<br>\n";
+
+
+// 出力です。
+//    c1 is Resource id #5
+//    c2 is Resource id #5
+//    Created table
+//    c1 inserted row without committing
+//    c2 inserted row without committing
+//    c1 ----selecting
+//        09-DEC-09 12:14:43
+//        09-DEC-09 12:14:45
+//    c1 ----done
+//    c2 ----selecting
+//        09-DEC-09 12:14:43
+//        09-DEC-09 12:14:45
+//    c2 ----done
+//    c1 rollback
+//    c1 ----selecting
+//    c1 ----done
+//    c2 ----selecting
+//    c2 ----done
+//    Dropped table
+//    c1 is 
+//    c2 is Resource id #5
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    OCI8 拡張モジュールのインストールや設定に不備があると、
+    接続時に問題やエラーが発生します。解決策は
+    <link linkend="oci8.setup">インストール/設定</link>
+    を参照ください。
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>oci_pconnect</function></member>
+    <member><function>oci_new_connect</function></member>
+    <member><function>oci_close</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

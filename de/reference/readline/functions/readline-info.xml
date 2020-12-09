@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 297028 Maintainer: sammywg Status: ready -->
+<refentry xml:id="function.readline-info" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>readline_info</refname>
+  <refpurpose>Liest/Setzt verschiedene interne readline-Variablen</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>readline_info</methodname>
+   <methodparam choice="opt"><type>string</type><parameter>varname</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>newvalue</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Liest/Setzt verschiedene interne readline-Variablen.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>varname</parameter></term>
+     <listitem>
+      <para>
+       Ein Variablenname.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>newvalue</parameter></term>
+     <listitem>
+      <para>
+       Sofern unterstützt, entspricht der Parameter dem neuen gesetzten Wert.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Wenn diese Funktion ohne Parameter aufgerufen wird, gibt sie
+   einen Array von Werten für alle Einstellungen zurück, die
+   readline benutzt. Die Elemente werden durch die folgenden Werte
+   indiziert:
+   done, end, erase_empty_line, library_version, line_buffer, mark,
+   pending_input, point, prompt, readline_name und terminal_name.
+  </para>
+  <para>
+   Wird die Funktion mit einem oder zwei Parametern aufgerufen, wird der
+   alte Wert zurückgegeben.
+   </para>
+ </refsect1>
+
+</refentry>
+
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,200 @@
+#!/usr/bin/env php
+<?php
+/*
+ * The PHP.net KARMA hook. For git repositories.
+ *
+ * (c) 2012 David Soria Parra <dsp at php dot net>
+ *
+ * Licensed under the terms of the MIT license.
+ */
+namespace Karma;
+
+const KARMA_FILE = '/git/checkout/SVNROOT/global_avail';
+const REPOSITORY_PATH = '/git/repositories';
+const LIB_PATH = '/git/checkout/karma/lib';
+
+set_include_path(
+    getenv('KARMA_LIB_PATH') ?: LIB_PATH .
+    PATH_SEPARATOR .
+    get_include_path());
+
+include 'Git.php';
+include 'Git/PushInformation.php';
+include 'Git/ReceiveHook.php';
+include 'Git/PreReceiveHook.php';
+
+$weKnowWhatWeAreDoing = ['dsp', 'johannes', 'tyrael', 'nikic'];
+// On restricted branches forced pushes are only possible by users listed in $weKnowWhatWeAreDoing
+$restrictedBranches =
+    ['php-src.git' => [
+        'refs/heads/PHP-5.3',
+        'refs/heads/PHP-5.4',
+        'refs/heads/PHP-5.5',
+        'refs/heads/PHP-5.6',
+        'refs/heads/PHP-7.0',
+        'refs/heads/PHP-7.1',
+        'refs/heads/PHP-7.2',
+        'refs/heads/PHP-7.3',
+        'refs/heads/PHP-7.4',
+        'refs/heads/master'
+    ],
+    'playground.git' => ['refs/heads/dsp']];
+// On closed branches only RMs may push
+$RMs = [
+    'johannes', 'stas', 'dsp', 'jpauli', 'tyrael', 'ab', 'krakjoe', 'davey',
+    'remi', 'pollita', 'cmb', 'derick', 'petk'
+];
+$closedBranches = [
+    'php-src.git' => [
+        'refs/heads/PHP-5.3' => $RMs,
+        'refs/heads/PHP-5.4' => $RMs,
+        'refs/heads/PHP-5.5' => $RMs,
+        'refs/heads/PHP-5.6' => $RMs,
+        'refs/heads/PHP-7.0' => $RMs,
+        'refs/heads/PHP-7.1' => $RMs,
+        'refs/heads/PHP-7.2' => $RMs,
+    ],
+    'playground.git' => ['refs/heads/johannes' => ['nobody', 'johannes']]
+];
+
+function deny($reason)
+{
+    fwrite(STDERR, $reason . "\n");
+    exit(1);
+}
+
+function accept($message)
+{
+    fwrite(STDOUT, $message . "\n");
+    exit(0);
+}
+
+function get_karma_for_paths($username, array $paths, array $avail_lines)
+{
+    $access = array_fill_keys($paths, 'unavail');
+    foreach ($avail_lines as $acl_line) {
+        $acl_line = trim($acl_line);
+        if ('' === $acl_line || '#' === $acl_line{0}) {
+            continue;
+        }
+
+        @list($avail, $user_str, $path_str) = explode('|', $acl_line);
+
+        $allowed_paths = explode(',', $path_str);
+        $allowed_users = explode(',', $user_str);
+
+        /* ignore lines which don't contain our users or apply to all users */
+        if (!in_array($username, $allowed_users) && !empty($user_str)) {
+            continue;
+        }
+
+        if (!in_array($avail, ['avail', 'unavail'])) {
+            continue;
+        }
+
+        if (empty($path_str)) {
+            $access = array_fill_keys($paths, $avail);
+        } else {
+            foreach ($access as $requested_path => $is_avail) {
+                foreach ($allowed_paths as $path) {
+                    if (fnmatch($path . '*', $requested_path)) {
+                        $access[$requested_path] = $avail;
+                    }
+                }
+            }
+        }
+    }
+
+    return $access;
+}
+
+function get_unavail_paths($username, array $paths, array $avail_lines)
+{
+    return
+        array_keys(
+            array_filter(
+                get_karma_for_paths($username, $paths, $avail_lines),
+                function ($avail) {
+                    return 'unavail' === $avail;
+                }));
+}
+
+
+error_reporting(E_ALL | E_STRICT);
+date_default_timezone_set('UTC');
+putenv("PATH=/opt/bin:/usr/local/bin:/usr/bin:/bin");
+putenv("LC_ALL=en_US.UTF-8");
+
+$user = null;
+if (getenv('REMOTE_USER')) {
+    $user = getenv('REMOTE_USER');
+} else if (getenv('SSH_CONNECTION') && getenv('GL_USER')) {
+    /* gitolite user */
+    $user = getenv('GL_USER');
+}
+
+if (is_null($user)) {
+    deny("Cannot determine user information. Aborted.");
+}
+
+fprintf(STDOUT, "Welcome $user.\n");
+
+$hook = new \Git\PreReceiveHook(getenv('PHP_KARMA_FILE') ?: KARMA_FILE,
+                             getenv('GL_REPO_BASE_ABS') ?: REPOSITORY_PATH);
+
+if ($hook->isKarmaIgnored()) {
+    accept("No karma check necessary. Thank you for your contribution.\n");
+}
+
+$hook->hookInput();
+$repo_name = $hook->getRepositoryName();
+$pi        = new \Git\PushInformation($hook);
+$req_paths = ($pi->isNewBranch() || $pi->isForced() || $pi->isTag()) ? [''] : $hook->getReceivedPaths();
+
+if (empty($req_paths)) {
+    $req_paths = ['']; // we can empty paths for trivial merge
+}
+
+if (isset($closedBranches[$repo_name])) {
+    $closed = array_filter(array_keys($closedBranches[$repo_name]),
+        function ($branch) use ($pi, $user, $closedBranches, $repo_name) {
+            return in_array($branch, $pi->getBranches()) && !in_array($user, $closedBranches[$repo_name][$branch]);
+        });
+
+    if (count($closed)) {
+        $rms = $closedBranches[$repo_name];
+        deny("You can not push to closed branches. ". PHP_EOL . implode(PHP_EOL, array_map(
+            function ($branch) use ($rms) {
+                return "Please contact " . implode(', ', $rms[$branch]) . " for changes to ${branch}.";
+            },
+            $closed)));
+    }
+}
+
+$restricted = [];
+if (isset($restrictedBranches[$repo_name])) {
+    $restricted = array_filter($restrictedBranches[$repo_name],
+        function ($branch) use ($pi) {
+            return in_array($branch, $pi->getBranches());
+        });
+}
+
+if (count($restricted) > 0 && $pi->isForced() && !in_array($user, $weKnowWhatWeAreDoing)) {
+    deny("You are not allowed to overwrite commits on " . implode(', ', $restricted));
+}
+
+$prefix          = sprintf('%s/', $repo_name);
+$avail_lines     = $hook->getKarmaFile();
+$req_paths       = array_map(function ($x) use ($prefix) { return $prefix . $x;}, $req_paths);
+$unavail_paths   = get_unavail_paths($user, $req_paths, $avail_lines);
+
+if (!empty($unavail_paths)) {
+    deny(sprintf(
+        "You have insufficient Karma!\n" .
+        "I'm sorry, I cannot allow you to write to\n" .
+        "    %s\n" .
+        "Have a nice day.",
+        implode("\n    ", $unavail_paths)));
+}
+
+accept("Changesets accepted. Thank you for your contribution.\n");

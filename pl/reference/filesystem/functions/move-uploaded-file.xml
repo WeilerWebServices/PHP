@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<!-- $Revision$ -->
+<refentry xml:id="function.move-uploaded-file" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>move_uploaded_file</refname>
+  <refpurpose>Przenieś uploadowany plik do innej lokalizacji</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>move_uploaded_file</methodname>
+   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <methodparam><type>string</type><parameter>przeznaczenie</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Funkcja ta sprawdza czy na pewno plik określony przez
+   <parameter>nazwa_pliku</parameter> jest prawidło uploadowanym plikiem
+   (to znaczy, że został uploadowany przez PHPowy mechanizm uploadowania HTTP
+   POST). Jeśli plik jest prawidłowy, to zostanie przeniesiony do nazwy pliku
+   wskazanej przez <parameter>przeznaczenie</parameter>.
+  </para>
+  <para>
+   Ten rodzaj testów jest szczególnie ważny jeśli istnieje szansa, że
+   cokolwiek robimy z przysłanymi plikami może zdradzić ich
+   treść użytkownikowi lub nawet innym użytkownikom tego samego
+   systemu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_pliku</parameter></term>
+     <listitem>
+      <para>
+       Nazwa wgrywanego pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>przeznaczenie</parameter></term>
+     <listitem>
+      <para>
+       Miejsce docelowe przenoszonego pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Jeśli <parameter>nazwa_pliku</parameter> nie jest prawidło uploadowanym plikiem,
+   to żadna akcja nie zostanie wykonana i <function>move_uploaded_file</function>
+   zwróci &false;.
+  </para>
+  <para>
+   Jeśli <parameter>nazwa_pliku</parameter> jest prawidłowo uploadowanym plikiem,
+   ale nie może zostać przeniesiony z jakiś powodów, żadna akcja nie zostanie wykonana
+   i <function>move_uploaded_file</function> zwróci &false;.
+   Dodatkowo, zostanie pokazane ostrzeżenie.
+  </para>
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
+ 
+  <note>
+   <para>
+    Funkcja <function>move_uploaded_file</function> jest świadoma &safemode;
+    oraz <link linkend="ini.open-basedir">open_basedir</link>.
+    Jednak, ograniczenia nałożone są tylko na ścieżkę
+    <parameter>przeznaczenie</parameter>, ponieważ pozwala na przenoszenie
+    uploadowanych plików w których <parameter>nazwa_pliku</parameter> może
+    kolidować z takimi ograniczeniami. <function>move_uploaded_file</function> zapewnia bezpieczeństwo
+    tej operacji poprzez zezwolenie na przeniesienie tylko tych plików,
+    które były uploadowane przez PHP.
+   </para>
+  </note>
+  <warning>
+   <para>
+    Jeśli już istnieje plik docelowy, to zostanie on nadpisany.
+   </para>
+  </warning>
+ </refsect1>
+   
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>is_uploaded_file</function></member>
+    <member>Zobacz <link linkend="features.file-upload">Obsługa uploadowanych plików</link> w celu uzyskania prostych przykładów użycia tej funkcji.</member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

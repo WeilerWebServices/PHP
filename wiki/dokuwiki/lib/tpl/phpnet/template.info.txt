@@ -1,0 +1,7 @@
+base     phpnet
+author   The PHP Group
+email    systems@php.net
+date     2015-03-24
+name     php.net Template
+desc     Template of wiki.php.net
+url      http://git.php.net/?p=web/wiki.git;a=tree;f=dokuwiki/lib/tpl/phpnet

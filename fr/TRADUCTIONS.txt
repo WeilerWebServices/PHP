@@ -1,0 +1,147 @@
+﻿$Revision$
+
+Dernière révision : 09 mai 2019 par girgias
+
+But : 
+  Ce fichier a pour but de rassembler une liste de traduction de termes techniques,
+  pour aider à la consistance du manuel.
+
+*À ne pas traduire* :
+- ``exAmple.com`` : ne pas changer cette url elle fait partie de la RFC 2606 et pointe sur un
+	domaine bien choisi. ``exEmple.com`` pointe sur un moteur de recherche à sponsors
+	qui achète un maximum de liens pour se garantir des visites.
+
+Style général :
+- Évitez de "parler" directement
+	Ex: "Il est possible de [...]" au lieu de "Vous pouvez [...]".
+- En accord avec la règle précédente "Please note" peut se traduire par "Il est à noter que"
+	au lieu de "Notez".
+- Utilisez plutôt :
+	- "à partir de" au lieu de "depuis" (même règle qu'en anglais "as of" au lieu de "since").
+	- "antérieur à" au lieu de "avant".
+	- "auparavant" ou "précédemment" pour "formaly".
+- Traduisez "should" par "devrait/devraient" au lieu de "doit/doivent".
+
+Quelques points de français :
+  - On n'écrit pas "etc..." mais "etc." (etc. et ... sont la même chose, d'où pléonasme).
+  - On n'écrit pas "comme par exemple" mais "comme" ou "par exemple".
+  - On n'écrit pas "si il", mais plutôt "s'il".
+  - On écrit "optioNNel" et non pas "optioNel".
+  - On écrit "abréger" et non pas "abrévier"
+  - Dans un domaine de cryptographie, on utilise le mot chiffrement et pas chiffrage,
+	pour plus d'informations voir : https://chiffrer.info/
+	référez-vous aussi aux traductions ci-dessous pour d'autres termes techniques.
+
+Il existe des entités qui permette de traduire rapidement les types primitifs de PHP:
+ - &array;
+ - &boolean;
+ - &float;
+ - &integer;
+ - &object;
+ - &string;
+ - $void;
+Et des entités de raccourcis :
+ - &zero;
+ - &one;
+
+Dictionnaire des traductions :
+_________________________________________________________________
+|                               |                               |
+|           Terme anglais       |           Traduction          |
+|_______________________________|_______________________________|
+| autoloading                   | auto-chargement               |
+| backward compatibility (BC)   | rétrocompatibilité            |
+| bitfield                      | champ de bits                 |
+| bitwise                       | opération bit à bit [1]       |
+|                               | opération binaire [2]         |
+| bug, debug                    | bogue, débogage               |
+| callable                      | un callble (inchangé)         |
+| callback                      | une fonction de rappel        |
+| closure                       | fermeture                     |
+| core                          | cœur                          |
+| delimiter                     | un délimiteur / séparateur    |
+| diff                          | un diff (inchangé)            |
+| DOM list                      | collection triée [3]          |
+| DOM map                       | collection non triée [3]      |
+| dump                          | fichier de vidage             |
+| encryption                    | cryptographie                 |
+| exception thrown              | exception lancée / émise      |
+| feature                       | une fonctionalité             |
+| garbage collector (GC)        | ramasse-miettes               |
+| getter                        | récupérateur                  |
+| handle                        | gestionnaire                  |
+| header                        | un en-tête (bien mettre le -) |
+| just in time (JIT)            | compilation à la volée        |
+| library                       | bibliothèque                  |
+| log                           | journal d'événements          |
+| mailbox                       | boîtes au lettres             |
+| to merge                      | fusionner                     |
+| output                        | données de sortie / résultat  |
+| to output                     | afficher                      |
+| overhad                       | surcoût                       |
+| package                       | un package (inchangé)         |
+| payload                       | charge utile                  |
+| polyfill                      | un polyfill [4]               |
+| to provide                    | fournir                       |
+| to return                     | retourner / rapporter         |
+| scope                         | la portée                     |
+| setter                        | définisseur                   |
+| stack trace                   | trace d'appels                |
+| stream                        | un flux                       |
+| timestamp                     | horodatage                    |
+| to unpack                     | défaire                       |
+|                               | déballer                      |
+|                               | décompresser (?)              |
+| userland                      | espace utilisateur            |
+| whitespace                    | charactère d'espacement blanc |
+| wrapper                       | enveloppe                     |
+|_______________________________________________________________|
+|                                                               |
+|               Dans un contexte d'encodage de chaîne           |
+|_______________________________________________________________|
+|                               |                               |
+|           Terme anglais       |           Traduction          |
+|_______________________________|_______________________________|
+| character set                 | jeu de charactères            |
+| fullwidth / halfwidth         | pleine / demi chasse [5]      |
+|_______________________________|_______________________________|
+|                                                               |
+|               Dans un contexte de cryptographie               |
+|_______________________________________________________________|
+|                               |                               |
+|           Terme anglais       |           Traduction          |
+|_______________________________|_______________________________|
+| checksum                      | somme de contrôle             |
+|                               | empreinte                     |
+| hash                          | hachage                       |
+| to hash                       | hacher                        |
+| hash strenght                 | robustesse du hachage         |
+| raw                           | brut                          |
+| bloc cypher mode              | mode de chiffrement par bloc  |
+| stream cipher mode            | mode de chiffrement par flot  |
+| crypt	                        | chiffrer                      |
+| decrypt                       | déchiffrer                    |
+|_______________________________________________________________|
+|                                                               |
+|                  Dans un contexte statistique                 |
+|_______________________________________________________________|
+|                               |                               |
+|           Terme anglais       |           Traduction          |
+|_______________________________|_______________________________|
+| CDF                           | Fonction de répartition       |
+| (Cummulative Density Function)|                               |
+| PDF                           | Fonction de densité           |
+| (Probability Density Function)|                               |
+| PMF                           | Fonction de masse             |
+| (Probability Mass Function)   |                               |
+| NAME distribution             | Loi de NAME                   |
+|_______________________________________________________________|
+
+
+Références :
+
+[1] https://fr.wikipedia.org/wiki/Op%C3%A9ration_bit_%C3%A0_bit
+[2] https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_binaires
+[3] https://docs.microsoft.com/fr-fr/dotnet/standard/data/xml/node-collections-in-namednodemaps-and-nodelists
+[4] https://fr.wikipedia.org/wiki/Polyfill
+[5] https://fr.wikipedia.org/wiki/Formes_%C3%A0_demi_et_pleine_chasse

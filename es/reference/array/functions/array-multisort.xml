@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 345315 Maintainer: seros Status: ready -->
+<!-- Reviewed: yes Maintainer: seros -->
+<refentry xml:id="function.array-multisort" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>array_multisort</refname>
+  <refpurpose>Ordena varios arrays, o arrays multidimensionales</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>array_multisort</methodname>
+   <methodparam><type>array</type><parameter role="reference">array1</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>array1_sort_order</parameter><initializer>SORT_ASC</initializer></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>array1_sort_flags</parameter><initializer>SORT_REGULAR</initializer></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_multisort</function> puede usarse para ordenar varios
+   arrays al mismo tiempo, o un array multidimensional por una o más
+   dimensiones.
+  </para>
+  <para>
+   Las claves asociativas (<type>string</type>) se mantendrán, aunque las
+   claves numéricas serán reindexadas.
+  </para>
+  &note.sort-unstable;
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array1</parameter></term>
+     <listitem>
+      <para>
+       Un <type>array</type> a ordenar.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>array1_sort_order</parameter></term>
+     <listitem>
+      <para>
+       El orden usado para ordenar el argumento anterior <type>array</type>. Puede ser
+       <constant>SORT_ASC</constant> para orden ascendente o <constant>SORT_DESC</constant>
+       para orden descendente.
+      </para>
+      <para>
+       Este argumento se puede intercambiar con <parameter>array1_sort_flags</parameter>
+       u omitir por completo, en cuyo caso se asume <constant>SORT_ASC</constant>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>array1_sort_flags</parameter></term>
+     <listitem>
+      <para>
+       Opciones de ordenación para el argumento previo <type>array</type>:
+      </para>
+      <para>
+       Banderas de tipo de ordenación:
+       <itemizedlist>
+        <listitem>
+         <simpara><constant>SORT_REGULAR</constant> - compara los elementos normalmente
+          (no cambia los tipos)</simpara>
+        </listitem>
+        <listitem>
+         <simpara><constant>SORT_NUMERIC</constant> - compara los elementos numéricamente</simpara>
+        </listitem>
+        <listitem>
+         <simpara><constant>SORT_STRING</constant> - compara los elementos como strings</simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORT_LOCALE_STRING</constant> - compara los elementos como
+          strings, basándose en la configuración regional en uso. Utiliza la configuración regional,
+          la cual se puede cambiar usando <function>setlocale</function>
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORT_NATURAL</constant> - compara los elementos como strings
+          usando un "orden natural" como <function>natsort</function>
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORT_FLAG_CASE</constant> - puede ser combinado
+          (OR a nivel de bits) con
+          <constant>SORT_STRING</constant> o
+          <constant>SORT_NATURAL</constant> para ordenar strings sin considerar mayúsculas/minúsculas
+         </simpara>
+        </listitem>
+       </itemizedlist>
+      </para>
+      <para>
+       Este argumento puede ser intercambiado con <parameter>array1_sort_order</parameter>
+       u omitido por completo, en cuyo caso se asume <constant>SORT_REGULAR</constant>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>...</parameter></term>
+     <listitem>
+      <para>
+       Más arrays, opcionalmente seguidos de una opción de ordenación y banderas. Solamente se
+       comparan los elementos correspondientes a elementos equivalentes en arrays previos.
+       En otras palabras, el orden el lexicográfico.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.4.0</entry>
+       <entry>
+        Se añadieron <constant>SORT_NATURAL</constant> y <constant>SORT_FLAG_CASE</constant>
+        a <parameter>array1_sort_flags</parameter> como posibles banderas de ordenación.
+       </entry>
+      </row>
+      <row>
+       <entry>5.3.0</entry>
+       <entry>
+        Se añadió <constant>SORT_LOCALE_STRING</constant> a
+        <parameter>array1_sort_flags</parameter> como posible bandera de ordenación.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Ordenar varios arrays</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$array1 = array(10, 100, 100, 0);
+$array2 = array(1, 3, 2, 4);
+array_multisort($array1, $array2);
+
+var_dump($array1);
+var_dump($array2);
+?>
+]]>
+    </programlisting>
+    <para>
+     En este ejemplo, después de la ordenación, el primer array contendrá
+     los valores 0, 10, 100, 100. El segundo array contendrá 4, 1, 2, 3.
+     Las entradas en el segundo array correspondientes a las entradas
+     idénticas del primer array (100 y 100) fueron ordenadas también.
+    </para>
+    <screen>
+<![CDATA[
+array(4) {
+  [0]=> int(0)
+  [1]=> int(10)
+  [2]=> int(100)
+  [3]=> int(100)
+}
+array(4) {
+  [0]=> int(4)
+  [1]=> int(1)
+  [2]=> int(2)
+  [3]=> int(3)
+}
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Ordenar un array multidimensional</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$ar = array(
+       array("10", 11, 100, 100, "a"),
+       array(   1,  2, "2",   3,   1)
+      );
+array_multisort($ar[0], SORT_ASC, SORT_STRING,
+                $ar[1], SORT_NUMERIC, SORT_DESC);
+var_dump($ar);
+?>
+]]>
+    </programlisting>
+    <para>
+     En este ejemplo, después de la ordenación, el primer array se
+     transformará en "10", 100, 100, 11, "a" (fue ordenado como string en
+     orden ascendente). El segundo contendrá 1, 3, "2", 2, 1 (ordenada como
+     números, en orden descendiente).
+    </para>
+    <screen>
+<![CDATA[
+array(2) {
+  [0]=> array(5) {
+    [0]=> string(2) "10"
+    [1]=> int(100)
+    [2]=> int(100)
+    [3]=> int(11)
+    [4]=> string(1) "a"
+  }
+  [1]=> array(5) {
+    [0]=> int(1)
+    [1]=> int(3)
+    [2]=> string(1) "2"
+    [3]=> int(2)
+    [4]=> int(1)
+  }
+}
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Ordenar resultados de una base de datos</title>
+    <para>
+     Para este ejemplo, cada elemento del array <varname>datos</varname>
+     representa una fila de una tabla. Este tipo de conjunto de datos es
+     típico de los registros en una base de datos.
+    </para>
+    <para>
+     Datos de ejemplo:
+    </para>
+    <screen>
+<![CDATA[
+volumen| edición
+-------+--------
+    67 |       2
+    86 |       1
+    85 |       6
+    98 |       2
+    86 |       6
+    67 |       7
+]]>
+    </screen>
+    <para>
+     Los datos como un array, llamados <varname>datos</varname>. Éste se
+     obtendría normalmente, por ejemplo, mediante un bucle con <function>mysqli_fetch_assoc</function>.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$datos[] = array('volumen' => 67, 'edición' => 2);
+$datos[] = array('volumen' => 86, 'edición' => 1);
+$datos[] = array('volumen' => 85, 'edición' => 6);
+$datos[] = array('volumen' => 98, 'edición' => 2);
+$datos[] = array('volumen' => 86, 'edición' => 6);
+$datos[] = array('volumen' => 67, 'edición' => 7);
+?>
+]]>
+    </programlisting>
+    <para>
+     En este ejemplo, ordenaremos por <varname>volumen</varname> descendientemente,
+     y por <varname>edición</varname> ascendentemente.
+    </para>
+    <para>
+     Tenemos un array de filas, pero <function>array_multisort</function>
+     requiere un array de columnas, así que usamos el código siguiente para obtener
+     las columnas, y luego realizar la ordenación.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Obtener una lista de columnas
+foreach ($datos as $clave => $fila) {
+    $volumen[$clave] = $fila['volumen'];
+    $edición[$clave] = $fila['edición'];
+}
+
+// a partir de PHP 5.5.0 puede usar array_column() en lugar del código anterior
+$volume  = array_column($data, 'volume');
+$edition = array_column($data, 'edition');
+
+// Ordenar los datos con volumen descendiente, edición ascendiente
+// Agregar $datos como el último parámetro, para ordenar por la clave común
+array_multisort($volumen, SORT_DESC, $edición, SORT_ASC, $datos);
+?>
+]]>
+    </programlisting>
+    <para>
+     El conjunto de datos ahora está ordenado, y será de este modo:
+    </para>
+    <screen>
+<![CDATA[
+volumen| edición
+-------+--------
+    98 |       2
+    86 |       1
+    86 |       6
+    85 |       6
+    67 |       2
+    67 |       7
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Ordenación sin considerar mayúsculas/minúsculas</title>
+    <para>
+     Tanto <constant>SORT_STRING</constant> como
+     <constant>SORT_REGULAR</constant> consideran las mayúsculas/minúsculas,
+     los string que comiencen con una letra mayúscula irán antes que
+     los string que comiencen con una letra minúscula.
+    </para>
+    <para>
+     Para realizar una ordenación sin considerar mayúsculas y minúsculas, asegúrese
+     de que el orden sea determinado por una copia en minúsculas del array original.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$array = array('Alpha', 'atomic', 'Beta', 'bank');
+$array_lowercase = array_map('strtolower', $array);
+
+array_multisort($array_lowercase, SORT_ASC, SORT_STRING, $array);
+
+print_r($array);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Array
+(
+    [0] => Alpha
+    [1] => atomic
+    [2] => bank
+    [3] => Beta
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>usort</function></member>
+    <member>&seealso.array.sorting;</member>
+   </simplelist>
+  </para>
+ </refsect1> 
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

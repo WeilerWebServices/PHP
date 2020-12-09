@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Live Demo: My HTML Document</title>
+	<meta name="description" content="Try and test HTML code online in a simple and easy way using our free HTML editor and see the results in real-time." />
+			    <meta charset="UTF-8" />
+	<meta property="og:title" content="My HTML Document" />
+    <meta property="og:description" content="View the live example as well as try and test it using the online HTML editor." />
+	<meta property="fb:admins" content="100001054961582" />
+	<meta property="fb:app_id" content="1404574483159557" />
+	<meta property="og:image" content="/lib/images/signature.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link type="image/x-icon" href="/favicon.ico" rel="shortcut icon" />
+	<link rel="stylesheet" href="lib/bin/css/codemirror.css" />
+    <link rel="stylesheet" href="/lib/icomoon/style.css">
+	<link rel="stylesheet" href="lib/bin/css/html-mode-2.3.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="lib/bin/js/codemirror.js"></script>
+	<script src="lib/bin/js/html-mode-1.1.js"></script>
+	<script src="lib/bin/mode/xml.js"></script>    
+	<script src="lib/bin/mode/javascript.js"></script>
+	<script src="lib/bin/mode/css.js"></script>
+	<script src="lib/bin/mode/htmlmixed.js"></script>
+	<script src="lib/bin/js/active-line.js"></script>
+	<script>
+		$(document).ready(function(){
+        	updatePreview();
+    	});    
+	</script>
+	<style>
+		.CodeMirror{font-size: 15px;line-height: normal;font-family: consolas,monospace;background: url("lib/images/gutter-bg.gif") repeat-y -26px 0 transparent;}
+		.CodeMirror-activeline-background {background: #e8f2ff !important;}
+		.CodeMirror-scroll{overflow:auto;}
+		#carbonads{border: none !important;}
+	</style>
+	<!--Google Analytics-->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-40117907-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-40117907-1');
+</script>	<!--End:Google Analytics-->
+</head>
+<body>
+
+    <form name="myForm" id="myForm" class="codelab">
+        <div class="header-wrapper">
+            <div class="header clearfix">				
+                <div class="logo">
+					<img src="lib/images/codelab-logo.svg" alt="CodeLab" />
+				</div>
+                <div class="control-bar">
+                    <div class="buttons">
+                        <a onClick="updatePreview();" class="show-output">Show Output</a>
+                        <a onClick="newWindow();" class="new-window" title="Show Output in Blank Tab"><span class="icon-new-window"></span></a>
+                        <a onClick="downloadCode();" class="download-code" title="Download Source Code"><span class="icon-download"></span></a>
+						<a onClick="toggleView();" class="toggle-view" title="Change Editor Layout"><span class="icon-screen-rotation"></span></a>
+                    </div>                            
+                </div>
+                <div class="top-ad-box">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Responsive Leaderboard -->
+<ins class="adsbygoogle"
+     style="display:block;width:100%;height:90px"
+     data-ad-client="ca-pub-9107540490929984"
+     data-ad-slot="4302666817"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>					<div id="carbon-block"></div>
+<script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CE7D6K3M&placement=wwwtutorialrepubliccom";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+    var cssLink = document.createElement("link");
+    cssLink.rel = "stylesheet";
+    cssLink.href = "/lib/styles/carbon.css";
+    (document.getElementsByTagName("head")[0]).appendChild(cssLink);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>				</div>                
+            </div>
+        </div>
+        <div class="frame-box vr">
+            <div class="pane-wrapper">
+                <div class="pane" id="code-pane">
+                    <div class="outer-area">
+                        <span class="show-preview-pane">&nbsp;</span>
+                        <div class="inner-area">
+                            <input type="hidden" id="current-code" name="current-code" />
+                            <textarea id="code" name="code">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My HTML Document</title>
+<style type="text/css">
+    body {
+        font-family: Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+    <h1>Hello World!</h1>
+</body>
+</html>                            </textarea>	
+                            <script>
+                                var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                                    mode: "text/html",
+                                    tabMode: "indent",
+                                    styleActiveLine: true,
+                                    lineNumbers: true,
+                                    lineWrapping: true
+                                });
+                            </script>									
+                        </div>
+                    </div>
+                </div>
+                <div class="pane" id="preview-pane">
+                    <div class="outer-wrapper">
+                        <span class="hide-preview-pane">&nbsp;</span>
+                        <div class="output-area">
+                            <iframe id="preview" name="preview"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="codelab-footer clearfix">		
+            <a href="/codelab.php?topic=sql&amp;file=select-all" class="switch-mode">Switch to SQL Mode</a>
+            <label class="auto-update"><input type="checkbox" id="check" /> Auto update</label>
+            <script>
+                var delay;
+                var checkbox = document.getElementById("check");
+                editor.on("change", function(){
+					editor.refresh();
+                    if(checkbox.checked==true){            
+                        clearTimeout(delay);
+                        delay = setTimeout(updatePreview, 300); // Don't use parenthesis 
+                    }
+                });
+                //setTimeout(updatePreview, 300);
+            </script>
+            <div class="social-widget-wrapper">
+                <!-- Social widget -->
+                                <p class="social-link">Share this example with 
+                    <a id="facebook-share-btn" href="https://facebook.com/sharer.php?u=https://www.tutorialrepublic.com%2Fcodelab.php" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600,top=150, left='+((screen.width/2)-300));return false;">Facebook</a>, 
+                    <a id="twitter-share-btn" href="https://twitter.com/share?text=My+HTML+Document+-+&amp;url=https://www.tutorialrepublic.com%2Fcodelab.php" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600,top=150, left='+((screen.width/2)-300));return false;">Twitter</a>, 
+                    <a id="google-share-btn" href="https://plus.google.com/share?url=https://www.tutorialrepublic.com%2Fcodelab.php" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=438,width=600,top=150, left='+((screen.width/2)-300));return false;">Google +</a>. Please give us a 
+                    <a id="facebook-like-btn" href="/like.php" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=250,width=600,top=150, left='+((screen.width/2)-300));return false;">Like</a>, if you find it helpful.
+                </p>
+                <!-- End:Social widget -->
+            </div>
+        </div>
+    </form>
+        
+    <form id="download-form" action="examples/bin/download.php" method="post" class="hidden-form">
+    	<input type="hidden" id="download-value" name="download-value" />
+    </form>
+    <form id="new-form" action="examples/fullscreen/output.php" method="post" target="_blank" class="hidden-form">
+    	<input type="hidden" id="code-value" name="code-value" />
+    </form>
+
+</body>
+</html>
+

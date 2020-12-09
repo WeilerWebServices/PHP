@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 297645 Maintainer: zamolxe Status: ready -->
+<!-- CREDITS: simionea -->
+
+  <chapter xml:id="security.apache" xmlns="http://docbook.org/ns/docbook">
+   <title>Instalat ca modul Apache</title>
+   <simpara>
+    Când <acronym>PHP</acronym> este utilizat ca modul în Apache, el moștenește
+    permisiunile implicite ale Apache (de obicei acelea ale utilizatorului
+    "nobody"). Acest fapt are mai multe impacte asupra securității și
+    autorizării. De exemplu, dacă utilizați <acronym>PHP</acronym> pentru a
+    accesa o bază de date, și dacă aceasta nu are control de acces inclus, va
+    trebui să faceti această bază de date să fie accesibilă utilizatorului
+    "nobody". Aceasta înseamnă că un script malefic va putea accesa și modifica
+    baza de date chiar fără a introduce numele utilizatorului și parola. Este
+    posibil ca un robot de indexare web să acceseze accidental panoul de
+    administrare al bazei de date și să modifice sau să șteargă toate datele. Vă
+    puteți proteja cu ajutorul sistemului de autorizare al Apache, sau printr-un
+    model de acces personalizat folosind LDAP, fișiere tip &htaccess;, etc. pe
+    care să le introduceți în scripturile <acronym>PHP</acronym> create.
+   </simpara>
+   <simpara>
+    Adesea, după ce politica de securitate a fost stabilită, iar utilizatorul
+    <acronym>PHP</acronym> (în acest caz, utilizatorul Apache) prezintă risc
+    redus față de sistem, iese la iveală faptul că <acronym>PHP</acronym> este
+    restricționat în a scrie în fișierele și directoarele utilizatorilor, sau nu
+    poate accesa și schimba anumite baze de date. El a fost securizat atât în a
+    scrie fișiere bune, cât și rele, sau inserarea de tranzacții atât benefice,
+    cât și dăunătoare bazelor de date.
+   </simpara>
+   <simpara>
+    O greșeală de securitate frecventă este că atunci când se ajunge în acest
+    moment, să se dea permisiuni de root serverului Apache, sau să se extindă
+    permisiunile într-un careva alt mod.
+   </simpara>
+   <simpara>
+    Extinderea privilegiilor utilizatorului Apache către root este deosebit de
+    periculoasă și poate duce la compromiterea întregului sistem, așa că
+    operațiunile 'sudo', 'chroot', sau alte modalități de a rula root nu ar
+    trebui luate în considerare în caz că nu sunteți expert în securitare.
+   </simpara>
+   <simpara>
+    Există și soluții mai simple. Utilizând
+    <link linkend="ini.open-basedir">open_basedir</link> puteți controla și
+    restricționa ce directorii doriți, în care poate avea acces
+    <acronym>PHP</acronym>. În plus puteți stabili zone numai pentru Apache,
+    pentru a preveni toate acțiunile din web asupra fișierelor utilizatorilor și
+    de sistem.
+   </simpara>
+  </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

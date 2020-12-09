@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 344025 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+<refentry xml:id="function.rand" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>rand</refname>
+  <refpurpose>Génère une valeur aléatoire</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>rand</methodname>
+   <void/>
+  </methodsynopsis>
+  <methodsynopsis>
+   <type>int</type><methodname>rand</methodname>
+   <methodparam><type>int</type><parameter>min</parameter></methodparam>
+   <methodparam><type>int</type><parameter>max</parameter></methodparam>
+  </methodsynopsis>
+  <simpara>
+   Appelée sans les options <parameter>min</parameter> et
+   <parameter>max</parameter>, <function>rand</function> retourne un
+   nombre pseudoaléatoire entre 0 et <function>getrandmax</function>.
+   Si vous voulez un nombre aléatoire entre 5 et 15
+   (inclus), par exemple, utilisez <literal>rand (5, 15)</literal>.
+  </simpara>
+  &caution.cryptographically-insecure;
+  <note>
+   <simpara>
+    Sur quelques plates-formes (par exemple, Windows),
+    <function>mt_getrandmax</function>est limité à 32767. Si vous désirez une
+    limite supérieure à 32767, en spécifiant <parameter>min</parameter> et
+    <parameter>max</parameter>, vous serez autorisés à utiliser un intervalle
+    plus grand que <function>mt_getrandmax</function>, ou bien, utilisez la fonction
+    <function>mt_rand</function> à la place.
+   </simpara>
+  </note>
+  <note><simpara>À partir de php 7.1.0, <function>rand</function> utilise le même 
+   générateur de nombres aléatoires que <function>mt_rand</function>. Pour 
+   préserver la compatibilité ascendante, <function>rand</function> permet à 
+   <parameter>max</parameter> d'être plus petit que <parameter>min</parameter> 
+   par opposition au retour &false; de <function>mt_rand</function></simpara>
+  </note>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>min</parameter></term>
+     <listitem>
+      <para>
+       La plus petite valeur à retourner (par défaut, 0)
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>max</parameter></term>
+     <listitem>
+      <para>
+       La plus grande valeur à retourner (par défaut, <function>mt_getrandmax</function>)
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Une valeur pseudoaléatoire, comprise entre
+   <parameter>min</parameter> (ou 0) et
+   <parameter>max</parameter> (ou <function>mt_getrandmax</function>, inclusif).
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        <function>rand</function> 
+        <link linkend="migration72.incompatible.rand-mt_rand-output">a reçu une correction de bogue</link> 
+        pour un bug de polarisation modulo. Cela signifie que les séquences 
+        générées dans certain cas spécifiques peuvent différer de php 7.1 sur 
+        les machines 64-bit.
+       </entry>
+      </row>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        <function>rand</function> <link linkend="migration71.incompatible.rand-srand-aliases">a été fait</link> un alias de <function>mt_rand</function>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>rand</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo rand() . "\n";
+echo rand() . "\n";
+
+echo rand(5, 15);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+7771
+22264
+11
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    La plage <parameter>min</parameter> <parameter>max</parameter> doit se situer 
+    dans la plage <function>getrandmax</function>. i.e. (<parameter>max</parameter> 
+    - <parameter>min</parameter>) &lt;= <function>getrandmax</function> sinon, 
+    <function>rand</function> peut retourner des nombres aléatoires de mauvaise 
+    qualité.
+   </para>
+  </warning>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>srand</function></member>
+    <member><function>getrandmax</function></member>
+    <member><function>mt_rand</function></member>
+    <member><function>random_int</function></member>
+    <member><function>random_bytes</function></member>
+    <member><function>openssl_random_pseudo_bytes</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 327173 Maintainer: cucinato Status: ready -->
+ <chapter xml:id="faq.mailinglist" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Mailing list</title>
+  <titleabbrev>Mailing list</titleabbrev>
+
+   <para>
+    Questa sezione contiene domande su come fare per entrare in contatto con
+    la comunità PHP. Il modo migliore è tramite le mailing list. 
+   </para>
+
+  <qandaset>
+   <qandaentry xml:id="faq.mailinglist.isthere">
+    <question>
+     <para>Esistono mailing list dedicate al PHP?</para>
+    </question>
+    <answer>
+     <para>
+      Certo! Ci sono molte mailing list dedicate a svariati aspetti.
+      Una lista completa di mailing list può essere trovata nella nostra pagina dedicata al
+      <link xlink:href="&url.php.support;">Supporto</link>.
+     </para>
+     <para>
+      La mailing list più generica è <literal>php-general</literal>.
+      Per iscriversi, inviare una mail a
+      <link xlink:href="mailto:&url.ml.general.subscribe;">&url.ml.general.subscribe;</link>.
+      Per cancellarsi, inviare una mail a <link xlink:href="mailto:&url.ml.general.unsubscribe;">&url.ml.general.unsubscribe;</link>.
+     </para>
+     <para>
+      Ci si può iscrivere e cancellare usando l'interfaccia web
+      nella nostra pagina di <link xlink:href="&url.php.mailing-lists;">Mailing list</link>,
+      e le istruzioni per disiscrizione sono incluse nel footer di
+      ogni messaggio della mailing list.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.mailinglist.others">
+    <question>
+     <para>Ci sono altre comunità?</para>
+    </question>
+    <answer>
+     <para>
+      Ve ne sono numerosissime in giro per il mondo, e abbiamo
+      link di alcune di queste risorse (e informazioni su come imparare di più)
+      nella nostra pagina di <link xlink:href="&url.php.support;">Support</link>.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.mailinglist.myown">
+    <question>
+     <para>Posso creare una mia mailing list su PHP?</para>
+    </question>
+    <answer>
+     <para>
+      Certamente! In effetti, non solo lo permettiamo gratuitamente, ma lo incoraggiamo!
+      Aiutare gli altri divulgando la propria conoscenza ed esperienza con PHP
+      aiuta a incoraggiare la crescita e lo sviluppo della comunità
+      globale PHP e lo stesso linguaggio.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.mailinglist.subscribing">
+    <question>
+     <para>
+      Aiuto! Non risco a iscrivermi/cancellarmi
+      a/da una delle mailing list!
+     </para>
+    </question>
+    <answer>
+     <para>
+      Se si riscontrano problemi nell'iscriversi o nel cancellarsi da una mailing
+      list, può essere perché il software che gestisce la mailing list stessa non riesce a individuare
+      l'indirizzo corretto da usare. Se l'indirizzo email è
+      <literal>pippo@example.com</literal>, e si sta cercando di
+      iscriversi a php-general, si può mandare una richiesta di iscrizione a
+      <literal>php-general-subscribe-pippo=example.com@lists.php.net</literal>,
+      o la richiesta di disiscrizione a
+      <literal>php-general-unsubscribe-pippo=example.com@lists.php.net</literal>.
+      Utilizzare indirizzi corrispondenti per le altre mailing list.
+     </para>
+     <para>
+      La ragione più comune di problemi con la disiscrizione dalle nostre
+      mailing list è l'uso di mail forwarder. Per esempio,
+      se l'indirizzo email è pippo@example.com, ma ci si è iscritti alla
+      mailing list con il forwarder php-lists@example.com che a sua volta inoltra
+      a pippo@example.com, cercare di disiscrivere
+      pippo@example.com non funziona, in quanto questo indirizzo non è conosciuto
+      dai nostri sistemi. Piuttosto, occorre disiscrivere l'inirizzo a
+      cui l'email è inviata - in questo esempio, php-lists@example.com.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.mailinglist.archive">
+    <question>
+     <para>Esiste un archivio delle mailing list?</para>
+    </question>
+    <answer>
+     <para>
+       Sì, una lista di siti che ospitano gli archivi si trova nella pagina delle
+       <link xlink:href="&url.php.mailing-lists;">mailing list</link>.
+       Si possono pure trovare decine di siti che archiviano o raggruppano
+       il contenuto delle nostre mailing list, usando il proprio motore di
+       ricerca preferito e cercando "php mailing list archives".
+     </para>
+     <para>
+       Gli articoli delle mailinglist vengono anche archiviati come messaggi
+       news. Si può accedere al news server <link
+       xlink:href="&url.php.news;">&url.php.news;</link>
+       usando un client per le news. Esiste anche un'interfaccia web
+       sperimentale verso il news server <link
+       xlink:href="&url.php.newsweb;">&url.php.newsweb;</link>
+     </para>
+    </answer>
+   </qandaentry>
+  
+   <qandaentry xml:id="faq.mailinglist.question">
+    <question>
+     <para>Cosa si può chiedere nelle mailing list?</para>
+    </question>
+    <answer>
+     <para>
+      Poiché PHP cresce di popolarità di giorno in giorno, il traffico
+      sulla mailing list php-general è notevolmente aumentato, oscillando da
+      75 a 200 messaggi al giorno. Considerato ciò, è nell'interesse di tutti
+      usare la lista solo come ultima chance, cioè solo quando si è già
+      cercato in tutti gli altri posti.
+     </para>
+     <para>
+      Prima di inviare un messaggio alla lista, bisognerebbe dare una lettura a queste FAQ e al
+      manuale per vedere se si può trovare aiuto lì. Se non si trova nulla,
+      si può provare con gli archivi della mailing list (vedere sopra). 
+      Se si riscontrano problemi nell'installare o nel configurare PHP, per favore
+      fare riferimento alla documentazione inclusa nella distribuzione e ai vari README. Se anche allora
+      non si riescono a trovare informazioni sufficienti, si è i benvenuti ad usare
+      la mailing list.
+     </para>
+     <para>
+      Per accertarsi di ricevere le migliori risposte (e ridurre la
+      possibilità di frustrare i propri colleghi sviluppatori), si abbia cura di
+      inviare le domande alla lista appropriata. Per esempio, se si
+      incontrano difficoltà nell'installazione di PHP, occorre mandare la domanda alla
+      mailing list <literal>php-install</literal>. Attenzione: alcune liste
+      hanno nomi simili ma utilizzi completamente differenti; una domanda sugli
+      script PHP in Windows dovrebbe essere inviata alla lista degli utenti
+      PHP Windows, <emphasis>non</emphasis> alla lista Windows Internals.
+     </para>
+     <para>
+      Prima di porre domande, può essere una buona idea per tutti leggere 
+      <link xlink:href="&url.smart.questions;">Come fare domande, il metodo migliore
+      </link>.
+     </para>
+    </answer>
+   </qandaentry>
+   
+   <qandaentry xml:id="faq.mailinglist.guideline">
+    <question>
+     <para>Quali informazioni si dovrebbero includere nel mandare un messaggio a una mailinglist?</para>
+    </question>
+    <answer>
+     <para>
+      Messaggi tipo: "Non riesco a installare PHP! Aiuto! Cosa c'è di
+      sbagliato?" non sono di aiuto a nessuno. Se si hanno problemi
+      a installare PHP, si dovrebbero includere il sistema operativo
+      nel quale lo si sta cercando di installare, quale versione di PHP si vuole installare,
+      in quale forma lo si ha a disposizione (pre-compilato, dal CVS, RPM e così via), cosa si è tentato
+      fino ad ora, dove ci si è bloccati e l'esatto messaggio di errore.
+     </para>
+     <para>
+      Questa regola è applicabile agli altri problemi che si possino incontrare. Si devono
+      includere informazioni su cosa si è fatto, dove si è rimasti bloccati, cosa si sta 
+      cercando di fare e , se possibile, fornire gli esatti messaggi di errore. Se si hanno
+      problemi con il codice sorgente, è meglio includere la parte di codice che non è funzionante,
+      indicando la linea che dà problemi usando un commento pozizionato nel punto corretto.
+      Non includere più codice di quello che è strettamente necessario! Questo renderebbe
+      il messaggio difficile da leggere e molte persone lo ignorerebbero proprio a causa di questo. Se si è
+      indecisi su quante informazioni includere nel messaggio, si cominci a indicare
+      quello che si crede sia rilevante per il problema, per poi
+      dare ulteriori informazioni in caso di richiesta.
+     </para>
+     <para>
+      Un'altra cosa importante da ricordare è quella di sintetizzare il vostro problema
+      nell'oggetto del messaggio. Un oggetto del tipo "AIUTATEMIIIIIIIII!!!" oppure "Dove sta
+      problema?" verrà ignorato dalla maggioranza dei lettori.
+     </para>
+     <para>
+      Infine si incoraggia la lettura di 
+      <link xlink:href="&url.smart.questions;">Come fare domande, il metodo migliore
+      </link>, può essere di aiuto per chiunque
+      .
+     </para>
+    </answer>
+   </qandaentry>
+  </qandaset>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

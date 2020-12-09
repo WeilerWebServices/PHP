@@ -1,0 +1,1114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 345661 Maintainer: pastore Status: ready -->
+<!-- CREDITS: cucinato,reghe -->
+<section xml:id="session.configuration" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.runtime;
+ &extension.runtime;
+ <para>
+ <table>
+  <title>Opzioni di configurazione della sessione</title>
+  <tgroup cols="4">
+   <thead>
+    <row>
+     <entry>&Name;</entry>
+     <entry>&Default;</entry>
+     <entry>&Changeable;</entry>
+     <entry>&Changelog;</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry><link linkend="ini.session.save-path">session.save_path</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.name">session.name</link></entry>
+     <entry>"PHPSESSID"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.save-handler">session.save_handler</link></entry>
+     <entry>"files"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.auto-start">session.auto_start</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.gc-probability">session.gc_probability</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.gc-divisor">session.gc_divisor</link></entry>
+     <entry>"100"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.gc-maxlifetime">session.gc_maxlifetime</link></entry>
+     <entry>"1440"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.serialize-handler">session.serialize_handler</link></entry>
+     <entry>"php"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-lifetime">session.cookie_lifetime</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-path">session.cookie_path</link></entry>
+     <entry>"/"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-domain">session.cookie_domain</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-secure">session.cookie_secure</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-httponly">session.cookie_httponly</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 5.2.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-samesite">session.cookie_samesite</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 7.3.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.use-strict-mode">session.use_strict_mode</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 5.5.2.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.use-cookies">session.use_cookies</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.use-only-cookies">session.use_only_cookies</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.referer-check">session.referer_check</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cache-limiter">session.cache_limiter</link></entry>
+     <entry>"nocache"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cache-expire">session.cache_expire</link></entry>
+     <entry>"180"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.use-trans-sid">session.use_trans_sid</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.trans-sid-tags">session.trans_sid_tags</link></entry>
+     <entry>"a=href,area=href,frame=src,form="</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 7.1.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.trans-sid-hosts">session.trans_sid_hosts</link></entry>
+     <entry><literal>$_SERVER['HTTP_HOST']</literal></entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 7.1.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.sid-length">session.sid_length</link></entry>
+     <entry>"32"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 7.1.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.sid-bits-per-character">session.sid_bits_per_character</link></entry>
+     <entry>"5"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 7.1.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.enabled">session.upload_progress.enabled</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>Disponibile da PHP 5.4.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.cleanup">session.upload_progress.cleanup</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>Disponibile da PHP 5.4.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.prefix">session.upload_progress.prefix</link></entry>
+     <entry>"upload_progress_"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>Disponibile da PHP 5.4.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.name">session.upload_progress.name</link></entry>
+     <entry>"PHP_SESSION_UPLOAD_PROGRESS"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>Disponibile da PHP 5.4.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.freq">session.upload_progress.freq</link></entry>
+     <entry>"1%"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>Disponibile da PHP 5.4.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.min-freq">session.upload_progress.min_freq</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>Disponibile da PHP 5.4.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.lazy-write">session.lazy_write</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 7.0.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.url-rewriter.tags">url_rewriter.tags</link></entry>
+     <entry>"a=href,area=href,frame=src,form="</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Da PHP 7.1.0, questa proprietà INI non viene più usata dalla sessione.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.hash-function">session.hash_function</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Rimossa in PHP 7.1.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.hash-bits-per-character">session.hash_bits_per_character</link></entry>
+     <entry>"4"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Rimossa in PHP 7.1.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.entropy-file">session.entropy_file</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Rimossa in PHP 7.1.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.entropy-length">session.entropy_length</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Rimossa in PHP 7.1.0</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.bug-compat-42">session.bug_compat_42</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Rimossa in PHP 5.4.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.bug-compat-warn">session.bug_compat_warn</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Rimossa in PHP 5.4.0.</entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+ &ini.php.constants;
+ </para>
+ <para>
+  Il sistema di gestione delle sessioni supporta un numero di opzioni di
+  configurazione che si possono inserire nel file &php.ini;. Di seguito
+  un breve sommario.
+ <variablelist>
+
+  <varlistentry xml:id="ini.session.save-handler">
+   <term>
+    <parameter>session.save_handler</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.save_handler</literal> definisce il nome
+     dell'handler che è utilizzato per salvare e caricare i dati
+     associati alla sessione. Il default è
+     <literal>files</literal>. Si noti che le singole estensioni postono registrare
+     i propri <literal>save_handler</literal>; gli handler registrati possono essere
+     ottenuti per una specifica installazione consultando
+     <function>phpinfo</function>. Vedere anche
+     <function>session_set_save_handler</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.save-path">
+   <term>
+    <parameter>session.save_path</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.save_path</literal> definisce l'argomento che
+     è passato all'handler di salvataggio. Se si sceglie l'handler di default
+     files, questo è il percorso in cui i file sono creati. Vedere anche
+     <function>session_save_path</function>. 
+    </simpara>
+    <para>
+     C'è un argomento <literal>N</literal> opzionale per questa direttiva che determina
+     il numero di livelli di cartelle su cui verranno distribuiti i file di
+     sessione.  Per esempio, impostarlo a <literal>'5;/tmp'</literal>
+     può portare a creare un file di sessione con questo percorso:
+     <literal>/tmp/4/b/1/e/3/sess_4b1e384ad74619bd212e236e52a5a174If
+     </literal>.  Per usare <literal>N</literal> occorre creare tutte queste
+     cartelle prima dell'utilizzo. Un piccolo shell script è presente in
+     <filename>ext/session</filename> per eseguire questo lavoro, si chiama
+     <filename>mod_files.sh</filename>, con una versione per Windows chiamata
+     <filename>mod_files.bat</filename>. Notare anche che se <literal>N</literal> è
+     usato ed è maggiore di 0 il garbage collection automatico non
+     sarà eseguito, vedere un &php.ini; per ulteriori
+     informazioni. Inoltre, se si usa <literal>N</literal>, assicurarsi di racchiudere
+     <literal>session.save_path</literal> in  
+     "doppie virgolette" poiché il separatore (<literal>;</literal>) è
+     usato anche per i commenti in &php.ini;.
+    </para>
+    <para>
+     Il modulo di salvataggio file crea file utilizzando la modalità 600 di default.
+     Questa impostazione può essere cambiata con gli argomento opzionale <literal>MODE</literal>:
+     <literal>N;MODE;/path</literal> dove <literal>MODE</literal> è la rappresentazione 
+     ottale della modalità. 
+     L'impostazione <literal>MODE</literal> non ha effettu sul processo umask.
+    </para>
+    <warning>
+     <para>
+      Se si lascia questo parametro impostato su una cartella leggibile da tutti, come
+      <filename>/tmp</filename> (il default), altri utenti sul server
+      possono abusare delle informazioni delle sessioni ottenendo la lista dei
+      file in quella cartella.
+     </para>
+    </warning>
+    <caution>
+     <para>
+      Quando si utilizza l'argomento opzionale livelli di cartelle <literal>N</literal>,
+      come descritto sopra, notare che utilizzare un valore più grande di 1 o 2 è
+      inappropriato per la maggior parte dei siti per la grande quantità di cartelle
+      richieste: per esempio, un valore di 3 implica che <literal>(2 ** session.sid_bits_per_character) ** 3</literal>
+      cartelle esistano nel filesystem, che può risultare in un sacco di spazio
+      e inode sprecati.
+     </para>
+     <para>
+      Utilizzare un <literal>N</literal> maggiore di 2 solo se si è assolutamente
+      sicuri che il proprio sito sia grande abbastanza per richiederlo.
+     </para>
+    </caution>
+    <note>
+     <simpara>
+      Prima di PHP 4.3.6, gli utenti di Windows dovevano cambiare questa variabile per
+      utilizzare le sessioni di PHP. Un percorso valido deve essere specificato, es.:
+      <filename>c:/temp</filename>.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.name">
+   <term>
+    <parameter>session.name</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.name</literal> specifica il nome della
+     sessione usato come nome del cookie. Dovrebbe contenere solamente
+     caratteri alfanumerici. Il valore predefinito è <literal>PHPSESSID</literal>.
+     Vedere anche <function>session_name</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="ini.session.auto-start">
+   <term>
+    <parameter>session.auto_start</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.auto_start</literal> specifica se
+     il modulo di sessione inizia automaticamente una sessione al momento della 
+     richiesta. Il valore predefinito è <literal>0</literal> (disabilitato).
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.serialize-handler">
+   <term>
+    <parameter>session.serialize_handler</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.serialize_handler</literal> definisce il nome
+     dell'identificativo usato per serializzare/deserializzare i dati. I
+     formati supportati sono il formato di serializzazione (nome <literal>php_serialize</literal>),
+     i formati interni di PHP (nome <literal>php</literal> e 
+     <literal>php_binary</literal>) e WDDX (nome
+     <literal>wddx</literal>). WDDX è disponibile solo se PHP è
+     compilato con il supporto <link linkend="ref.wddx">WDDX
+     </link>. <literal>php_serialize</literal> è disponibile
+     da PHP 5.5.4. <literal>php_serialize</literal> utilizza semplici
+     funzioni serialize/unserialize internamente e non ha
+     limitazioni che <literal>php</literal>
+     e <literal>php_binary</literal> hanno. Vecchi identificativi per serializzare
+     non possono memorizzare indici numerici o indici di stringhe che contengono caratteri
+     speciali (<literal>|</literal> e <literal>!</literal>) in
+     $_SESSION. Utilizzare <literal>php_serialize</literal> per evitare errori
+     legati agli indici numerici o a caratteri speciali alla chiusura dello script. Il valore predefinito
+     è <literal>php</literal>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.gc-probability">
+   <term>
+    <parameter>session.gc_probability</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.gc_probability</literal> in combinazione con
+     <literal>session.gc_divisor</literal> è usato per gestire la probabilità
+     che la routine gc (garbage collection) venga eseguita.
+     Il valore predefinito è <literal>1</literal>. Vedere <link
+     linkend="ini.session.gc-divisor">session.gc_divisor</link> per i dettagli.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.gc-divisor">
+   <term>
+    <parameter>session.gc_divisor</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.gc_divisor</literal> in combinazione con 
+     <literal>session.gc_probability</literal> definisce la probabilità 
+     che la routine gc (garbage collection) venga eseguita ad ogni inizializzazione
+     di sessione.
+     La probabilità è calcolata usando gc_probability/gc_divisor,
+     es. 1/100 significa che c'è la probabilità del 1% che il processo GC parta
+     ad ogni richiesta.
+     <literal>session.gc_divisor</literal> ha come valore predefinito <literal>100</literal>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="ini.session.gc-maxlifetime">
+   <term>
+    <parameter>session.gc_maxlifetime</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.gc_maxlifetime</literal> specifica il numero
+     di secondi dopo i quali i dati verranno visti come 'spazzatura' e
+     potenzialmente ripuliti. La ripulitura (Garbage Collection) avviene durante l'avvio della sessione
+     (in base a <link
+     linkend="ini.session.gc-probability">session.gc_probability</link> and
+     <link linkend="ini.session.gc-divisor">session.gc_divisor</link>).
+    </simpara>
+    <note>
+     <simpara>
+      Se differenti script hanno differenti valori di
+      <literal>session.gc_maxlifetime</literal> ma condividono lo stesso spazio di
+      memorizzazione dei dati di sessione allora lo script con il valore minimo sarà quello 
+      che ripulirà i dati. In questo caso, utilizzare la direttiva assieme a <link
+      linkend="ini.session.save-path">session.save_path</link>.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.referer-check">
+   <term>
+    <parameter>session.referer_check</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.referer_check</literal> contiene la
+     sottostringa che si vuole cercare nel HTTP Referer. Se il
+     Referer è stato inviato dal client e la sottostringa non viene
+     trovata, il session id incorporato viene segnato come non valido.
+     Il valore predefinito è la stringa vuota.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.entropy-file">
+   <term>
+    <parameter>session.entropy_file</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.entropy_file</literal> fornisce il percorso a una
+     resource esterna (file) che sarà usata come una fonte addizionale
+     di entropia nel processo di creazione del session id. Esempi sono
+     <literal>/dev/random</literal> o <literal>/dev/urandom</literal>
+     che sono disponibili in molti sistemi Unix.
+    </simpara>
+    <simpara>
+     Questa funzionalità è supportata su Winows dalla versione PHP 5.3.3. Impostare
+     <literal>session.entropy_length</literal> a un valore diverso da zero
+     farà sì che PHP utilizzi come sorgente di entropia la Windows Random API.
+    </simpara>
+     <note>
+     <simpara>
+      Rimossa in PHP 7.1.0
+     </simpara>
+     <simpara>
+      In PHP 5.4.0 <literal>session.entropy_file</literal> ha come valore predefinito
+      <literal>/dev/urandom</literal> o <literal>/dev/arandom</literal>
+      se è disponibile. In PHP 5.3.0 questa direttiva è lasciata vuota per impostazione predefinita.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.entropy-length">
+   <term>
+    <parameter>session.entropy_length</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.entropy_length</literal> specifica il numero
+     di bytes che saranno letti dal file specificato
+     qui sopra. Il valore predefinito è <literal>32</literal>.
+    </simpara>
+    <simpara>
+     Rimossa in PHP 7.1.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.use-strict-mode">
+   <term>
+    <parameter>session.use_strict_mode</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.use_strict_mode</literal> specifica se il modulo
+     userà la modalità "strict session id". Se questa modalità è abilitata,
+     il modulo non accetta ID di sessione non inizializzati. Se il browser
+     invia un ID non inizializzato, un nuovo ID di sessione è inviato al browser.
+     Utilizzato la modalità strict, le applicazioni sono protette
+     da attacchi "session fixation".
+     Il valore predefinito è <literal>0</literal> (disabilitato).
+    </simpara>
+    <note>
+     <simpara>
+     L'abilitazione di <literal>session.use_strict_mode</literal> è obbligatoria per
+     la sicurezza generale della sessione. A tutti i siti è consigliato di abilitarla. Per ulteriori 
+     dettagli vedere l'esempio di codice di <function>session_create_id</function>.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.use-cookies">
+   <term>
+    <parameter>session.use_cookies</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.use_cookies</literal> specifica se il
+     modulo userà i cookie per salvare il session id sul client
+     Il valore predefinito è <literal>1</literal> (abilitato).
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.use-only-cookies">
+   <term>
+    <parameter>session.use_only_cookies</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.use_only_cookies</literal> specifica se
+     il modulo userà <emphasis role="strong">solo</emphasis> i
+     cookie per salvare il session id sul client.
+     L'abilitazione di questa impostazione previene gli attacchi che passano
+     session id nelle URL.
+     Il valore predefinito è <literal>1</literal> (abilitato) da PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+
+  <varlistentry xml:id="ini.session.cookie-lifetime">
+   <term>
+    <parameter>session.cookie_lifetime</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cookie_lifetime</literal> specifica il tempo di vita
+     in secondi del cookie inviato al browser. Il valore 0
+     significa "finché il browser non viene chiuso". Il valore predefinito è
+     <literal>0</literal>. Vedere anche
+     <function>session_get_cookie_params</function> e
+     <function>session_set_cookie_params</function>.
+    </simpara>
+    <note>
+     <simpara>
+      Il timestamp di scadenza è impostato relativamente all'orario del server, che
+      non è necessariamente lo stesso di quello del browser.
+     </simpara>
+    </note> 
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cookie-path">
+   <term>
+    <parameter>session.cookie_path</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cookie_path</literal> specifica il percorso da impostare 
+     nel session_cookie. Il valore predefinito è <literal>/</literal>. Vedere anche
+     <function>session_get_cookie_params</function> e
+     <function>session_set_cookie_params</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cookie-domain">
+   <term>
+    <parameter>session.cookie_domain</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cookie_domain</literal> specifica il dominio da
+     impostare nel session_cookie. Il valore predefinito è vuoto, che corridponde al nome dell'host
+     del server che ha generato il cookie, secondo le specifiche dei cookie.
+     Vedere anche <function>session_get_cookie_params</function> e
+     <function>session_set_cookie_params</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cookie-secure">
+   <term>
+    <parameter>session.cookie_secure</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cookie_secure</literal> specifica se i
+     cookie devono essere mandati solo su connessioni sicure. Il valore predefinito è
+     <literal>off</literal>.
+     Vedere anche
+     <function>session_get_cookie_params</function> e
+     <function>session_set_cookie_params</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cookie-httponly">
+   <term>
+    <parameter>session.cookie_httponly</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     Contrassegna il cookie come accessibile solo attraverso il protocollo HTTP. Questo significa 
+     che il cookie non sarà accessibile dai linguaggi di scripting, come
+     JavaScript. Questa impostazione aiuta efficacemente a ridurre i furti di identità
+     attraverso attacchi XSS (anche se non è accettato da tutti i browser).
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cookie-samesite">
+   <term>
+    <parameter>session.cookie_samesite</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     Permette ai server di affermare che un cookie non deve essere inviato insieme a
+     richieste cross-site. Questa asserzione consente agli user agent di mitigare il rischio
+     di perdita di informazioni di cross-origin, e fornisce una certa protezione contro
+     gli attacchi di contraffazione delle richieste cross-site. Notare che questo non è supportato da tutti i
+     browser.
+     Un valore vuoto significa che non verrà impostato alcun attributo del cookie SameSite.
+     <literal>Lax</literal> e <literal>Strict</literal> indicano che il cookie
+     non verrà inviato per richieste POST cross-domain; <literal>Lax</literal>
+     invierà il cookie per richieste GET cross-domain, mentre <literal>Strict</literal>
+     non lo farà.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cache-limiter">
+   <term>
+    <parameter>session.cache_limiter</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cache_limiter</literal> specifica il metodo
+     di controllo della cache da usare per le pagine di sessione.
+     Può essere uno dei seguenti valori:
+     <literal>nocache</literal>, <literal>private</literal>, 
+     <literal>private_no_expire</literal> o <literal>public</literal>.
+     Il valore predefinito è <literal>nocache</literal>. Vedere anche
+     la documentazione di <function>session_cache_limiter</function> per
+     informazioni sul significato di questi valori.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+
+  <varlistentry xml:id="ini.session.cache-expire">
+   <term>
+    <parameter>session.cache_expire</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cache_expire</literal> specifica il tempo di vita
+     in minuti delle pagine di sessione, non ha effetto se il cache_limiter
+     è nocache. Il valore predefinito è <literal>180</literal>. Vedere anche
+     <function>session_cache_expire</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.use-trans-sid">
+   <term>
+    <parameter>session.use_trans_sid</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.use_trans_sid</literal> Specifica se il supporto trasparente
+     del sid è abilitato o no. Il valore predefinito è
+     <literal>0</literal> (disabled).
+    </simpara>
+    <note>
+     <simpara>
+      La gestione della sessione basata sulle URL ha dei rischi di sicurezza maggiori
+      rapportata alla gestione basata sui cookie. Per esempio, gli utenti possono inviare
+      una URL che contiene un ID di sessione attivo ai proprio amici via
+      email oppure gli utenti possono salvare una URL che contiene un ID di sessione nei
+      preferiti ed accedere al sito
+      sempre con lo stesso ID.
+     </simpara>
+     <simpara>
+      Da PHP 7.1.0, il percorso URL completo, p.es. https://php.net/, è 
+      gestito dalla funzionalità trans sid. In precedenza PHP gestiva solo i
+      percorsi URL relativi. Gli host rewrite target sono definiti da <link
+      linkend="ini.session.trans-sid-hosts">session.trans_sid_hosts</link>.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.trans-sid-tags">
+   <term>
+    <parameter>session.trans_sid_tags</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.trans_sid_tags</literal> specifica quali tag HTML
+     devono essere riscritti per includere l'id della sessione quando il supporto transparent sid
+     è abilitato. Il valore predefinito è
+     <literal>a=href,area=href,frame=src,input=src,form=</literal>
+    </simpara>
+    <simpara>
+     <literal>form</literal> è un tag speciale. Viene aggiunto
+      <literal>&lt;input hidden="session_id" name="session_name"&gt;</literal> come variabile del form.
+    </simpara>
+    <note>
+     <simpara>
+      Prima di PHP 7.1.0, per questo scopo veniva utilizzato
+      <link linkend="ini.url-rewriter.tags">url_rewriter.tags</link>. Da PHP 7.1.0, <literal>fieldset</literal> 
+      non viene più considerato un tag speciale.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.trans-sid-hosts">
+   <term>
+    <parameter>session.trans_sid_hosts</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.trans_sid_hosts</literal> specifica quali host
+     devono essere riscritti per includere l'id della sessione quando il supporto transparent sid
+     è abilitato. Il valore predefinito è <literal>$_SERVER['HTTP_HOST']</literal>
+     Possono essere specificati host multipli con ",", non è permesso nessuno spazio
+     tra gli host. p.es. <literal>php.net,wiki.php.net,bugs.php.net</literal>
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="ini.session.bug-compat-42">
+   <term>
+    <parameter>session.bug_compat_42</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     PHP 4.2.3 e precedenti hanno una funzionalità/bug non documentata che
+     permette di inizializzare una variabile di sessione nello scope globale,
+     anche se <link linkend="ini.register-globals">register_globals</link>
+     è disabilitato.  PHP 4.3.0 e successivi mostrano un avviso, se questa funzionalità è
+     utilizzata, e se <link linkend="ini.session.bug-compat-warn">
+     session.bug_compat_warn</link> è pure abilitato. Questa funzionalità/bug può essere
+     spenta disabilitando questa direttiva.
+    </simpara>
+    <note>
+     <simpara>
+      Rimosso in PHP 5.4.0.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="ini.session.bug-compat-warn">
+   <term>
+    <parameter>session.bug_compat_warn</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     PHP 4.2.3 e precedenti hanno una funzionalità/bug non documentata che
+     permette di inizializzare una variabile di sessione nello scope globale,
+     anche se <link linkend="ini.register-globals">register_globals</link>
+     è disabilitato.  PHP 4.3.0 e successivi mostrano un avviso, se questa funzionalità è
+     utilizzata abilitando sia
+     <link linkend="ini.session.bug-compat-42">session.bug_compat_42</link>
+     che <link linkend="ini.session.bug-compat-warn">
+     session.bug_compat_warn</link>.
+    </simpara>
+    <note>
+     <simpara>
+      Rimosso in PHP 5.4.0.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.sid-length">
+   <term>
+    <parameter>session.sid_length</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.sid_length</literal> permette di specificare la
+     lunghezza della stringa ID della sessione. La lunghezza dell'ID della sessione può essere compresa tra 22
+     e 256.
+    </simpara>
+    <simpara>
+     Il valore predefinito è 32. Se si necessita di compatibilità si può specificare 32,
+     40, ecc. Un ID di sessione più lungo è più difficile da indovinare. È raccomandato utilizzare
+     almeno 32 caratteri.
+    </simpara>
+    <para>
+      Note di compatibilità: Utilizzare 32 per
+      <literal>session.hash_func</literal>=0 (MD5) e
+      <literal>session.hash_bits_per_character</literal>=4,
+      <literal>session.hash_func</literal>=1 (SHA1) e
+      <literal>session.hash_bits_per_character</literal>=6. Utilizzare 26 per
+      <literal>session.hash_func</literal>=0 (MD5) e
+      <literal>session.hash_bits_per_character</literal>=5. Utilizzare 22 per
+      <literal>session.hash_func</literal>=0 (MD5) e
+      <literal>session.hash_bits_per_character</literal>=6. È necessario
+      configurare i valori INI per avere almeno 128 bit nell'ID della sessione. È importante non
+      dimenticare di impostare un valore appropriato a
+      <literal>session.sid_bits_per_character</literal>, altrimenti si
+      avrà un'ID di sessione più debole.
+    </para>
+    <note>
+     <simpara>
+      Questa impostazione è stata introdotta in PHP 7.1.0.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.sid-bits-per-character">
+   <term>
+    <parameter>session.sid_bits_per_character</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.sid_per_character</literal> permette di specificare il
+     numero di bit dei caratteri dell'ID della sessione codificata. I valori possibili sono 
+     '4' (0-9, a-f), '5' (0-9, a-v), e '6' (0-9, a-z, A-Z, "-", ",").
+    </simpara>
+    <simpara>
+     Il valore predefinito è 4. Più bit porteranno ad un ID della sessione più forte. 5 è
+     il valore raccomandato per la maggior parte degli ambienti.
+    </simpara>
+    <para>
+    </para>
+    <note>
+     <simpara>
+      Questa impostazione è stata introdotta in PHP 7.1.0.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.hash-function">
+   <term>
+    <parameter>session.hash_function</parameter>
+    <type>mixed</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.hash_function</literal> permete di specificare l'algoritmo di hashing
+     usato per generare l'ID di sessione. '0' significa MD5 (128 bit) e
+     '1' significa SHA-1 (160 bit).
+    </simpara>
+    <para>
+     Da PHP 5.3.0 è possibile anche specificare uno degli algoritmi
+     forniti dall'<link linkend="ref.hash">estensione hash</link> (se è
+     disponibile), come <literal>sha512</literal> o
+     <literal>whirlpool</literal>. Una lista completa degli algoritmi disponibili può
+     essere ottenuta con la funzione <function>hash_algos</function>.
+    </para>
+    <note>
+     <simpara>
+      Questo è stata introdotto in PHP 5. Rimosso in PHP 7.1.0.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.hash-bits-per-character">
+   <term>
+    <parameter>session.hash_bits_per_character</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.hash_bits_per_character</literal> permette di definire
+     quanti bit sono memorizzati in ogni carattere quando si converte il dato binario
+     dell'hash in forma leggibile. I valori possibile sono '4' (0-9, a-f),
+     '5' (0-9, a-v), e '6' (0-9, a-z, A-Z, "-", ",").
+    </simpara>
+    <note>
+     <simpara>
+      Rimosso in PHP 7.1.0.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.enabled">
+   <term>
+    <parameter>session.upload_progress.enabled</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     Abilita il monitoraggio dell'avanzamento dell'upload, popolando la varibile <varname>$_SESSION</varname>.
+     Il valore predefinito è 1, abilitato.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.cleanup">
+   <term>
+    <parameter>session.upload_progress.cleanup</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     Elimina l'informazione dell'avanzamento non appena tutti i dati POST sono stati letti
+     (es. upload completato). Il valore predefinito è 1, abilitato.
+    </simpara>
+    <note>
+     <simpara>
+      Si consiglia vivamente di mantenere abilitata questa funzionalità.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.prefix">
+   <term>
+    <parameter>session.upload_progress.prefix</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     Un prefisso usato nella chiave che contiene l'avanzamento dell'upload all'interno di <varname>$_SESSION</varname>.
+     Questa chiave verrà concatenata con il valore di
+     <literal>$_POST[ini_get("session.upload_progress.name")]</literal> per
+     fornire un indice unico.
+    </simpara>
+    <simpara>
+     Il valore predefinito è "upload_progress_".
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.name">
+   <term>
+    <parameter>session.upload_progress.name</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     Il nome della chiave usata in <varname>$_SESSION</varname> per conservare
+     l'informazione sull'avanzamento. Vedere anche
+     <link linkend="ini.session.upload-progress.prefix">session.upload_progress.prefix</link>.
+    </simpara>
+    <simpara>
+     Se <literal>$_POST[ini_get("session.upload_progress.name")]</literal>
+     non viene fornito o non è disponibile, l'avanzamento dell'upload non sarà registrato.
+    </simpara>
+    <simpara>
+     Il valore predefinito è "PHP_SESSION_UPLOAD_PROGRESS".
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.freq">
+   <term>
+    <parameter>session.upload_progress.freq</parameter>
+    <type>mixed</type>
+   </term>
+   <listitem>
+    <simpara>
+     Definisce la frequenza di aggiornamento dell'avanzamento di upload.
+     Può essere definito in byte (es. "aggiorna l'informazione ogni 100 byte"), oppure in percentuale (es "aggiorna l'avanzamento ogni volta che viene trasferito 1% della dimensione del file).
+    </simpara>
+    <simpara>
+     Il valore predefinito è "1%".
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.min-freq">
+   <term>
+    <parameter>session.upload_progress.min-freq</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     L'intervallo minimo tra gli aggiornamenti, in secondi.
+     Il valore predefinito è "1" (un secondo).
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.lazy-write">
+   <term>
+    <parameter>session.lazy_write</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.lazy_write</literal>, quando impostato a 1, indica che i dati della
+     sessione sono riscritti solo se ci sono cambiamenti. Il valore predefinito è 1, abilitato.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+ </variablelist>
+ </para>
+
+ <para>
+  Le impostazioni di configurazione
+  <link
+  linkend="ini.register-globals"><literal>register_globals</literal></link>
+  influenzano come le variabili di sessione sono
+  salvate e caricate.
+ </para>
+
+ <para>
+  L'avanzamento dell'upload non viene registrato a meno che
+  session.upload_progress.enabled non sia attivata, e la variabile
+  $_POST[ini_get("session.upload_progress.name")] impostata.
+  Vedere <link linkend="session.upload-progress">Avanzamento dell'upload di sessione</link> per ulteriori dettagli su questa funzionalità.
+ </para>
+
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

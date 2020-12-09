@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 288721 Maintainer: felipe Status: ready --><!-- CREDITS: lucasr -->
+<refentry xml:id="function.list" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>list</refname>
+  <refpurpose>Cria variáveis como se fossem arrays</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>void</type><methodname>list</methodname>
+   <methodparam><type>mixed</type><parameter>varname</parameter></methodparam>
+   <methodparam rep="repeat"  choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Assim como <function>array</function>, não é exatamente uma função,
+   e sim uma construção da própria linguagem. <function>list</function> é usada
+   para criar uma lista de variáveis em apenas uma operação.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>varname</parameter></term>
+     <listitem>
+      <para>
+       A variável.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.void;
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemplo da <function>list</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$info = array('Café', 'marrom', 'cafeína');
+
+// Listando todas as variáveis
+list($bebida, $cor, $substancia) = $info;
+echo "$bebida é $cor e $substancia o faz especial.\n";
+
+// Listando apenas alguns deles
+list($bebida, , $substancia) = $info;
+echo "$bebida tem $substancia.\n";
+
+// Ou ignoramos os primeiros valores para conseguir apenas o último 
+list( , , $substancia) = $info;
+echo "I need $substancia!\n";
+
+// list() não funciona com strings
+list($bar) = "abcde";
+var_dump($bar); // NULL
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Exemplo da <function>list</function></title>     
+    <programlisting role="php">
+<![CDATA[
+<table>
+ <tr>
+  <th>Lista de empregados</th>
+  <th>Salário</th>
+ </tr>
+
+<?php
+
+$result = mysql_query ("SELECT id, nome, salario FROM empregados", $conn);
+while (list ($id, $nome, $salario) = mysql_fetch_row ($result)) {
+     echo " <tr>\n" .
+           "  <td><a href=\"info.php?id=$id\">$nome</a></td>\n" .
+           "  <td>$salario</td>\n" .
+            " </tr>\n";
+}
+
+?>
+
+</table>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Usando <function>list</function> de forma aninhada</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+list($a, list($b, $c)) = array(1, array(2, 3));
+
+var_dump($a, $b, $c);
+
+?>
+]]>
+    </programlisting>
+    <screen>
+<![CDATA[
+int(1)
+int(2)
+int(3)
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Usando <function>list</function> com índices de array</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$info = array('café', 'marrom', 'cafeína');
+
+list($a[0], $a[1], $a[2]) = $info;
+
+var_dump($a);
+
+?>
+]]>
+    </programlisting>
+   <para>
+   O retorno desse script é o seguinte (note a ordem dos elementos em
+   comparação com o array original):
+   </para>
+   <screen>
+<![CDATA[ 
+array(3) {
+  [2]=>
+  string(8) "cafeína"
+  [1]=>
+  string(5) "marrom"
+  [0]=>
+  string(6) "café"
+}
+]]>  
+      </screen>  
+     </example>  
+   </para>
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    A função <function>list</function> assinala os valores começando pelos 
+    parâmetros da direita. Se você está usando variáveis normais, então não 
+    precisa se preocupar com esse detalhe. Mas se você está usando arrays com
+    índices você normalmente iria esperar que a ordem dos índices no array 
+    fosse da esquerda para a direita, mas não é isso que acontece. O índice é
+    criado na ordem reversa.
+   </para>
+  </warning>
+  <note>
+   <para>
+    <function>list</function> funciona somente com arrays numéricos e 
+    espera que esses índices comecem de 0 (zero).
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>each</function></member>
+    <member><function>array</function></member>
+    <member><function>extract</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

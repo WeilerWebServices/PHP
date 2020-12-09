@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.7 $ -->
+<classentry id="gtk.gtkiconfactory">
+ <classmeta>
+  <classtitle>GtkIconFactory</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   A collection of a set of variants for a particular icon.
+  </shortdesc>
+  <desc>
+   <para>
+    An icon factory helps you to manage a collection of GtkIconSets; and a
+    GtkIconSet manages a set of variants for a particular icon, that is, variants
+    for different sizes and widget states. Icons in an icon factory are named by
+    a Stock ID, which a simple string identifying the icon.
+   </para>
+   <para>
+    Each <classname>GtkStyle</classname> has a list of
+    <classname>GtkIconFactory</classname>s derived from the current theme; those
+    icon factories are consulted first when searching for an icon. If the theme
+    doesn't set a particular icon, PHP-GTK 2 looks for it in a list of default
+    icon factories, which are maintained by 
+    <function class="GtkIconFactory">add_default</function> and 
+    <function class="GtkIconFactory">remove_default</function>.
+   </para>
+   <para>
+    Applications with icons must add a default icon factory to their icons,
+    which will allow themes to override the icons for the application.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkiconfactory.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkIconFactory</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>GtkIconFactory</classname> to manage icon sets.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new <classname>GtkIconFactory</classname>. An icon factory
+     manages a collection of icon sets; an icon set manages a set of variants of
+     a particular icon. Icons in an icon factory are named by a stock ID, which
+     is a simple string identifying the icon. Each
+     <classname>GtkStyle</classname> has a list of icon factories derived from
+     the current theme; those icon factories are consulted first when searching
+     for an icon. If the theme doesn't set a particular icon, GTK+ looks for the
+     icon in a list of default icon factories. Applications with icons should
+     add a default icon factory with their icons, which will allow themes to
+     override the icons for the application.
+    </para>
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkiconfactory.method.add">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add</function></funcdef>
+     <paramdef><classname>GtkIconSet</classname> <parameter>icon_set</parameter></paramdef>
+     <paramdef>string <parameter>stock_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Adds a new <classname>GtkIconSet</classname> to the icon factory.
+   </shortdesc>
+   <desc>
+    <para>
+     This method adds a specified <literal>icon_set</literal> to the icon
+     factory under the name <literal>stock_id</literal>. The stock id you
+     specify should include the name of your application. Normally applications
+     create a <classname>GtkIconFactory</classname> and add it to the list of
+     default factories with <function class="GtkIconFactory">add_default</function>. Then they pass the stock id
+     to widgets like <classname>GtkImage</classname> to display the icon.
+    </para>
+    <para>
+     Themes can provide an icon with the same name to override your
+     application's default icons. If an icon already existed in the icon factory
+     for stock_id, it is unreferenced and replaced with the new icon_set.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconfactory.method.add_default">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_default</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Adds the icon factory to list of default factories.
+   </shortdesc>
+   <desc>
+    <para>
+     This method adds the icon factory to the list of icon factories searched by
+     <function class="GtkStyle">lookup_icon_set</function>. This means that, for
+     example, <function class="GtkImage">set_from_stock</function> will be able
+     to find icons in the icon factory. There will normally be an icon factory
+     added for each library or application that comes with icons. The default
+     icon factories can be overridden by themes.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconFactory">lookup_default</function>, 
+     <function class="GtkIconFactory">remove_default</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconfactory.method.lookup">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>lookup</function></funcdef>
+     <paramdef>string <parameter>stock_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Searches for a <classname>GtkIconSet</classname> in current icon factory.
+   </shortdesc>
+   <desc>
+    <para>
+     This function returns a <classname>GtkIconSet</classname> that has the name
+     specified by <literal>stock_id</literal> by searching the current <classname>GtkIconFactory</classname> instance
+     . If the icon set cannot be found the function returns NULL.
+    </para>
+    <para>
+     You should use <function class="GtkStyle">lookup_icon_set</function> on the
+     <classname>GtkStyle</classname> for the widget for displaying the icon to
+     the user, instead of using this function directly, so that themes
+     are taken into account.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconfactory.method.lookup_default">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>lookup_default</function></funcdef>
+     <paramdef>string <parameter>stock_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Searches for a <classname>GtkIconSet</classname> in default icon factories.
+   </shortdesc>
+   <desc>
+    <para>
+     This function returns a <classname>GtkIconSet</classname> that has the name
+     specified by <literal>stock_id</literal> by searching the default factories
+     available. If the icon set cannot be found the function returns NULL.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconFactory">add_default</function>, 
+     <function class="GtkIconFactory">remove_default</function>
+    </para>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconfactory.method.remove_default">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>remove_default</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Removes an icon factory from the list of default factories.
+   </shortdesc>
+   <desc>
+    <para>
+     This method removes an icon factory from the list of default icon
+     factories. Not normally used though you might use it for a library that can
+     be unloaded or shut down.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconFactory">add_default</function>, 
+     <function class="GtkIconFactory">lookup_default</function>
+    </para>
+
+   </desc>
+  </method>
+
+ </methods>
+
+</classentry>

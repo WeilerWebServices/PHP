@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 323642 Maintainer: pastore Status: ready -->
+<!-- CREDITS: cortesi -->
+<section xml:id="mail.configuration" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.runtime;
+ &extension.runtime;
+ <para>
+ <table>
+  <title>Opzioni di configurazione Mail</title>
+  <tgroup cols="4">
+   <thead>
+    <row>
+     <entry>&Name;</entry>
+     <entry>&Default;</entry>
+     <entry>&Changeable;</entry>
+     <entry>&Changelog;</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry><link linkend="ini.mail.add-x-header">mail.add_x_header</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>Disponibile da PHP 5.3.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.mail.log">mail.log</link></entry>
+     <entry>NULL</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>Disponibile da PHP 5.3.0. (PHP_INI_SYSTEM|PHP_INI_PERDIR)</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.mail.force_extra_parameters">mail.force_extra_parameters</link></entry>
+     <entry>NULL</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>Disponibile da PHP 5.0.0. (PHP_INI_SYSTEM|PHP_INI_PERDIR)</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.smtp">SMTP</link></entry>
+     <entry>"localhost"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.smtp-port">smtp_port</link></entry>
+     <entry>"25"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.sendmail-from">sendmail_from</link></entry>
+     <entry>NULL</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.sendmail-path">sendmail_path</link></entry>
+     <entry>"/usr/sbin/sendmail -t -i"</entry>
+     <entry>PHP_INI_SYSTEM</entry>
+     <entry></entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+ &ini.php.constants;
+ </para>
+ 
+ &ini.descriptions.title;
+ 
+ <para>
+ <variablelist>
+  <varlistentry xml:id="ini.mail.add-x-header">
+   <term>
+    <parameter>mail.add_x_header</parameter>
+    <type>bool</type>
+   </term>
+   <listitem>
+    <para>
+     Aggiunge <literal>X-PHP-Originating-Script</literal> che include l'UID  dello
+     script seguito dal nome del file.
+    </para>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.mail.log">
+   <term>
+    <parameter>mail.log</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <para>
+     Im percorso verso un file di log che registra tutte le chiamate a <function>mail</function>.
+     Le voci del log includono il percorso completo dello script, il numero di linea,
+     Rl'indirizzo <literal>To</literal> e le intestazioni.
+    </para>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.mail.force_extra_parameters">
+   <term>
+    <parameter>mail.force_extra_parameters</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <para>
+     Forza l'aggiunta dei parametri specificati da passare come parametri
+     extra al binario sendmail. Questi parametri sostituiranno sempre
+     il valore del quinto parametro di <function>mail</function>, anche in
+     modalità sicura.
+    </para>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.smtp">
+   <term>
+    <parameter>SMTP</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <para>
+     Usato solo con Windows: Nome DNS o indirizzo IP del server SMTP che PHP
+     deve usare per spedire posta elettronica con la funzione <function>mail</function>.
+    </para>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.smtp-port">
+   <term>
+    <parameter>smtp_port</parameter>
+    <type>int</type>
+   </term>
+   <listitem>
+    <para>
+     Usato solo con Windows: Numero della porta del server specificato da
+     <literal>SMTP</literal> al quale connettersi quando si inviano email
+     usando <function>mail</function>; il valore predefinito è 25.
+    </para>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.sendmail-from">
+   <term>
+    <parameter>sendmail_from</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <para>
+     Quale indirizzo email <literal>"From:"</literal> deve essere utilizzato nelle mail inviate
+     direttamente tramite SMTP (solo Windows).
+     Questa direttiva imposta anche l'intestazione <literal>"Return-Path:"</literal>.
+    </para>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.sendmail-path">
+   <term>
+    <parameter>sendmail_path</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <para>
+     Dove trovare il programma <command>sendmail</command>,
+     solitamente <filename>/usr/sbin/sendmail</filename> oppure
+     <filename>/usr/lib/sendmail</filename>.
+     <command>configure</command> cerca di trovare il file
+     e lo imposta di default, ma se non riesce a localizzarlo,
+     lo si può impostare qui.
+    </para>
+    <para>
+     I sistemi che non usano <command>sendmail</command> devono impostare questa direttiva
+     al wrapper che i rispettivi sistemi di posta offrono, se esistenti.
+     Per esempio, gli utenti di <link xlink:href="&url.qmail;">Qmail</link>
+     possono normalmente impostarla a
+     <filename>/var/qmail/bin/sendmail</filename> o <filename>
+     /var/qmail/bin/qmail-inject</filename>.
+    </para>
+    <para>
+     <command>qmail-inject</command> non necessita di nessuna opzione
+     al fine di processare correttamente la mail.
+    </para>
+    <para>
+     Questi parametri funzionano anche su Windows. Se si impostate <varname>smtp</varname>,
+     <varname>smtp_port</varname> e <varname>sendmail_from</varname> saranno
+     ignorate e verrà eseguito il comando indicato.
+    </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+ </para>
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

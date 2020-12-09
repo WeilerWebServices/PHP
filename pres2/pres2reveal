@@ -1,0 +1,368 @@
+#!/usr/bin/env php
+<?php
+if($argc<2) {
+	echo "Usage: {$argv[0]} <presentation.xml> [<reveal_template.php>]\n";
+	exit(1);
+}
+$pres_xml = $argv[1];
+if(!file_exists($argv[1])) {
+	echo "Unable to open {$argv[1]}\n";
+	exit(1);
+}
+$base_path = dirname($pres_xml);
+if(!empty($argv[2])) $reveal_template = $argv[2];
+else $reveal_template = "./reveal_template.php";
+
+// Massive shortcut!
+$pres = simplexml_load_file($pres_xml);
+extract((array)$pres);
+$slides = '';
+
+// Now do the real work
+foreach($slide as $sld) {
+	$s = simplexml_load_file($base_path.'/'.$sld);
+	$slide_path = dirname($base_path.'/'.$sld);
+
+	// The titlepage is the first section in the reveal template
+	if($s['template'] == 'titlepage') continue;
+
+	$bgcolor = '';
+	$vertical = false;
+
+	if(!empty($s['body_style'])) {
+		foreach(explode(';',$s['body_style']) as $str) {
+			// Add support for other body styles here
+			if(preg_match('/background:(.*[^;])/', $str, $regs)) {
+				$bgcolor = $regs[1];
+			}
+		}
+	}
+	$slides .= "\t<section";
+	if(!empty($bgcolor)) $slides .= " data-background-color=\"$bgcolor\"";
+	if(!empty($s['data-transition'])) $slides .= " data-transition=\"{$s['data-transition']}\"";
+	$slides .= ">\n";
+
+	if(!empty($s['section'])) {
+		$slides .= "\t\t<section id=\"{$s['section']}\">\n";
+		$vertical = true;
+	}
+	if(!empty($s['title'])) {
+		$text = markup_text((string)$s['title']);
+		$slides .= "\t\t<h2 margin-bottom=\"2em\">$text</h2><br>\n";
+	}
+	foreach($s as $k=>$e) {
+		switch($k) {
+			case 'link':
+			case 'image':
+			case 'object':
+			case 'blurb':
+			case 'notes':
+			case 'literal':
+			case 'example':
+			case 'movie':
+			case 'table':
+			case 'cell':
+				$fnc ="render_$k";
+				if(is_array($e)) {
+					foreach($e as $ee) {
+						$slides .= $fnc($ee);
+					}
+				} else {
+					$slides .= $fnc($e);
+				}
+				break;
+			case 'list':
+				$slides .= render_list($e);	
+				break;
+			case 'title':
+				if(empty($s['title']) && !empty($e['title'])) {
+					$text = markup_text((string)$e['title']);
+					$slides .= "\t\t<h2 margin-bottom=\"2em\">$text</h2><br>\n";
+				}
+				break;
+			case 'break':
+				if($vertical && !empty($e['section'])) {
+					$slides .= "\t\t</section>\n";
+					$slides .= "<section id=\"{$e['section']}\">\n";
+				}
+                if(empty($e['section']) && !empty($e['lines'])) {
+                    $slides .= str_repeat("<br/>\n", (int)$e['lines']);
+                }
+				break;
+		}
+	}
+
+	if($vertical) $slides .= "\t\t</section>";
+	$slides .= "\t</section>\n";
+}
+
+// And plug everything into the Reveal template
+include $reveal_template;
+
+function render_image($e) {
+	global $slide_path;
+	$ret = '';
+	if(!empty($e['title'])) {
+		$ret .= "<p>{$e['title']}</p>\n";
+	}
+    $align="";
+    if(!empty($e['align'])) {
+        $align = "align=\"{$e['align']}\"";
+    }
+
+	if(substr($e['filename'], 0, 4) == 'http') {
+		$src = $e['filename'];
+	} else {
+		$src = "/{$slide_path}/{$e['filename']}";
+	}
+	$ret .= <<<EOB
+		<img src="$src" $align width="{$e['width']}" height="{$e['height']}">
+
+EOB;
+	return $ret;
+}
+
+function render_object($e) {
+	global $slide_path;
+	$ret = '';
+	if(!empty($e['title'])) {
+		$ret .= "<p>{$e['title']}</p>\n";
+	}
+    $align="";
+    if(!empty($e['align'])) {
+        $align = "align=\"{$e['align']}\"";
+    }
+
+	$ret .= <<<EOB
+		<object data="/{$slide_path}/{$e['filename']}" type="{$e['type']}" $align width="{$e['width']}" height="{$e['height']}">Use a newer browser, please</object>
+
+EOB;
+	return $ret;
+}
+
+function render_blurb($e) {
+	$size = (int)$e['fontsize'];
+	$class = $style = '';
+	if($size >= 20) $tag = 'h1';
+	else if($size >= 8) $tag = 'h2';
+	else if($size >= 6) { $tag = 'h3'; $class = " class=\"p\""; }
+	else if($size >= 4) { $tag = 'h4'; $class = " class=\"p\""; }
+	else {
+		$tag = 'p';
+		$class = " class=\"p\"";
+		if(!empty($e['fontsize'])) $style .= "font-size:".$e['fontsize'].';';
+	}
+
+	if(!empty($e['align'])) $style .= 'text-align:'.$e['align'].';';
+	if(!empty($e['style'])) $style .= $e['style'];
+	if(!empty($style)) $style = " style=\"$style\"";
+
+	$text = markup_text((string)$e);
+	return "\t\t<$tag{$class}{$style}>$text</$tag>\n";
+}
+
+
+function render_table($table) {
+    $align = '';
+	$ret = '';
+    if(!empty($table['align'])) $align = 'align="'.$table['align'].'"';
+    if(isset($table['title'])) {
+        if(!empty($table['fontsize'])) $style = "style=\"font-size: ".$table['fontsize'].';"';
+        $ret .= "<div $align $style>".markup_text($table['title'])."</div>\n";
+    }
+    $i=0;
+    $width="100%";
+    if(!empty($table['width'])) {
+        $width = $table['width'];
+    }
+	$style = '';
+	if(isset($table['marginleft'])) $style .= "margin-left: {$table['marginleft']};";
+	if(isset($table['marginright'])) $style .= "margin-right: {$table['marginright']};";
+	if(isset($table['fontsize'])) $ret .= "<font size=\"{$table['fontsize']}\">\n";
+    $ret .= '<table '.$align.' width="'.$width.'" border="'.$table['border'].'" '.(isset($table['bgcolor'])?"bgcolor=\"{$table['bgcolor']}\"":'')."style=\"$style\">";
+    foreach($table->cell as $k=>$cell) {
+        if(!($i % $table['columns'])) {
+            $ret .= "<tr>\n";
+        }
+        $ret .= " <td ";
+        if(isset($cell['class'])) $ret .= "class=\"".$cell['class']."\"";
+        if(isset($cell['align'])) $ret .= "align=\"".$cell['align']."\"";
+        if(isset($cell['bgcolor'])) $ret .= "bgcolor=\"".$cell['bgcolor']."\"";
+        $ret .= ">";
+        $ret .= render_cell($cell);
+        $ret .= " </td>";
+        if(!(($i+1) % $table['columns'])) {
+            $ret .= "</tr>\n";
+        }
+        $i++;
+    }
+    $ret .= '</table>';
+	if(isset($table['fontsize'])) $ret .= "</font>";
+	$ret .= "<br />\n";
+    return $ret;
+}
+
+function render_cell($cell) {
+    $style='';
+    if(!empty($cell['fontsize'])) $style .= "font-size: ".$cell['fontsize'].';';
+    if(!empty($cell['marginleft'])) $style .= "margin-left: ".$cell['marginleft'].';';
+
+    if(!empty($cell['marginright'])) $style .= "margin-right: ".$cell['marginleft'].';';
+
+    if(!empty($cell['padding'])) $style .= "padding: ".$cell['padding'].';';
+
+    if(!empty($cell['bold']) && $cell['bold']) $style .= 'font-weight: bold;';
+
+    return "<span style=\"$style\">".markup_text($cell)."</span>\n";
+}
+
+function render_link($link) {
+	if(strlen((string)$link)) {
+		$text = (string)$link;
+    } else {
+		$text = $link['href'];
+	}
+	return "\t\t<div align=\"{$link['align']}\" style=\"font-size: {$link['fontsize']}; color: {$link['textcolor']}; text-align: {$link['align']}; margin-left: {$link['marginleft']}; margin-right: {$link['marginright']}; margin-top: {$link['margintop']}; margin-bottom: {$link['marginbottom']};\">{$link['leader']}<a href=\"{$link['href']}\" target=\"{$link['target']}\">".markup_text($text)."</a></div>\n";
+}
+
+function render_list($e) {
+	$ret = $columns = $fontsize = $style = '';
+	if(!empty($e['style'])) $style = " style=\"{$e['style']}\"";
+
+	if(!empty($e['title'])) {
+		$style = $align = '';
+		if(!empty($e['fontsize'])) $lstyle .= "font-size: ".$e['fontsize'].';';
+		if(!empty($e['align'])) $align .= 'align="'.$e['align'].'"';
+		if(!empty($lstyle)) $lstyle = " style=\"$lstyle\"";
+		if(!empty($align)) $align = " align=\"$align\"";
+		$ret .= "\t\t<div $align style=\"$lstyle\">".markup_text($e['title'])."</div>\n";
+	}
+	$ret .= "\t\t<ul{$style}>\n";
+	foreach($e->item as $v) {
+		$text = markup_text((string)$v);
+		$ret .= "\t\t\t<li>$text</li>\n";	
+	}
+	foreach($e->bullet as $v) {
+		$style = '';
+		$text = markup_text((string)$v);
+		if(!empty($v['fontsize'])) $style .= "font-size: ".$v['fontsize'].';';
+		if(!empty($v['lineheight'])) $style .= "line-height: ".$v['lineheight'].';';
+		if(!empty($v['marginleft'])) $style .= "margin-left: ".$v['marginleft'].';';
+		if(!empty($v['type'])) $style .= "list-style-type: ".$v['type'].';';
+		if(!empty($style)) $style = " style=\"$style\"";
+		$ret .= "\t\t\t<li$style>$text</li>\n";
+	}
+	$ret .= "\t\t</ul>\n";
+	return $ret;
+}
+
+function render_example($e) {
+	$ret = $extra = $style = '';
+	if(!empty($e['title'])) $ret .= '<p class="example">'.markup_text($e['title'])."</p>\n";
+	if(!empty($e['fontsize'])) $style = ' style="font-size:'.$e['fontsize'].';"';
+	$code = trim((string)$e);
+	$orig_code = $code;
+	if(empty($e['nostrip']) && substr($code,0,5)=="<?php") {
+		$code = trim(substr($code,5));
+	}
+	$code = htmlspecialchars($code);
+	$class = ''; 
+	if(!empty($e['type'])) $class = ' class="'.$e['type'].'"';
+	if(!empty($e['extra'])) $extra = $e['extra'];
+	if(empty($e['hide'])) $ret .= "\t\t<pre><code$class data-trim$style $extra>$code</code></pre>\n";
+	if(!empty($e['result'])) {
+		$ret .= "\t\t<pre class=\"output\"$style>";
+		ob_start();
+		eval("?>$orig_code");
+		$ret .= ob_get_clean();
+		$ret .= "\t\t</pre>";
+	}
+	return $ret;
+}
+
+function render_movie($e) {
+	global $slide_path;
+
+	$width = $height = $poster = '';
+	if(!empty($e['width'])) $width = "width=\"{$e['width']}\" ";
+	if(!empty($e['height'])) $height = "height=\"{$e['height']}\" ";
+	if(!empty($e['poster'])) $poster = "poster=\"{$e['poster']}\" ";
+	$filename = $e['filename'];
+
+	$ret = <<<EOB
+	<div id="container">
+      <video id='video' controls="controls" preload='none' onclick='this.paused ? this.play() : this.pause();'
+        $width $poster>
+        <source id='mp4' src="{$slide_path}/$filename" type='video/mp4'/>
+        <p>Your user agent does not support the HTML5 Video element.</p>
+      </video>
+    </div>
+EOB;
+	return $ret;
+}
+
+function render_notes($e) {
+	$notes = markup_text(nl2br((string)$e));
+	$ret = "<aside class=\"notes\">$notes</aside>\n";
+	return $ret;
+}
+
+function render_literal($e) {
+	return (string)$e;
+}
+
+function format_tt($arg) {
+  return("<tt>".str_replace(' ', '&nbsp;', $arg[1])."</tt>");
+}
+
+/* {{{ string markup_text($str)
+	*word*		Bold
+	_word_		underline
+	%word%		monospaced word (ie. %function()%)
+	~word~		italics
+	|rrggbb|word| Colour a word
+	^N^		   Superscript
+	@N@		   Subscript
+	**word**	  Blink
+	#id#		  Entity
+*/
+function markup_text($str) {
+    global $pres;
+
+    $ret = $str;
+    $ret = preg_replace('/#([[:alnum:]]+?)#/','&\1;',$ret);
+    $ret = preg_replace('/\b_([^_][\S ]+?)_\b/','<u>\1</u>',$ret);
+
+    // blink
+    $ret = str_replace('\*',chr(1),$ret);
+    $ret = preg_replace('/\*\*([\S ]+?)\*\*/','<blink>\1</blink>',$ret);
+    $ret = str_replace(chr(1),'\*',$ret);
+
+    // bold
+    $ret = str_replace('\*',chr(1),$ret);
+    $ret = preg_replace('/\*([\S ]+?)\*/','<strong>\1</strong>',$ret);
+    $ret = str_replace(chr(1),'\*',$ret);
+
+    // italics
+    $ret = str_replace('\~',chr(1),$ret);
+    $ret = preg_replace('/~([\S ]+?)~/','<i>\1</i>',$ret);
+    $ret = str_replace(chr(1),'\~',$ret);
+
+    // monospace font
+    $ret = str_replace('\%',chr(1),$ret);
+    $ret = preg_replace_callback('/%([\S ]+?)%/', 'format_tt', $ret);
+    $ret = str_replace(chr(1),'%',$ret);
+
+    // Hack by arjen: allow more than one word to be coloured
+    $ret = preg_replace('/\|([0-9a-fA-F]+?)\|([\S ]+?)\|/','<font color="\1">\2</font>',$ret);
+    $ret = preg_replace('/\^([[:alnum:]]+?)\^/','<sup>\1</sup>',$ret);
+    $ret = preg_replace('/\@([[:alnum:]]+?)\@/','<sub>\1</sub>',$ret);
+    // Quick hack by arjen: BR/ and TAB/ pseudotags from conversion
+    $ret = preg_replace('/BR\//','<BR/>',$ret);
+    $ret = preg_replace('/TAB\//',' ',$ret);
+
+    $ret = preg_replace('/([\\\])([*#_|^@%])/', '\2', $ret);
+#    $ret = @preg_replace('/:-:(.*?):-:/e','$pres->\\1',$ret);
+    $ret = preg_replace_callback('/:-:(.*?):-:/', function($m) { global $pres; return $pres->{$m[1]}; }, $ret);
+    return $ret;
+}

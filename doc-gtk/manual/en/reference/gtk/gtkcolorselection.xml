@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.12 $ -->
+<classentry id="gtk.gtkcolorselection">
+ <classmeta>
+  <classtitle>GtkColorSelection</classtitle>
+  <classparent>GtkVBox</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkcolorselection.png"/>
+  <shortdesc>
+   Widget that is used to select a color.
+  </shortdesc>
+  <desc>
+   <classname>GtkColorSelection</classname> is a widget that is used to 
+   select a color. The widget provides a very user friendly interface that 
+   includes a 'color wheel' in addition to a number of sliders and entry 
+   boxes for color parameters such as <literal>hue</literal>,
+   <literal>saturation</literal>, <literal>RGB</literal>, and
+   <literal>opacity</literal>. The widget is used in the ready-made color
+   selection dialog box, <classname>GtkColorSelectionDialog</classname>.
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkcolorselection.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkColorSelection</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>GtkColorSelection</classname>
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new <classname>GtkColorSelection</classname> widget used to 
+     select a color.
+    </para>
+
+    <example>
+     <title>GtkColorSelection embedded in a window</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkcolorselection/constructor.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkcolorselection.method.get_color">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_color</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Returns the color currently selected in the 
+    <classname>GtkColorSelection</classname> widget.
+   </shortdesc>
+   <desc>
+    <para>
+     This method is used to return the currently selected color on the 
+     <classname>GtkColorSelection</classname> widget.
+    </para>
+    <note>
+     WARNING! This method has been deprecated in PHP-GTK 2, and should NOT be
+     used in newly written code. Use 
+     <function class="GtkColorSelection">get_current_color</function> instead.
+    </note>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">set_color</function>, 
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.get_current_alpha">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_current_alpha</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the current alpha value on the
+    <classname>GtkColorSelection</classname> widget.
+   </shortdesc>
+   <desc>
+    <para>
+     This method returns the current alpha value of the color selected on the 
+     specified <classname>GtkColorSelection</classname>. The value returned 
+     is an integer between <literal>0</literal> and <literal>65535</literal>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">set_current_alpha</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.get_current_color">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_current_color</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the current color selected on the 
+    <classname>GtkColorSelection</classname> widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to ascertain the color that is currently selected on 
+     the <classname>GtkColorSelection</classname> widget. This function 
+     returns a <classname>GdkColor</classname> object, containing the values
+     of <literal>red</literal>, <literal>blue</literal>,
+     <literal>green</literal> and <literal>pixel</literal>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">set_current_color</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.get_has_opacity_control">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_has_opacity_control</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Determines whether the GtkColorSelection has opacity control enabled.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to ascertain whether the specified 
+     <classname>GtkColorSelection</classname> has opacity (transparency) control
+     enabled or not. The function returns <literal>true</literal> if opacity 
+     controls are visible, <literal>false</literal> otherwise.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">set_has_opacity_control</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.get_has_palette">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_has_palette</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Determines if the widget has a palette.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to ascertain whether the specified 
+     <classname>GtkColorSelection</classname> has a visible palette or not.
+     The function returns <literal>true</literal> if the palette is visible,
+     <literal>false</literal> otherwise.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">set_has_palette</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.get_previous_alpha">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_previous_alpha</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the previous alpha value on the 
+    <classname>GtkColorSelection</classname> widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to obtain the previous alpha value selected on the 
+     specified <classname>GtkColorSelection</classname>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">set_previous_alpha</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.get_previous_color">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_previous_color</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the previous color selected on the 
+    widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to ascertain the color that was previously selected on
+     the <classname>GtkColorSelection</classname> widget. This function
+     returns a GdkColor Object, containing the values of red, blue, green and
+     pixel.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">set_previous_color</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.is_adjusting">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>is_adjusting</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the current state of the specified 
+    <classname>GtkColorSelection</classname>
+   </shortdesc>
+   <desc>
+    Use this method to find out whether the user is in the process of
+    selecting a color or if a color has been selected. The function returns
+    <literal>true</literal> if the user is currently dragging a color around,
+    <literal>false</literal> if the process of selection has stopped.
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.set_color">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_color</function></funcdef>
+     
+     <paramdef><parameter>red</parameter></paramdef>
+     <paramdef><parameter>green</parameter></paramdef>
+     <paramdef><parameter>blue</parameter></paramdef>
+     <paramdef><parameter><optional>opacity</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the color currently selected in the 
+    <classname>GtkColorSelection</classname> widget.
+   </shortdesc>
+   <desc>
+    <para>
+     This method is used to set the currently selected color on the 
+     <classname>GtkColorSelection</classname> widget.
+    </para>
+    <note>
+     WARNING! This method has been deprecated in PHP-GTK 2, and should NOT be 
+     used in newly written code. Use 
+     <function class="GtkColorSelection">set_current_color</function> instead.
+    </note>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">get_color</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.set_current_alpha">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_current_alpha</function></funcdef>
+     <paramdef>int <parameter>alpha</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the current alpha value on the 
+    <classname>GtkColorSelection</classname> widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the opacity of the currently selected color on
+     <classname>GtkColorSelection</classname> to the specified alpha 
+     value. You may pass an integer between <literal>0</literal> and
+     <literal>65535</literal> as a valid alpha value.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">get_current_alpha</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.set_current_color">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_current_color</function></funcdef>
+     
+     <paramdef><classname>GdkColor</classname> <parameter>color</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the current color selected on the 
+    <classname>GtkColorSelection</classname> widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the current color on the specified.
+     <classname>GtkColorSelection</classname> widget. Colors should be 
+     defined as <classname>GdkColor</classname> objects.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">get_current_color</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.set_has_opacity_control">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_has_opacity_control</function></funcdef>
+     <paramdef>bool <parameter>has_opacity</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets whether the opacity control is visible for the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set whether the opacity control for the 
+     <classname>GtkColorSelection</classname> is visible or not. Pass 
+     <literal>true</literal> as a parameter if you want the opacity control 
+     to be visible, <literal>false</literal> otherwise.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">get_has_opacity_control</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.set_has_palette">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_has_palette</function></funcdef>
+     <paramdef>bool <parameter>has_palette</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets whether the palette for the 
+    <classname>GtkColorSelection</classname> widget is visible or not. 
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set whether the opacity control for the 
+     <classname>GtkColorSelection</classname> widget. 
+     Pass <literal>true</literal> as a parameter if you want the 
+     palette to be visible, <literal>false</literal> otherwise.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">get_has_palette</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.set_previous_alpha">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_previous_alpha</function></funcdef>
+     <paramdef>int <parameter>alpha</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the previous value on alpha on the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the 'previous' value of alpha on the specified 
+     <classname>GtkColorSelection</classname> widget. This function however, 
+     is hardly used, since it usually does not make sense to have the 
+     previous value of alpha change (other than to GTK internals).
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">get_previous_alpha</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.set_previous_color">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_previous_color</function></funcdef>
+     
+     <paramdef><classname>GdkColor</classname> <parameter>color</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the previous color selected on the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the 'previous' color selected on the specified 
+     <classname>GtkColorSelection</classname> widget. This function however, 
+     is hardly used, since it usually does not make sense to have the 
+     previous color selected to change (other than to GTK internals).
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkColorSelection">get_previous_color</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcolorselection.method.set_update_policy">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_update_policy</function></funcdef>
+     <paramdef>GtkUpdateType <parameter>policy</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the policy controlling when the 
+    <signalname class="GtkColorSelection">color-changed</signalname> signal 
+    is emitted.
+   </shortdesc>
+   <desc>
+    <note>
+     WARNING! This method has been deprecated in PHP-GTK 2, and should NOT be 
+     used in newly written code.
+    </note>
+   </desc>
+  </method>
+
+ <method id="gtk.gtkcolorselection.method.palette_to_string">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>palette_to_string</function></funcdef>
+     
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkcolorselection.signal.color-changed">
+   <signalname>color-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkColorSelection <parameter>colorselection</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the color changes in the widget according to its update policy.
+   </shortdesc>
+   <desc>
+    FIXME
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

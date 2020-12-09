@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 297028 Maintainer: qrak Status: ready -->
+<!-- $Revision$ -->
+<refentry xml:id="function.apache-lookup-uri" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>apache_lookup_uri</refname>
+  <refpurpose>Wywołuje wewnętrzne żądanie dla określonego URI i zwraca całą informację o nim</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>object</type><methodname>apache_lookup_uri</methodname>
+   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Ta funkcja wywołuje wewnętrzne żądanie dla określonego URI. Funkcja zbiera
+   wszystkie istotne informacje odnośnie podanego zasobu.
+  </para>
+  &apache.req.module;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_pliku</parameter></term>
+     <listitem>
+      <para>
+       Nazwa rządanego pliku (URI).
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <type>Obiekt</type> powiązany z informacjami URI. Własności tego 
+   <type>obiektu</type> to:
+  </para>
+  <para>
+
+   <simplelist>
+    <member>status</member>
+    <member>the_request</member>
+    <member>status_line</member>
+    <member>method</member>
+    <member>content_type</member>
+    <member>handler</member>
+    <member>uri</member>
+    <member>filename</member>
+    <member>path_info</member>
+    <member>args</member>
+    <member>boundary</member>
+    <member>no_cache</member>
+    <member>no_local_copy</member>
+    <member>allowed</member>
+    <member>send_bodyct</member>
+    <member>bytes_sent</member>
+    <member>byterange</member>
+    <member>clength</member>
+    <member>unparsed_uri</member>
+    <member>mtime</member>
+    <member>request_time</member>
+   </simplelist>
+  </para>
+ </refsect1> 
+  
+ <refsect1 role="examples"> 
+  &reftitle.examples; 
+  <para> 
+   <example> 
+    <title><function>apache_lookup_uri</function> przykład</title> 
+    <programlisting role="php"> 
+<![CDATA[ 
+<?php 
+$info = apache_lookup_uri('index.php?var=value'); 
+print_r($info); 
+    
+if (file_exists($info->filename)) { 
+  echo 'plik istnieje!'; 
+} 
+?> 
+]]> 
+    </programlisting> 
+    &example.outputs.similar; 
+    <screen> 
+<![CDATA[ 
+stdClass Object 
+( 
+      [status] => 200 
+      [the_request] => GET /katalog/plik.php HTTP/1.1 
+      [method] => GET 
+      [mtime] => 0 
+      [clength] => 0 
+      [chunked] => 0 
+      [content_type] => application/x-httpd-php 
+      [no_cache] => 0 
+      [no_local_copy] => 1 
+      [unparsed_uri] => /katalog/index.php?var=value 
+      [uri] => /katalog/index.php 
+      [filename] => /home/htdocs/katalog/index.php 
+      [args] => var=value 
+      [allowed] => 0 
+      [sent_bodyct] => 0 
+      [bytes_sent] => 0 
+      [request_time] => 1074282764 
+) 
+file exists! 
+]]> 
+    </screen> 
+   </example> 
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

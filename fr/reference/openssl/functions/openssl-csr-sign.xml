@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 343014 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="function.openssl-csr-sign" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>openssl_csr_sign</refname>
+  <refpurpose>Signe un CSR avec un autre certificat (ou lui-même) et génère un certificat</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>openssl_csr_sign</methodname>
+   <methodparam><type>mixed</type><parameter>csr</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>cacert</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>priv_key</parameter></methodparam>
+   <methodparam><type>int</type><parameter>days</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>configargs</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>serial</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>openssl_csr_sign</function> génère une ressource de certificat x509
+   depuis la CSR donnée.
+  </para>
+  &note.openssl.cnf;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>csr</parameter></term>
+     <listitem>
+      <para>
+       Une CSR générée précédemment par <function>openssl_csr_new</function>. mais ce paramètre peut aussi être une
+       Ca peut aussi être le chemin vers une CSR encodée au format PEM, et spécifiée avec 
+       <filename>file://path/to/csr</filename> ou une chaîne exportée par 
+       <function>openssl_csr_export</function>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>cacert</parameter></term>
+     <listitem>
+      <para>
+       Le certificat généré sera signé par le certificat <parameter>cacert</parameter>. 
+       Si <parameter>cacert</parameter> vaut &null;, le certificat généré sera autosigné. 
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>priv_key</parameter></term>
+     <listitem>
+      <para>
+       <parameter>priv_key</parameter> est la clé privée qui correspond au certificat
+       <parameter>cacert</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>days</parameter></term>
+     <listitem>
+      <para>
+       <parameter>days</parameter> spécifie la durée pour laquelle le certificat
+       est valide, en nombre de jours.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>configargs</parameter></term>
+     <listitem>
+      <para>
+       Vous pouvez affiner la signature CSR avec <parameter>configargs</parameter>.
+       Voir la fonction <function>openssl_csr_new</function> pour plus d'informations sur 
+       <parameter>configargs</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>serial</parameter></term>
+     <listitem>
+      <para>
+       Un numéro de série optionnel pour le certificat émis. S'il n'est pas spécifié,
+       il vaudra 0.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne la ressource de certificat x509 en cas de succès, &false; sinon.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>openssl_csr_sign</function> - signer une
+     CSR (comment être votre propre Autorité de Certification)</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Supposons que ce script est configuré pour recevoir des CSR qui ont
+// été collés dans un champ textarea depuis une autre page
+$csrdata = $_POST["CSR"];
+
+// Nous allons signer la requête avec notre propre certificat, en tant 
+// qu'"autorité de certification". Vous pouvez utiliser n'importe quel
+// certificat pour en signer un autre, mais le processus est inutile à moins
+// que le certificat de signature n'ait la confiance des utilisateurs
+// qui utiliseront le nouveau certificat signé.
+
+// Nous avons besoin de notre certificat et de la clé privée
+$cacert = "file://path/to/ca.crt";
+$privkey = array("file://path/to/ca.key", "la_cle_secrete_de_votre_certificat");
+
+$usercert = openssl_csr_sign($csrdata, $cacert, $privkey, 365, array('digest_alg'=>'sha256') );
+
+// Affichons maintenant le certificat généré, de façon à ce que l'utilisateur
+// puisse le copier/coller dans sa configuration locale (comme un
+// fichier qui contient les certificats de son serveur SSL)
+openssl_x509_export($usercert, $certout);
+echo $certout;
+
+// Affiche toutes les erreurs survenues
+while (($e = openssl_error_string()) !== false) {
+    echo $e . "\n";
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.9 $ -->
+<classentry id="gtk.gtkscale">
+ <classmeta>
+  <classtitle>GtkScale</classtitle>
+  <classparent>GtkRange</classparent>
+  <shortdesc>
+   Base class for GtkHScale and GtkVScale.
+  </shortdesc>
+  <desc>
+   <para>
+    A <classname>GtkScale</classname> is a widget that looks very like a
+    <classname>GtkScrollbar</classname> without the arrow buttons at either
+    end and with the ability to display the current value as text.
+   </para>
+   <para>
+    There are some issues with the value display, in that scrolling-aware
+    container widgets will not allow their child's
+    <classname>GtkAdjustment</classname> to be overwritten, which means that
+    the <classname>GtkScale</classname> cannot have focus unless it takes
+    the values given by the container to the scrollable widget. This in turn
+    misconfigures the display area, which is calculated with regard to
+    the upper value of the associated adjustment object. When a container
+    sets an adjustment, each value is 0 at the start, and the later values
+    are calculated on the fly after the widgets have been drawn.
+   </para>
+   <para>
+    Although it is possible to use the <classname>GtkWidget</classname>
+    method <function class="GtkWidget">queue_resize</function> to force
+    the text area to resize according to the width of the new adjustment
+    values, the widget does not fully redraw unless it has a configure event
+    - that is, you need to manually resize it and then restore it.
+   </para>
+   <para>
+    For all these reasons, it is unadvisable to use the draw-value feature
+    where the <classname>GtkScale</classname> is associated with a
+    scrollable widget.
+   </para>
+  </desc>
+ </classmeta>
+
+ <methods>
+
+  <method id="gtk.gtkscale.method.get_digits">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_digits</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Gets number of decimal places.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets number of decimal places.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScale">set_digits</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscale.method.get_draw_value">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_draw_value</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets if value is displayed or not.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets if value is displayed or not.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScale">set_draw_value</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscale.method.get_layout">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>
+      <classname>PangoLayout</classname> <function>get_layout</function>
+     </funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the <classname>PangoLayout</classname> for the scale.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the <classname>PangoLayout</classname> for the scale. If the
+     <fieldname class="GtkScale">draw_value</fieldname> field is
+     <literal>false</literal> this method will return <literal>null</literal>.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscale.method.get_layout_offsets">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_layout_offsets</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the coordinates where the scale will draw the text in the scale.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns an array of the coordinates where the scale will draw the text in
+     the scale.
+    </para>
+    <para>
+     If the scale has been set not to draw the value (using <function class="GtkScale">set_draw_value</function>) the values returned will both
+     be <literal>0</literal>.
+    </para>
+    <note>
+     The offsets returned may need to be converted using <function class="Pango">PIXELS</function>.
+    </note>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscale.method.get_value_pos">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GtkPositionType</enumname> <function>get_value_pos</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Gets position of numeric text.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets position of numeric text.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScale">set_value_pos</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscale.method.set_digits">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_digits</function></funcdef>
+     <paramdef>int <parameter>digits</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets number of decimal places.
+   </shortdesc>
+   <desc>
+    <para>
+     This method sets the number of places to the right of the decimal point in the displayed value.
+    </para>
+    <para>
+     The default number of decimal places is 1.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScale">get_digits</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscale.method.set_draw_value">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_draw_value</function></funcdef>
+     <paramdef>bool <parameter>draw_value</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Toggles whether value is displayed.
+   </shortdesc>
+   <desc>
+    <para>
+     <function class="GtkScale">set_draw_value</function> simply toggles
+     whether the value is displayed as text or not.
+    </para>
+    <para>
+     The default setting is true.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScale">get_draw_value</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscale.method.set_value_pos">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_value_pos</function></funcdef>
+     <paramdef><enumname>GtkPositionType</enumname> <parameter>pos</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets position of numeric text.
+   </shortdesc>
+   <desc>
+    <para>
+     This method determines the position of the text, when it is displayed. The default value is GTK_POS_TOP.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScale">get_value_pos</function>
+    </para>
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkscale.signal.format-value">
+   <signalname>format-value</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>callback <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkScale <parameter>scale</parameter></paramdef>
+     <paramdef>double <parameter>value</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Signal which allows the display value of the scale to be changed.
+   </shortdesc>
+   <desc>
+    <para>
+     Signal which allows the display value of the scale to be changed. 
+    </para>
+    <para>
+     A signal handler can be connected to this signal to allow the display
+     value of the scale to be changed from the default. The callback will be
+     passed both the scale and the current value. The callback should return a
+     string representing the value as it is to be displayed.
+    </para>
+    <para>
+     <example>
+      <title>Formatting the Value of a Scale</title>
+      <programlisting role="php">
+       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkscale/format-value.phpw" parse="text">
+        <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+       </xi:include>
+      </programlisting>
+     </example>
+     This code will produce the window shown below.
+     <graphic fileref="&directory.images;/reference/gtk/gtkscale/format-value.png"/> 
+    </para>
+   </desc>
+  </signal>
+
+ </signals>
+
+</classentry>

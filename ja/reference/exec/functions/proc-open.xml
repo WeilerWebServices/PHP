@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 350654 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi,mumumu -->
+  <refentry xml:id='function.proc-open' xmlns="http://docbook.org/ns/docbook">
+   <refnamediv>
+    <refname>proc_open</refname>
+    <refpurpose>
+     コマンドを実行し、入出力用にファイルポインタを開く
+    </refpurpose>
+   </refnamediv>
+   <refsect1 role="description">
+    &reftitle.description;
+     <methodsynopsis>
+      <type>resource</type><methodname>proc_open</methodname>
+      <methodparam><type>mixed</type><parameter>cmd</parameter></methodparam>
+      <methodparam><type>array</type><parameter>descriptorspec</parameter></methodparam>
+      <methodparam><type>array</type><parameter role="reference">pipes</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>cwd</parameter></methodparam>
+      <methodparam choice="opt"><type>array</type><parameter>env</parameter></methodparam>
+      <methodparam choice="opt"><type>array</type><parameter>other_options</parameter></methodparam>
+     </methodsynopsis>
+    <para>
+     <function>proc_open</function> は <function>popen</function> と
+     よく似ていますが、プログラムの実行をさらに細かく制御できる点で違います。
+    </para>
+
+<!-- ptys are currently disabled in the sources
+    <para>
+     PHP 5 で、Unix98 pty 形式の pty のサポートが追加されました。これにより、
+     ターミナルとのやりとりを想定しているアプリケーションとの対話が可能となります。
+     pty の動きはパイプに似ていますが、双方向に働くので read/write のモードを
+     指定する必要がありません。以下の例では、pty を使用する方法を示しています。
+     すべてのディスクリプタを pty に接続する必要はないことに注意しましょう。
+     また、pty を 3 回指定したとしても、生成される pty は 1 つだけであることにも
+     注意しましょう。
+     PHP の将来のバージョンでは、pty に対する単なる読み書き以上のことが
+     可能になるでしょう。
+    </para>
+-->
+
+   </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>cmd</parameter></term>
+     <listitem>
+      <para>
+       実行するコマンドラインを &string; として渡します。
+       特殊な文字は適切にエスケープされ、適切にクォートされます。
+      </para>
+      <note>
+       <simpara>
+        <emphasis>Windows</emphasis> では、
+        <parameter>other_options</parameter> の <literal>bypass_shell</literal> を &true; に設定しないと、
+        <command>cmd.exe</command> (実際は<literal>%ComSpec%</literal>) に 
+        <parameter>cmd</parameter> の値を <emphasis>クォートしないまま</emphasis>
+        (つまり、<function>proc_open</function> に渡されたそのままの値を)
+        <literal>/c</literal> と一緒に渡してしまいます。
+        この振る舞いによって、<command>cmd.exe</command> が 
+        <parameter>cmd</parameter> からクォートを削除してしまうため、
+        (詳細は <command>cmd.exe</command> のドキュメントを参照してください)
+        予期しない、潜在的に危険とさえ言える結果になります。なぜなら、
+        <command>cmd.exe</command> のエラーメッセージには、
+        渡された <parameter>cmd</parameter> (の一部) が含まれる可能性があるからです(下の例を見てください)。
+       </simpara>
+      </note>
+      <para>
+       PHP 7.4.0 以降、<parameter>cmd</parameter> にはコマンドの引数も含めた &array; を渡せるようになりました。
+       この場合、プロセスは直接(シェルを介さずに)オープンされ、PHP が必要な引数のエスケープを全て行います。
+      </para>
+      <note>
+       <para>
+        Windows では、&array; で渡されるコマンドライン引数のエスケープは、
+        コマンドライン引数の解釈が
+        VCランタイムによって行われるものと互換性があることを前提にして行われます。
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>descriptorspec</parameter></term>
+     <listitem>
+      <para>
+       数値添字の配列で、ディスクリプタ番号をキーとし、PHP がその
+       ディスクリプタをどのように子プロセスに渡すかを表すのが
+       対応する値となります。
+       0 が標準入力 (stdin)、1 が標準出力 (stdout) で、
+       2 が標準エラー出力 (stderr) となります。
+      </para>
+      <para>
+       各要素は、次のようになります。
+       <simplelist>
+        <member>
+         プロセスに渡すパイプをあらわす配列。
+         最初の要素はディスクリプタの型で、2 番目の要素がその型に対応するオプションとなります。
+         使用できる型は <literal>pipe</literal> (2 番目の要素は、
+         プロセスにパイプの読み込み側を渡すのなら <literal>r</literal>、
+         書き込み側を渡すのなら <literal>w</literal>)
+         および <literal>file</literal> (2 番目の要素はファイル名)
+         です。
+        </member>
+        <member>
+         実際のファイルディスクリプタ (オープンしたファイルやソケット、
+         <constant>STDIN</constant> など) をあらわすストリームリソース。
+        </member>
+       </simplelist>
+      </para>
+      <para>
+       ファイルディスクリプタの番号は、特に 0, 1, 2 に限られているわけでは
+       ありません。有効であるどのようなファイルディスクリプタの番号も指定でき、
+       それは子プロセスに渡されます。これにより、あるスクリプトと、
+       子プロセスとして起動している別のスクリプトとの間で通信ができます。
+       特に、これは PGP や GPG、openssl といったプログラムにパスフレーズを
+       より安全な方法で渡したいとき威力を発揮します。
+       補助的なファイルディスクリプタを介して、そのようなプログラムの
+       状態を取得するのにも便利です。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>pipes</parameter></term>
+     <listitem>
+      <para>
+       PHP 側で生成されたパイプの終端にあたる
+       ファイルポインタの配列。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>cwd</parameter></term>
+     <listitem>
+      <para>
+       コマンドの初期作業ディレクトリ。
+       <emphasis role="strong">完全</emphasis>パスである必要があります。
+       デフォルト値 (現在の PHP プロセスの作業ディレクトリ) を使用したい場合は
+       &null; を指定します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>env</parameter></term>
+     <listitem>
+      <para>
+       実行するコマンドのための環境変数の配列。
+       現在の PHP プロセスと同じ環境変数を使用する場合は
+       &null; を指定します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>other_options</parameter></term>
+     <listitem>
+      <para>
+       その他の追加オプションを指定することが可能です。
+       現在サポートされているオプションは次の通りです。
+       <simplelist>
+        <member>
+         <literal>suppress_errors</literal> (windows のみ):
+         &true; にすると、この関数が出力するエラーを抑制します。
+        </member>
+        <member>
+         <literal>bypass_shell</literal> (windows のみ):
+         &true; にすると、<literal>cmd.exe</literal> シェルをバイパスします。
+        </member>
+        <member>
+         <literal>blocking_pipes</literal> (windows のみ):
+         &true; に設定すると、パイプを強制的に切断します。
+        </member>
+        <member>
+         <literal>create_process_group</literal> (Windows のみ):
+         &true; に設定すると、
+         子プロセスが <literal>CTRL</literal> イベントを
+         ハンドルすることを許可します。
+        </member>
+        <member>
+         <literal>create_new_console</literal> (windows のみ):
+         新しいプロセスは親の console を継承せず、新しい console を持ちます。
+        </member>
+       </simplelist>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   プロセスを表すリソースを返します。このリソースは、使用し終えた際に
+   <function>proc_close</function> を使用して開放する必要があります。
+   失敗した場合は &false; を返します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.4.4</entry>
+       <entry>
+        <parameter>other_options</parameter> パラメータに
+        オプション <literal>create_new_console</literal> が追加されました。
+       </entry>
+      </row>
+      <row>
+       <entry>7.4.0</entry>
+       <entry>
+        <function>proc_open</function> 関数は、
+        <parameter>cmd</parameter> に &array; を渡せるようになりました。
+       </entry>
+      </row>
+      <row>
+       <entry>7.4.0</entry>
+       <entry>
+        <parameter>other_options</parameter> パラメータに
+        オプション <literal>create_process_group</literal> が追加されました。
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>A <function>proc_open</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$descriptorspec = array(
+   0 => array("pipe", "r"),  // stdin は、子プロセスが読み込むパイプです。
+   1 => array("pipe", "w"),  // stdout は、子プロセスが書き込むパイプです。
+   2 => array("file", "/tmp/error-output.txt", "a") // はファイルで、そこに書き込みます。
+);
+
+$cwd = '/tmp';
+$env = array('some_option' => 'aeiou');
+
+$process = proc_open('php', $descriptorspec, $pipes, $cwd, $env);
+
+if (is_resource($process)) {
+    // $pipes はこの時点で次のような形を取っています。
+    // 0 => 子プロセスの stdin に繋がれた書き込み可能なハンドル
+    // 1 => 子プロセスの stdout に繋がれた読み込み可能なハンドル
+    // すべてのエラー出力は /tmp/error-output.txt に書き込みされます。
+
+    fwrite($pipes[0], '<?php print_r($_ENV); ?>');
+    fclose($pipes[0]);
+
+    echo stream_get_contents($pipes[1]);
+    fclose($pipes[1]);
+
+    // デッドロックを避けるため、proc_close を呼ぶ前に
+    // すべてのパイプを閉じることが重要です。
+    $return_value = proc_close($process);
+
+    echo "command returned $return_value\n";
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Array
+(
+    [some_option] => aeiou
+    [PWD] => /tmp
+    [SHLVL] => 1
+    [_] => /usr/local/bin/php
+)
+command returned 0
+]]>
+    </screen>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title><function>proc_open</function> 関数の癖(Windows限定)</title>
+    <simpara>
+     次のプログラムで、ファイル <filename>filename.txt</filename> にある
+     <literal>search</literal> というテキストを検索し、結果を出力したいのですが、
+     実際にはかなり異なる振る舞いをします。
+    </simpara>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$descriptorspec = [STDIN, STDOUT, STDOUT];
+$cmd = '"findstr" "search" "filename.txt"';
+$proc = proc_open($cmd, $descriptorspec, $pipes);
+proc_close($proc);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+'findstr" "search" "filename.txt' is not recognized as an internal or external command,
+operable program or batch file.
+]]>
+    </screen>
+    <simpara>
+     この振る舞いを避けるには、
+     <parameter>cmd</parameter> を追加のクォートで囲めば通常は十分です:
+    </simpara>
+    <programlisting role="php">
+<![CDATA[
+$cmd = '""findstr" "search" "filename.txt""';
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+<!-- ptys are currently disabled
+  <para>
+   <example>
+    <title>pty の使用法</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// 子プロセスのための擬似ターミナルを作成します。
+$descriptorspec = array(
+   0 => array("pty"),
+   1 => array("pty"),
+   2 => array("pty")
+);
+$process = proc_open("cvs -d:pserver:cvsread@cvs.php.net:/repository login", $descriptorspec, $pipes);
+if (is_resource($process)) {
+   // プロセスに対する操作をここで行います。
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+-->
+
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Windows における互換性: 2 (stderr) よりも大きな番号のディスクリプタは
+    子プロセスに継承可能なハンドルとして渡されますが、
+    Windows のアーキテクチャは、ファイルディスクリプタの番号と
+    より低レベルなハンドルを関連付けないので、子プロセスは、
+    それらのハンドルにアクセスする術を持ちません。stdin, stdout, stderr
+    は期待通り動きます。
+   </para>
+  </note>
+  <note>
+   <para>
+    もし単方向(一方向)のパイプを利用したいだけでしたら、
+    <function>popen</function> を使うほうがより簡単です。
+   </para>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>popen</function></member>
+    <member><function>exec</function></member>
+    <member><function>system</function></member>
+    <member><function>passthru</function></member>
+    <member><function>stream_select</function></member>
+    <member><link linkend="language.operators.execution">バックティック演算子</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

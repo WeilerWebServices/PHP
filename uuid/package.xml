@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<package version="2.0" xmlns="http://pear.php.net/dtd/package-2.0"
+    xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+
+  <name>uuid</name>
+  <channel>pecl.php.net</channel>
+
+  <summary>UUID extension</summary>
+
+  <description>
+  A wrapper around libuuid from the ext2utils project.
+  </description>
+
+  <lead>
+    <name>Hartmut Holzgraefe</name>
+    <user>hholzgra</user>
+    <email>hartmut@php.net</email>
+    <active>yes</active>
+  </lead>
+  <lead>
+    <name>Remi Collet</name>
+    <user>remi</user>
+    <email>remi@php.net</email>
+    <active>yes</active>
+  </lead>
+
+  <date>2020-10-06</date>
+  <version>
+    <release>1.2.0</release>
+    <api>1.1.0</api>
+  </version>
+  <stability>
+    <release>stable</release>
+    <api>stable</api>
+  </stability>
+
+  <license uri="http://www.gnu.org/licenses/licenses.html#LGPL" filesource="LICENSE">LGPL</license>
+
+  <notes>
+- raise warnings on bad input value with PHP 7
+- promote warnings to ValueError with PHP 8
+- add type hinting with PHP 8
+- fix bug #66982 uuid_mac checks wrong bit/byte for valid MAC address
+  </notes>
+
+  <contents>
+    <dir name="/">
+      <file role='doc' name='CREDITS'/>
+      <file role='doc' name='LICENSE'/>
+      <file role='src' name='config.m4'/>
+      <file role='src' name='uuid.c'/>
+      <file role='src' name='uuid.stub.php'/>
+      <file role='src' name='uuid_arginfo.h'/>
+      <file role='src' name='uuid_legacy_arginfo.h'/>
+      <file role='src' name='php_uuid.h'/>
+      <dir name="tests">
+        <file role='test' name='uuid_create.phpt'/>
+        <file role='test' name='uuid_is_valid.phpt'/>
+        <file role='test' name='uuid_compare.phpt'/>
+        <file role='test' name='uuid_is_null.phpt'/>
+        <file role='test' name='uuid_type.phpt'/>
+        <file role='test' name='uuid_variant.phpt'/>
+        <file role='test' name='uuid_time.phpt'/>
+        <file role='test' name='uuid_mac.phpt'/>
+        <file role='test' name='uuid_parse.phpt'/>
+        <file role='test' name='uuid_unparse.phpt'/>
+        <file role='test' name='uuid_generate_md5.phpt'/>
+        <file role='test' name='uuid_generate_sha1.phpt'/>
+      </dir>
+    </dir>
+  </contents>
+
+  <dependencies>
+    <required>
+      <php>
+        <min>7.0.0</min>
+      </php>
+      <pearinstaller>
+        <min>1.10.0</min>
+      </pearinstaller>
+      <os>
+        <name>unix</name>
+      </os>
+    </required>
+  </dependencies>
+
+  <providesextension>uuid</providesextension>
+
+  <extsrcrelease>
+   <configureoption name="with-uuid" default="autodetect" prompt="uuid installation directory?" />
+  </extsrcrelease>
+  
+  <changelog>
+   <release>
+  <date>2019-11-28</date>
+    <version>
+      <release>1.1.0</release>
+      <api>1.1.0</api>
+    </version>
+    <stability>
+      <release>stable</release>
+      <api>stable</api>
+    </stability>
+    <license uri="http://www.gnu.org/licenses/licenses.html#LGPL" filesource="LICENSE">LGPL</license>
+    <notes>
+- add uuid_generate_md5 and uuid_generate_sha1 functions
+    </notes>
+   </release>
+
+   <release>
+    <version>
+      <release>1.0.2</release>
+      <api>1.0.2</api>
+    </version>
+    <stability>
+      <release>stable</release>
+      <api>stable</api>
+    </stability>
+	<date>2008-04-01</date>
+    <license uri="http://www.gnu.org/licenses/licenses.html#LGPL" filesource="LICENSE">LGPL</license>
+    <notes>
+- should now work on Solaris, too (although missing two functions)
+- added uuid_parse() and uuid_unparse()
+- now generated using PEAR::CodeGen_PECL
+    </notes>
+   </release>
+
+   <release>
+      <version>
+        <release>1.0.3</release>
+        <api>1.0.2</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.gnu.org/licenses/licenses.html#LGPL" filesource="LICENSE">LGPL</license>
+      <date>2012-06-18</date>
+      <notes>
+- Fixed build on PHP 5.3+
+      </notes>
+   </release>
+
+   <release>
+      <date>2015-05-08</date>
+         <version>
+            <release>1.0.4</release>
+            <api>1.0.2</api>
+         </version>
+      <stability>
+         <release>stable</release>
+         <api>stable</api>
+      </stability>
+      <license uri="http://www.gnu.org/licenses/licenses.html#LGPL" filesource="LICENSE">LGPL</license>
+      <notes>
+- PHP 7 compatibility
+- add LICENSE in documentation
+- various build fix
+      </notes>
+   </release>
+
+   <release>
+      <date>2019-11-28</date>
+      <version>
+        <release>1.0.5</release>
+        <api>1.0.2</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.gnu.org/licenses/licenses.html#LGPL" filesource="LICENSE">LGPL</license>
+      <notes>
+- add missing constant UUID_VARIANT_NCS
+      </notes>
+   </release>
+  </changelog>
+</package>

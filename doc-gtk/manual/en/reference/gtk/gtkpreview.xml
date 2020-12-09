@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.6 $ -->
+<classentry id="gtk.gtkpreview">
+ <classmeta>
+  <classtitle>GtkPreview</classtitle>
+  <classparent>GtkWidget</classparent>
+  <shortdesc>
+   DEPRECATED. A widget to display RGB or grayscale data.
+  </shortdesc>
+  <desc>
+   <note>
+    &deprecated.class;
+    Use <classname>GtkImage</classname> with a <classname>GdkPixbuf</classname>
+    or <classname>GtkDrawingArea</classname>
+   </note>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkpreview.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkPreview</function></funcdef>
+    <paramdef>GtkPreviewType <parameter>type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkpreview.method.draw_row">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_row</function></funcdef>
+     <paramdef>string <parameter>data</parameter></paramdef>
+     <paramdef>int <parameter>x</parameter></paramdef>
+     <paramdef>int <parameter>y</parameter></paramdef>
+     <paramdef>int <parameter>w</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkpreview.method.put">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>put</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><classname>GdkGC</classname> <parameter>gc</parameter></paramdef>
+     <paramdef><parameter>srcx</parameter></paramdef>
+     <paramdef><parameter>srcy</parameter></paramdef>
+     <paramdef><parameter>destx</parameter></paramdef>
+     <paramdef><parameter>desty</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkpreview.method.set_dither">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_dither</function></funcdef>
+     
+     <paramdef><parameter>dither</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkpreview.method.set_expand">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_expand</function></funcdef>
+     <paramdef>bool <parameter>expand</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkpreview.method.size">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>size</function></funcdef>
+     <paramdef>int <parameter>width</parameter></paramdef>
+     <paramdef>int <parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+ <method id="gtk.gtkpreview.method.get_cmap">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_cmap</function></funcdef>
+     
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkpreview.method.get_preview_visual">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_preview_visual</function></funcdef>
+     
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkpreview.method.reset">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>reset</function></funcdef>
+     
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkpreview.method.set_color_cube">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>set_color_cube</function></funcdef>
+     
+     <paramdef><parameter>nred_shades</parameter></paramdef>
+     <paramdef><parameter>ngreen_shades</parameter></paramdef>
+     <paramdef><parameter>nblue_shades</parameter></paramdef>
+     <paramdef><parameter>ngray_shades</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkpreview.method.set_gamma">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>set_gamma</function></funcdef>
+     <paramdef><parameter>gamma</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkpreview.method.set_install_cmap">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>set_install_cmap</function></funcdef>
+     <paramdef><parameter>install_cmap</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkpreview.method.set_reserved">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>set_reserved</function></funcdef>
+     <paramdef><parameter>nreserved</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  </methods>
+
+</classentry>

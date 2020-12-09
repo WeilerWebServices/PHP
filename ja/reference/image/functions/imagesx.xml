@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 350828 Maintainer: hirokawa Status: ready -->
+<!-- Credits: mumumu -->
+<refentry xml:id="function.imagesx" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>imagesx</refname>
+  <refpurpose>画像の幅を取得する</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>imagesx</methodname>
+   <methodparam><type>resource</type><parameter>image</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   指定した画像リソース <parameter>image</parameter> の幅を返します。
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    &gd.image.description;
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <parameter>image</parameter> の幅、あるいはエラー時に &false;
+   を返します。
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>imagesx</function> の使用法</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// 300*200 の画像を作成します
+$img = imagecreatetruecolor(300, 200);
+
+echo imagesx($img); // 300
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><function>imagecreatetruecolor</function></member>
+   <member><function>getimagesize</function></member>
+   <member><function>imagesy</function></member>
+  </simplelist>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

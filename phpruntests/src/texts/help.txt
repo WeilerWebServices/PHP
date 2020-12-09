@@ -1,0 +1,54 @@
+Synopsis:
+    php run-tests.php [options] [files] [directories]
+
+Options:
+
+    -h
+    --help       This Help.
+
+    -p <php>     Specify PHP executable to run.
+    
+    -d foo=bar   Pass -d option to the php binary (Define INI entry foo
+                 with value 'bar').
+
+    -n           Pass -n option to the php binary (Do not use a php.ini).
+
+    -c <file>    Look for php.ini in directory <file> or use <file> as ini.
+    
+    -z <nproc>   Run in parallel, forks <nproc> processes.
+                 Only if pcntl enabled.
+    
+    -q           Quiet, no user interaction
+
+    -o <list|csv|xml>    Output format (default=list)
+    
+    -s <file>    Write output to <file>
+    
+    -l <file>   Read the testfiles to be executed from <file>. After the test
+                has finished all failed tests are written to the same <file>.
+                If the list is empty and no further test is specified then
+                all tests are executed (same as: -r <file> -w <file>).
+
+    -r <file>   Read the testfiles to be executed from <file>.
+
+    -v          verbose-mode level 1
+                basic information, test-name and status
+    
+    -vv         verbose-mode level 2
+                basic information plus extended information about
+                not passed tests
+    
+    -vvv        verbose-mode level 3
+                all available information about every test
+
+    --keep-[all|php|skip|clean]
+                 Do not delete 'all' files, 'php' test file, 'skip' or 'clean'
+                 file.
+	
+    --no-clean   Do not execute clean section if any.
+    
+    -m           Test for memory leaks with Valgrind 
+    
+    --mopts      Memory-options (Valgrind)
+
+

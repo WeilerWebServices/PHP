@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 338302 Maintainer: sammywg Status: ready -->
+
+<chapter xml:id="gmp.setup" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.setup;
+
+ <!-- {{{ Requirements -->
+ <section xml:id="gmp.requirements">
+  &reftitle.required;
+  <para> 
+   Die <acronym>GMP</acronym>-Bibliothek kann von <link
+   xlink:href="&url.gmp;">&url.gmp;</link> heruntergeladen werden. 
+   Auf dieser Seite steht zudem das <acronym>GMP</acronym>-Manual 
+   bereit.
+  </para>
+  <simpara>
+   Zumindest <acronym>GMP</acronym> Version 2 wird benötigt, um diese Funktionen 
+   zu verwenden. Einige Funktionen können aktuellere Versionen der 
+   <acronym>GMP</acronym>-Bibliothek voraussetzen. 
+  </simpara>
+ </section>
+ <!-- }}} -->
+
+ <!-- {{{ Installation -->
+ &reference.gmp.configure;
+ <!-- }}} -->
+
+ <!-- {{{ Configuration -->
+ <section xml:id="gmp.configuration">
+  &reftitle.runtime;
+  &no.config;
+ </section>
+ <!-- }}} -->
+
+ <!-- {{{ Resources -->
+ <section xml:id="gmp.resources">
+  &reftitle.resources;
+  <para>
+   Vor PHP 5.6 operierten die meisten GMP Funktionen auf GMP Zahlen-Ressourcen
+   oder gaben solche züruck.PHP 5.6 und neuer verwenden
+   <classname>GMP</classname> Objekte statt der GMP Zahlen-Ressourcen.
+  </para>
+ </section>
+ <!-- }}} -->
+
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

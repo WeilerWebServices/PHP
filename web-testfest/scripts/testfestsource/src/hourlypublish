@@ -1,0 +1,5 @@
+#!/bin/bash
+/home/zoe/testfestsource/src/publishresults.sh
+/usr/local/bin/php /home/zoe/testfestsource/src/killcurl.php
+exit 0
+

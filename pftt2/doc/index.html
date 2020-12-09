@@ -1,0 +1,240 @@
+<html>
+<body>
+
+<h1>PFTT - PHP Fast Test Tool</h1>
+
+<p>PFTT is a cross-platform and multi-platform high-speed PHP Test tool which supports unit tests, PHPTs for PHP-Core and
+PHPUnit tests for PHP Applications, along with comparison, debugging, performance, UI Automation, smoke and multi-scenario support. Fully tests PHP.</p>
+
+<h1>License</h1>
+
+<p>BSD</p>
+
+<h1>Important Classes</h1>
+
+<p>CliPhptTestCaseRunner - Executes a single PHPT Test Case (using the CLI SAPI) and evaluates</p>
+<p>HttpPhptTestCaseRunner - Executes a single PHPT Test Case against a PHP build running under a Web Server (Builtin, IIS, Apache)</p>
+<p>Host - Abstracts host management so client code doesn't need to care if host is local or remote(ssh)</p>
+<p>ScenarioSet - Models 90 sets of different Scenarios to test PHP in</p>
+<p>PhptTestCase - Models a PHPT Test case</p>
+
+<h1>INSTALL</h1>
+
+<ol>
+<li>Install Java SE 6 or 7 (JRE or JDK)
+<ol>
+<li>Must install JDK if you plan on development work. For normal use, JRE is sufficient.</li>
+<li>Sun/Oracle Java JDK: <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk6u37-downloads-1859587.html" target="_new">http://www.oracle.com/technetwork/java/javase/downloads/jdk6u37-downloads-1859587.html</a></li>
+<li>Sun/Oracle Java JRE: <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre6u37-downloads-1859589.html" target="_new">http://www.oracle.com/technetwork/java/javase/downloads/jre6u37-downloads-1859589.html</a></li>
+</ol>
+</li>
+<li>download PFTT ZIP</li>
+<li>decompress ZIP to C:\php-sdk\PFTT\current (Windows) or ~/php-sdk/PFTT/current (Linux)
+<p>Note: should have directories like c:\php-sdk\PFTT\current\bin not c:\php-sdk\PFTT\current\pftt-version\bin</p></li>
+<li>add PFTT to $PATH or %PATH% (optional)
+<ol>
+<li>Windows</li>
+<li>set PATH=c:\php-sdk\PFTT\current\bin;%PATH%</li>
+<li>To make it permanent, open System Properties from Control Panel (can also right-click on Start &gt; Computer and click My Computer)</li>
+<li>Click Advanced then Environment variables</li>
+<li>Find PATH under System variables and add C:\php-sdk\PFTT\current\bin</li>
+</ol>
+<br/>
+<ol>
+<li>Linux (bash)</li>
+<li>Open ~/.bash_profile</li>
+<li>Add export PATH=$PATH:~/php-sdk/PFTT/current/bin</li>
+<li>chmod +x ~/php-sdk/PFTT/current/bin/pftt</li>
+</ol>
+</li>
+</ol>
+
+<h1>Upgrading</h1>
+
+<p>PFTT has a builtin upgrade command. Just do:</p>
+
+<code>pftt upgrade</code>
+	
+<p>and you'll have the latest version.</p>
+
+<h1>USAGE</h1>
+
+<p>Find and download newest 5.3 snapshot build that provides an NTS build</p>
+
+<code>pftt release_get 5.3 NTS newest</code>
+
+<p>Find and download second-newest(previous before newest) 5.4 snapshot build that provides an NTS build</p>
+
+<code>pftt rget 5.4 NTS previous</code>
+
+<p>Stores builds and test-packs in C:\Php-sdk (Windows) or ~/php-sdk (Linux).
+For convenience can do</p>
+
+<code>pftt rgn 5.3 nts</code>
+	
+<p>List releases (by build, branch, both, or all)</p>
+
+<code>pftt release_list 5.3</code>
+<code>pftt release_list NTS</code>
+<code>pftt rl nts 5.3</code>
+<code>pftt rl</code>
+	
+<p>Download specific release (test-pack and build)</p>
+
+<code>pftt rg MASTER TS rc165a0b</code>
+
+<p>Run all PHPTs from the test-pack</p>
+<code>pftt core_all C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567</code>
+
+<p>Runs PHPTs only from list in SKIP_list_file (can add comments to lists with a ; or #)</p>
+<code>pftt core_list C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567 SKIP_list_file</code>
+
+<p>Runs PHPTs that contain 021 (name fragment) in their name</p>
+<code>pftt core_named C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567 021</code>
+
+<p><b>NOTE:</b> On Windows PFTT will prompt you to elevate it to Administrator privileges for some operations to configure Windows Error Reporting and firewall</p>
+
+<p>If build or test-pack not in current directory, automatically checks php-sdk (so you can ommit c:\php-sdk, etc...)</p>
+
+<code>pftt core_all php-5.4.7-win32-vc9-x86 php-test-pack-5.4-r1234567</code>
+
+<p>Opens a GUI to efficiently review large amounts of tests</p>
+<code>pftt -gui core_all C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567</code>
+<code>pftt -gui -config config_file core_list C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567 </code>
+<code>pftt -gui -config config_file core_named C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567</code>
+
+<p><a href="PhptDebuggerFrame1.png" target="_new"><img src="PhptDebuggerFrame1.png" width="640" border="0"/></a></p>
+
+<p>Shows help info (additional commands, etc...)</p>
+<code>pftt -help</code>
+
+<p>Run all PHPTs from the test-pack, running each PHPT 3 times</p> 
+<code>pftt -stress_each 3 core_all C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567</code>
+
+<h2>Functional Build Comparison(FBC) Reports</h2>
+
+<p>Run one test pass</p>
+<code>
+pftt core_all C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567
+<span>Or</span>
+pftt core_list C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567 SKIP_list_file
+<span>Or</span>
+pftt core_named C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567 021
+</code>
+
+<p>Run a second test pass, using a different build and/or test-pack</p>
+<code>
+pftt pa C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234568
+<span>Or</span>
+pftt core_list C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234568 SKIP_list_file
+<span>Or</span>
+pftt core_named C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234568 021
+</code>
+
+<p>PFTT will automatically generate an FBC report and display it using system default web browser</p>
+
+<p>Setup Wordpress (or other ~20 other PHP application), IIS and MySQL</p>
+<code>pftt -config iis,wordpress,mysql setup</code>
+
+<p>Run PHPT tests on Apache (instead of CLI)</p>
+<code>pftt -config apache core_all C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567 Or pftt core_list C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567 SKIP_list_file Or pftt core_named C:\php-sdk\php-5.4.7-win32-vc9-x86 C:\php-sdk\php-test-pack-5.4-r1234567 021</code>
+
+
+<h1>Development</h1>
+
+<ol>
+<li>Install <b>Eclipse Java IDE</b> 4.2 (Juno), <b>not Eclipse Classic</b> see http://eclipse.org/
+<ol>
+<li>download and decompress .zip file<li> 
+</ol>
+<li>Run Eclipse, the default value for workspace is ok
+<ol>
+<li>from decompressed eclipse folder, run eclipse.exe (Windows) or eclipse (linux)</li>
+</ol>
+</li>
+<li>Install Groovy Plugin:
+<ol>
+<li>Help &gt; Install New Software</li>
+<li>Add
+<li>Enter 'Groovy' for name and http://dist.springsource.org/release/GRECLIPSE/e4.2/ for location and click ok/add</li>
+<li>Check Groovy-Eclipse and click next through all the screens</li>
+<li>You may get a warning about groovy-eclipse not being signed, ignore and install anyway. Also, Eclipse will need to restart.</li>
+</ol>
+<li>On Windows, find c:\php-sdk\PFTT\Current\.classpath and .project. Look at their Properties in Windows Explorer and make sure the 'Read Only' and 'Hidden' attributes are not set. Clear it if it is, or Eclipse will get Access Denied errors.</li>
+<li>File &gt; Import &gt; General &gt; Existing project</li>
+<li>Choose C:\php-sdk\PFTT\current</li>
+<br/>
+That should be it (PFTT comes with eclipse .project and .classpath files which already have all the correct settings)
+</li>
+<li>By setting Host#Dev &gt; 0, you can have PFTT use php-sdk\PFTT\Dev-N and php-sdk\Dev-N instead of php-sdk\PFTT\current, to run stable and multiple development versions of PFTT side-by-side.</li>
+
+<!-- TODO how to create a run configuration -->
+
+</ol>
+
+<h2>Adding Scenarios</h2>
+
+<p>To add any test Scenario, implement Scenario and instantiate it in Scenario#getAllDefaultScenarios or a config file if it needs special configuration (like connecting to a remote host, database, etc... that the user would have to setup).</p>
+
+<h3>Database Scenario</h3>
+
+<p>More specifically, to add a database scenario (MySQL, Firebird, etc...) implement AbstractDatabaseScenario and add it to Scenario#getAllDefaultScenarios or a config file if it needs special configuration (like connecting to a remote host, database, etc... that the user would have to setup).</p>
+
+<h3>SAPI Scenario</h3> 
+
+<p>To add a SAPI Scenario (CLI, web server, etc...), implement AbstractSAPIScenario and add it to Scenario#getAllScenarios.</p>
+
+<p>If you want to implement a Web Server scenario (IIS, Apache, etc...), implement AbstractWebServerScenario, a subclass of AbstractSAPIScenario, which provides additional methods for testing PHPT tests using HTTP against PHP running under web servers.</p>
+
+<h2>Adding a PHPUnit Application</h2> 
+
+<p>If the application uses PHPUnit, implement PhpUnitAppTestPack. If it uses something else or something custom (like Wordpress), implement PhpAppTestPack.</p>
+
+<h2>Crash debugging</h2>
+
+<p>To re-run tests in exactly the same order, use -thread_count=1 console option with `app_list` or `core_list` commands.</p>
+
+<h3>For crashes that happen every time</h3>
+
+<ol>
+<li>Create a list of the tests that are crashing or might be crashing</li>
+<li>Run with -debug_all and core_list</li>
+</ol>
+
+<p>This will run all the tests in a Debugger (WinDebug for Windows and GDB for Linux). Do 1 first to reduce the number of tests to run since they'll run much slower in a debugger.</p>
+
+<p>When testing with Apache, this will run the Debugger on Apache to help trace Apache related problems.</p>
+
+<h3>For tests that crash occasionally</h3>
+
+<p>These options may be useful with core_list or core_all or core_named. -run_group_times_all, -run_test_times and -debug_list especially.</p> 
+
+<ul>
+<li>-run_test_times_all <N> - runs each test N times in a row/consecutively</li>
+<li>-run_test_times_list <N> <list file> - runs tests in that list N times. if used with -run_test_times_all, tests not in list can be run different number of times from tests in list (ex: run listed tests 5 times, run all other tests 2 times).</li>
+<li>-debug_list <list files> - runs tests in list in Debugger</li>
+<li>-run_group_times_all <N> - runs all groups of tests N times (in same order every time, unless -randomize used)</li>
+<li>-run_group_times_list <N> <list file> - like grun_group_times_All and run_test_times_list (but for groups of tests)</li> 
+<li>-no_nts - runs tests in any thread, regardless of thread-safety. This can increase load/stress, but may lead to false FAILS/ERRORs, especially in file or database tests.</li>
+</ul>
+
+<h3>Crash Reporting</h3>
+
+<p>When a PHP (or Apache) process crashes, PFTT will try running it a second time to confirm that that specific test really caused a crash before reporting the test as CRASH.</p>
+
+<p>On Windows, this double-crashing may cause 2 WER Popups (Windows Error Reporting) to appear for each test that crashed. This is normal, and its just PFTT being extra accurate about reporting CRASHes.</p>
+
+<h3>Cleaning up an interrupted Test Run (Windows)</h3>
+
+<p>Use `taskkill /im:php.exe /f /t` or `taskkill /im:httpd.exe /f /t` to kill off remaining php or apache processes</p>
+
+<p>Check `net use` and use `net use z: /delete` to take care of remaining remote file systems</p>
+
+<h3>Automation</h3>
+
+<p>Be sure to use -auto console option to signal that its being run automatically. This will supress blocking warnings and change some other settings to make sure that it runs without you having to click any buttons, etc...</p>
+
+<p>On Windows, be sure to run PFTT under Admistrator privileges or you'll get a bunch of UAC popups that will block automation.</p>
+
+</body>
+</html>

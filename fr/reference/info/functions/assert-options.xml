@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 349184 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+<refentry xml:id="function.assert-options" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>assert_options</refname>
+  <refpurpose>Définit/récupère différentes options d'assertions</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>assert_options</methodname>
+   <methodparam><type>int</type><parameter>what</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>value</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>assert_options</function> permet de modifier les diverses
+   options de la fonction <function>assert</function>, ou simplement
+   connaître la configuration actuelle.
+  </para>
+  <note>
+   <simpara>
+    À partir de PHP 7.0.0, l'utilisation de <function>assert_options</function>
+    est déconseillé en faveur de définir et récupérer les directives &php.ini;
+    <link linkend="ini.zend.assertions">zend.assertions</link> et
+    <link linkend="ini.assert.exception">assert.exception</link> avec
+    <function>ini_set</function> et <function>ini_get</function>, respectivement.
+   </simpara>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>what</parameter></term>
+     <listitem>
+      <para>
+       <table>
+        <title>Options d'assertions</title>
+        <tgroup cols="4">
+         <thead>
+          <row>
+           <entry>Option</entry>
+           <entry>Directive</entry>
+           <entry>Valeur par défaut</entry>
+           <entry>Description</entry>
+          </row>
+         </thead>
+         <tbody>
+          <row>
+           <entry>ASSERT_ACTIVE</entry>
+           <entry>assert.active</entry>
+           <entry>1</entry>
+           <entry>
+            Active l'évaluation de la fonction <function>assert</function>
+           </entry>
+          </row>
+          <row>
+           <entry>ASSERT_WARNING</entry>
+           <entry>assert.warning</entry>
+           <entry>1</entry>
+           <entry>Génère une alerte PHP pour chaque assertion fausse</entry>
+          </row>
+          <row>
+           <entry>ASSERT_BAIL</entry>
+           <entry>assert.bail</entry>
+           <entry>0</entry>
+           <entry>Termine l'exécution en cas d'assertion fausse</entry>
+          </row>
+          <row>
+           <entry>ASSERT_QUIET_EVAL</entry>
+           <entry>assert.quiet_eval</entry>
+           <entry>0</entry>
+           <entry>
+            Désactive le rapport d'erreur durant l'évaluation d'une assertion
+           </entry>
+          </row>
+          <row>
+           <entry>ASSERT_CALLBACK</entry>
+           <entry>assert.callback</entry>
+           <entry>(&null;)</entry>
+           <entry>
+            Fonction de rappel utilisateur, pour le traitement des assertions fausses
+           </entry>
+          </row>
+         </tbody>
+        </tgroup>
+       </table>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>value</parameter></term>
+     <listitem>
+      <para>
+       Une nouvelle valeur, optionnelle, pour l'option.
+      </para>
+      <para>
+       La fonction de rappel définie via <constant>ASSERT_CALLBACK</constant> ou
+       assert.callback devrait avoir la signature suivante :
+       <methodsynopsis role="procedural">
+        <type>void</type><methodname>assert_callback</methodname>
+        <methodparam><type>string</type><parameter>file</parameter></methodparam>
+        <methodparam><type>int</type><parameter>line</parameter></methodparam>
+        <methodparam><type>string</type><parameter>assertion</parameter></methodparam>
+        <methodparam choice="opt"><type>string</type><parameter>description</parameter></methodparam>
+       </methodsynopsis>
+       <variablelist>
+        <varlistentry>
+         <term><parameter>file</parameter></term>
+         <listitem>
+          <simpara>
+           Le fichier <function>assert</function> a été appellé.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><parameter>line</parameter></term>
+         <listitem>
+          <simpara>
+           La ligne où <function>assert</function> a été appellé.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><parameter>assertion</parameter></term>
+         <listitem>
+          <simpara>
+           L'assertion qui a été fournie à <function>assert</function>,
+           convertie en une &string;.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><parameter>description</parameter></term>
+         <listitem>
+          <simpara>
+           La description qui a été fournie à <function>assert</function>.
+          </simpara>
+         </listitem>
+        </varlistentry>
+       </variablelist>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne la valeur originale de l'option, ou bien &false; en cas d'erreur.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+   <title>Exemple avec <function>assert_options</function></title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+// Ceci est notre fonction pour gérer les
+// erreurs d'assertion
+function assert_failure($file, $line, $assertion, $message)
+{
+    echo "L'assertion $assertion dans $file à la ligne $line a échoué : $message";
+}
+
+// Ceci est notre fonction de test
+function test_assert($parameter)
+{
+    assert(is_bool($parameter));
+}
+
+// Définit nos options d'assertion
+assert_options(ASSERT_ACTIVE,   true);
+assert_options(ASSERT_BAIL,     true);
+assert_options(ASSERT_WARNING,  false);
+assert_options(ASSERT_CALLBACK, 'assert_failure');
+
+// Une assertion qui doit échouée
+test_assert(1);
+
+// Ceci n'est jamais atteint, car ASSERT_BAIL
+// vaut true
+echo 'Jamais atteint';
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>assert</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

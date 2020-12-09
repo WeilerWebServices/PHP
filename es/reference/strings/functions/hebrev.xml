@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 297028 Maintainer: benjamin Status: ready -->
+<!-- Reviewed: not --> 
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.hebrev">
+ <refnamediv>
+  <refname>hebrev</refname>
+  <refpurpose>Convierte texto hebreo lógico a texto visual </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description"> &reftitle.description; <methodsynopsis>
+   <type>string</type>
+   <methodname>hebrev</methodname>
+   <methodparam>
+    <type>string</type>
+    <parameter>hebrew_text</parameter>
+   </methodparam>
+   <methodparam choice="opt">
+    <type>int</type>
+    <parameter>max_chars_per_line</parameter>
+    <initializer>0</initializer>
+   </methodparam>
+  </methodsynopsis>
+  <para> Convierte el texto hebreo lógico a texto visual.</para>
+  <para> La función trata de evitar el corte de las palabras. </para>
+ </refsect1>
+
+ <refsect1 role="parameters"> &reftitle.parameters; <para>
+   <variablelist>
+    <varlistentry>
+     <term>
+      <parameter>hebrew_text</parameter>
+     </term>
+     <listitem>
+      <para> Una cadena Hebrea de entrada. </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>
+      <parameter>max_chars_per_line</parameter>
+     </term>
+     <listitem>
+      <para> Este parámetro opcional indica el número máximo de caracteres por línea que será
+       devuelta. </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues"> &reftitle.returnvalues; <para> Devuelve la cadena visual.
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso"> &reftitle.seealso; <para>
+   <simplelist>
+    <member>
+     <function>hebrevc</function>
+    </member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>

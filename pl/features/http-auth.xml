@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 337609 Maintainer: joeaccord Status: ready -->
+<!-- $Revision$ -->
+<!-- CREDITS: slawek, sobak -->
+ <chapter xml:id="features.http-auth" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Uwierzytelnianie HTTP w PHP</title>
+
+  <simpara>
+   Możliwe jest używanie
+   funkcji <function>header</function> w celu wysłania do przeądarki komunikatu
+   <literal>"Wymagana autoryzacja"</literal>. To powoduje wyświetlenie okna z polami:
+   użytkownik i hasło. Po wypełnieniu przez użytkownika tych pól, URL
+   zawierający skrypt PHP zostanie ponownie wywołany z ustawionymi
+   <link linkend="reserved.variables">predefiniowanymi zmiennymi</link>
+   <varname>PHP_AUTH_USER</varname>, <varname>PHP_AUTH_PW</varname> i
+   <varname>AUTH_TYPE</varname> zawierającymi odpowiednio
+   nazwę użytkownika, hasło i typ autoryzacji. Zmienne te będą dostępne w
+   tablicy <varname>$_SERVER</varname> Obecnie obsługiwane są autoryzacje
+   typu "Basic" i "Digest" (od PHP 5.1.0). Więcej informacji można znaleć w opisie funkcji
+   <function>header</function>.
+  </simpara>
+
+  <para>
+   Przykładowy skrypt wymuszający autoryzację klienta:
+  </para>
+  <para>
+   <example>
+    <title>Uwierzytelnianie Basic HTTP</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+if (!isset($_SERVER['PHP_AUTH_USER'])) {
+    header('WWW-Authenticate: Basic realm="My Realm"');
+    header('HTTP/1.0 401 Unauthorized');
+    echo 'Tekst do wysłania, jeśli użytkownik wciśnie przycisk Anuluj';
+    exit;
+} else {
+    echo "<p>Hej {$_SERVER['PHP_AUTH_USER']}.</p>";
+    echo "<p>Twoje hasło to {$_SERVER['PHP_AUTH_PW']}.</p>";
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title>Przykład uwierzytelnianie Digest HTTP</title>
+    <para>
+     Ten przykład pokazuje jak zaimplementować proste umierzytelnianie
+     Digest HTTP. Więcej informacji znajduje się w dokumencie <link
+      xlink:href="&url.rfc;2617">RFC 2617</link>.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$realm = 'Zastrzeżona strefa';
+
+//user => password
+$users = array('admin' => 'mypass', 'guest' => 'guest');
+
+
+if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
+    header('HTTP/1.1 401 Unauthorized');
+    header('WWW-Authenticate: Digest realm="'.$realm.
+           '",qop="auth",nonce="'.uniqid().'",opaque="'.md5($realm).'"');
+
+    die('Tekst do wysłania kiedy użytkownik kliknie klawisz anuluj');
+}
+
+
+// analiza zmiennej PHP_AUTH_DIGEST
+if (!($data = http_digest_parse($_SERVER['PHP_AUTH_DIGEST'])) ||
+    !isset($users[$data['username']]))
+    die('Nieprawidłowe listy uwierzytelniające!');
+
+
+// tworzenie prawidłowej odpowiedzi
+$A1 = md5($data['username'] . ':' . $realm . ':' . $users[$data['username']]);
+$A2 = md5($_SERVER['REQUEST_METHOD'].':'.$data['uri']);
+$valid_response = md5($A1.':'.$data['nonce'].':'.$data['nc'].':'.$data['cnonce'].':'.$data['qop'].':'.$A2);
+
+if ($data['response'] != $valid_response)
+    die('Nieprawidłowe listy uwierzytelniające!');
+
+// ok, prawidłowa nazwa użytkownika i hasło
+echo 'Jesteś zalogowany jako: ' . $data['username'];
+
+
+// function to parse the http auth header
+function http_digest_parse($txt)
+{
+    // zabezpieczenie przeciwko brakującym informacjom
+    $needed_parts = array('nonce'=>1, 'nc'=>1, 'cnonce'=>1, 'qop'=>1, 'username'=>1, 'uri'=>1, 'response'=>1);
+    $data = array();
+    $keys = implode('|', array_keys($needed_parts));
+
+    preg_match_all('@(\w+)=(?:([\'"])([^\2]+)\2|([^\s,]+))@', $txt, $matches, PREG_SET_ORDER);
+
+    foreach ($matches as $m) {
+        $data[$m[1]] = $m[3] ? $m[3] : $m[4];
+        unset($needed_parts[$m[1]]);
+    }
+
+    return $needed_parts ? false : $data;
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <note>
+   <title>Kompatybilność</title>
+   <para>
+    Należy uważać z linijkami dodawanymi do nagłówka HTTP. W celu zachowania maksymalnej
+    zgodności ze wszystkimi klientami, słowo Basic powinno zaczynać się dużą
+    literą "B", wartość realm powinna być otoczona  cudzysłowami (nie apostrofami),
+    i dokładnie jeden znak odstępu powinien poprzedzać kod <emphasis>401</emphasis> w linii
+    <emphasis>HTTP/1.0 401</emphasis>. Parametry autoryzacyjne muszą być
+    oddzielone przecinkami jak pokazano to w przykładzie digest powyżej.
+   </para>
+  </note>
+
+  <para>
+   Zamiast wyświetlać wartość <varname>PHP_AUTH_USER</varname> i
+   <varname>PHP_AUTH_PW</varname>, jak to zrobiono w powyższym przykładzie,
+   zechcesz zapewne sprawdzić poprawność nazwy użytkownika i hasła. Na przykład
+   poprzez zapytanie do bazy danych lub odnalezienie użytkownika w pliku dbm.
+  </para>
+
+  <para>
+   Należy uważać na kapryśne przeglądarki Internet Explorer. Są wrażliwe na
+   kolejność wysyłanych nagłówków HTTP. Wysłanie nagłowka
+   <emphasis>WWW-Authenticate</emphasis> przed
+   <literal>HTTP/1.0 401</literal> powinno rozwiązać problem.
+  </para>
+
+  <simpara>
+   Aby zapobiec sytuacji w której ktoś napisze skrypt
+   wykradający hasło wysłane tradycyjnym zewnętrznym mechanizmem,
+   zmienne PHP_AUTH nie będą ustawiane, jeśli dla danej strony
+   aktywna jest autoryzacja zewnętrzna
+   i &safemode; jest włączony.  Bez względu na to,
+   <varname>REMOTE_USER</varname> może zostać użyte do zidentyfikowania
+   użytkownika autoryzowanego zewnętrznie  Zatem, możesz użyć
+   <varname>$_SERVER['REMOTE_USER']</varname>.
+  </simpara>
+
+  <note>
+   <title>Konfiguracja</title>
+   <para>
+    Aby wykryć czy miała miejsce zewnętrzna autoryzacja, PHP sprwadza
+    obecność dyrektywy <literal>AuthType</literal>.
+   </para>
+  </note>
+
+  <simpara>
+   Powyższa metoda nie zapobiega jednak wykradaniu haseł do stron wymagających
+   autoryzacji przez kogoś, kto na tym samym serwerze kontroluje strony nie
+   wymagające autoryzacji.
+  </simpara>
+  <simpara>
+   Zarówno Netscape Navigator jak i Internet Explorer opróżnią bufor
+   autoryzacji po otrzymaniu od serwera kodu 401. Można w ten sposób
+   wylogowanić użytkownika i zmusić go do ponownego wysłania nazwy użytkownika
+   i hasła. Tej metody można użyć do wylogowania użytkownika po określonym
+   czasie lub stworzenia przycisku "Wyloguj".
+  </simpara>
+  <para>
+   <example>
+    <title>Uwierzytelnianie HTTP z wymuszeniem przelogowania</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function authenticate() {
+    header('WWW-Authenticate: Basic realm="Testowy system autoryzacji"');
+    header('HTTP/1.0 401 Unauthorized');
+    echo "Musisz podać poprawny login i hasło by wejść na tę stronę\n";
+    exit;
+}
+
+if (!isset($_SERVER['PHP_AUTH_USER']) ||
+    ($_POST['SeenBefore'] == 1 && $_POST['OldAuth'] == $_SERVER['PHP_AUTH_USER'])) {
+    authenticate();
+} else {
+    echo "<p>Witaj: " . htmlspecialchars($_SERVER['PHP_AUTH_USER']) . "<br />";
+    echo "Poprzednio: " . htmlspecialchars($_REQUEST['OldAuth']);
+    echo "<form action='' method='post'>\n";
+    echo "<input type='hidden' name='SeenBefore' value='1' />\n";
+    echo "<input type='hidden' name='OldAuth' value=\"" . htmlspecialchars($_SERVER['PHP_AUTH_USER']) . "\" />\n";
+    echo "<input type='submit' value='Re Authenticate' />\n";
+    echo "</form></p>\n";
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <simpara>
+   Powyższa metoda nie jest wymagana przez autoryzację <literal>HTTP Basic</literal>,
+   więc nie można na niej polegać. Testy z przeglądarką
+   <literal>Lynx</literal> pokazały, że <literal>Lynx</literal> nie usuwa danych
+   o autoryzacji po odebraniu od serwera kodu 401, zatem przejście wstecz a następnie
+   do przodu otworzy stronę, chyba, że
+   wymagania co do danych autoryzacji zmieniły się. Użytkownik może jednak
+   użyć klawisza <literal>'_'</literal> by usunąc dane o autoryzacji.
+  </simpara>
+  <simpara>
+   Aby autoryzacja HTTP działała na serwerze Microsoft IIS z PHP w wersji
+   CGI musisz wyedytować "<literal>Bezpieczeństwo katalogów</literal>" w konfiguracji IIS.
+   Kliknij na "<literal>Edytuj</literal>" i zaznacz wyłącznie
+   "<literal>Anonimowy Dostęp</literal>", wszystkie inne pola
+   powinny pozostać nie zaznaczone.
+  </simpara>
+  <note>
+   <title>Notatka IIS:</title>
+   <simpara>
+    Aby Autoryzacja HTTP działała z IIS, dyrektywa PHP
+    <link linkend="ini.cgi.rfc2616-headers">cgi.rfc2616_headers</link> musi
+    być ustawiona na <literal>0</literal> (domyślna wartość).
+   </simpara>
+  </note>
+  <note>
+   <para>
+    Jeśli włączony jest <link linkend="ini.safe-mode">tryb bezpieczny</link>,
+    uid skryptu jest doklejany do pola <literal>realm</literal> nagłówka
+    <literal>WWW-Authenticate</literal>.
+   </para>
+  </note>
+
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,94 @@
+#!/bin/sh
+# $Id$
+# Run the cron for a box
+
+FAIL_LOGFILE=/var/log/php-cron-box.fail
+
+LOGFILE=/var/log/php-cron-box.log
+
+exec >> $LOGFILE
+exec 2>&1
+exec </dev/null
+
+now() {
+	date +%Y.%m.%d-%H.%M.%S
+}
+
+log_fail() {
+	SVC=$1
+	ERR=$2
+
+	echo "`now` job=$SVC exit-code=$ERR" >> $FAIL_LOGFILE
+}
+
+# pull in details for this box
+. /local/systems/boxen/`hostname`
+
+usage()
+{
+	echo "cron-box (monthly|weekly|daily|hourly|minutely|startup)"
+}
+
+cd /local/systems
+PATH="/local/systems:/usr/local/bin:$PATH"
+
+case "$1" in
+	monthly)
+		WHAT=$MONTHLY
+		date=`date +"%Y%m%d-month%m"`
+		 ;;
+	weekly)	
+		WHAT=$WEEKLY
+		date=`date +"%Y%m%d-week%V"`
+		 ;;
+	daily)	
+		WHAT=$DAILY
+		date=`date +"%Y%m%d"`
+		WHAT="$WHAT check-fails"
+		 ;;
+	hourly)	
+		WHAT=$HOURLY
+		date=`date +"%Y%m%d-%H:00"`
+		 ;;
+	minutely)	
+		WHAT=$MINUTELY
+		date=`date +"%Y%m%d-%H:%M"`
+		 ;;
+	startup)
+		WHAT=$BOOT
+		date=`date +"%Y%m%d"`
+		;;
+	*)
+				usage
+				exit 1
+				;;
+esac
+
+# export the date for backup scripts
+how=$1
+export how
+export date
+
+for svc in $WHAT ; do
+
+	# Alert systems@php.net if there's a possible zombie process here. <danbrown>
+	if test -x /tmp/.$svc.runone.pid; then
+		echo "I tried to run the $1 process on $svc, but found that /tmp/.$svc.runone.pid exists." \
+		| mail -s "Possible Zombie Process on `hostname`" systems@php.net -- -fnoreply@php.net;
+	fi;
+
+	if test -x /local/systems/$svc ; then
+        echo
+        echo "`now` running $svc"
+		runone /tmp/.$svc.runone.pid /local/systems/$svc
+		ERR=$?
+
+		if test "$ERR" != "0"; then
+			log_fail $svc $ERR
+		fi
+	else
+		echo "Something is wrong. /local/systems/$svc on `hostname` is not executable." \
+		| mail -s "Broken cronjob on `hostname`" systems@php.net -- -fnoreply@php.net
+	fi
+done
+

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 299490 Maintainer: takagi Status: ready -->
+<refentry xml:id="memcache.set" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>Memcache::set</refname>
+  <refpurpose>データをサーバーに格納する</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>Memcache::set</methodname>
+   <methodparam><type>string</type><parameter>key</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>var</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flag</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>expire</parameter></methodparam>
+  </methodsynopsis>
+
+  <para>
+   <function>Memcache::set</function> は、キー
+   <parameter>key</parameter> に <parameter>var</parameter> という値を
+   関連付け、memcached サーバーに格納します。パラメータ <parameter>expire</parameter>
+   は、データの有効期限を秒単位で指定します。もし 0 を指定した場合は
+   その項目が期限切れになることはありません (これは、その項目のデータが
+   memcached サーバー上にずっと残り続けることを保証するものではありません。
+   他の項目をキャッシュするための場所を確保するためにサーバーから
+   削除されてしまうこともあります)。
+   (zlib を使用して) その場でのデータの圧縮を行いたい場合は、
+   <parameter>flag</parameter> の値として、定数
+   <constant>MEMCACHE_COMPRESSED</constant> を指定します。
+   <note>
+    <para>
+     リソース型の変数 (たとえばファイル記述子や接続記述子など)
+     はキャッシュに保存できないことを覚えておきましょう。これは、
+     シリアライズした状態ではそれらのデータを適切に表すことが
+     できないためです。
+    </para> 
+   </note>
+   <function>memcache_set</function> 関数を使用することも可能です。
+  </para>
+
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>key</parameter></term>
+     <listitem>
+      <para>
+       項目に関連付けられたキー。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>var</parameter></term>
+     <listitem>
+      <para>
+       格納する値。文字列および整数値はそのままの形式で、それ以外の型は
+       シリアライズされて格納されます。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>flag</parameter></term>
+     <listitem>
+      <para>
+       項目を圧縮して格納する場合に <constant>MEMCACHE_COMPRESSED</constant>
+       を使用します (zlib を使用します)。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>expire</parameter></term>
+     <listitem>
+      <para>
+       項目の有効期限。ゼロの場合は有効期限なし (いつまでも有効)
+       となります。Unix タイムスタンプ形式、あるいは現在からの
+       秒数で指定することが可能ですが、後者の場合は秒数が
+       2592000 (30 日) を超えることはできません。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>Memcache::set</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+/* 手続き型の API */
+
+/* memcached サーバーに接続します */
+$memcache_obj = memcache_connect('memcache_host', 11211);
+
+/*
+キー 'var_key' の項目の値を設定します。
+flag の値として 0 を使用し、圧縮は使用しません。
+有効期限は 30 秒です。
+*/
+memcache_set($memcache_obj, 'var_key', 'some variable', 0, 30);
+
+echo memcache_get($memcache_obj, 'var_key');
+
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title><function>Memcache::set</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+/* オブジェクト指向の API */
+
+$memcache_obj = new Memcache;
+
+/* memcached サーバーに接続します */
+$memcache_obj->connect('memcache_host', 11211);
+
+/*
+キー 'var_key' に対応する値を設定します。その際、データの圧縮を行います。
+有効期限は 50 秒です。
+*/
+$memcache_obj->set('var_key', 'some really big variable', MEMCACHE_COMPRESSED, 50);
+
+echo $memcache_obj->get('var_key');
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>Memcache::add</function></member>
+    <member><function>Memcache::replace</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

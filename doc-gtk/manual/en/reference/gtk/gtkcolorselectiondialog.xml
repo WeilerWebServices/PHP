@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.10 $ -->
+<classentry id="gtk.gtkcolorselectiondialog">
+ <classmeta>
+  <classtitle>GtkColorSelectionDialog</classtitle>
+  <classparent>GtkDialog</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkcolorselectiondialog.png"/>
+  <shortdesc>
+   A standard dialog box to select a color.
+  </shortdesc>
+  <desc>
+   The <classname>GtkColorSelectionDialog</classname> provides a standard 
+   dialog box which allows the user to select a color. The dialog box 
+   implements the <classname>GtkColorSelection</classname> widget to enable 
+   the user to pick a color.
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkcolorselectiondialog.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkColorSelectionDialog</function></funcdef>
+    <paramdef>string <parameter><optional>title = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new GtkColorSelectionDialog.
+   </shortdesc>
+   <desc>
+    <para>
+     Use the constructor to create a new 
+     <classname>GtkColorSelectionDialog</classname>.
+    </para>
+
+    <example>
+     <title>Customized GtkColorSelectionDialog</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkcolorselectiondialog/constructor.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <fields>
+
+  <field id="gtk.gtkcolorselectiondialog.field.cancel_button" type="ro">
+   <fieldname>cancel_button</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    The cancel button widget
+   </shortdesc>
+   <desc>
+    This widget refers to the cancel button contained within the 
+    <classname>GtkColorSelectionDialog</classname>. You may connect a 
+    callback to handle the clicked signal.
+   </desc>
+  </field>
+
+  <field id="gtk.gtkcolorselectiondialog.field.colorsel" type="ro">
+   <fieldname>colorsel</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    GtkColorSelection widget of the dialog
+   </shortdesc>
+   <desc>
+    This widget refers to the <classname>GtkColorSelection</classname> widget 
+    contained within <classname>GtkColorSelectionDialog</classname>. You may 
+    use this widget and its 
+    <function class="GtkColorSelection">get_current_color</function> to 
+    ascertain what color the user has selected. Another application would be 
+    to use the widget's 
+    <signalname class="GtkColor">color_changed</signalname> signal to be 
+    notified when the color changes.
+   </desc>
+  </field>
+
+  <field id="gtk.gtkcolorselectiondialog.field.help_button" type="ro">
+   <fieldname>help_button</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    Help button widget.
+   </shortdesc>
+   <desc>
+    This widget refers to the help button contained within the 
+    <classname>GtkColorSelectionDialog</classname>. You may connect a 
+    callback to handle the clicked signal.
+   </desc>
+  </field>
+
+  <field id="gtk.gtkcolorselectiondialog.field.ok_button" type="ro">
+   <fieldname>ok_button</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    OK button widget.
+   </shortdesc>
+   <desc>
+    This widget refers to the OK button contained within the 
+    <classname>GtkColorSelectionDialog</classname>. You may connect a 
+    callback to handle the clicked signal.
+   </desc>
+  </field>
+
+ </fields>
+
+</classentry>

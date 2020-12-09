@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351135 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id='function.simplexml-load-file' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>simplexml_load_file</refname>
+  <refpurpose>Convertit un fichier XML en objet</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>SimpleXMLElement</type><type>false</type></type><methodname>simplexml_load_file</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>class_name</parameter><initializer>"SimpleXMLElement"</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>options</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>ns</parameter><initializer>""</initializer></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>is_prefix</parameter><initializer>&false;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Convertit le document XML <parameter>filename</parameter>
+   en un objet de type <type>SimpleXMLElement</type>.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filename</parameter></term>
+     <listitem>
+      <para>
+       Chemin vers le fichier XML
+      </para>
+      <note>
+       <para>
+        Libxml 2 supprime la protection des caractères des URI, alors si vous voulez
+        passer par exemple <literal>b&amp;c</literal> comme paramètre URI à 
+        <literal>a</literal>, vous devez appeler
+        <literal>simplexml_load_file(rawurlencode('http://example.com/?a=' .
+         urlencode('b&amp;c')))</literal>. Depuis PHP 5.1.0, vous n'avez plus
+        besoin de faire cela puisque PHP le fait pour vous.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>class_name</parameter></term>
+     <listitem>
+      <para>
+       Vous pouvez utiliser ce paramètre optionnel et ainsi,
+       la fonction <function>simplexml_load_file</function> retournera un objet de
+       la classe spécifiée. Cette classe doit étendre la classe 
+       <type>SimpleXMLElement</type>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>options</parameter></term>
+     <listitem>
+      <para>
+       Depuis PHP 5.1.0 et Libxml 2.6.0, vous pouvez aussi utiliser le paramètre
+       <parameter>options</parameter> pour spécifier des <link
+       linkend="libxml.constants">paramètres additionnels Libxml</link>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>ns</parameter></term>
+     <listitem>
+      <para>
+       Préfixe ou l'URI de l'espace de noms.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>is_prefix</parameter></term>
+     <listitem>
+      <para>
+       &true; si <parameter>ns</parameter> est un préfixe,
+       &false; si c'est l'URI ; par défaut, &false;.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne un &object; de la classe <type>SimpleXMLElement</type>
+   dont les propriétés contiennent les données du document XML, &return.falseforfailure;.
+  </para>
+  &return.falseproblem;
+ </refsect1>
+ 
+ <refsect1 role="errors"><!-- {{{ -->
+  &reftitle.errors;
+  <para>
+   Produit un message d'erreur de niveau <constant>E_WARNING</constant>
+   pour chaque erreur trouvée dans les données XML.
+  </para>
+  <tip>
+   <para>
+    Utilisez la fonction <function>libxml_use_internal_errors</function>
+    pour supprimer toutes les erreurs XML, et la fonction
+    <function>libxml_get_errors</function> pour les parcourir.
+   </para>
+  </tip>
+ </refsect1><!-- }}} -->
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.2.0</entry>
+       <entry>
+        Le paramètre optionel <parameter>is_prefix</parameter> a été ajouté.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Interprétation d'un document XML</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Le fichier test.xml contient un document XML avec un élément racine
+// et au moins un élément /[racine]/title.
+
+if (file_exists('test.xml')) {
+    $xml = simplexml_load_file('test.xml');
+
+    print_r($xml);
+} else {
+    exit('Echec lors de l\'ouverture du fichier test.xml.');
+}
+?>
+]]>
+    </programlisting>
+    <para>
+     Ce script affichera, en cas de succès :
+    </para>
+    <screen>
+<![CDATA[
+SimpleXMLElement Object
+(
+  [title] => Example Title
+  ...
+)
+]]>
+    </screen>
+    <simpara>
+     À partir de là, vous pouvez utiliser <literal>$xml->title</literal>
+     et tout autre élément.
+    </simpara>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>simplexml_load_string</function></member>
+    <member><methodname>SimpleXMLElement::__construct</methodname></member>
+    <member><xref linkend="simplexml.examples-errors" /></member>
+    <member><function>libxml_use_internal_errors</function></member>
+    <member><xref linkend="simplexml.examples-basic"/></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

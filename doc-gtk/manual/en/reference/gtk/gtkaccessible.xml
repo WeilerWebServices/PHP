@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.6 $ -->
+<classentry id="gtk.gtkaccessible">
+ <classmeta>
+  <classtitle>GtkAccessible</classtitle>
+  <classparent>AtkObject</classparent>
+  <shortdesc>
+   Accessibility support for other widgets.
+  </shortdesc>
+  <desc>
+   A class to provide accessibility support for other widgets when used with
+   an assistive technology such as a screen reader.
+  </desc>
+ </classmeta>
+
+ <methods>
+
+  <method id="gtk.gtkaccessible.method.connect_widget_destroyed">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>connect_widget_destroyed</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Specified the callback to be called when the corresponding widget is
+    destroyed.
+   </shortdesc>
+   <desc>
+    <para>
+     This method specifies the callback to be called when the widget
+     corresponding to a <classname>GtkAccessible</classname> is destroyed.
+    </para>
+    <para>
+     &seealso;
+     <function classname="GtkWidget">get_accessible</function>,
+     <classname>AtkObject</classname>
+    </para>
+   </desc>
+  </method>
+
+ </methods>
+
+</classentry>

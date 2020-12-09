@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.8 $ -->
+<classentry id="gtk.gtkitemfactory">
+ <classmeta>
+  <classtitle>GtkItemFactory</classtitle>
+  <classparent>GtkObject</classparent>
+  <shortdesc>
+   DEPRECATED. A factory for menus.
+  </shortdesc>
+  <desc>
+   <note>
+    &deprecated.class;
+    Use <classname>GtkUIManager</classname> instead.
+   </note>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkitemfactory.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkItemFactory</function></funcdef>
+    <paramdef>GType <parameter>container_type</parameter></paramdef>
+    <paramdef>string <parameter>path</parameter></paramdef>
+    <paramdef>GtkAccelGroup <parameter><optional>accel_group = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkitemfactory.method.add_foreign">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_foreign</function></funcdef>
+     
+     <paramdef><classname>GtkWidget</classname> <parameter>accel_widget</parameter></paramdef>
+     <paramdef><parameter>full_path</parameter></paramdef>
+     <paramdef><classname>GtkAccelGroup</classname> <parameter>accel_group</parameter></paramdef>
+     <paramdef><parameter>keyval</parameter></paramdef>
+     <paramdef><parameter>modifiers</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitemfactory.method.construct">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>construct</function></funcdef>
+     <paramdef>GType <parameter>container_type</parameter></paramdef>
+     <paramdef>string <parameter>path</parameter></paramdef>
+     <paramdef>GtkAccelGroup <parameter>accel_group</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <method id="gtk.gtkitemfactory.method.delete_item">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>delete_item</function></funcdef>
+     <paramdef>string <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkItemFactory">create_item</function>, 
+     <function class="GtkItemFactory">get_item</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitemfactory.method.get_item">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkWidget <function>get_item</function></funcdef>
+     <paramdef>string <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkItemFactory">create_item</function>, 
+     <function class="GtkItemFactory">delete_item</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitemfactory.method.get_item_by_action">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkWidget <function>get_item_by_action</function></funcdef>
+     <paramdef>int <parameter>action</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitemfactory.method.get_widget">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkWidget <function>get_widget</function></funcdef>
+     <paramdef>string <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitemfactory.method.get_widget_by_action">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkWidget <function>get_widget_by_action</function></funcdef>
+     <paramdef>int <parameter>action</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitemfactory.method.popup">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>popup</function></funcdef>
+     <paramdef>int <parameter>x</parameter></paramdef>
+     <paramdef>int <parameter>y</parameter></paramdef>
+     <paramdef>int <parameter>mouse_button</parameter></paramdef>
+     <paramdef>int <parameter><optional>time = GDK_CURRENT_TIME</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  
+
+  
+
+  
+
+ <method id="gtk.gtkitemfactory.method.from_path">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>from_path</function></funcdef>
+     <paramdef><parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitemfactory.method.from_widget">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>from_widget</function></funcdef>
+     <paramdef><classname>GtkWidget</classname><parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitemfactory.method.path_delete">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>path_delete</function></funcdef>
+     
+     <paramdef><parameter>ifactory_path</parameter></paramdef>
+     <paramdef><parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitemfactory.method.path_from_widget">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>path_from_widget</function></funcdef>
+     <paramdef><classname>GtkWidget</classname><parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </method>
+
+  </methods>
+
+</classentry>

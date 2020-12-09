@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.8 $ -->
+<classentry id="gtk.gtkplug">
+ <classmeta>
+  <classtitle>GtkPlug</classtitle>
+  <classparent>GtkWindow</classparent>
+  <shortdesc>
+   A toplevel window to be embedded into other processes.
+  </shortdesc>
+  <desc>
+   <para>
+    This class provides the ability to embed widgets from one process into
+    another in a way that is transparent to the user. One process creates a
+    <classname>GtkSocket</classname> widget and passes the ID of that widget's
+    window to the other process, which then creates a
+    <classname>GtkPlug</classname> with that window ID. Any widgets contained in
+    the <classname>GtkPlug</classname> will appear inside the first
+    application's window.
+   </para>
+  </desc>
+ </classmeta>
+
+ <methods>
+
+  
+
+  
+
+  <method id="gtk.gtkplug.method.get_id">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_id</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retrieves the window ID for the plug.
+   </shortdesc>
+   <desc>
+    This method returns the window ID of the <classname>GtkPlug</classname>
+    widget, which can be used to embed this window inside another window, for
+    instance with <function class="GtkSocket">add_id</function>.
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkplug.signal.embedded">
+   <signalname>embedded</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkPlug <parameter>plug</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when plug window is reparented to socket window.
+   </shortdesc>
+   <desc>
+    <para>
+      This signal is emitted when the <classname>GtkPlug</classname> window is
+      reparented to the <classname>GtkSocket</classname> window.
+    </para>
+    <para>
+      The callback will be passed one parameter:
+     <parameter>plug</parameter>, the plug which received the signal
+     </para>
+   </desc>
+  </signal>
+
+ </signals>
+
+</classentry>

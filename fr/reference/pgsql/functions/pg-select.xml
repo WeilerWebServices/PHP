@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 349708 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="function.pg-select" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+ <refname>pg_select</refname>
+  <refpurpose>
+   Effectue une sélection PostgreSQL
+  </refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>pg_select</methodname>
+   <methodparam><type>resource</type><parameter>connection</parameter></methodparam>
+   <methodparam><type>string</type><parameter>table_name</parameter></methodparam>
+   <methodparam><type>array</type><parameter>assoc_array</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>options</parameter><initializer>PGSQL_DML_EXEC</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>result_type</parameter><initializer>PGSQL_ASSOC</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_select</function> sélectionne les enregistrements par
+   <literal>assoc_array</literal> qui est au format
+   <literal>champ=>valeur</literal>. Lorsque la requête
+   réussit, elle retourne un tableau contenant tous les enregistrements et
+   champs qui vérifient la condition spécifiée par
+   <literal>assoc_array</literal>.
+  </para>
+  <para>
+   Si <literal>options</literal> est fournit,
+   <function>pg_convert</function> est appliqué à
+   <literal>assoc_array</literal> avec les drapeaux fournit.
+  </para>
+  <para>
+   Par défaut <function>pg_delete</function> passe des valeurs brutes. Les valeurs
+   doivent être échappé ou l'option PGSQL_DML_ESCAPE doit être fournit.
+   PGSQL_DML_ESCAPE met des guillemets et échappe les paramètres/idantifiants.
+   Par conséquent, les noms de table/colonnes doivent être sensible à la casse.
+  </para>
+  <para>
+   Notez que ni l'échappement ni les requêtes préparer peuvent protéger des
+   requêtes LIKE, JSON, Tableaux, Regex, etc. Ces paramètres devraient être
+   traité en fonction de leur contexte. C'est à dire échapper/valider les valeurs.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>connection</parameter></term>
+     <listitem>
+      <para>
+       Ressource de connexion de base de données PostgreSQL.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>table_name</parameter></term>
+     <listitem>
+      <para>
+       Nom de la table dans laquelle on sélectionne les lignes.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>assoc_array</parameter></term>
+     <listitem>
+      <para>
+       Un &array; à qui les clés sont les noms des champs dans la table
+       <parameter>table_name</parameter> et à qui les valeurs sont les
+       conditions que la ligne doit vérifier pour être récupérée.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>options</parameter></term>
+     <listitem>
+      <para>
+       N'importe quelle de <constant>PGSQL_CONV_FORCE_NULL</constant>, 
+       <constant>PGSQL_DML_NO_CONV</constant>,
+       <constant>PGSQL_DML_ESCAPE</constant>,
+       <constant>PGSQL_DML_EXEC</constant>,
+       <constant>PGSQL_DML_ASYNC</constant> ou
+       <constant>PGSQL_DML_STRING</constant> combinée. Si
+       <constant>PGSQL_DML_STRING</constant> fait partie de
+       <parameter>options</parameter> alors la requête est retournée sous
+       forme de chaîne de caractères. Lorsque la constante
+       <constant>PGSQL_DML_NO_CONV</constant> ou la constante
+       <constant>PGSQL_DML_ESCAPE</constant> est définie, aucun appel à la fonction
+       <function>pg_convert</function> ne sera effectué en interne.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;  Retourne une &string; si
+   <constant>PGSQL_DML_STRING</constant> est passé via
+   <parameter>options</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>pg_select</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php 
+  $db = pg_connect ('dbname=foo');
+  // Ceci est sûr quelque peu, car toutes les valeurs sont échappées
+  // Cependant PostgreSSQL supporte les JSON/Tableaux. Ceci ne sont pas
+  // sûr ni par échappement ni par les requêtes préparés.
+  $rec = pg_select($db, 'post_log', $_POST, PG_DML_ESCAPE);
+  if ($rec) {
+    echo "Lignes lues\n";
+    var_dump($rec);
+  } else {
+    echo "Problème dans les données utilisateur\n";
+  }
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Le paramètre <parameter>result_type</parameter> a été ajouté.
+       </entry>
+      </row>
+      <row>
+       <entry>5.6.0</entry>
+       <entry>
+        La fonction n'est plus expérimentale. Ajout de la constante
+        <constant>PGSQL_DML_ESCAPE</constant> ainsi que du support des données
+        de type &true;/&false; et &null;.
+       </entry>
+      </row>
+      <row>
+       <entry>5.5.3/5.4.19</entry>
+       <entry>
+        Les injections SQL directes dans <parameter>table_name</parameter>
+        et les injections SQL indirectes via les identifiants ont été résolues.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_convert</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

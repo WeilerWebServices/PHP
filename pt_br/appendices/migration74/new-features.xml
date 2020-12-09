@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 351133 Maintainer: geekcom Status: ready --><!-- CREDITS: geekcom -->
+
+<sect1 xml:id="migration74.new-features" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Novos Recursos</title>
+
+ <sect2 xml:id="migration74.new-features.core">
+  <title>PHP Core</title>
+
+  <sect3 xml:id="migration74.new-features.core.typed-properties">
+   <title>Propriedades tipadas</title>
+
+   <para>
+    As propriedades de classe agora suportam declarações de tipo.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class User {
+    public int $id;
+    public string $name;
+}
+?>
+]]>
+     </programlisting>
+    </informalexample>
+    O exemplo acima reforçará que <literal>$user->id</literal> pode ser atribuído apenas
+    com valores <type>int</type> e <literal>$user->name</literal>
+    somente com valores de <type>string</type>.
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.core.arrow-functions">
+   <title>Arrow functions</title>
+
+   <para>
+    <link linkend="functions.arrow">Arrow functions</link> fornecem uma
+    sintaxe abreviada para definir funções
+    com ligação implícita por valor de escopo.
+
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$factor = 10;
+$nums = array_map(fn($n) => $n * $factor, [1, 2, 3, 4]);
+// $nums = array(10, 20, 30, 40);
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.core.type-variance">
+   <title>Covariância do tipo de retorno limitado e contravariância do tipo de argumento</title>
+
+   <para>
+    O código a seguir agora funcionará:
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class A {}
+class B extends A {}
+
+class Producer {
+    public function method(): A {}
+}
+class ChildProducer extends Producer {
+    public function method(): B {}
+}
+?>
+]]>
+     </programlisting>
+    </informalexample>
+    O suporte completo à variação só está disponível se o carregamento automático for usado. Dentro de
+    um único arquivo, apenas as referências de tipo não cíclico são possíveis, porque todas
+    as classes precisam estar disponíveis antes de serem referenciadas.
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.core.null-coalescing-assignment-operator">
+   <title>Operador de atribuição de coalescência nula</title>
+
+   <para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$array['key'] ??= computeDefault();
+// is roughly equivalent to
+if (!isset($array['key'])) {
+    $array['key'] = computeDefault();
+}
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.core.unpack-inside-array">
+   <title>Descompactando dentro de arrays</title>
+
+   <para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$parts = ['apple', 'pear'];
+$fruits = ['banana', 'orange', ...$parts, 'watermelon'];
+// ['banana', 'orange', 'apple', 'pear', 'watermelon'];
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.core.numeric-literal-separator">
+   <title>Separador literal numérico</title>
+
+   <para>
+    Literais numéricos podem conter underscores entre dígitos.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+6.674_083e-11; // float
+299_792_458;   // decimal
+0xCAFE_F00D;   // hexadecimal
+0b0101_1111;   // binary
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.core.weakreference">
+   <title>Referências fracas</title>
+
+   <para>
+    Referências fracas permitem que o programador mantenha uma referência a um objeto
+    que não impede que o objeto seja destruído.
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.core.tostring-exceptions">
+   <title>Permitir exceções de __toString()</title>
+
+   <para>
+    Lançar exceções de <link linkend="object.tostring">__toString()</link>
+    agora é permitido. Antes isto resultava um erro fatal. Os erros fatais
+    recuperáveis ​​existentes nas conversões de string foram convertidos
+    em exceções de <classname>Error</classname>.
+   </para>
+  </sect3>
+
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.curl">
+  <title>CURL</title>
+
+  <para>
+   <classname>CURLFile</classname> agora suporta stream wrappers,
+   além de nomes de arquivos simples, se a extensão tiver sido criada com relação à libcurl &gt;= 7.56.0.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.filter">
+  <title>Filter</title>
+
+  <para>
+   O filtro <constant>FILTER_VALIDATE_FLOAT</constant> agora suporta
+   as opções <literal>min_range</literal> e <literal>max_range</literal>
+   com a mesma semântica que <constant>FILTER_VALIDATE_INT</constant>.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.ffi">
+  <title>FFI</title>
+
+  <para>
+   FFI é uma nova extensão, que fornece uma maneira simples de chamar
+   funções nativas, acessar variáveis ​​nativas e criar/acessar
+   estruturas de dados definidas nas bibliotecas C.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.gd">
+  <title>GD</title>
+
+  <para>
+   Adicionado o filtro de imagem <constant>IMG_FILTER_SCATTER</constant>
+   para aplicar um filtro de dispersão às imagens.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.hash">
+  <title>Hash</title>
+
+  <para>
+   Adicionado o hash <literal>crc32c</literal> usando o polinômio de Castagnoli.
+   Essa variante CRC32 é usada por sistemas de armazenamento, como
+   iSCSI, SCTP, Btrfs e ext4.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.mbstring">
+  <title>Multibyte String</title>
+
+  <para>
+   Adicionada a função <function>mb_str_split</function>, que fornece
+   a mesma funcionalidade que <function>str_split</function>, mas operando
+   em pontos de código em vez de bytes.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.opcache">
+  <title>OPcache</title>
+
+  <para>
+   <link linkend="opcache.preloading">Suporte para pré-carregamento de código</link> foi adicionado.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.pcre">
+  <title>Expressões Regulares (Perl-Compatible)</title>
+
+  <para>
+   As funções <function>preg_replace_callback</function> e <function>preg_replace_callback_array</function>
+   agora aceitam um argumento <parameter>flags</parameter> adicional, com suporte para as flags
+   <constant>PREG_OFFSET_CAPTURE</constant> e <constant>PREG_UNMATCHED_AS_NULL</constant>.
+   Isso influencia o formato do array de correspondências passado para a função de retorno da chamada.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.pdo">
+  <title>PDO</title>
+
+  <para>
+   O nome de usuário e a senha agora podem ser especificados como parte do PDO DSN para
+   os drivers mysql, mssql, sybase, dblib, firebird e oci. Antes, isso
+   era suportado apenas pelo driver pgsql. Se um nome de usuário/senha for especificado
+   no construtor e no DSN, o construtor terá precedência.
+  </para>
+  <para>
+   Agora é possível escapar pontos de interrogação nas consultas SQL para evitar que
+   elas sejam interpretadas como espaços reservados para parâmetros. Escrever <literal>??</literal>
+   permite enviar um único ponto de interrogação para o banco de dados e por exemplo, usar o
+   operador PostgreSQL JSON key exists (<literal>?</literal>).
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.pdo_oci">
+  <title>PDO_OCI</title>
+
+  <para>
+   <methodname>PDOStatement::getColumnMeta</methodname> agora está disponível.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.pdo_sqlite">
+  <title>PDO_SQLite</title>
+
+  <para>
+   <literal>PDOStatement::getAttribute(PDO::SQLITE_ATTR_READONLY_STATEMENT)</literal>
+   permite verificar se a instrução é somente leitura, ou seja, se não modifica
+   o banco de dados.
+  </para>
+  <para>
+   <literal>PDO::setAttribute(PDO::SQLITE_ATTR_EXTENDED_RESULT_CODES, true)</literal>
+   permite o uso de códigos de resultado estendidos do SQLite3 em <function>PDO::errorInfo</function>
+   e <function>PDOStatement::errorInfo</function>.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.sqlite3">
+  <title>SQLite3</title>
+
+  <para>
+   Adicionado <methodname>SQLite3::lastExtendedErrorCode</methodname>
+   para buscar o último código de resultado estendido.
+  </para>
+  <para>
+   Adicionado <literal>SQLite3::enableExtendedResultCodes($enable = true)</literal>,
+   que fará <methodname>SQLite3::lastErrorCode</methodname>
+   retornar códigos de resultado estendidos.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.new-features.standard">
+  <title>Standard</title>
+
+  <sect3 xml:id="migration74.new-features.standard.strip-tags">
+   <title>strip_tags() com array de nomes de tags</title>
+   <para>
+    <function>strip_tags</function> agora também aceita um array de tags permitidas:
+    em vez de <literal>strip_tags($str, '&lt;a&gt;&lt;p&gt;')</literal>
+    agora você pode escrever <literal>strip_tags($str, ['a', 'p'])</literal>.
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.standard.magic-serialize">
+   <title> Serialização de objetos personalizados</title>
+   <para>
+    Um novo mecanismo para serialização de objetos personalizados foi adicionado,
+    que usa dois novos métodos mágicos: <literal>__serialize</literal>
+    e <literal>__unserialize</literal>.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// Retorna um array contendo todo o estado necessário do objeto.
+public function __serialize(): array;
+
+// Restaura o estado do objeto a partir do array de dados fornecido.
+public function __unserialize(array $data): void;
+?>
+]]>
+     </programlisting>
+    </informalexample>
+    O novo mecanismo de serialização substitui a interface
+    <interfacename>Serializable</interfacename>,
+    que será descontinuada no futuro.
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.standard.array-merge-no-args">
+   <title>Funções de mesclagem de array sem argumentos</title>
+   <para>
+    <function>array_merge</function> e <function>array_merge_recursive</function>
+    agora podem ser chamados sem nenhum argumento; nesse caso, eles retornarão um array vazio.
+    Isso é útil em conjunto com o operador spread, por exemplo, <literal>array_merge(...$arrays)</literal>.
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.standard.proc-open">
+   <title>Função <function>proc_open</function></title>
+   <para>
+    <function>proc_open</function> agora aceita um array em vez de
+    uma string para o comando. Nesse caso, o processo será aberto
+    diretamente (sem passar por um shell) e  o PHP cuidará de
+    qualquer argumento necessário para escapar.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+proc_open(['php', '-r', 'echo "Hello World\n";'], $descriptors, $pipes);
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <para>
+    <function>proc_open</function> agora suporta
+    <literal>redirect</literal> e descritores <literal>null</literal>.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// Like 2>&1 on the shell
+proc_open($cmd, [1 => ['pipe', 'w'], 2 => ['redirect', 1]], $pipes);
+// Like 2>/dev/null or 2>nul on the shell
+proc_open($cmd, [1 => ['pipe', 'w'], 2 => ['null']], $pipes);
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.new-features.standard.sodium-argon-hash">
+   <title>argon2i(d) sem libargon</title>
+   <para>
+    <function>password_hash</function> agora possui as implementações argon2i e argon2id
+    da extensão sodium quando o PHP é compilado sem libargon.
+   </para>
+  </sect3>
+
+ </sect2>
+
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

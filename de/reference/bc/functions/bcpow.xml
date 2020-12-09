@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 343101 Maintainer: sammywg Status: ready -->
+<refentry xml:id="function.bcpow" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>bcpow</refname>
+  <refpurpose>Potenz einer Zahl beliebiger Genauigkeit</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>bcpow</methodname>
+   <methodparam><type>string</type><parameter>base</parameter></methodparam>
+   <methodparam><type>string</type><parameter>exponent</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>scale</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Potenziert <parameter>base</parameter> mit
+   <parameter>exponent</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>base</parameter></term>
+     <listitem>
+      <para>
+       Die Basis in Stringform.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>exponent</parameter></term>
+     <listitem>
+      <para>
+       Der Exponent in Stringform. Ist der Exponent nicht ganzzahlig, wird er
+       abgeschnitten. Der gültige Bereich des Exponenten ist Plattformabhängig,
+       ist allerdings wenigstens <literal>-2147483648</literal> bis
+       <literal>2147483647</literal>.
+      </para>
+     </listitem>
+    </varlistentry>
+    &bc.scale.description;
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Gibt das Ergebnis als String zurück.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog"><!-- {{{ -->
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.3.0</entry>
+      <entry>
+       <function>bcpow</function> liefert nun Zahlen mit den angeforderten
+       Nachkommastellen zurück. Zuvor haben die zurückgelieferten Zahlen
+       möglicherweise abschließende Dezimalnullen ausgelassen.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1><!-- }}} -->
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <example>
+   <title><function>bcpow</function>-Beispiel</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+echo bcpow('4.2', '3', 2); // 74.08
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Vor PHP 7.3.0 kann <function>bcpow</function> ein Ergebnis mit weniger Dezimalstellen
+    liefern als der <parameter>scale</parameter> Parameter angibt.
+    Das geschieht nur, wenn das Ergebnis nicht die gesamte Genauigkeit benötigt,
+    die durch den <parameter>scale</parameter> erlaubt ist. Zum Beispiel:
+    <example>
+     <title><function>bcpow</function> Genauigkeitsbeispiel</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+echo bcpow('5', '2', 2);     // gibt "25" aus, nicht "25.00"
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>bcpowmod</function></member>
+    <member><function>bcsqrt</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

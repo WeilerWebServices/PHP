@@ -1,0 +1,105 @@
+// vim:ft=javascript
+
+// config.w32 for solr extension
+
+ARG_ENABLE('solr', 'Whether to enable Apache Solr support', 'no');
+if (typeof PHP_SOLR_DEBUG == 'undefined') PHP_SOLR_DEBUG = 'no';
+
+if(PHP_SOLR != 'no')
+{
+	if(!CHECK_LIB('libcurl_a.lib;libcurl.lib', 'solr', PHP_SOLR) ||
+		!CHECK_HEADER_ADD_INCLUDE('curl/easy.h', 'CFLAGS_SOLR')) {
+		WARNING('solr was not enabled; curl libraries and/or headers not found');
+		PHP_SOLR = "no";
+	}
+	if(!CHECK_LIB('libssh2_a.lib;libssh2.lib', 'solr', PHP_SOLR)) {
+		WARNING('solr was not enabled; libssh2 library not found');
+		PHP_SOLR = "no";
+	}
+	if(!CHECK_LIB('nghttp2_a.lib;nghttp2.lib', 'solr', PHP_SOLR)) {
+		WARNING('solr was not enabled; nghttp2 library not found');
+		PHP_SOLR = "no";
+	}
+	if(!CHECK_LIB('crypt32.lib', 'solr', PHP_SOLR)) {
+		WARNING('solr was not enabled; crypt32 library not found');
+		PHP_SOLR = "no";
+	}
+	if(!CHECK_LIB('normaliz.lib', 'solr', PHP_SOLR)) {
+		WARNING('solr was not enabled; IDN libraries (normaliz.lib) not found');
+		PHP_SOLR = "no";
+	}
+	if(!((CHECK_LIB('libssl.lib', 'solr', PHP_SOLR)
+		&& CHECK_LIB('libcrypto.lib', 'solr', PHP_SOLR)) ||
+		(CHECK_LIB('ssleay32.lib', 'solr', PHP_SOLR)
+		&& CHECK_LIB('libeay32.lib', 'solr', PHP_SOLR)))) {
+		WARNING('solr was not enabled; openssl libraries not found');
+		PHP_SOLR = "no";
+	}
+	if(!CHECK_LIB('winmm.lib', 'solr', PHP_SOLR)
+		|| !CHECK_LIB('wldap32.lib', 'solr', PHP_SOLR)) {
+		WARNING('solr not enabled; ldap libraries not found');
+		PHP_SOLR = "no";
+	}
+	if(!((PHP_ZLIB == 'no' && CHECK_LIB('zlib_a.lib;zlib.lib', 'solr', PHP_SOLR))
+		|| (PHP_ZLIB_SHARED && CHECK_LIB('zlib.lib', 'solr', PHP_SOLR))
+		|| (PHP_ZLIB == 'yes' && !PHP_ZLIB_SHARED))) {
+		WARNING('solr not enabled; zlib libraries not found');
+		PHP_SOLR = "no";
+	}
+	if(PHP_LIBXML == 'no' || !ADD_EXTENSION_DEP('solr', 'libxml')) {
+		WARNING('solr was not enabled; libxml is not enabled');
+		PHP_SOLR = "no";
+	} else {
+		if (!CHECK_LIB("libxml2_a_dll.lib;libxml2_a.lib", "solr", PHP_SOLR) ||
+			!CHECK_LIB("libiconv_a.lib;iconv_a.lib;libiconv.lib;iconv.lib", "solr", PHP_SOLR) ||
+			!CHECK_HEADER_ADD_INCLUDE('libxml/parser.h', 'CFLAGS_SOLR', PHP_PHP_BUILD + "\\include\\libxml2") ||
+			!CHECK_HEADER_ADD_INCLUDE('libxml/tree.h', 'CFLAGS_SOLR', PHP_PHP_BUILD + "\\include\\libxml2")
+			) {
+			WARNING('solr was not enabled; libxml or iconv not found');
+			PHP_SOLR = "no";
+		}
+	}
+	if(PHP_JSON == 'no' || !ADD_EXTENSION_DEP('solr', 'json')) {
+		WARNING('solr was not enabled; json is not enabled');
+		PHP_SOLR = "no";
+	}
+	if(PHP_SOLR != 'no') {
+		if(PHP_SOLR_DEBUG == 'yes') {
+			AC_DEFINE('SOLR_DEBUG', 1, 'Solr debugging set to on');
+		} else {
+			AC_DEFINE('SOLR_DEBUG_OFF', 1, 'Solr debugging set to off');
+		}
+
+		var dll = get_define('PHPDLL');
+        var old_conf_dir = configure_module_dirname;
+
+        /* XXX tricky job here, override configure_module_dirname, define the basic extension,
+            then set it back*/
+        if (null != dll.match(/^php5/)) {
+            configure_module_dirname = configure_module_dirname + "\\src\\php5";
+        } else if (null != dll.match(/^php7/)) {
+            configure_module_dirname = configure_module_dirname + "\\src\\php7";
+        } else {
+            ERROR("Cannot match any known PHP version with '" + dll + "'");
+        }
+
+		EXTENSION('solr',
+					'php_solr.c php_solr_client.c php_solr_document.c php_solr_exception.c ' +
+					'php_solr_input_document.c php_solr_object.c php_solr_params.c php_solr_query.c ' +
+					'php_solr_response.c php_solr_utils.c solr_functions_client.c solr_functions_debug.c ' +
+					'solr_functions_document.c solr_functions_helpers.c solr_functions_params.c ' +
+					'solr_functions_response.c solr_string.c php_solr_dismax_query.c ' +
+					'php_solr_collapse_function.c php_solr_extract.c'
+		);
+
+		configure_module_dirname = old_conf_dir;
+
+		ADD_FLAG('CFLAGS_SOLR', '/I"' + configure_module_dirname + '" /D CURL_STATICLIB /D LIBXML_STATICLIB');
+		AC_DEFINE('HAVE_SOLR', 1, 'Solr support');
+
+		if (!PHP_SOLR_SHARED) {
+			ADD_FLAG("CFLAGS_SOLR", "/D LIBXML_STATIC");
+		}
+		ADD_EXTENSION_DEP('solr', 'libxml');
+	}
+}

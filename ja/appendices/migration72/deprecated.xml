@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 343533 Maintainer: takagi Status: ready -->
+<!-- Credits: mumumu -->
+
+<sect1 xml:id="migration72.deprecated">
+ <title>PHP 7.2.x で推奨されなくなる機能</title>
+
+ <sect2 xml:id="migration72.deprecated.unquoted-strings">
+  <title>クオートしない文字列</title>
+
+  <para>
+   クオートしない文字列は、その名前のグローバル定数が定義されていない場合は単なる文字列という扱いになります。
+   このとき、いままでは <constant>E_NOTICE</constant> が発生していました。
+   PHP 7.2.x 以降は、<constant>E_WARNING</constant> が発生するようになります。
+   次のメジャーバージョンアップ後は <classname>Error</classname> 例外が発生するようになります。
+  </para>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+var_dump(NONEXISTENT);
+
+/* 出力:
+Warning: Use of undefined constant NONEXISTENT - assumed 'NONEXISTENT' (this will throw an Error in a future version of PHP) in %s on line %d
+string(11) "NONEXISTENT"
+*/
+]]>
+   </programlisting>
+  </informalexample>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.png2wbmp-jpeg2wbmp">
+  <title><function>png2wbmp</function> および <function>jpeg2wbmp</function></title>
+
+  <para>
+   GD 拡張モジュールの <function>png2wbmp</function> および <function>jpeg2wbmp</function>
+   関数は非推奨となり、次のPHPのメジャーバージョンアップで削除される予定です。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.INTL_IDNA_VARIANT_2003-variant">
+  <title><constant>INTL_IDNA_VARIANT_2003</constant> バリアント</title>
+
+  <para>
+   Intl 拡張モジュール では、<constant>INTL_IDNA_VARIANT_2003</constant> バリアントは非推奨になりました。
+   これは <function>idn_to_ascii</function> および <function>idn_to_utf8</function> 関数の
+   デフォルト値として現在使われています。PHP 7.4 ではこのデフォルト値が
+   <constant>INTL_IDNA_VARIANT_UTS46</constant> に変更される予定ですし、
+   PHP の次のメジャーバージョンアップでは、 <constant>INTL_IDNA_VARIANT_2003</constant> が削除される予定です。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.__autoload-method">
+  <title><function>__autoload</function> メソッド</title>
+
+  <para>
+   <function>__autoload</function>メソッドは非推奨になりました。なぜなら、この関数は 
+   (autoloader をチェインできない点で) <function>spl_autoload_register</function>
+   に劣っていますし、これら2つの autoload のやり方には互換性がないからです。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.track_errors-and-php_errormsg">
+  <title>php.ini の <parameter>track_errors</parameter> および <literal>$php_errormsg</literal> 変数</title>
+
+  <para>
+   php.ini で <parameter>track_errors</parameter> の設定が有効になると、
+   致命的でないエラーが起きた場合に、<literal>$php_errormsg</literal> 変数がローカルスコープに生成されます。
+   このようなエラー情報を収集するのに望ましい方法は、<function>error_get_last</function> 関数を使うことなので
+   この機能は非推奨になりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.create_function-function">
+  <title><function>create_function</function> 関数</title>
+
+  <para>
+   (<function>eval</function> 関数のラッパーなので) この関数にはセキュリティ上の問題があるため、非推奨になりました。
+   好ましい代替は  <link linkend="functions.anonymous">無名関数</link> です。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.mbstringfunc_overload-ini-setting">
+  <title>php.ini の <parameter>mbstring.func_overload</parameter></title>
+
+  <para>
+   この設定が有効になった環境で使われる、文字列ベースの関数の相互運用上の問題により、この設定は非推奨になりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.unset-cast">
+  <title><literal>(unset)</literal> キャスト</title>
+
+  <para>
+   あらゆる値を (unset) キャストすると &null; になりますが、この余分な機能は非推奨になりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.parse_str-no-second-arg">
+  <title>第二引数を指定しないで <function>parse_str</function> 関数を使う</title>
+
+  <para>
+   2番目の引数を指定しないで <function>parse_str</function> 関数を使うと、
+   これが使われた関数内部のシンボルテーブルを収集してしまいます。
+   これはセキュリティ上の問題があるため、2番目の引数を指定しないで <function>parse_str</function>
+   を使うのは非推奨になりました。この関数の2番目の引数は、クエリストリングを配列に設定してくれる
+   ので、常に設定すべきです。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.gmp_random-function">
+  <title><function>gmp_random</function> 関数</title>
+
+  <para>
+   この関数は、外部に公開されていない、プラットフォーム依存のlimbサイズの範囲に基づいて
+   ランダムな数を生成しています。このため、この関数は非推奨になりました。GMP 拡張モジュールを使って
+   ランダムな数値を生成する望ましいやり方は、
+   <function>gmp_random_bits</function> および
+   <function>gmp_random_range</function> を使うことです。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.each-function">
+  <title><function>each</function>関数</title>
+
+  <para>
+   この関数は、通常の <literal>foreach</literal>よりもループが遅く、PHPそのものの変更に伴って
+   実装上の問題を引き起こしたことから、非推奨になりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.assert-string-arg">
+  <title><function>assert</function>関数に文字列を渡す</title>
+
+  <para>
+   <function>assert</function> で <function>eval</function> させるには、この関数に文字列を渡す必要がありました。
+   リモートからコードを実行される可能性があるので、この関数に文字列を渡すのは非推奨になりました。boolean 値を渡すのが
+   お勧めです。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.errcontext-arg-of-error-handlers">
+  <title>エラーハンドラの <literal>$errcontext</literal> 引数</title>
+
+  <para>
+   <literal>$errcontext</literal> 引数には、エラーが起きた場所の全てのローカル変数
+   が含まれています。これは使われることが少ないことと、PHP の内部的な最適化に問題を
+   引き起こすため、非推奨になりました。エラーが起きた場所のローカル変数の情報を取得
+   するには、デバッガを使うべきです。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.deprecated.read_exif_data-function">
+  <title><function>read_exif_data</function> 関数</title>
+
+  <para>
+   <function>read_exif_data</function> 関数は非推奨になりました。
+   代わりに <function>exif_read_data</function> 関数を使ってください。
+  </para>
+ </sect2>
+
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 337619 Maintainer: takagi Status: ready -->
+<!-- CREDITS: hirokawa,shimooka -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.crc32">
+ <refnamediv>
+  <refname>crc32</refname>
+  <refpurpose>文字列の crc32 多項式計算を行う</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>crc32</methodname>
+   <methodparam><type>string</type><parameter>str</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <parameter>str</parameter> の 32 ビット長の CRC (cyclic redundancy
+   checksum) チェックサムを生成します。
+   これは通常、送信したデータの整合性を検証するために使用します。
+  </para>
+  <warning>
+   <simpara>
+    PHP の整数型は符号付きで、多くの crc32
+    チェックサムは 32 ビットシステム上では負の整数になります。
+    しかし、64 ビット環境では <function>crc32</function>
+    の結果はすべて正の整数となります。
+   </simpara>
+   <simpara>
+    つまり、符号なしの <function>crc32</function> チェックサムの文字列表記を
+    十進形式で取得するには、
+    <function>sprintf</function> もしくは <function>printf</function> の
+    "%u" フォーマッタを使う必要があります。
+   </simpara>
+   <simpara>
+    チェックサムの十六進表記を取得するには、<function>sprintf</function> あるいは <function>printf</function>
+    の "%x" フォーマッタを使うか、あるいは変換関数
+    <function>dechex</function> を使います。これらはいずれも、
+    <function>crc32</function> の結果を符号なし整数に変換することも行います。
+   </simpara>
+   <simpara>
+    64 ビット環境でも、返り値が大きくなると負の整数を返すことが考えられます。
+    その場合は十六進変換がうまくいかないので、負の整数については
+    オフセット 0xFFFFFFFF######## を与えます。
+    十六進表現は最もよく使われる形式なので、この処理が壊れないようにしました。
+    32 ビット環境から 64 ビット環境に移したときに
+    ほぼ 50% の確率で十進形式での比較が失敗してしまいますが、
+    それよりも十六進表記のほうを優先したのです。
+   </simpara>
+   <simpara>
+    今思えば、この関数が整数値を返すようにしたというのがまずい判断でした。
+    最初から、<function>md5</function>
+    のように十六進形式の文字列をを直接返すようにしておけばよかったのでしょう。
+   </simpara>
+   <simpara>
+    移植性を考慮した選択肢として、より汎用的な
+    <function>hash</function> を使う方法もあります。
+    <code>hash("crc32b", $str)</code> は
+    <code>str_pad(dechex(crc32($str)), 8, '0', STR_PAD_LEFT)</code> と同じ文字列を返します。
+   </simpara>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>str</parameter></term>
+     <listitem>
+      <para>
+       データ。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <parameter>str</parameter> の crc32 チェックサムを整数値で返します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>crc32 チェックサムの表示</title>
+    <para>
+     この例は <function>printf</function>
+     関数を用いた変換後のチェックサムの表示方法を示しています。
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$checksum = crc32("The quick brown fox jumped over the lazy dog.");
+printf("%u\n", $checksum);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>hash</function></member>
+    <member><function>md5</function></member>
+    <member><function>sha1</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

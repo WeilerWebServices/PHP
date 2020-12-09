@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision: 1.7 $ -->
+<classentry id="atk.atkhyperlink">
+ <classmeta>
+  <classtitle>AtkHyperlink</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   An object which encapsulates a link or set of links in a hypertext document.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <methods>
+
+  <method id="atk.atkhyperlink.method.get_end_index">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_end_index</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="atk.atkhyperlink.method.get_n_anchors">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_n_anchors</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="atk.atkhyperlink.method.get_object">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>AtkObject <function>get_object</function></funcdef>
+     <paramdef>int <parameter>i</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="atk.atkhyperlink.method.get_start_index">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_start_index</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="atk.atkhyperlink.method.get_uri">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_uri</function></funcdef>
+     <paramdef>int <parameter>i</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="atk.atkhyperlink.method.is_valid">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>is_valid</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="atk.atkhyperlink.signal.link-activated">
+   <signalname>link-activated</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>AtkHyperlink <parameter>hyperlink</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

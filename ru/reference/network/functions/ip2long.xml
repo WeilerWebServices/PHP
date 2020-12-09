@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 351133 Maintainer: bfl Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+<!-- $Revision$ -->
+<refentry xml:id="function.ip2long" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>ip2long</refname>
+  <refpurpose>Конвертирует строку, содержащую IPv4-адрес в целое число</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>ip2long</methodname>
+   <methodparam><type>string</type><parameter>ip_address</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Функция <function>ip2long</function> преобразует IPv4-адрес сети Интернет из стандартного
+   формата (строка с точками) в целое число. 
+  </para>
+  <para>
+   Функция <function>ip2long</function> также будет работать с неполными IP-адресами. См. <link xlink:href="&url.ip2long.tech;">&url.ip2long.tech;</link>
+   для более подробной информации.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>ip_address</parameter></term>
+     <listitem>
+      <para>
+       Адрес в стандартном формате.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Возвращает целое число или &false;, если параметр <parameter>ip_address</parameter>
+   содержит ошибку.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>ip2long</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$ip = gethostbyname('www.example.com');
+$out = "Следующие URL эквивалентны:<br />\n";
+$out .= 'http://www.example.com/, http://' . $ip . '/, и http://' . sprintf("%u", ip2long($ip)) . "/<br />\n";
+echo $out;
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Отображение IP-адресов</title>
+    <para>
+     Второй пример показывает как выводить сконвертированные адреса с помощью функции <function>printf</function>:
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$ip   = gethostbyname('www.example.com');
+$long = ip2long($ip);
+
+if ($long == -1 || $long === FALSE) {
+    echo 'Неверный IP-адрес, попробуйте еще раз';
+} else {
+    echo $ip   . "\n";            // 192.0.34.166
+    echo $long . "\n";            // -1073732954
+    printf("%u\n", ip2long($ip)); // 3221234342
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Ввиду того, что тип PHP <type>int</type> является знаковым, и на 32-битных системах многие IP-адреса будут представлены в виде отрицательных чисел, необходимо
+    использовать "%u" в функции <function>sprintf</function> или <function>printf</function> для получения IP-адреса в строковом беззнаковом виде.
+   </para>
+  </note>
+  <note>
+   <para>
+    Функция <function>ip2long</function> возвратит &false; для IP
+    <literal>255.255.255.255</literal> в PHP 5 &lt;= 5.0.2 и <literal>-1</literal> в
+    PHP 5 &lt;=5.2.4 на 64-битных системах. Это было исправлено в
+    PHP 5.2.5, теперь возвращается <literal>4294967295</literal>. В 32-битных
+    системах будет возвращено <literal>-1</literal> из-за целочисленного переполнения.
+   </para>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>long2ip</function></member>
+    <member><function>sprintf</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 344782 Maintainer: nikic Status: ready -->
+
+<sect1 xml:id="function.return" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>return</title>
+ <?phpdoc print-version-for="return"?>
+ <simpara>
+  <literal>return</literal> gibt die Programmsteuerung an das aufrufende
+  Modul zurück. Die Ausführung wird mit dem Ausdruck fortgesetzt,
+  der dem Aufruf des aufgerufenden Moduls folgt.
+ </simpara>
+ <simpara>
+  Wenn innerhalb einer Funktion aufgerufen, beendet <literal>return</literal>
+  augenblicklich die Ausführung der Funktion und übergibt den Parameter
+  als Rückgabewert der Funktion. <literal>return</literal> beendet ebenfalls
+  die Ausführung von Code innerhalb von <function>eval</function>
+  oder einer Datei.
+ </simpara>
+ <simpara>
+  Wenn im globalen Raum aufgerufen, endet die Ausführung des Skripts.
+  Wenn das aktuelle Skript mit <function>include</function> oder
+  <function>require</function> eingebunden ist, endet nur die Ausführung
+  der eingebundenen Datei und der Wert, der an <literal>return</literal>
+  übergeben wurde, wird zum Rückgabewert des Aufrufs von 
+  <function>include</function>/<function>require</function>.
+  Wenn <literal>return</literal> im Hauptskript aufgerufen wird,
+  endet das gesamte Skript. Wenn das aktuelle Skript durch die
+  Konfigurationsdirektiven <link
+  linkend="ini.auto-prepend-file">auto_prepend_file</link> oder <link
+  linkend="ini.auto-append-file">auto_append_file</link> aufgerufen wurde,
+  wird die Ausführung dieses Skripts beendet.
+  
+ </simpara>
+ <simpara>Für mehr Informationen, siehe die Dokumentation zu <link
+ linkend="functions.returning-values">Rückgabewerten</link>.
+ </simpara>
+ <para>
+  <note>
+   <simpara>
+    Weil <literal>return</literal> ein Sprachkonstrukt und keine
+    Funktion ist, sind die Klammern um das Argument nicht erforderlich, und von
+    deren Verwendung wird abgeraten.
+   </simpara>
+  </note>
+  <note>
+   <simpara>
+    Wenn kein Parameter übergeben wird, dürfen die Klammern nicht gesetzt 
+    werden und &null; wird zurückgegeben. Der Aufruf von
+    <literal>return</literal> mit Klammern aber ohne Parameter verursacht
+    einen Parse Error.
+   </simpara>
+  </note>
+ </para>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

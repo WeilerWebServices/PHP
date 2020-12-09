@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision: 1.8 $ -->
+<appendix id="appendix.credits">
+ <title>&Credits;</title>
+ <authorgroup id="appendix.credits.authors">
+  <author>
+   <firstname>Andrei</firstname><surname>Zmievski</surname>
+   <contrib>Main body of work</contrib>
+  </author>
+ </authorgroup>
+
+ <authorgroup id="appendix.credits.contributors">
+  <!-- alphabetical order -->
+  <author>
+   <firstname>Steph</firstname><surname>Fox</surname>
+   <contrib>Win32 compilation and binary distributions, Glade support, miscellaneous code</contrib>
+  </author>
+  <author>
+   <firstname>Anant</firstname><surname>Narayanan</surname>
+   <contrib>Sourceview, scintilla and mozembed extensions, patches</contrib>
+  </author>
+  <author>
+   <firstname>Christian</firstname><surname>Weiske</surname>
+   <contrib>Reflection support, patches</contrib>
+  </author>
+ </authorgroup>
+
+ <authorgroup id="appendix.credits.pastcontributors">
+  <!-- alphabetical order -->
+  <author>
+   <firstname>Markus</firstname><surname>Fischer</surname>
+   <contrib>Miscellaneous code, several extensions</contrib>
+  </author>
+  <author>
+   <firstname>Alan</firstname><surname>Knowles</surname>
+   <contrib>GtkHTML extension, miscellaneous code</contrib>
+  </author>
+  <author>
+   <firstname>Frank</firstname><surname>Kromann</surname>
+   <contrib>Win32 compilation and binary distributions, some code generator work</contrib>
+  </author>
+ </authorgroup>
+
+</appendix>

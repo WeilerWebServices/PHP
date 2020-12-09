@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.3 $ -->
+<classentry id="sourceview.gtksourcetagstyle">
+ <classmeta>
+  <classtitle>GtkSourceTagStyle</classtitle>
+  <classparent>GBoxed</classparent>
+  <shortdesc>
+   A tag that can be applied to a <classname>GtkSourceBuffer</classname>.
+  </shortdesc>
+  <desc>
+   
+  </desc>
+ </classmeta>
+
+
+ <constructors>
+  <constructor id="sourceview.gtksourcetagstyle.constructor">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><function>GtkSourceTagStyle</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtksourcetagstyle.constructor">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><function>GtkSourceTagStyle</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </constructor>
+
+</constructors>
+
+
+ <methods>
+  <method id="sourceview.gtksourcetagstyle.method.free">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>free</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtksourcetagstyle.method.free">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>free</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+</methods>
+</classentry>

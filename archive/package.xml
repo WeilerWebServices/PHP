@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+ <name>archive</name>
+ <channel>pecl.php.net</channel>
+ <summary>archive extension</summary>
+ <description>archive extension allows to read and write
+tar and cpio archives using libarchive (http://people.freebsd.org/~kientzle/libarchive/).
+ </description>
+ <lead>
+  <name>Antony Dovgal</name>
+  <user>tony2001</user>
+  <email>antony@zend.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-11-05</date>
+ <time>12:15:42</time>
+ <version>
+  <release>0.2</release>
+  <api>0.2</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP License</license>
+ <notes>
+- Reimplemented and turned on by default ArchiveWriter.
+- Fixed some typobugs and made the code cleaner.
+ </notes>
+ <contents>
+  <dir name="/">
+   <dir name="tests">
+    <dir name="add">
+     <file name="001.phpt" role="test" />
+     <file name="002.phpt" role="test" />
+     <file name="003.phpt" role="test" />
+    </dir> <!-- //tests/add -->
+    <dir name="add_bz2">
+     <file name="001.phpt" role="test" />
+    </dir> <!-- //tests/add_bz2 -->
+    <dir name="add_gz">
+     <file name="001.phpt" role="test" />
+    </dir> <!-- //tests/add_gz -->
+    <dir name="extract">
+     <file name="001.phpt" role="test" />
+     <file name="002.phpt" role="test" />
+     <file name="003.phpt" role="test" />
+     <file name="004.phpt" role="test" />
+     <file name="005.phpt" role="test" />
+     <file name="006.phpt" role="test" />
+    </dir> <!-- //tests/extract -->
+    <dir name="extract_bz2">
+     <file name="001.phpt" role="test" />
+     <file name="002.phpt" role="test" />
+     <file name="003.phpt" role="test" />
+     <file name="004.phpt" role="test" />
+     <file name="005.phpt" role="test" />
+     <file name="006.phpt" role="test" />
+    </dir> <!-- //tests/extract_bz2 -->
+    <dir name="extract_gz">
+     <file name="001.phpt" role="test" />
+     <file name="002.phpt" role="test" />
+     <file name="003.phpt" role="test" />
+     <file name="004.phpt" role="test" />
+     <file name="005.phpt" role="test" />
+     <file name="006.phpt" role="test" />
+    </dir> <!-- //tests/extract_gz -->
+    <dir name="list">
+     <file name="001.phpt" role="test" />
+     <file name="002.phpt" role="test" />
+     <file name="003.phpt" role="test" />
+     <file name="004.phpt" role="test" />
+     <file name="005.phpt" role="test" />
+     <file name="006.phpt" role="test" />
+    </dir> <!-- //tests/list -->
+    <dir name="list_bz2">
+     <file name="001.phpt" role="test" />
+     <file name="002.phpt" role="test" />
+     <file name="003.phpt" role="test" />
+     <file name="004.phpt" role="test" />
+     <file name="005.phpt" role="test" />
+     <file name="006.phpt" role="test" />
+    </dir> <!-- //tests/list_bz2 -->
+    <dir name="list_gz">
+     <file name="001.phpt" role="test" />
+     <file name="002.phpt" role="test" />
+     <file name="003.phpt" role="test" />
+     <file name="004.phpt" role="test" />
+     <file name="005.phpt" role="test" />
+     <file name="006.phpt" role="test" />
+    </dir> <!-- //tests/list_gz -->
+    <dir name="_files">
+     <file name="bsdtar.cpio" role="test" />
+     <file name="bsdtar.cpio.bz2" role="test" />
+     <file name="bsdtar.cpio.gz" role="test" />
+     <file name="bsdtar.tar" role="test" />
+     <file name="bsdtar.tar.bz2" role="test" />
+     <file name="bsdtar.tar.gz" role="test" />
+     <file name="extracting-unwritable-dirs.tar" role="test" />
+     <file name="extracting-unwritable-dirs.tar.bz2" role="test" />
+     <file name="extracting-unwritable-dirs.tar.gz" role="test" />
+     <file name="gnucpio.cpio" role="test" />
+     <file name="gnucpio.cpio.bz2" role="test" />
+     <file name="gnucpio.cpio.gz" role="test" />
+     <file name="gnutar.tar" role="test" />
+     <file name="gnutar.tar.bz2" role="test" />
+     <file name="gnutar.tar.gz" role="test" />
+     <file name="mkdir-torture.tar" role="test" />
+     <file name="mkdir-torture.tar.bz2" role="test" />
+     <file name="mkdir-torture.tar.gz" role="test" />
+     <file name="try-to-extract-with-umask-777.tar" role="test" />
+     <file name="try-to-extract-with-umask-777.tar.bz2" role="test" />
+     <file name="try-to-extract-with-umask-777.tar.gz" role="test" />
+    </dir> <!-- //tests/_files -->
+    <file name="unlink_entry.inc" role="test" />
+   </dir> <!-- //tests -->
+   <file name="API.txt" role="doc" />
+   <file name="archive.c" role="src" />
+   <file name="archive_clbk.c" role="src" />
+   <file name="archive_clbk.h" role="src" />
+   <file name="archive_entry.c" role="src" />
+   <file name="archive_reader.c" role="src" />
+   <file name="archive_reader.h" role="src" />
+   <file name="archive_util.c" role="src" />
+   <file name="archive_util.h" role="src" />
+   <file name="archive_writer.c" role="src" />
+   <file name="archive_writer.h" role="src" />
+   <file name="config.m4" role="src" />
+   <file name="CREDITS" role="doc" />
+   <file name="php_archive.h" role="src" />
+   <file name="php_archive_entry.h" role="src" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <providesextension>archive</providesextension>
+ <extsrcrelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.1</release>
+    <api>0.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2005-01-26</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>
+Initial release.
+   </notes>
+  </release>
+ </changelog>
+</package>

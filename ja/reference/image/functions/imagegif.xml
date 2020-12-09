@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 350828 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi,mumumu -->
+<refentry xml:id="function.imagegif" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>imagegif</refname>
+  <refpurpose>&gd.image.output;</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>imagegif</methodname>
+   <methodparam><type>resource</type><parameter>image</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>to</parameter><initializer>&null;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>imagegif</function> は画像 <parameter>image</parameter>
+   から <parameter>to</parameter> に <acronym>GIF</acronym> ファイルを作成します。
+   引数 <parameter>image</parameter> は
+   <function>imagecreate</function> あるいは <literal>imagecreatefrom*</literal>
+   関数から返されたものです。
+  </para>
+  <para>
+   画像フォーマットは、<function>imagecolortransparent</function> を
+   用いて画像を透明化しない限り <acronym>GIF87a</acronym> となります。
+   透明化した場合の画像フォーマットは <acronym>GIF89a</acronym> となります。
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    &gd.image.description;
+    <varlistentry>
+     <term><parameter>to</parameter></term>
+     <listitem>
+      <para>&gd.image.path;</para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+  &gd.return.trueonerror;
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>imagegif</function> による画像の出力</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// 新しい画像のインスタンスを作成します
+$im = imagecreatetruecolor(100, 100);
+
+// 背景を白にします
+imagefilledrectangle($im, 0, 0, 99, 99, 0xFFFFFF);
+
+// テキスト文字列を画像の上に描画します
+imagestring($im, 3, 40, 20, 'GD Library', 0xFFBA00);
+
+// 画像をブラウザに出力します
+header('Content-Type: image/gif');
+
+imagegif($im);
+imagedestroy($im);
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title><function>imagegif</function> による PNG 画像から GIF への変換</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// PNG を読み込みます
+$png = imagecreatefrompng('./php.png');
+
+// 画像を GIF 形式で保存します
+imagegif($png, './php.gif');
+
+// メモリから開放します
+imagedestroy($png);
+
+// 終了です
+echo 'Converted PNG image to GIF with success!';
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    <acronym>GIF</acronym> のサポートは <acronym>GD</acronym>
+    ライブラリのバージョン 1.6 でいったん削除され、バージョン 2.0.28
+    で復活しました。この間のバージョンではこの関数は使えません。
+    詳細な情報は
+    <link xlink:href="&url.gd;">GD Project</link> のサイトを参照ください。
+   </para>
+   <para>
+    以下の短いコードにより、利用可能な GD サポートの型を自動検出して
+    汎用性のある PHP アプリケーションを書くことが可能です。
+    <literal>header ("Content-Type: image/gif");
+    imagegif ($im);</literal> の部分を、より柔軟性のある
+    このコードに置換してください。
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// Create a new image instance
+$im = imagecreatetruecolor(100, 100);
+
+// Do some image operations here
+
+// Handle output
+if(function_exists('imagegif'))
+{
+    // For GIF
+    header('Content-Type: image/gif');
+
+    imagegif($im);
+}
+elseif(function_exists('imagejpeg'))
+{
+    // For JPEG
+    header('Content-Type: image/jpeg');
+
+    imagejpeg($im, NULL, 100);
+}
+elseif(function_exists('imagepng'))
+{
+    // For PNG
+    header('Content-Type: image/png');
+
+    imagepng($im);
+}
+elseif(function_exists('imagewbmp'))
+{
+    // For WBMP
+    header('Content-Type: image/vnd.wap.wbmp');
+
+    imagewbmp($im);
+}
+else
+{
+    imagedestroy($im);
+
+    die('No image support in this PHP server');
+}
+
+// If image support was found for one of these
+// formats, then free it from memory
+if($im)
+{
+    imagedestroy($im);
+}
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </note>
+  <note>
+   <para>
+    種々のイメージ関数のサポートを調べるために 
+    関数 <function>imagetypes</function> を使用することが可能です。
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+if(imagetypes() & IMG_GIF)
+{
+    header('Content-type: image/gif');
+    imagegif($im);
+}
+elseif(imagetypes() & IMG_JPG)
+{
+    /* ... etc. */
+}
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><function>imagepng</function></member>
+   <member><function>imagewbmp</function></member>
+   <member><function>imagejpeg</function></member>
+   <member><function>imagetypes</function></member>
+  </simplelist>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<appendix xml:id="zlib.constants" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.constants;
+ &extension.constants;
+ <variablelist>
+  <varlistentry xml:id="constant.force-gzip">
+   <term>
+    <constant>FORCE_GZIP</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.force-deflate">
+   <term>
+    <constant>FORCE_DEFLATE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-encoding-raw">
+   <term>
+    <constant>ZLIB_ENCODING_RAW</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Algorithme DEFLATE tel que décrite dans la RFC 1951. Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-encoding-deflate">
+   <term>
+    <constant>ZLIB_ENCODING_DEFLATE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Algorithme de compression ZLIB tel que décrit dans la RFC 1950.
+     Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-encoding-gzip">
+   <term>
+    <constant>ZLIB_ENCODING_GZIP</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Algorithme GZIP tel que décrit par la RFC 1952. Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-filtered">
+   <term>
+    <constant>ZLIB_FILTERED</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-huffman-only">
+   <term>
+    <constant>ZLIB_HUFFMAN_ONLY</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+      Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-fixed">
+   <term>
+    <constant>ZLIB_FIXED</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+      Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-rle">
+   <term>
+    <constant>ZLIB_RLE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+      Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-default-strategy">
+   <term>
+    <constant>ZLIB_DEFAULT_STRATEGY</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+      Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-block">
+   <term>
+    <constant>ZLIB_BLOCK</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+      Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-no-flush">
+   <term>
+    <constant>ZLIB_NO_FLUSH</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+      Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-partial-flush">
+   <term>
+    <constant>ZLIB_PARTIAL_FLUSH</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+      Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-sync-flush">
+   <term>
+    <constant>ZLIB_SYNC_FLUSH</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+      Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-full-flush">
+   <term>
+    <constant>ZLIB_FULL_FLUSH</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+      Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.zlib-finish">
+   <term>
+    <constant>ZLIB_FINISH</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+      Disponible depuis PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+-->

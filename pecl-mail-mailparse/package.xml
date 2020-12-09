@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<package packagerversion="1.4.0a1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <name>mailparse</name>
+ <channel>pecl.php.net</channel>
+ <summary>Email message manipulation</summary>
+ <description>Mailparse is an extension for parsing and working with email messages.
+It can deal with rfc822 and rfc2045 (MIME) compliant messages.
+ </description>
+ <lead>
+  <name>Wez Furlong</name>
+  <user>wez</user>
+  <email>wez@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Brian Shire</name>
+  <user>shire</user>
+  <email>shire@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>John Jawed</name>
+  <user>jawed</user>
+  <email>jawed@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Sean DuBois</name>
+  <user>seander</user>
+  <email>seander@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Remi Collet</name>
+  <user>remi</user>
+  <email>remi@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2020-09-16</date>
+ <version>
+  <release>3.1.2dev</release>
+  <api>3.0</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP</license>
+ <notes>
+-
+ </notes>
+ <contents>
+  <dir name="/">
+   <dir name="tests">
+    <dir name="testdata">
+     <file name="m0001.txt" role="test" />
+     <file name="mime.exp" role="test" />
+     <file name="mime.txt" role="test" />
+     <file name="multimedia-demo.exp" role="test" />
+     <file name="multimedia-demo.txt.gz" role="test" />
+     <file name="oeuue" role="test" />
+     <file name="phpcvs1.exp" role="test" />
+     <file name="phpcvs1.txt" role="test" />
+     <file name="qp.exp" role="test" />
+     <file name="qp.txt" role="test" />
+     <file name="rfc2231.exp" role="test" />
+     <file name="rfc2231.txt" role="test" />
+     <file name="uue.exp" role="test" />
+     <file name="uue.txt" role="test" />
+    </dir> <!-- //tests/testdata -->
+    <file name="001.phpt" role="test" />
+    <file name="002.phpt" role="test" />
+    <file name="003.phpt" role="test" />
+    <file name="004.phpt" role="test" />
+    <file name="005.phpt" role="test" />
+    <file name="006.phpt" role="test" />
+    <file name="007.phpt" role="test" />
+    <file name="008.phpt" role="test" />
+    <file name="009.phpt" role="test" />
+    <file name="010.phpt" role="test" />
+    <file name="011.phpt" role="test" />
+    <file name="012.phpt" role="test" />
+    <file name="013.phpt" role="test" />
+    <file name="bug001.phpt" role="test" />
+    <file name="parse_test_messages.phpt" role="test" />
+   </dir> <!-- //tests -->
+   <file name="config.m4" role="src" />
+   <file name="config.w32" role="src" />
+   <file name="LICENSE" role="doc" />
+   <file name="CREDITS" role="doc" />
+   <file name="mailparse.c" role="src" />
+   <file name="Makefile.frag" role="src" />
+   <file name="arginfo.h" role="src" />
+   <file name="php_mailparse.h" role="src" />
+   <file name="php_mailparse_mime.c" role="src" />
+   <file name="php_mailparse_mime.h" role="src" />
+   <file name="php_mailparse_rfc822.c" role="src" />
+   <file name="php_mailparse_rfc822.h" role="src" />
+   <file name="php_mailparse_rfc822.re" role="src" />
+   <file name="README.md" role="doc" />
+   <file name="try.php" role="doc" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>7.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.10</min>
+   </pearinstaller>
+   <extension>
+    <name>mbstring</name>
+   </extension>
+  </required>
+ </dependencies>
+ <providesextension>mailparse</providesextension>
+ <extsrcrelease />
+ <changelog>
+  <release>
+   <date>2020-09-16</date>
+   <version>
+    <release>3.1.1</release>
+    <api>3.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+- Fixed bug #74215: Memory leaks with mailparse (cmb)
+- Fixed bug #76498: Unable to use callable as callback (cmb)
+- Compatibility with 8.0.0beta4
+   </notes>
+  </release>
+  <release>
+   <date>2020-04-22</date>
+   <version>
+    <release>3.1.0</release>
+    <api>3.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+- add arginfo to all functions
+- fix MimeMessage constructor name
+   </notes>
+  </release>
+  <release>
+   <date>2019-12-19</date>
+   <version>
+    <release>3.0.4</release>
+    <api>3.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+- Replace ulong with zend_ulong, fix Windows build (cmb)
+   </notes>
+  </release>
+  <release>
+   <date>2019-03-20</date>
+   <version>
+    <release>3.0.3</release>
+    <api>3.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+QA Release:
+- add missing files in archive
+- fix -Wformat warning
+- add dependency on mbstring extension
+- PHP 7.3 compatibility
+   </notes>
+  </release>
+  <release>
+   <date>2016-12-07</date>
+   <version>
+    <release>3.0.2</release>
+    <api>3.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+- Fix segfault in getChild
+   </notes>
+  </release>
+  <release>
+   <date>2016-01-29</date>
+   <version>
+    <release>3.0.1</release>
+    <api>3.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+- Fix double free caused by mailparse_msg_free
+   </notes>
+  </release>
+  <release>
+   <date>2015-12-23</date>
+   <version>
+    <release>3.0.0</release>
+    <api>3.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+- PHP 7 Release
+   </notes>
+  </release>
+ </changelog>
+</package>

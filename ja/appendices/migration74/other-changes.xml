@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 348208 $ -->
+<!-- EN-Revision: 350232 Maintainer: mumumu Status: ready -->
+
+<sect1 xml:id="migration74.other-changes" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>その他の変更</title>
+
+ <sect2 xml:id="migration74.other-changes.performance">
+  <title>パフォーマンスの向上</title>
+
+  <sect3 xml:id="migration74.other-changes.performance.core">
+   <title>PHP コア</title>
+   <para>
+    <function>array_key_exists</function> 関数で使うための特別な VM opcode
+    が追加されました。これにより、これが静的に解決される場合のパフォーマンスが向上します。名前空間内にあるコードは、
+    <literal>\array_key_exists()</literal> を書くか、明示的に関数を import
+    する必要があるかもしれません。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.other-changes.performance.pcre">
+   <title>正規表現 (Perl互換)</title>
+   <para>
+    UTF-8モード(<literal>"u"</literal> 修飾子)
+    が同じ文字列に対して繰り返し呼ばれた(但し異なるオフセットで呼ばれる)場合、UTF-8
+    として正しいかどうかの確認は一度だけ行われるようになります。
+   </para>
+  </sect3>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.ini">
+  <title>INIファイルのハンドリングに対する変更</title>
+  <para>
+  <link linkend="ini.zend.exception-ignore-args">zend.exception_ignore_args</link> は、
+  例外から生成されたスタックトレースに引数を含めたり、除外したりするための新しい
+  INIディレクティブです。
+  </para>
+  <para>
+   <link linkend="ini.opcache.preload-user">opcache.preload_user</link>
+   は、指定されなければ root
+   として実行されてしまう場合(これはセキュリティ上の理由で禁止されています) に、事前ロードされたコードを実行するユーザーアカウントを指定するための新しいINIディレクティブです。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.pkg-config">
+  <title>pkg-config への移行</title>
+  <para>
+   たくさんの拡張機能が、ライブラリへの依存性を検知するために、明示的に
+   pkg-config に移行しました。一般的には、このことは 以前 <option
+   role="configure">--with-foo-dir=DIR</option>
+   に似た指定をしていたのが、<option role="configure">--with-foo</option>
+   が使うだけで済むようになるということです。
+   カスタムライブラリのパスは <literal>PKG_CONFIG_PATH</literal>
+   にディレクトリを追加するか、明示的に <literal>FOO_CFLAGS</literal> と
+   <literal>FOO_LIBS</literal>
+   でコンパイルオプションを指定することができます。
+  </para>
+  <para>
+   以下の拡張機能や SAPI が影響を受けます:
+  </para>
+
+  <itemizedlist>
+   <listitem>
+    <simpara>CURL:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-curl</option>
+       は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>Enchant:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-enchant</option> は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>FPM:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-fpm-systemd</option>
+       オプションは、pkg-config が libsystem
+       をチェックする用途だけに使われるようになりました。libsystemd
+       の最小バージョンは 209 です。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>GD:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-gd</option> オプションは
+       <option role="configure">--enable-gd</option>
+       (拡張機能全部を有効にする場合) と
+       <option role="configure">--with-external-gd</option> 
+       (バンドルされたものではなく、外部のlibgdを使う場合)
+       になりました。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-png-dir</option>
+       は削除されました。libpng はビルドに必須です。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-zlib-dir</option>
+       は削除されました。zlib はビルドに必須です。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-freetype-dir</option>
+       は、<option role="configure">--with-freetype</option> になりました。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-jpeg-dir</option>
+       は、<option role="configure">--with-jpeg</option> になりました。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-webp-dir</option>
+       は、<option role="configure">--with-webp</option> になりました。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-xpm-dir</option> 
+       は、
+       <option role="configure">--with-xpm</option> になりました。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>IMAP:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-kerberos-systemd</option> は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>Intl:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-icu-dir</option> は削除されました。
+       <option role="configure">--enable-intl</option> が渡された場合、libicu
+       が常に必須になります。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>LDAP:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-ldap-sasl</option> は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>Libxml:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-libxml-dir</option> は削除されました。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <option role="configure">--enable-libxml</option>
+       は、
+       <option role="configure">--with-libxml</option> になりました。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-libexpat-dir</option> は
+       <option role="configure">--with-expat</option>
+       にリネームされ、ディレクトリを受け入れなくなりました。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>Litespeed:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-litespeed</option>
+       は、
+       <option role="configure">--enable-litespeed</option> になりました。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>Mbstring:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-onig</option>
+       オプションは削除されました。
+       <option role="configure">--disable-mbregex</option>
+       が指定されない限り、libonig が必須です。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>ODBC:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-iodbc</option> は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       ディレクトリを指定せずに <option
+       role="configure">--with-unixODBC</option> を使うと、pkg-config
+       を利用するようになります(望ましい)。libodbc.pc
+       がない古いバージョンのために、ディレクトリもまだ受け入れ可能です。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>OpenSSL:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-openssl</option> は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>PCRE:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-pcre-regex</option>
+       オプションは削除されました。
+       代わりに、バンドルされたものではなく、外部のPCREライブラリを使うために <option
+       role="configure">--with-external-pcre</option> が提供されます。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>PDO_SQLite:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-pdo-sqlite</option> は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>Readline:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-libedit</option> は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>Sodium:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-sodium</option> は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>SQLite3:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-sqlite3</option> は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>XSL:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-xsl</option> は、ディレクトリを受け入れません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+   <listitem>
+    <simpara>Zip:</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <option role="configure">--with-libzip</option> は削除されました。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <option role="configure">--enable-zip</option>
+       は、
+       <option role="configure">--with-zip</option> になりました。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+
+  </itemizedlist>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.csv">
+  <title>CSV のエスケープ</title>
+  <para>
+   <function>fputcsv</function>,
+   <function>fgetcsv</function>,
+   <methodname>SplFileObject::fputcsv</methodname>, 
+   <methodname>SplFileObject::fgetcsv</methodname> および
+   <methodname>SplFileObject::setCsvControl</methodname>
+   は、 <literal>$escape</literal>
+   パラメータに空文字列を受け入れるようになりました。
+   これによって、プロプライエタリな PHP のエスケープ機構が無効になります。
+  </para>
+  <para>
+   <function>str_getcsv</function>
+   関数の振る舞いが適切に調整されました(正確には、空文字列がデフォルトを使うことに等しくなります)
+  </para>
+  <para>
+   <methodname>SplFileObject::getCsvControl</methodname>
+   は、3番目の配列要素で空文字列を返すように適切に調整されました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.filter">
+  <title>データのフィルタリング</title>
+  <para>
+   <link linkend="book.filter">filter</link> 拡張機能は、
+   Unix でビルドする際に <option role="configure">--with-pcre-dir</option>
+   が不要になり、 <command>./configure</command>
+   コマンドで共有ライブラリとして確実にビルドされるようになりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.gd">
+  <title>GD</title>
+  <para>
+   libgd にバンドルされた <function>imagecropauto</function>
+   関数の振る舞いが、システムの libgd と同じになりました。
+  </para>
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     <constant>IMG_CROP_DEFAULT</constant> は、
+     <constant>IMG_CROP_SIDES</constant> にフォールバックしなくなりました。
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Threshold-cropping は、システムの libgd
+     のアルゴリズムを使うようになりました。
+    </simpara>
+   </listitem>
+  </itemizedlist>
+  <para>
+   <function>imagecropauto</function> 関数の <literal>$mode</literal>
+   引数のデフォルト値が <constant>IMG_CROP_DEFAULT</constant>
+   に変更されました。つまり、 <literal>-1</literal>
+   を渡すことは推奨されなくなりました。
+  </para>
+  <para>
+   <function>imagescale</function> 関数が、<literal>$new_width</literal> に
+   <literal>-1</literal> を渡すことによって、
+   固定の高さのアスペクト比をサポートするようになりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.hash">
+  <title>HASH メッセージダイジェストフレームワーク</title>
+  <para>
+   <link linkend="book.hash">hash</link>
+   拡張機能を無効にすることはできなくなり、PHP
+   ビルドに必須の部分として扱われます。
+   <link linkend="book.datetime">date</link> 拡張機能も同様です。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.intl">
+  <title>Intl</title>
+  <para>
+   <link linkend="book.intl">intl</link> 拡張機能は、ICU 50.1
+   以降が必須になりました。
+  </para>
+  <para>
+   <classname>ResourceBundle</classname>
+   は、<interfacename>Countable</interfacename> を新たに実装しました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.ldap">
+  <title>LDAP</title>
+  <para>
+   nsldap と umich_ldap のサポートは削除されました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.libxml">
+  <title>Libxml</title>
+  <para>
+   すべての libxmlベースの拡張機能は libxml 2.7.6 以降が必須になりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.mbstring">
+  <title>マルチバイト文字列</title>
+  <para>
+   oniguruma ライブラリは PHP本体にバンドルされなくなりました。代わりに、libonig
+   がシステムで利用可能になっている必要があります。mbregex
+   コンポーネントを無効にするために、<option
+   role="configure">--disable-mbregex</option>
+   オプションが代わりに利用できます。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.opcache">
+  <title>OPcache</title>
+  <para>
+   <option role="configure">--disable-opcache-file</option> と 
+   <option role="configure">--enable-opcache-file</option>
+   オプションは削除され、<link
+   linkend="ini.opcache.file-cache">opcache.file_cache</link>
+   INIディレクティブに置き換えられました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.password">
+  <title>パスワードハッシュ</title>
+  <para>
+   <function>password_hash</function> 関数は、<literal>$algo</literal> に nullable な &string; と
+   &integer; を受け入れるようになりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.pear">
+  <title>PEAR</title>
+  <para>
+   PEAR (PECL を含む)
+   のインストールは、デフォルトで無効になりました。configure オプション
+   <option role="configure">--with-pear</option>
+   を使うことで明示的に有効にできますが、このオプションは推奨されなくなり、将来的に削除される可能性があります。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.reflection">
+  <title>リフレクション</title>
+  <para>
+   <classname>ReflectionClass</classname>,
+   <classname>ReflectionFunction</classname>,
+   <classname>ReflectionMethod</classname>,
+   <classname>ReflectionObject</classname>,
+   <classname>ReflectionProperty</classname>
+   クラスの修飾子の定数の数値
+   (<literal>IS_ABSTRACT</literal>,
+   <literal>IS_DEPRECATED</literal>,
+   <literal>IS_EXPLICIT_ABSTRACT</literal>,
+   <literal>IS_FINAL</literal>,
+   <literal>IS_IMPLICIT_ABSTRACT</literal>,
+   <literal>IS_PRIVATE</literal>,
+   <literal>IS_PROTECTED</literal>,
+   <literal>IS_PUBLIC</literal>,
+   <literal>IS_STATIC</literal>) 
+   が変更されました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.simplexml">
+  <title>SimpleXML</title>
+  <para>
+   <classname>SimpleXMLElement</classname> クラスが、新たに
+   <interfacename>Countable</interfacename> を実装しました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.sqlite3">
+  <title>SQLite3</title>
+  <para>
+   バンドルされていた libsqlite は削除されました。
+   <link linkend="book.sqlite3">SQLite3</link>
+   拡張機能をビルドするには、libsqlite3 3.7.4 以降が必須になりました。
+   <link linkend="ref.pdo-sqlite">PDO_SQLite</link>
+   拡張機能をビルドするには、libsqlite3 3.5.0 以降が必須になりました。
+  </para>
+  <para>
+   <classname>SQLite3</classname>,
+   <classname>SQLite3Stmt</classname> および <classname>SQLite3Result</classname>
+   クラスのシリアル化とその復元は、明示的に禁止されました。
+   以前は、これらのクラスのシリアル化は可能でしたが、それを
+   復元すると不安定なオブジェクトを返していました。
+  </para>
+  <para>
+   <literal>@param</literal> 記法は
+   SQLクエリパラメータを示すために使えるようになりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.other-changes.zip">
+  <title>Zip</title>
+  <para>
+   バンドルされていた libzip ライブラリは削除されました。
+   <link linkend="book.zip">zip</link> 拡張機能をビルドするには、libzip >=
+   0.11 が必要になっています。
+  </para>
+ </sect2>
+
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

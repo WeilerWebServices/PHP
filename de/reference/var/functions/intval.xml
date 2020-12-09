@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 348405 Maintainer: fa Status: ready -->
+<!-- splitted from ./de/functions/var.xml in rev 1.2 -->
+<refentry xml:id="function.intval" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>intval</refname>
+  <refpurpose>Konvertiert einen Wert nach integer</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>intval</methodname>
+   <methodparam><type>mixed</type><parameter>var</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>base</parameter><initializer>10</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Liefert den <type>integer</type>-Wert von <parameter>var</parameter> unter
+   Benutzung der angegebenen Basis. (Standardwert ist <parameter>base</parameter>=10).
+   <function>intval</function> sollte nicht auf Objekte angewandt werden, da dies eine
+   Meldung vom Typ <constant>E_NOTICE</constant> erzeugt und den Wert 1 zurückgibt.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>var</parameter></term>
+     <listitem>
+      <para>
+       Der skalare Wert (das kann ein Ausdruck oder eine einfache Variable 
+       sein, nicht jedoch ein Array oder Objekt.), der nach <type>integer</type> 
+       konvertiert werden soll.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>base</parameter></term>
+     <listitem>
+      <para>
+       Die Basis der Konvertierung
+      </para>
+      <note>
+       <para>
+        Wenn <parameter>base</parameter> 0 ist, wird die verwendete Basis
+        durch das Format von <parameter>var</parameter> bestimmt:
+        <itemizedlist>
+         <listitem>
+          <simpara>
+           wenn die Zeichenkette ein "0x" (oder "0X") Präfix enthält, ist die
+           Basis 16 (hexadezimal); andernfalls,
+          </simpara>
+         </listitem>
+         <listitem>
+          <simpara>
+           wenn die Zeichenkette mit "0" beginnt, ist die Basis 8 (oktal);
+           andernfalls,
+          </simpara>
+         </listitem>
+         <listitem>
+          <simpara>
+           ist die Basis 10 (dezimal).
+          </simpara>
+         </listitem>
+        </itemizedlist>
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Der integer-Wert von <parameter>var</parameter> bei Erfolg, sonst 0.
+   Leere Arrays geben den Wert 0 zurück, nichtleere Arrays den Wert 1.
+  </para>
+  <para>
+   Der Maximalwert hängt vom System ab. 32-Bit-Systeme haben einen maximalen
+   Wertebereich für signed integer von -2147483648 bis 2147483647. Also wird
+   beispielsweise auf solch einem System <literal>intval('1000000000000')</literal>
+   2147483647 zurückgeben. Der maximale signed integer-Wert auf 64-Bit-Systemen ist
+   9223372036854775807.
+  </para>
+  <para>
+   Zeichenketten werden meistens 0 zurückgeben, auch wenn das erste Zeichen hier
+   entscheidend ist. Es gelten die normalen Regeln zur
+   <link linkend="language.types.integer.casting">Umwandlung nach integer</link>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>intval</function>-Beispiele</title>
+    <para>
+     Die folgenden Beispiele beziehen sich auf ein 32-Bit-System
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo intval(42);                      // 42
+echo intval(4.2);                     // 4
+echo intval('42');                    // 42
+echo intval('+42');                   // 42
+echo intval('-42');                   // -42
+echo intval(042);                     // 34
+echo intval('042');                   // 42
+echo intval(1e10);                    // 1410065408
+echo intval('1e10');                  // 1
+echo intval(0x1A);                    // 26
+echo intval(42000000);                // 42000000
+echo intval(420000000000000000000);   // 0
+echo intval('420000000000000000000'); // 2147483647
+echo intval(42, 8);                   // 42
+echo intval('42', 8);                 // 34
+echo intval(array());                 // 0
+echo intval(array('foo', 'bar'));     // 1
+echo intval(false);                   // 0
+echo intval(true);                    // 1
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Der <parameter>base</parameter>-Parameter hat keinerlei Auswirkung, wenn der
+    <parameter>var</parameter>-Parameter kein String ist.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="changelog"><!-- {{{ -->
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.1.0</entry>
+       <entry>
+        Erzeugt eine Meldung vom Type <constant>E_NOTICE</constant> und
+        gibt den Wert 1 zurück, wenn ein Objekt als Parameter
+        <parameter>var</parameter> übergeben wird.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1><!-- }}} -->
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>boolval</function></member>
+    <member><function>floatval</function></member>
+    <member><function>strval</function></member>
+    <member><function>settype</function></member>
+    <member><function>is_numeric</function></member>
+    <member><link linkend="language.types.type-juggling">Typen-Tricks</link></member>
+    <member><link linkend="ref.bc">BCMath - Mathematische Funktionen mit beliebiger Genauigkeit</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

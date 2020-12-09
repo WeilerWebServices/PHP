@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<section xml:id="filesystem.configuration" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.runtime;
+ &extension.runtime;
+ <para>
+ <table>
+   <title>&ConfigureOptions; le système de fichiers</title>
+   <tgroup cols="4">
+    <thead>
+     <row>
+      <entry>&Name;</entry>
+      <entry>&Default;</entry>
+      <entry>&Changeable;</entry>
+      <entry>&Changelog;</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry><link linkend="ini.allow-url-fopen">allow_url_fopen</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+     <row>
+      <entry><link linkend="ini.allow-url-include">allow_url_include</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Disponible à partir de PHP 5.2.0. Obsolète à partir de PHP 7.4.0.</entry>
+     </row>
+    <row>
+     <entry><link linkend="ini.user-agent">user_agent</link></entry>
+     <entry>NULL</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.default-socket-timeout">default_socket_timeout</link></entry>
+     <entry>"60"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.from">from</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.auto-detect-line-endings">auto_detect_line_endings</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.sys-temp-dir">sys_temp_dir</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_SYSTEM</entry>
+     <entry>Disponible à partir de PHP 5.5.0.</entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+ &ini.php.constants;
+ </para>
+ &ini.descriptions.title;
+ <para>
+  <variablelist>
+   <varlistentry xml:id="ini.allow-url-fopen">
+    <term>
+     <parameter>allow_url_fopen</parameter>
+     &boolean;
+    </term>
+    <listitem>
+     <para>
+      Cette option active les versions étendues des fonctions d'accès
+      aux fichiers, qui savent exploiter les URL. Les extensions par 
+      défaut permettent d'accéder aux 
+      <link linkend="features.remote-files">fichiers distants</link>
+      avec les protocoles FTP ou HTTP. Certaines extensions comme 
+      <link linkend="ref.zlib">zlib</link>, peuvent ajouter d'autres
+      fonctionnalités.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.allow-url-include">
+    <term>
+     <parameter>allow_url_include</parameter>
+     &boolean;
+    </term>
+    <listitem>
+     <para>
+      Cette option permet l'utilisation des gestionnaires d'URL avec les
+      fonctions suivantes : <function>include</function>,
+      <function>include_once</function>, 
+      <function>require</function>,
+      <function>require_once</function>.
+     </para>
+     <note>
+      <para>
+       Ce paramètre nécessite que le paramètre <parameter>allow_url_fopen</parameter>
+       soit activé avec <literal>"on"</literal>.
+      </para>
+     </note>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.user-agent">
+    <term>
+     <parameter>user_agent</parameter>
+     &string;
+    </term>
+    <listitem>
+     <para>
+      Définit le type d'"user agent" (Définition du navigateur web) utilisé par
+      PHP.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.default-socket-timeout">
+    <term>
+     <parameter>default_socket_timeout</parameter>
+     &integer;
+    </term>
+    <listitem>
+     <para>
+      Durée d'expiration (en secondes) pour les flots basés sur les sockets.
+      Spécifier une valeur négative signifie une durée d'expiration infinie.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.from">
+    <term>
+     <parameter>from</parameter>
+     &string;
+    </term>
+    <listitem>
+     <para>
+      L'adresse mail à utiliser pour les connexions FTP non-autorisées
+      ou encore pour fournir une valeur au champ "From" sur une connexion HTTP.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.auto-detect-line-endings">
+    <term>
+     <parameter>auto_detect_line_endings</parameter>
+     &boolean;
+    </term>
+    <listitem>
+     <para>
+      Lorsque cette option est activée, PHP va examiner les données lues
+      par <function>fgets</function> et <function>file</function> pour voir
+      si le fichier utilise les conventions de ligne de Unix, MS-Dos ou
+      Macintosh.
+     </para>
+     <para>
+      Cela permet à PHP de fonctionner avec des systèmes Macintosh, mais
+      par défaut, cette option est désactivée, car cette détection
+      impose un légère pénalité en temps de traitement, mais aussi
+      parce que ceux qui utilisent les retours chariots comme séparateurs
+      auront des soucis de compatibilité.
+     </para>
+    </listitem>
+   </varlistentry>
+   
+   <varlistentry xml:id="ini.sys-temp-dir">
+    <term>
+     <parameter>sys_temp_dir</parameter>
+     &string;
+    </term>
+    <listitem>
+     <para>
+     </para>
+    </listitem>
+   </varlistentry>
+
+  </variablelist>
+ </para>
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

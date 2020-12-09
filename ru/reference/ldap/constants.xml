@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 351133 Maintainer: mch Status: ready -->
+<!-- Reviewed: yes Maintainer: sergey -->
+<!-- $Revision$ -->
+
+<appendix xml:id="ldap.constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.constants;
+ &extension.constants;
+ <variablelist>
+  <varlistentry xml:id="constant.ldap-deref-never">
+   <term>
+    <constant>LDAP_DEREF_NEVER</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Правило разыменования псевдонимов - Never.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-deref-searching">
+   <term>
+    <constant>LDAP_DEREF_SEARCHING</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Правило разыменования псевдонимов - Searching.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-deref-finding">
+   <term>
+    <constant>LDAP_DEREF_FINDING</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Правило разыменования псевдонимов - Finding.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-deref-always">
+   <term>
+    <constant>LDAP_DEREF_ALWAYS</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Правило разыменования псевдонимов - Always.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-deref">
+   <term>
+    <constant>LDAP_OPT_DEREF</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет альтернативные правила для следующих псевдонимов на сервере.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-sizelimit">
+   <term>
+    <constant>LDAP_OPT_SIZELIMIT</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <para>
+     Определяет максимальное количество записей, которые могут быть возвращены при операции поиска.
+    </para>
+    <note>
+     <simpara>
+      Предел фактического размера для операций также ограничен максимальным количеством
+      возвращаемых записей, которое задаётся конфигурацией сервера.      
+      Меньшее из этих двух параметров является фактическим ограничением размера.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-timelimit">
+   <term>
+    <constant>LDAP_OPT_TIMELIMIT</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет количество секунд для ожидания результатов поиска.
+    </simpara>
+    <note>
+     <simpara>
+      Предел фактического времени выполнения для операций также ограничен максимальным временем, которое задаётся конфигурацией сервера.      
+      Меньшее из этих двух параметров является фактическим ограничением времени выполнения.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="constant.ldap-opt-network-timeout">
+   <term>
+    <constant>LDAP_OPT_NETWORK_TIMEOUT</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Опция для ldap_set_option разрешает настройку сетевого времени ожидания.
+     (Доступна с PHP 5.3.0)
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="constant.ldap-opt-protocol-version">
+   <term>
+    <constant>LDAP_OPT_PROTOCOL_VERSION</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет используемый протокол LDAP (V2 или V3).
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-error-number">
+   <term>
+    <constant>LDAP_OPT_ERROR_NUMBER</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Последний код ошибки сессии.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-referrals">
+   <term>
+    <constant>LDAP_OPT_REFERRALS</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет, следовать ли автоматически рефералам, возвращенным сервером LDAP.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-restart">
+   <term>
+    <constant>LDAP_OPT_RESTART</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет, следует ли неявно перезапустить соединение.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-host-name">
+   <term>
+    <constant>LDAP_OPT_HOST_NAME</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Устанавливает/получает разделенные пробелами хосты при попытке подключения.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-error-string">
+   <term>
+    <constant>LDAP_OPT_ERROR_STRING</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Псевдоним для <constant>LDAP_OPT_DIAGNOSTIC_MESSAGE</constant>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-diagnostic-message">
+   <term>
+    <constant>LDAP_OPT_DIAGNOSTIC_MESSAGE</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Последнее сообщение об ошибке в сессии.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-matched-dn">
+   <term>
+    <constant>LDAP_OPT_MATCHED_DN</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Устанавливает/получает проверяемые DN связанные с соединением.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-server-controls">
+   <term>
+    <constant>LDAP_OPT_SERVER_CONTROLS</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет список серверных элементов управления по умолчанию, который должен быть отправлен с 
+     каждым запросом.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-client-controls">
+   <term>
+    <constant>LDAP_OPT_CLIENT_CONTROLS</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет список клиентских элементов управления по умолчанию, которые должны обрабатываться с 
+     каждым запросом.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-debug-level">
+   <term>
+    <constant>LDAP_OPT_DEBUG_LEVEL</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет поразрядный уровень для отладочных трассировок.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-keepalive-idle">
+   <term>
+    <constant>LDAP_OPT_X_KEEPALIVE_IDLE</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет число секунд, в течение которого соединение должно быть неактивным, прежде
+     чем начнут посылаться пакеты keepalive.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-keepalive-probes">
+   <term>
+    <constant>LDAP_OPT_X_KEEPALIVE_PROBES</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет максимальное количество пакетов keepalive, которое должно быть послано,
+     прежде чем соединение будет разорвано.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-keepalive-interval">
+   <term>
+    <constant>LDAP_OPT_X_KEEPALIVE_INTERVAL</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет интервал в секундах между посылками keepalive.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-cacertdir">
+   <term>
+    <constant>LDAP_OPT_X_TLS_CACERTDIR</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет путь к директории, в которой лежат сертификаты CA.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-cacertfile">
+   <term>
+    <constant>LDAP_OPT_X_TLS_CACERTFILE</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет полный путь к файлу сертификата CA.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-certfile">
+   <term>
+    <constant>LDAP_OPT_X_TLS_CERTFILE</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет полный путь к файлу сертификата.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-cipher-suite">
+   <term>
+    <constant>LDAP_OPT_X_TLS_CIPHER_SUITE</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Задает допустимый набор шифров.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-crlcheck">
+   <term>
+    <constant>LDAP_OPT_X_TLS_CRLCHECK</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет стратегию оценки CRL. Одна из констант: <constant>LDAP_OPT_X_TLS_CRL_NONE</constant>,<constant>LDAP_OPT_X_TLS_CRL_PEER</constant>, <constant>LDAP_OPT_X_TLS_CRL_ALL</constant>.
+    </simpara>
+    <note>
+     <simpara>
+      Эта опция корректна только для OpenSSL.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-crlfile">
+   <term>
+    <constant>LDAP_OPT_X_TLS_CRLFILE</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет полный путь к файлу CRL.
+    </simpara>
+    <note>
+     <simpara>
+      Эта опция корректна только для GnuTLS.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-dhfile">
+   <term>
+    <constant>LDAP_OPT_X_TLS_DHFILE</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет полный путь к файлу, содержащему параметры Протокола Диффи-Хеллмана.
+    </simpara>
+    <note>
+     <simpara>
+      Эта опция игнорируется GnuTLS и Mozilla NSS.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-keyfile">
+   <term>
+    <constant>LDAP_OPT_X_TLS_KEYFILE</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет полный путь к файлю ключа сертификата.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-protocol-min">
+   <term>
+    <constant>LDAP_OPT_X_TLS_PROTOCOL_MIN</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет минимальную версию протокола. Одна из констант:
+     <constant>LDAP_OPT_X_TLS_PROTOCOL_SSL2</constant>,
+     <constant>LDAP_OPT_X_TLS_PROTOCOL_SSL3</constant>, 
+     <constant>LDAP_OPT_X_TLS_PROTOCOL_TLS1_0</constant>, 
+     <constant>LDAP_OPT_X_TLS_PROTOCOL_TLS1_1</constant>, 
+     <constant>LDAP_OPT_X_TLS_PROTOCOL_TLS1_2</constant>
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-random-file">
+   <term>
+    <constant>LDAP_OPT_X_TLS_RANDOM_FILE</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Устанавливает/получает случайный файл когда один из системных файлов по умолчанию не доступен.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-opt-x-tls-require-cert">
+   <term>
+    <constant>LDAP_OPT_X_TLS_REQUIRE_CERT</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Определяет стратегию проверки сертификата. Одна из констант:
+     <constant>LDAP_OPT_X_TLS_NEVER</constant>,
+     <constant>LDAP_OPT_X_TLS_HARD</constant>, 
+     <constant>LDAP_OPT_X_TLS_DEMAND</constant>,
+     <constant>LDAP_OPT_X_TLS_ALLOW</constant>,
+     <constant>LDAP_OPT_X_TLS_TRY</constant>.
+     (Доступно с PHP 7.0.0)
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.gslc-ssl-no-auth">
+   <term>
+    <constant>GSLC_SSL_NO_AUTH</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Режим аутентификации SSL - аутентификация не требуется (Только для Oracle LDAP)
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.gslc-ssl-oneway-auth">
+   <term>
+    <constant>GSLC_SSL_ONEWAY_AUTH</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Режим аутентификации SSL - требуется только серверная аутентификация (Только для Oracle LDAP)
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.gslc-ssl-twoway-auth">
+   <term>
+    <constant>GSLC_SSL_TWOWAY_AUTH</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Режим аутентификации SSL - требуется как серверная, так и клиентская аутентификация (Только для Oracle LDAP)
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-exop-start-tls">
+   <term>
+    <constant>LDAP_EXOP_START_TLS</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Константа расширенной операции - Start TLS (<link xlink:href="&url.rfc;4511">RFC 4511</link>).
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-exop-modify-passwd">
+   <term>
+    <constant>LDAP_EXOP_MODIFY_PASSWD</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Константа расширенной операции - Modify password (<link xlink:href="&url.rfc;3062">RFC 3062</link>).
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-exop-refresh">
+   <term>
+    <constant>LDAP_EXOP_REFRESH</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Константа расширенной операции - Refresh (<link xlink:href="&url.rfc;2589">RFC 2589</link>).
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-exop-who-am-i">
+   <term>
+    <constant>LDAP_EXOP_WHO_AM_I</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Константа расширенной операции - WHOAMI (<link xlink:href="&url.rfc;4532">RFC 4532</link>).
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-exop-turn">
+   <term>
+    <constant>LDAP_EXOP_TURN</constant> 
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Константа расширенной операции - Turn (<link xlink:href="&url.rfc;4531">RFC 4531</link>).
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="constant.ldap-control-managedsait">
+   <term>
+    <constant>LDAP_CONTROL_MANAGEDSAIT</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - управление DSA IT (<link xlink:href="&url.rfc;3296">RFC 3296</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-proxy-authz">
+   <term>
+    <constant>LDAP_CONTROL_PROXY_AUTHZ</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - прокси-авторизация (<link xlink:href="&url.rfc;4730">RFC 4370</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-subentries">
+   <term>
+    <constant>LDAP_CONTROL_SUBENTRIES</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - подразделы (<link xlink:href="&url.rfc;3672">RFC 3672</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-valuesreturnfilter">
+   <term>
+    <constant>LDAP_CONTROL_VALUESRETURNFILTER</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - фильтрация возвращаемых значений (<link xlink:href="&url.rfc;3876">RFC 3876</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-assert">
+   <term>
+    <constant>LDAP_CONTROL_ASSERT</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - контроль утверждений (<link xlink:href="&url.rfc;45282">RFC 4528</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-pre-read">
+   <term>
+    <constant>LDAP_CONTROL_PRE_READ</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - возврат изначального значения (<link xlink:href="&url.rfc;4527">RFC 4527</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-post-read">
+   <term>
+    <constant>LDAP_CONTROL_POST_READ</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - возврат итогового значения (<link xlink:href="&url.rfc;4527">RFC 4527</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-sortrequest">
+   <term>
+    <constant>LDAP_CONTROL_SORTREQUEST</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - запрос сортировки (<link xlink:href="&url.rfc;2891">RFC 2891</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-sortresponse">
+   <term>
+    <constant>LDAP_CONTROL_SORTRESPONSE</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - ответ на запрос сортировки (RFC 2891).
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-pagedresults">
+   <term>
+    <constant>LDAP_CONTROL_PAGEDRESULTS</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - пагинация результата (<link xlink:href="&url.rfc;2696">RFC 2696</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-authzid-request">
+   <term>
+    <constant>LDAP_CONTROL_AUTHZID_REQUEST</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - запрос идентификации авторизации (<link xlink:href="&url.rfc;3829">RFC 3829</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-authzid-response">
+   <term>
+    <constant>LDAP_CONTROL_AUTHZID_RESPONSE</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - ответ на запрос идентификации авторизации (<link xlink:href="&url.rfc;3829">RFC 3829</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-sync">
+   <term>
+    <constant>LDAP_CONTROL_SYNC</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - операция синхронизации контента (<link xlink:href="&url.rfc;4533">RFC 4533</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-sync-state">
+   <term>
+    <constant>LDAP_CONTROL_SYNC_STATE</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - состояние операции синхронизации контента (<link xlink:href="&url.rfc;4533">RFC 4533</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-sync-done">
+   <term>
+    <constant>LDAP_CONTROL_SYNC_DONE</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - операция синхронизации контента завершена (<link xlink:href="&url.rfc;4533">RFC 4533</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-dontusecopy">
+   <term>
+    <constant>LDAP_CONTROL_DONTUSECOPY</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - не использовать копию (<link xlink:href="&url.rfc;6171">RFC 6171</link>).
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-passwordpolicyrequest">
+   <term>
+    <constant>LDAP_CONTROL_PASSWORDPOLICYREQUEST</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - запрос парольной политики
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-passwordpolicyresponse">
+   <term>
+    <constant>LDAP_CONTROL_PASSWORDPOLICYRESPONSE</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - ответ на запрос парольной политики
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-x-incremental-values">
+   <term>
+    <constant>LDAP_CONTROL_X_INCREMENTAL_VALUES</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - инкрементные значения Active Directory
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-x-domain-scope">
+   <term>
+    <constant>LDAP_CONTROL_X_DOMAIN_SCOPE</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - доменная область Active Directory
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-x-permissive-modify">
+   <term>
+    <constant>LDAP_CONTROL_X_PERMISSIVE_MODIFY</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - изменение разрешений Active Directory
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-x-search-options">
+   <term>
+    <constant>LDAP_CONTROL_X_SEARCH_OPTIONS</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - опции поиска Active Directory
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-x-tree-delete">
+   <term>
+    <constant>LDAP_CONTROL_X_TREE_DELETE</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - удаление дерева в Active Directory
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-x-extended-dn">
+   <term>
+    <constant>LDAP_CONTROL_X_EXTENDED_DN</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - расширенный DN Active Directory
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-vlvrequest">
+   <term>
+    <constant>LDAP_CONTROL_VLVREQUEST</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - запрос просмотра вертуального списка
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.ldap-control-vlvresponse">
+   <term>
+    <constant>LDAP_CONTROL_VLVRESPONSE</constant>
+    (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Управляющая константа - ответ на запрос просмотра вертуального списка 
+     Доступно с PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+-->

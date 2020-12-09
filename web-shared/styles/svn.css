@@ -1,0 +1,30 @@
+.vc_diff_change {
+  background: yellow;
+}
+.vc_diff_change_empty {
+  background-color: gold;
+}
+.vc_diff_chunk_header td {
+  background: orange;
+}
+.vc_diff_remove {
+  background-color: hotpink;
+}
+.vc_diff_add {
+  background-color: green;
+}
+#vc_file>table {
+  white-space: pre-wrap;
+  font-family: monospace;
+  padding-right: 0;
+}
+#vc_file>table tr:nth-child(even) {
+  background: #f0f3ff;
+}
+#vc_file>table tr:nth-child(odd) {
+  background: #fff;
+}
+#vc_file>table td.vc_file_line_number {
+  vertical-align: top;
+  color: #aaa;
+}

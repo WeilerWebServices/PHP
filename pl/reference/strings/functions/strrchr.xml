@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: n/a Maintainer: sMeRFx Status: ready -->
+<!-- $Revision$ -->
+  <refentry xml:id="function.strrchr" xmlns="http://docbook.org/ns/docbook">
+   <refnamediv>
+    <refname>strrchr</refname>
+    <refpurpose>
+    Znajduje ostatnie występowanie znaku w łańcuchu znaków
+    </refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>string</type><methodname>strrchr</methodname>
+      <methodparam><type>string</type><parameter>stóg siana</parameter></methodparam>
+      <methodparam><type>string</type><parameter>igła</parameter></methodparam>
+     </methodsynopsis>
+    <para>
+     Ta funkcja zwraca część
+     <parameter>stogu siana</parameter> zaczynającą się od ostatniego
+     występowania<parameter>igły</parameter>aż do 
+     końca <parameter>stogu siana</parameter>.
+    </para>
+    <para>
+     Zwraca &false; jeżeli <parameter>igła</parameter> nie jest znaleziona.
+    </para>
+    <para>
+     Jeżeli <parameter>igła</parameter> zawiera więcej niż jeden
+     znak, tylko pierwszy jest użyty. To zachowanie jest inne od
+     zachowania <function>strchr</function>.
+    </para>
+    <para>
+     Jeżeli <parameter>igła</parameter> nie jest ciągiem znaków, jest konwertowana
+     na liczbę całkowitą i stosowana jako porządkowa wartość znaku.
+     <example>
+      <title><function>strrchr</function> przykład</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+// otrzymano ostatni katalog w $PATH
+$dir = substr(strrchr($PATH, ":"), 1);
+
+// otrzymano wszystko po ostatniej nowej linii
+$text = "Lina 1\nLinia 2\nLinia 3";
+$last = substr(strrchr($text, 10), 1 );
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     <function>strrchr</function> jest bezpieczna dla danych binarnych od wersji PHP 4.3.0
+    </para>
+    <para>
+     Patrz także <function>strstr</function>, <function>substr</function>, i
+     <function>stristr</function>.
+    </para>
+   </refsect1>
+  </refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

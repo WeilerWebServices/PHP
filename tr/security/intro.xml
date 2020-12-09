@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 297028 Maintainer: sezer Status: ready -->
+<!-- splitted from ./index.xml, last change in rev 1.66 -->
+ <chapter xml:id="security.intro" xmlns="http://docbook.org/ns/docbook">
+  <title>Giriş</title>
+  <simpara>
+   PHP güçlü bir dil ve yorumlayıcıdır. İster bir HTTP sunucusunun modülü
+   olarak ister ayrı bir <acronym>CGI</acronym> çalıştırılabiliri olarak
+   çalışıyor olsun, sunucu üzerinde ağ bağlantıları açabilir, dosyalara
+   erişebilir ve onları çalıştırabilir. Herşeyi çalıştırılabilir yapan bu
+   özellikler öntanımlı haliyle bir HTTP sunucusunu güvensiz duruma getirir.
+   PHP, <acronym>CGI</acronym> programları yazmak için özellikle Perl ve C'den
+   daha güvenli bir dil olması için  tasarlanmıştır. Doğru derleme seçenekleri
+   ile derlenir, doğru çalışma anı seçenekleriyle yapılandırılır ve uygun bir
+   kodlama deneyimiyle kullanılırsa arzuladığınız güvenlik ve özgürlüğü size sunar.
+  </simpara>
+  <simpara>
+   PHP ile birçok şey yapmak mümkün olduğu gibi, ayarları da oldukça fazladır.
+   Bu ayarların çokluğu size istediğiniz şekilde bir sunucu ortamını kurmanızı
+   sağlarsa da bu seçeneklerle sunucunun yapılandırması bir araya geldiğinde
+   güvensiz bir ortam oluşma riski anlamına da gelebilir.
+  </simpara>
+  <simpara>
+    PHP yapılandırmasındaki bu esneklik, kod esnekliğiyle rekabet halinde
+    gelişir. PHP ile bir kabuk kullanıcısının tüm gücüne sahip eksiksiz sunucu
+    uygulamaları geliştirlebileceği gibi sıkı bir şekilde denetlenen bir ortamda
+    küçük bir güvenlik riskiyle sunucu taraflı sayfalar oluşturmakta da
+    kullanılabilir. Bu ortamın nasıl kurulacağı ve güvenliğinin nasıl
+    sağlanacağı büyük oranda PHP geliştiricisine bırakılmıştır.
+  </simpara>
+  <simpara>
+    Bu kısıma genel güvenlik tavsiyeleri vererek başlayacağız. Ardından
+    değişik ayarların nasıl yapıldığına dair bilgiler verecek ve hangi
+    güvenlik seviyesinde hangi güvenlik ayarlarının kullanılması gerektiğinden
+    bahsedeceğiz.
+  </simpara>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

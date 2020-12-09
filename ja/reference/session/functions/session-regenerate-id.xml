@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 350645 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: shimooka,mumumu -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.session-regenerate-id">
+ <refnamediv>
+  <refname>session_regenerate_id</refname>
+  <refpurpose>
+   現在のセッションIDを新しく生成したものと置き換える
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>session_regenerate_id</methodname>
+   <methodparam choice="opt"><type>bool</type><parameter>delete_old_session</parameter><initializer>&false;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>session_regenerate_id</function> は現在のセッションIDを
+   新しいものと置き換えます。その際、現在のセッション情報は維持されます。
+  </para>
+  <para>
+   <link linkend="ini.session.use-trans-sid">session.use_trans_sid</link> が有効な場合は、
+   <function>session_regenerate_id</function> を呼んでから出力を始めないといけません。
+   それ以前の出力には、古いセッション ID が使われます。
+  </para>
+  <warning>
+   <para>
+    現在の session_regenerate_id は、不安定なネットワークをうまく扱えません。
+    たとえば、モバイルネットワークや WiFi ネットワークです。
+    よって、 session_regenerate_id を 呼ぶことで、セッションの消失を経験するかもしれません。
+   </para>
+   <para>
+    すぐに古いセッションデータを破棄すべきではありませんが、
+    古いセッションID のタイムスタンプと、
+    アクセス制御は破棄すべきでしょう。
+    さもないと、ページへの同時アクセスによって、
+    状態の不整合が発生したり、セッションが失われたり、
+    クライアント(ブラウザ) 側のレースコンディションが発生したり、
+    不必要なセッションIDをたくさん作らなければならなくなるかもしれません。
+    セッションデータをすぐに破棄してしまうと、
+    セッションハイジャックの検出だけでなく、
+    防止もできなくしてしまいます。
+   </para>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>delete_old_session</parameter></term>
+      <listitem>
+       <para>
+        関連付けられた古いセッションを削除するかどうか。
+        削除による競合を防いだり、セッションハイジャックを 検出/防ぐ
+        必要がある場合には、古いセッションを削除すべきではありません。
+       </para>
+      </listitem>
+     </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>session_regenerate_id</function> の使用例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// 注意: このコードは完全に動作するわけではありません。一例です！
+
+session_start();
+
+// 破棄されたタイムスタンプをチェック
+if (isset($_SESSION['destroyed'])
+    && $_SESSION['destroyed'] < time() - 300) {
+    // 通常は起こるべきではない。攻撃や不安定なネットワークによる可能性がある
+    // このユーザーのセッションから、全ての認証ステータスを削除
+    remove_all_authentication_flag_from_active_sessions($_SESSION['userid']);
+    throw(new DestroyedSessionAccessException);
+}
+
+$old_sessionid = session_id();
+
+// 破棄されたタイムスタンプを設定
+$_SESSION['destroyed'] = time(); // PHP 7.0.0 以降では、session_regenerate_id() は古いセッションデータを保存します。
+
+// 単に session_regenerate_id() を呼ぶだけでは、セッションの消失などに繋がる可能性があります。
+// 次の例を見てください。
+session_regenerate_id();
+
+// 新しいセッションには、破棄されたタイムスタンプは不要
+unset($_SESSION['destroyed']);
+
+$new_sessionid = session_id();
+
+echo "古いセッション: $old_sessionid<br />";
+echo "新しいセッション: $new_sessionid<br />";
+
+print_r($_SESSION);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   現在のセッションモジュールは、不安定なネットワークをうまく扱えません。
+   session_regenerate_id によるセッションの消失を避けるために、
+   セッションIDを管理すべきです。
+  </para>
+
+  <para>
+   <example>
+    <title><function>session_regenerate_id</function> による、セッションの消失を避ける</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// 注意: このコードは完全に動作するわけではありません。一例です！
+//  my_session_start() and my_session_regenerate_id() によって、
+//  不安定なネットワークによるセッションの消失を避けています。
+//  それに加えて、このコードは攻撃者から、盗まれたセッションを利用した
+//  攻撃を防ぐ可能性もあります。
+
+function my_session_start() {
+    session_start();
+    if (isset($_SESSION['destroyed'])) {
+       if ($_SESSION['destroyed'] < time()-300) {
+           // 通常は起こるべきではない。攻撃や不安定なネットワークによる可能性がある
+           // このユーザーのセッションから、全ての認証ステータスを削除
+           remove_all_authentication_flag_from_active_sessions($_SESSION['userid']);
+           throw(new DestroyedSessionAccessException);
+       }
+       if (isset($_SESSION['new_session_id'])) {
+           // 完全に expire してはいない。
+           // Cookie が不安定なネットワークによって失われた可能性がある。
+           // 適切なセッションIDのクッキーを設定するためにリトライする。
+           // 注意: 認証フラグを削除したい場合は、セッションIDを再度設定しようとしてはいけない。
+           session_commit();
+           session_id($_SESSION['new_session_id']);
+           // 新しいセッションIDが存在しているはず
+           session_start();
+           return;
+       }
+   }
+}
+
+function my_session_regenerate_id() {
+    // 不安定なネットワークのために、セッションID が設定されなかったときは、
+    // 新しいセッションID が、適切なセッションIDに設定されることが必須。
+    $new_session_id = session_create_id();
+    $_SESSION['new_session_id'] = $new_session_id;
+    
+    // 破棄された時のタイムスタンプを設定
+    $_SESSION['destroyed'] = time();
+    
+    // 現在のセッションを書き込んで閉じる
+    session_commit();
+
+    // 新しいセッションを新しいセッションIDで開始
+    session_id($new_session_id);
+    ini_set('session.use_strict_mode', 0);
+    session_start();
+    ini_set('session.use_strict_mode', 1);
+    
+    // 新しいセッションには、以下の情報は不要
+    unset($_SESSION['destroyed']);
+    unset($_SESSION['new_session_id']);
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>session_id</function></member>
+    <member><function>session_create_id</function></member>
+    <member><function>session_start</function></member>
+    <member><function>session_destroy</function></member>
+    <member><function>session_reset</function></member>
+    <member><function>session_name</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

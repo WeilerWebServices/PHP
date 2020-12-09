@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 345239 $ -->
+<!-- EN-Revision: 345239 Maintainer: mumumu Status: ready -->
+
+<sect1 xml:id="migration71.windows-support" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Windows のサポート</title>
+
+ <sect2 xml:id="migration71.windows-support.long-and-utf8-path">
+  <title>長いpath と UTF-8のpath のサポート</title>
+  <para>
+    Webアプリケーションが UTF-8
+    に対応しているなら、追加の作業は必要ありません。
+    UTF-8 でないpathへの I/O に依存したアプリケーションについては、
+    明示的に INIディレクティブを設定する必要があります。
+    エンコーディングのINI設定のチェックは、コアの順番に依存します:
+  </para>
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     internal_encoding
+    </simpara>
+   </listitem>
+    <listitem>
+    <simpara>
+     default_charset
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     zend.multibyte
+    </simpara>
+   </listitem>
+  </itemizedlist>
+  <para>
+    コードページを扱う関数がいくつか追加されました:
+  </para>
+      <itemizedlist>
+       <listitem>
+        <simpara>
+         sapi_windows_cp_set() は、デフォルトのコードページを設定します
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         sapi_windows_cp_get() は、現在のコードページを取得します
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         sapi_windows_cp_is_utf8()
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         sapi_windows_cp_conv() は、iconv() 互換のシグナチャで、コードページ間の変換を行います。
+        </simpara>
+       </listitem>
+      </itemizedlist>
+  <para>
+   これらの関数はスレッドセーフです。
+  </para>
+  <para>
+    コンソール出力のコードページは、
+    PHP の内部で使用されるエンコーディングに基づいて調整されます。
+    具体的な システム OEM のコードページによっては、
+    目に見える出力は正しいかもしれませんし、正しくないかもしれません。
+    たとえば、OEM コードページ 437 のシステム上での
+    デフォルトの cmd.exe は、1251, 1252, 1253 や、
+    他のいくつかのコードページを出力しますが、
+    これらは UTF-8 で表示すれば正しく表示できます。
+    同じシステム上で、20932 のようなコードページ上の文字は、
+    正しく表示できません。
+    これは、コードページにまつわる特定のシステムのルールや、
+    フォントの互換性、そして特定のコンソールプログラムが関係しています。
+    PHP は、php.ini から読み取ったエンコーディングのルールに沿って、
+    コンソールのコードページを自動的に設定します。
+    cmd.exe 以外のコンソールを使う場合、
+    ケースによってはより良い体験が得られるかもしれません。
+  </para>
+  <para>
+    それでもなお知っておくべきなのは、
+    リクエストの処理が始まったあとの実行時にコードページを変更すると、
+    CLI 上では予測できない副作用をもたらす可能性があることです。
+    好ましいやり方は、Unicode をサポートしていない PHP CLI
+    がコンソールのエミュレータとして使われている場合、必須ではないものの、
+    php.ini を使うことでコンソールのコードページを変更することを避けることです。
+    これを達成する最良のやり方は、デフォルト、
+    または内部エンコーディングの設定を ANSI コードページにすることです。
+    別のやり方として、INI ディレクティブの output_encoding と input_encoding
+    を必要なコードページに設定することがあります。しかしこの場合、
+    内部のコードページと I/O のコードページが異なることが原因で、
+    文字化けを引き起こしがちです。レアケースではありますが、
+    PHP が偶然綺麗にクラッシュしたとしても、
+    オリジナルのコンソールのコードページがリストアされない可能性もあります。
+    この場合、手動でリストアする方法として、chcp コマンドが使えます。
+  </para>
+  <para>
+    DBCS システムについては、特別に知っておくべきことがあります。
+    実行時に <function>ini_set</function> を使ってコードページを変更すると、
+    表示上の問題を引き起こす可能性があることです。
+    DBCS でないシステムとの違いは、
+    コンソールのセルふたつ分を表示に要求する拡張文字を表示する場合です。
+    場合によっては、フォントのグリフセットへの文字のマッピングが発生するのに、
+    実際のフォントは変わらないといったことが起こります。
+    これは DBCS システムの性質によって起こります。
+    この手の表示の問題を避けるもっとも簡単な方法は、
+    コードページの変更に <function>ini_set</function> を使わないことです。
+  </para>
+  <para>
+    ストリームで UTF-8 がサポートされたことによって、
+    PHP スクリプトは ASCII や ANSI のファイル名にもはや縛られなくなりました。
+    これは CLI の枠を越えたサポートです。他の SAPI については、
+    対応するサーバのドキュメントを見ると有益でしょう。
+  </para>
+  <para>
+    長いパス名のサポートは透過的です。
+    260バイトより長いパス名には、
+    自動的に <literal>\\?\</literal> という prefix が付きます。
+    パス名の最大の長さは、2048バイトに制限されています。
+    パスセグメントの長さの制限 (basepath の長さ) はまだ続いていることも知っておいてください。
+  </para>
+  <para>
+    移植性を最大にするために、ファイル名や I/O 、
+    そして他の関連するトピックを UTF-8 で扱うことを強くお勧めします。
+    それに加えて、コンソールアプリケーションについては、
+    TrueType フォントを使うことが好ましいです。
+    また、コードページの変更に ini_set() を使うことは推奨されません。
+  </para>
+  <para>
+  </para>
+  <para>
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.windows-support.readline">
+  <title>readline</title>
+
+  <para>
+   <link linkend="book.readline">readline 拡張機能</link>
+   が <link xlink:href="&url.readline.windows;">WinEditLine ライブラリ</link>
+   を通じてサポートされました。
+   これにより、インタラクティブな <acronym>CLI</acronym>
+   シェルもサポートされました (<literal>php.exe -a</literal>)。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.windows-support.php-fcgi-children">
+  <title>PHP_FCGI_CHILDREN</title>
+  <para>
+  環境変数 <varname>PHP_FCGI_CHILDREN</varname> が尊重されるようになりました。
+  この環境変数が定義されていた場合、最初の <filename>php-cgi.exe</filename> 
+  プロセスが指定された数の子プロセスを実行します。
+  これらは同じTCPソケットを共有します。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.windows-support.ftok">
+  <title>ftok()</title>
+  <para>
+   <function>ftok</function> 関数のサポートが追加されました。
+  </para>
+ </sect2>
+
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 350653 Maintainer: simionea Status: ready -->
+<!-- CREDITS: adiju -->
+
+<refentry xml:id="function.mktime" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>mktime</refname>
+  <refpurpose>Obține timestamp-ul Unix pentru o dată și oră</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>mktime</methodname>
+   <methodparam choice="opt"><type>int</type><parameter>hour</parameter><initializer>date("H")</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>minute</parameter><initializer>date("i")</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>second</parameter><initializer>date("s")</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>month</parameter><initializer>date("n")</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>day</parameter><initializer>date("j")</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>year</parameter><initializer>date("Y")</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>isDST</parameter><initializer>-1</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Întoarce timestamp-ul Unix ce corespunde argumentelor furnizate. Acest
+   timestamp este un integer lung conținând numărul de secunde între Epoca Unix
+   (1 Ianuarie 1970 00:00:00 GMT) și timpul specificat.
+  </para>
+  <para>
+   Argumentele pot fi omise unul după altul de la dreapta spre atânga; orice
+   argument omis va fi stabilit la valoarea curentă în corespundere cu data și
+   ora locale.
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Începând cu PHP 5.1, când este apelat fără argumente,
+    <function>mktime</function> aruncă o notificare
+    <constant>E_STRICT</constant>: utilizați funcția <function>time</function>
+    în loc.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>hour</parameter></term>
+     <listitem>
+      <para>
+       Numărul orei relativ cu începutul zilei determinat de
+       <parameter>month</parameter>, <parameter>day</parameter> și
+       <parameter>year</parameter>.
+       Valorile negative se referă la ora înainte de miezul nopții a zilei în cauză.
+       Valorile mai mari decât 23 se referă la ora corespunzătoare a zilei (zilelor) următoare.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>minute</parameter></term>
+     <listitem>
+      <para>
+       Numărul minutului relativ cu începutul orei determinat de
+       <parameter>hour</parameter>.
+       Valorile negative se referă la minutul orei precedente.
+       Valorile mai mari decât 59 se referă la minutul corespunzător a orei
+       (orelor) următoare.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>second</parameter></term>
+     <listitem>
+      <para>
+       Numărul de secunde relativ cu începutul minutului determinat de
+       <parameter>minute</parameter>.
+       Valorile negative se referă la secunda minutului precedent.
+       Valorile mai mari decât 59 se referă la secunda corespunzătoare ale
+       minutului (minutelor) următoare.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>month</parameter></term>
+     <listitem>
+      <para>
+       Numărul lunii relativ cu sfârșitul anului precedent.
+       Valorile de la 1 până la 12 se referă la lunile normale ale anului în cauză.
+       Valorile mai mici decât 1 (inclusiv valorile negative) se referă la lunile
+       anului precedent în ordine inversă, deci 0 este Decembrie, -1 este
+       Noiembrie, etc.
+       Valorile mai mari decât 12 se referă la luna corespunzătoare a anului
+       (anilor) următor.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>day</parameter></term>
+     <listitem>
+      <para>
+       Numărul zilei relativ cu sfârșitul lunii precedente.
+       Valorile de la 1 până la 28, 29, 30 sau 31 (în dependență de lună) se
+       referă la zilele normale ale lunii în cauză.
+       Valorile mai mici decât 1 (inclusiv valorile negative) se referă la zilele
+       lunii precedente, deci 0 este ultima zi a lunii precedente, -1 este
+       penultima zi, etc.
+       Valorile mai mari decât numărul de zile din luna respectivă se referă la
+       ziua corespunzătoare din luna (lunile) următoare.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>year</parameter></term>
+     <listitem>
+      <para>
+       Numărul anului. Poate fi format din două sau din patru cifre. Valorile
+       0-69 corespund anilor 2000-2069, iar 70-100 corespund 1970-2000. Pe
+       sistemele unde time_t este un întreg pe 32 biți cu semn, cum este pe
+       majoritatea sistemelor contemporane, domeniul valid pentru
+       <parameter>year</parameter> este între 1901 și 2038. Însă înainte de PHP
+       5.1.0 acest domeniu era limitat între 1970 și 2038 pe unele sisteme
+       (de ex. Windows).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>isDST</parameter></term>
+     <listitem>
+      <para>
+       Acest parametru poate fi stabilit în 1 dacă este în efect timpul de vară
+       (daylight savings time (DST)), 0 dacă nu, sau -1 (valoarea implicită)
+       dacă nu se cunoaște dacă este în efect timpul de vară. Dacă nu se
+       cunoaște, PHP încearcă singur să determine acest lucru. Aceasta poate
+       cauza rezultate neașteptate (dar nu neapărat incorecte).
+       Unele ore nu sunt valide dacă DST este activat pe sistemul unde rulează
+       PHP, sau dacă parametrul <parameter>isDST</parameter> este stabilit în
+       1. Dacă DST este activat de ex. la 2:00, toate orele între 2:00 și 3:00
+       sunt invalide și <function>mktime</function> întoarce o valoare
+       nedefinită (de obicei negativă). Unele sisteme (de ex. Solaris 8)
+       activează DST la miezul nopții, de aceea ora 0:30 în ziua când DST este
+       activat este evaluată ca 23:30 a zilei precedente.
+      </para>
+      <note>
+       <para>
+        Începând cu PHP 5.1.0, acest parametru a devenit învechit. În consecința
+        acestui fapt trebuie utilizate noile facilități de gestiune a fusului
+        orar.
+       </para>
+      </note>
+      <note>
+       <para>
+        Acest parametru a fost eliminat în PHP 7.0.0.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <function>mktime</function> întoarce timestamp-ul Unix al argumentelor
+   furnizate. Dacă argumentele nu sunt valide, funcția întoarce &false; (înainte
+   de PHP 5.1 întorcea <literal>-1</literal>).
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &date.timezone.errors.description;
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemplu simplu <function>mktime</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Stabilește fusul orar implicit pentru a fi utilizat. Disponibil începând cu PHP 5.1
+date_default_timezone_set('UTC');
+
+// Afișează: July 1, 2000 is on a Saturday
+echo "July 1, 2000 is on a " . date("l", mktime(0, 0, 0, 7, 1, 2000));
+
+// Afișează ceva de felul: 2006-04-05T01:02:03+00:00
+echo date('c', mktime(1, 2, 3, 4, 5, 2006));
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Exemple <function>mktime</function></title>
+    <para>
+     <function>mktime</function> este utilă pentru a face operații aritmetice și
+     de validare a datelor, deoarece ea va calcula automat valoarea corectă
+     pentru vlorile introduse din afara domeniului. De exemplu, fiecare rând ce
+     urmează produce string-ul "Jan-01-1998".
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo date("M-d-Y", mktime(0, 0, 0, 12, 32, 1997));
+echo date("M-d-Y", mktime(0, 0, 0, 13, 1, 1997));
+echo date("M-d-Y", mktime(0, 0, 0, 1, 1, 1998));
+echo date("M-d-Y", mktime(0, 0, 0, 1, 1, 98));
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Ultima zi a lunii</title>
+    <para>
+     Ultima zi a oricărei luni poate fi exprimată ca ziua "0" a lunii următoare,
+     dar nu ziua -1. Ambele exemple ce urmează vor produce string-ul
+     "Ultima zi din Februarie 2000 este: 29".
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$lastday = mktime(0, 0, 0, 3, 0, 2000);
+echo strftime("Ultima zi din Februarie 2000 este: %d", $lastday);
+$lastday = mktime(0, 0, 0, 4, -31, 2000);
+echo strftime("Ultima zi din Februarie 2000 este: %d", $lastday);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <caution>
+   <para>
+    Înainte de PHP 5.1.0, timestamp-urile negative nu erau susținute în unele
+    sisteme, inclusiv nici într-o versiune cunoscută Windows. De aceea domeniul
+    valid al anilor era limitat între 1970 și 2038.
+   </para>
+  </caution>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>checkdate</function></member>
+    <member><function>gmmktime</function></member>
+    <member><function>date</function></member>
+    <member><function>time</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

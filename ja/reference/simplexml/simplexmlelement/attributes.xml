@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 349881 Maintainer: takagi Status: ready -->
+<!-- CREDITS: hirokawa,shimooka,mumumu -->
+<refentry xml:id="simplexmlelement.attributes" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>SimpleXMLElement::attributes</refname>
+  <refpurpose>要素の属性を定義する</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>SimpleXMLElement</type><methodname>SimpleXMLElement::attributes</methodname>
+   <methodparam choice="opt"><type>string</type><parameter>ns</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>is_prefix</parameter><initializer>&false;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   この関数は、XMLタグの中で定義された属性とその値を取得します。
+  </para>
+  &simplexml.iteration;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>ns</parameter></term>
+     <listitem>
+      <para>
+       オプションで指定する、取得した属性の名前空間。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>is_prefix</parameter></term>
+     <listitem>
+      <para>
+       デフォルトは &false;。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <classname>SimpleXMLElement</classname> オブジェクトを返します。
+   これを反復処理すれば、そのタグの属性を順に処理することができます。
+  </para>
+  <para>
+   タグではなく属性を指している <classname>SimpleXMLElement</classname>
+   に対してコールした場合は &null; を返します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.2.0</entry>
+       <entry>
+        オプションの引数 <parameter>is_prefix</parameter> が追加されました。
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>XML文字列を解釈する</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$string = <<<XML
+<a>
+ <foo name="one" game="lonely">1</foo>
+</a>
+XML;
+
+$xml = simplexml_load_string($string);
+foreach($xml->foo[0]->attributes() as $a => $b) {
+    echo $a,'="',$b,"\"\n";
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+name="one"
+game="lonely"
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><xref linkend="simplexml.examples-basic"/></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

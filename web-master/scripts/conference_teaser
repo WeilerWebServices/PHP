@@ -1,0 +1,58 @@
+<?php
+
+/* vim: ft=php
+ This code is used to pregenerate the conference teaser array displayed
+ on the PHP.net homepage. It gets the filename
+ of the RSS where the info is already fetched, and generates the
+ PHP code ready to be included to $outfile 
+*/
+
+function pregenerate_conf_teaser($rssfile, $outfile)
+{
+    // Try to open output file for reading
+    $out = @fopen("$outfile~", "w");
+    if (!$out) { die("unable to pregenerate conference teaser to '$outfile~'"); }
+
+    // Load the RSS file and register used namespaces
+    $sxe = new SimpleXMLElement($rssfile, $GLOBALS["XML_OPTIONS"], true);
+    $sxe->registerXPathNamespace("php", "http://php.net/ns/news");
+
+    // Loop over the items and store them in a array
+    $STORE = [];
+    foreach($sxe->entry as $item) {
+        $url = (string)$item->link["href"];
+        $subject = (string)$item->category["term"];
+		if($subject == "conferences") {
+			$subject = "conference";
+		}
+		elseif($subject != "cfp") {
+			// This is neither a conf announcement nor cfp, skip it
+			continue;
+		}
+        $title = (string)$item->title;
+		$lastDate = current($item->xpath("php:finalTeaserDate"));
+		if(strtotime($lastDate) < strtotime("tomorrow")) {
+			// finalTeaserDate has passed, skip it
+			continue;
+		}
+        $STORE[$subject][$url] = $title;
+    }
+
+    // Create PHP readable array
+    $write = '$CONF_TEASER = ' .var_export($STORE, true);
+
+    // Write & close
+    fwrite($out, "<?php\n$write\n?>");
+    fclose($out);
+    
+    // If we don't have new data, delete file
+    if (!@filesize("$outfile~")) {
+        echo "'$outfile~' was empty, skipping\n";
+        unlink("$outfile~");
+        return;
+    }
+  
+    // Replace real file with temporary file
+    return rename("$outfile~", $outfile);    
+}
+

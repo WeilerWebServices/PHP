@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 339132 Maintainer: takagi Status: ready -->
+<!-- CREDITS: hirokawa -->
+<section xml:id="mysqli.installation" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+&reftitle.install;
+
+ <para>
+  <literal>mysqli</literal> 拡張モジュールが使えるようになったのは PHP バージョン
+  5.0.0 以降です。また、MySQL Native Driver が PHP に含まれるようになったのはバージョン 5.3.0 以降です。
+ </para>
+
+ <section xml:id="mysqli.installation.linux">
+
+  <title>Linux でのインストール</title>
+
+  <para>
+   一般的な Unix ディストリビューションには、バイナリ版の PHP がインストールされています。
+   これらのバイナリ版は、通常は MySQL 拡張モジュールに対応したものになっています。
+   しかし、拡張モジュールライブラリ自身を別パッケージでインストールする必要があるでしょう。
+   使用しているディストリビューションのパッケージマネージャで確認してみましょう。
+  </para>
+  
+  <para>
+   たとえば Ubuntu なら、<literal>php5-mysql</literal> パッケージをインストールすれば、
+   ext/mysql、ext/mysqli、そして pdo_mysql をインストールできます。CentOS の場合は
+   <literal>php-mysql</literal> パッケージを使えば、同じものをインストールできます。
+  </para>
+
+  <para>
+   この拡張モジュールを自分でコンパイルすることもできます。
+   PHP をソースからビルドすれば、使いたい MySQL 拡張モジュールを指定したり
+   各拡張モジュールが使用するクライアントライブラリを選択したりすることができます。
+  </para>
+
+  <para>
+   クライアントライブラリには MySQL Native Driver を使うことを推奨します。
+   そのほうがパフォーマンスが向上し、MySQL Client Library
+   を使用した場合には使えない機能も使用することができます。
+   <link linkend="mysqli.overview.mysqlnd">PHP の MySQL Native
+   Driver とは?</link>
+   に、MySQL Native Driver の利点が簡単にまとめられています。
+  </para>
+
+  <para>
+   <literal>/path/to/mysql_config</literal> は、MySQL Server に含まれる
+   <literal>mysql_config</literal> プログラムの場所を表します。
+  </para>
+
+  <table>
+   <title>mysqli のコンパイル時のサポート表</title>
+   <tgroup cols="5">
+    <thead>
+     <row>
+      <entry>PHP &Version;</entry>
+      <entry>&Default;</entry>
+      <entry>&ConfigureOptions;: <link linkend="mysqlnd.overview">mysqlnd</link></entry>
+      <entry>&ConfigureOptions;: <literal>libmysqlclient</literal></entry>
+      <entry>&Changelog;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>5.4.x 以降</entry>
+      <entry>mysqlnd</entry>
+      <entry><option role="configure">--with-mysqli</option></entry>
+      <entry><option role="configure">--with-mysqli=/path/to/mysql_config</option></entry>
+      <entry>mysqlnd がデフォルトになりました。</entry>
+     </row>
+     <row>
+      <entry>5.3.x</entry>
+      <entry>libmysqlclient</entry>
+      <entry><option role="configure">--with-mysqli=mysqlnd</option></entry>
+      <entry><option role="configure">--with-mysqli=/path/to/mysql_config</option></entry>
+      <entry>mysqlnd が使えるようになりました。</entry>
+     </row>
+     <row>
+      <entry>5.0.x, 5.1.x, 5.2.x</entry>
+      <entry>libmysqlclient</entry>
+      <entry>&NotAvailable;</entry>
+      <entry><option role="configure">--with-mysqli=/path/to/mysql_config</option></entry>
+      <entry>mysqlnd は使えません。</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+
+  <para>
+   MySQL 拡張モジュールとクライアントライブラリの組み合わせは自由であることに注意しましょう。
+   たとえば、MySQL 拡張モジュールは MySQL Client Library (libmysqlclient) を使うようにして有効にし、
+   一方 <literal>mysqli</literal> 拡張モジュールは MySQL Native Driver
+   を使うようにするということも可能です。
+   しかし、それ以外にも拡張モジュールとクライアントライブラリのすべての組み合わせが使用可能です。
+  </para>
+
+ </section>
+
+ <section xml:id="mysqli.installation.windows">
+
+  <title>Windows システムでのインストール</title>
+
+  <para>
+   Windows の場合、PHP のインストールにはたいていバイナリインストーラを使用します。
+  </para>
+
+  <section xml:id="mysqli.installation.windows.php53">
+
+    <title>PHP 5.3.0 以降</title>
+
+   <para>
+    Windows の PHP バージョン 5.3 以降では、
+    <literal>mysqli</literal> 拡張モジュールはデフォルトで有効になっており、
+    また MySQL Native Driver を使うようになっています。つまり、
+    <filename>libmysql.dll</filename> にアクセスできるようにする必要はないということです。
+   </para>
+
+  </section>
+
+  <section xml:id="mysqli.installation.windows.php52">
+
+   <title>PHP 5.0, 5.1, 5.2</title>
+
+   <para>
+    これらの旧バージョンの PHP (PHP 5.2 は 2011年1月6日にサポートを終了しています)
+    では、<literal>mysqli</literal> を有効にしてクライアントライブラリを指定するための設定が必要です。
+   </para>
+
+   <para>
+    <literal>mysqli</literal>
+    拡張モジュールはデフォルトでは有効になりません。そこで、
+    <filename>php_mysqli.dll</filename> DLL を
+    &php.ini; の中で有効化しなければなりません。有効化するには、まず
+    &php.ini; を探し (通常は <filename>c:\php</filename> にあります)、
+    そして <literal>extension=php_mysqli.dll</literal> という行の最初にあるコメント
+    (セミコロン) を削除します。この行は
+    <literal>[PHP_MYSQLI]</literal> というセクションにあります。
+   </para>
+
+   <para>
+    また、MySQL Client Library を <literal>mysqli</literal>
+    で使いたい場合は、PHP からクライアントライブラリのファイルにアクセスできるようにしなければなりません。
+    MySQL Client Library は <filename>libmysql.dll</filename>
+    という名前のファイルで、これは Windows 版の PHP に含まれています。
+    このファイルを Windows の環境変数
+    <envar>PATH</envar> で指定された場所に置けば読み込めるようになります。
+    FAQ の
+    "<link linkend="faq.installation.addtopath">Windows で PHP のディレクトリを
+    PATH に追加するにはどうすればいいのですか?</link>"
+    に、その方法が説明されています。
+    <filename>libmysql.dll</filename> を Windows のシステムディレクトリ
+    (通常は <filename>c:\Windows\system</filename>) にコピーしても動作します。
+    システムディレクトリは、デフォルトでシステムの
+    <envar>PATH</envar> に含まれているからです。
+    しかし、これはできるだけ避けるようにしましょう。
+   </para>
+
+   <para>
+    その他の PHP 拡張モジュール (<filename>php_mysqli.dll</filename> など)
+    を有効にするときと同様、PHP のディレクティブ
+    <link linkend="ini.extension-dir">extension_dir</link>
+    を設定して PHP 拡張モジュールのある場所を指定する必要があります。
+    <link linkend="install.windows.manual">Windows
+    での手動インストールの手順</link> も参照ください。PHP 5 の <literal>extension_dir</literal>
+    の値は、たとえば <filename>c:\php\ext</filename> のようになります。
+   </para>
+
+   <note>
+    <para>
+     ウェブサーバーの起動時に
+     <literal>"Unable to load dynamic library
+     './php_mysqli.dll'"</literal>
+     のようなエラーが出たら、それは
+     <filename>php_mysqli.dll</filename> や
+     <filename>libmysql.dll</filename> をシステムが見つけられないことが原因です。
+    </para>
+   </note>
+  </section>
+
+ </section>
+
+</section>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

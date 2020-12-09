@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 349709 Maintainer: tmn Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+<!-- $Revision$ -->
+<refentry xml:id='domattr.isid' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>DOMAttr::isId</refname>
+  <refpurpose>
+   Проверяет, является ли атрибут определенным идентификатором
+  </refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>bool</type><methodname>DOMAttr::isId</methodname>
+   <void/>
+  </methodsynopsis>
+  <para>
+   Эта функция проверяет, является ли определенным идентификатором.
+  </para>
+  <para>
+   В соответствии со стандартом DOM для этого требуется DTD, который определяет
+   идентификатор атрибута быть идентификатором типа. Перед использованием этой функции 
+   необходимо проверять документ на действительность с помощью
+   <xref linkend="domdocument.validate" /> или 
+   <literal>DOMDocument::validateOnParse</literal>.
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования DOMAttr::isId()</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$doc = new DomDocument;
+
+// Необходимо проверить документ на действительность перед тем как ссылаться по идентификатору
+$doc->validateOnParse = true;
+$doc->Load('book.xml');
+
+// Получаем атрибут элемента с именем идентификатора chapter   
+$attr = $doc->getElementsByTagName('chapter')->item(0)->getAttributeNode('id');
+
+var_dump($attr->isId()); // bool(true)
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

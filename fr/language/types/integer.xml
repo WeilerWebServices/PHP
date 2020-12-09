@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes Maintainer: girgias -->
+<!-- CREDITS: DavidA -->
+
+<sect1 xml:id="language.types.integer">
+ <title>Les entiers</title>
+
+ <simpara>
+  Un &integer; est un nombre appartenant à l'ensemble
+  &#8484; = {..., -2, -1, 0, 1, 2, ...}.
+ </simpara>
+
+ <para>
+  Voir aussi :
+ </para>
+
+ <itemizedlist>
+  <listitem>
+   <simpara>
+    <link linkend="book.gmp">Les entiers de longueur arbitraire / GMP</link>
+   </simpara>
+  </listitem>
+  <listitem>
+   <simpara>
+    <link linkend="language.types.float">Les nombres à virgule flottante</link>
+   </simpara>
+  </listitem>
+  <listitem>
+   <simpara>
+    <link linkend="book.bc">Les précisions arbitraires / BCMath</link>
+   </simpara>
+  </listitem>
+ </itemizedlist>
+
+ <sect2 xml:id="language.types.integer.syntax">
+  <title>Syntaxe</title>
+
+  <simpara>
+   Les &integer;s peuvent être spécifiés en notation décimale (base 10), hexadécimale
+   (base 16), octale (base 8), ou binaire (base 2).
+   L'<link linkend="language.operators.arithmetic">opérateur de négation</link>
+   peut être utilisé pour désigner un &integer; négatif.
+  </simpara>
+
+  <para>
+   Pour utiliser la notation octale, précédez le nombre d'un <literal>0</literal> (zéro).
+   Pour utiliser la notation hexadécimale, précédez le nombre de <literal>0x</literal>.
+   Pour utiliser la notation binaire, précédez le nombre de <literal>0b</literal>.
+  </para>
+
+  <para>
+   À partir de PHP 7.4.0, les entiers litérals peuvent contenir des underscores
+   (<literal>_</literal>) entre les chiffres, pour une meilleure lisibilité
+   des litérals. Ces underscores sont supprimés par le scanner de PHP.
+  </para>
+
+  <example>
+   <title>Les entiers littéraux</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$a = 1234; // un nombre décimal
+$a = 0123; // un nombre octal (équivalent à 83 en décimal)
+$a = 0x1A; // un nombre héxadecimal (équivalent à 26 en décimal)
+$a = 0b11111111; // un nombre binaire (équivalent à 255 en decimal)
+$a = 1_234_567; // un nombre décimal (à partir de PHP 7.4.0)
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <para>
+   Formellement, la structure d'un &integer; littéral est à partir de PHP 7.4.0
+   (auparavant, les underscores n'étaient pas autorisé) :
+  </para>
+
+  <informalexample>
+   <programlisting>
+<![CDATA[
+decimal     : [1-9][0-9]*(_[0-9]+)*
+            | 0
+
+hexadecimal : 0[xX][0-9a-fA-F]+(_[0-9a-fA-F]+)*
+
+octal       : 0[0-7]+(_[0-7]+)*
+
+binary      : 0[bB][01]+(_[01]+)*
+
+integer     : decimal
+            | hexadecimal
+            | octal
+            | binary
+]]>
+   </programlisting>
+  </informalexample>
+
+  <para>
+   La taille d'un &integer; est dépendante de la plate-forme, cependant,
+   une valeur maximale d'environ 2 milliards est habituelle (cela correspond
+   à 32 bits signés). Les plateformes 64-bit ont habituellement une valeur
+   maximale d'environ 9E18.
+   PHP ne supporte pas les &integer;s non-signés.
+   La taille d'un &integer; peut être déterminée en utilisant la constante
+   <constant>PHP_INT_SIZE</constant>, la valeur maximale, en utilisant
+   la constante <constant>PHP_INT_MAX</constant>,
+   et la valeur minimale en utilisant la constante
+   <constant>PHP_INT_MIN</constant>.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="language.types.integer.overflow">
+  <title>Débordement d'entier</title>
+
+  <para>
+   Si PHP rencontre un nombre supérieur au maximal d'un &integer;, il sera
+   interprété comme un &float;. De la même façon, une opération qui résulte en
+   un nombre en dehors de l'intervalles du type &integer; retournera un &float;.
+  </para>
+
+  <example>
+   <title>Dépassement d'entier sur un système 32-bit</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$large_number = 2147483647;
+var_dump($large_number);                     // int(2147483647)
+
+$large_number = 2147483648;
+var_dump($large_number);                     // float(2147483648)
+
+$million = 1000000;
+$large_number =  50000 * $million;
+var_dump($large_number);                     // float(50000000000)
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>Dépassement d'entier sur un système 64-bit</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$large_number = 9223372036854775807;
+var_dump($large_number);                     // int(9223372036854775807)
+
+$large_number = 9223372036854775808;
+var_dump($large_number);                     // float(9.2233720368548E+18)
+
+$million = 1000000;
+$large_number =  50000000000000 * $million;
+var_dump($large_number);                     // float(5.0E+19)
+?>
+]]>
+   </programlisting>
+  </example>
+  
+  <para>
+   Il n'y a pas d'opérateur de division d'&integer; en PHP, pour accomplir ceci
+   utiliser la fonction <function>intdiv</function>.
+   <literal>1/2</literal> produit le &float; (<literal>0.5</literal>).
+   La valeur peut être transtypé en un &integer; pour l'arrondir vers zéro, ou
+   en utilisant la fonction <function>round</function> pour avoir un contrôle
+   plus fin sur la façon dont l'arrondi est exécuté.
+  </para>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(25/7);         // float(3.5714285714286) 
+var_dump((int) (25/7)); // int(3)
+var_dump(round(25/7));  // float(4) 
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </sect2>
+
+ <sect2 xml:id="language.types.integer.casting">
+  <title>Conversion en entier</title>
+
+  <simpara>
+   Pour convertir explicitement une valeur en un &integer;, utiliser soit
+   le mot-clé <literal>(int)</literal>, soit <literal>(integer)</literal>.
+   Cependant, dans la plupart des cas, ce mot-clé n'est pas nécessaire
+   vu qu'une valeur sera automatiquement convertie si un opérateur, une
+   fonction ou une structure de contrôle demande un &integer; en guise
+   d'argument. Une valeur peut également être convertie en un &integer;
+   en utilisant la fonction <function>intval</function>.
+  </simpara>
+  
+  <simpara>
+   Si une &resource; est convertie vers un &integer;, alors
+   le résultat sera l'identifiant unique de la &resource; assigné 
+   par PHP à l'exécution.
+  </simpara>
+
+
+  <simpara>
+   Voir aussi <link linkend="language.types.type-juggling">le transtypage</link>.
+  </simpara>
+
+  <sect3 xml:id="language.types.integer.casting.from-boolean">
+   <title>Depuis un <link linkend="language.types.boolean">booléen</link></title>
+
+   <simpara>
+    &false; correspond à <literal>0</literal> (zéro), et &true; correspond à
+    <literal>1</literal> (un).
+   </simpara>
+  </sect3>
+
+  <sect3 xml:id="language.types.integer.casting.from-float">
+   <title>
+    Depuis <link linkend="language.types.float">un nombre à virgule flottante</link>
+   </title> 
+
+   <simpara>
+    Lorsque l'on convertit un &float; en un &integer;, le nombre sera arrondi
+    <emphasis>vers zéro</emphasis>.
+   </simpara>
+
+   <para>
+    Si le nombre à virgule flottante est au delà des limites des &integer;s (habituellement,
+    <literal>+/- 2.15e+9 = 2^31</literal> sur les plate-formes 32-bit et
+    <literal>+/- 9.22e+18 = 2^63</literal> sur les plate-formes 64-bit),
+    le résultat sera indéfini, sachant que le &float; n'a pas une précision
+    suffisante pour donner un résultat &integer; exact.
+    Aucune alerte n'est émise lorsque ce comportement survient !
+   </para>
+
+   <note>
+    <para>
+     NaN et Infinity sont toujours égal à zéro lors d'une conversion en &integer;.
+    </para>
+   </note>
+
+   <warning>
+    <para>
+     Ne convertissez jamais une fraction inconnue en un &integer;, ceci peut
+     engendrer des résultats inattendus.
+    </para>
+
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+echo (int) ( (0.1+0.7) * 10 ); // Affiche 7 !
+?>
+]]>
+     </programlisting>
+    </informalexample>
+
+    <para>
+     Voir aussi la section sur <link linkend="warn.float-precision">les alertes
+     concernant la précision des nombres à virgule flottante</link>.
+    </para>
+   </warning>
+  </sect3>
+
+  <sect3 xml:id="language.types.integer.casting.from-string">
+   <title>Depuis des chaînes de caractères</title>
+
+   <simpara>
+    Voir la section sur la <link linkend="language.types.string.conversion">
+    conversion des chaînes en nombres</link>
+   </simpara>
+  </sect3>
+  
+  <sect3 xml:id="language.types.integer.casting-from-null">
+   <title>Depuis <type>NULL</type></title>
+
+   <simpara>
+    &null; est toujours converti en zéro (<literal>0</literal>).
+   </simpara>
+  </sect3>
+
+  <sect3 xml:id="language.types.integer.casting.from-other">
+   <title>Depuis d'autres types</title>
+
+   <caution>
+    <simpara>
+     Le comportement de la conversion en &integer; est indéfini depuis les autres types.
+     Ne rapporter <emphasis>aucun</emphasis> comportement observé, sachant qu'ils peuvent
+     changer sans avertissement.
+    </simpara>
+   </caution>
+  </sect3>
+
+ </sect2>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

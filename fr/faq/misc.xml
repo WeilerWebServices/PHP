@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 297028 Maintainer: gui Status: ready -->
+<!-- Reviewed: yes -->
+
+ <chapter xml:id="faq.misc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Questions diverses</title>
+  <titleabbrev>Questions diverses</titleabbrev>
+
+   <para>
+    Il y'a quelques questions inclassables. Vous les trouverez ici.
+   </para>
+
+  <qandaset>
+   <qandaentry xml:id="faq.misc.bz2">
+    <question>
+     <para>
+      Comment puis-je manipuler le manuel compressé en bzip2 sous Windows ?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Si vous n'avez pas d'outil d'archivage prenant en charge les fichiers au
+      format bz2, <link xlink:href="&url.bzip2;">téléchargez</link> l'outil en
+      ligne de commande à partir de Redhat (merci de lire les informations
+      plus bas).
+     </para>
+     <para>
+      Si vous préférez ne pas utiliser d'outil en ligne de commande, vous
+      pouvez essayer des outils gratuits comme <link xlink:href="&url.stuffit;">Stuffit Expander</link>,
+      <link xlink:href="&url.ultimatezip;">UltimateZip</link>,
+      <link xlink:href="&url.7zip;">7-Zip</link>, ou
+      <link xlink:href="&url.quickzip;">Quick Zip</link>. Si vous avez
+      des outils comme <link xlink:href="&url.winrar;">WinRAR</link> ou
+      <link xlink:href="&url.powerarchiver;">Power Archiver</link>, vous pouvez
+      facilement décompresser les fichiers bz2 avec. Si vous utilisez Total Commander
+      (autrefois Windows Commander), un plugin bz2 est disponible gratuitement sur le site de
+      <link xlink:href="&url.wincmd;">Total Commander</link>.
+     </para>
+     <para>
+      L'outil en ligne commande bzip2 de Redhat :
+     </para>
+     <para>
+      Les utilisateurs du service pack 2 de Win2K doivent prendre la version
+      1.0.2, tous les autres utilisateurs de Windows doivent prendre la
+      version 1.00. Après avoir téléchargé, renommez l'exécutable en bzip2.exe.
+      Pour votre convenance, mettez-le dans un dossier dans votre path, c'est
+      à dire C:\Windows où C représente votre disque où Windows est installé.
+     </para>
+     <para>
+      Note : Dans ce qui suit, lang représente votre langue et x le format
+      désiré, par exemple : pdf.
+      Pour décompresser php_manual_lang.x.bz2 suivez les instructions
+      suivantes :
+      <itemizedlist>
+       <listitem>
+        <simpara>ouvrez un invite de commande</simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         déplacez-vous dans le dossier où se trouvent les fichiers php_manual_lang.x.bz2
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         lancez la commande bzip2 -d php_manual_lang.x.bz2, pour extraire
+         php_manual_lang.x dans ce même dossier
+        </simpara>
+       </listitem>
+      </itemizedlist>
+     </para>
+     <para>
+      Dans le cas où vous avez téléchargé le fichier php_manual_lang.tar.bz2
+      avec beaucoup de fichiers HTML à l'intérieur, la procédure est la même.
+      La seule différence est que vous obtiendrez un fichier php_manual_lang.tar.
+      Le format tar est connu pour être pris en compte par la plupart des
+      archiveurs de Windows, comme <link xlink:href="&url.winzip;">WinZip</link>.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.misc.arguments.references">
+    <question>
+     <para>
+      Que signifie le caractère "&amp;" devant les arguments dans les déclarations
+      des fonctions comme la fonction <function>asort</function> ?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Cela signifie que cet argument est
+      <link linkend="language.references.pass">passé par référence</link>
+      et que la fonction le modifiera, comme expliqué dans la documentation.
+      Vous pouvez passer uniquement des variables de cette façon et vous
+      n'avez pas besoin de les passer avec le caractère "&amp;" dans l'appel de la fonction
+      (car <link linkend="ini.allow-call-time-pass-reference">obsolète</link>).
+     </para>
+    </answer>
+   </qandaentry>
+   
+   <qandaentry xml:id="faq.misc.registerglobals">
+    <question>
+     <para>
+      Comment puis-je gérer la directive <literal>register_globals</literal> ?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Pour plus d'informations concernant l'implication sur la sécurité de la 
+      directive <literal>register_globals</literal>, lisez le chapitre sur la sécurité
+      concernant l'<link linkend="security.globals">utilisation de register_globals</link>.
+     </para>
+     <para>
+      Il est préférable d'utiliser les 
+      <link linkend="language.variables.superglobals">superglobals</link>,
+      plutôt que de remettre à <literal>on</literal> la directive 
+      <literal>register_globals</literal>.
+     </para>
+     <para>
+      Si vous êtes sur un serveur mutualisé avec la directive 
+      <literal>register_globals</literal> de positionnée à <literal>off</literal>
+      et que vous devez utiliser des applications qui requièrent que cette option soit à
+      <literal>on</literal> ou si vous êtes hébergés sur un serveur qui a cette directive d'activée
+      mais que vous voudriez éliminer ce risque sécuritaire, vous devriez émuler
+      l'argument opposé avec PHP. C'est toujours une bonne idée que de demander tout d'abord
+      s'il est possible de modifier cette option dans la configuration de PHP mais si cela n'est
+      pas possible, vous pouvez utiliser ces astuces de compatibilité.
+     </para>
+     <para>
+      <example>
+       <title>Émulation des Register Globals</title>
+        <para>
+         Ceci émulera la directive <literal>register_globals</literal> à <literal>On</literal>. 
+         Si vous modifiez la directive
+         <link linkend="ini.variables-order">variables_order</link>, modifiez la variable
+         <varname>$superglobals</varname> pour qu'elle corresponde à votre nouvelle
+         directive..
+       </para>
+       <programlisting role="php">
+<![CDATA[
+<?php
+// Émulation de register_globals à on
+if (!ini_get('register_globals')) {
+    $superglobals = array($_SERVER, $_ENV,
+        $_FILES, $_COOKIE, $_POST, $_GET);
+    if (isset($_SESSION)) {
+        array_unshift($superglobals, $_SESSION);
+    }
+    foreach ($superglobals as $superglobal) {
+        extract($superglobal, EXTR_SKIP);
+    }
+}
+?>
+]]>
+       </programlisting>
+       <para>
+        Ceci émulera register_globals à Off. Gardez à l'esprit que ce code doit être appelé au tout
+        début de votre script ou après la fonction
+        <function>session_start</function> si vous l'utilisez pour commencer votre session.
+       </para>
+       <programlisting role="php">
+<![CDATA[
+<?php
+// Émulation de register_globals à off
+function unregister_GLOBALS()
+{
+    if (!ini_get('register_globals')) {
+        return;
+    }
+
+    // Vous pouvez vouloir modifier cela pour avoir une erreur plus jolie
+    if (isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS'])) {
+    die('Tentative d\'effacement des GLOBALS détectée');
+    }
+
+    // Les variables à ne jamais effacer
+    $noUnset = array('GLOBALS',  '_GET',
+    '_POST',    '_COOKIE',
+    '_REQUEST', '_SERVER',
+    '_ENV',     '_FILES');
+
+    $input = array_merge($_GET,    $_POST,
+    $_COOKIE, $_SERVER,
+    $_ENV,    $_FILES,
+    isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array());
+
+    foreach ($input as $k => $v) {
+        if (!in_array($k, $noUnset) && isset($GLOBALS[$k])) {
+            unset($GLOBALS[$k]);
+        }
+    }
+}
+
+unregister_GLOBALS();
+
+?>
+]]>
+       </programlisting>
+      </example>
+     </para>
+    </answer>
+   </qandaentry>
+
+  </qandaset>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

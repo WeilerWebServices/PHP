@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 344396 Maintainer: jpauli Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="function.getenv" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>getenv</refname>
+  <refpurpose>Retourne la valeur d'une variable d'environnement</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>getenv</methodname>
+   <methodparam><type>string</type><parameter>varname</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>local_only</parameter><initializer>&false;</initializer></methodparam>
+  </methodsynopsis>
+  <methodsynopsis>
+   <type>array</type><methodname>getenv</methodname>
+   <void/>
+  </methodsynopsis>
+  <para>
+   Retourne la valeur d'une variable d'environnement.
+  </para>
+  <para>
+   Vous pouvez voir une liste complète des variables d'environnement en
+   utilisant la fonction <function>phpinfo</function>. Vous pouvez trouver
+   la signification de chacune d'entre elles en consultant la
+   <link xlink:href="&url.rfc;3875">RFC 3875</link>, en particulier la section
+   4.1 "Request Meta-Variables".
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>varname</parameter></term>
+     <listitem>
+      <para>
+       Le nom de la variable.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>local_only</parameter></term>
+     <listitem>
+      <para>
+       Définir à true pour retourner seulement les variables d'environnement locales 
+       (définit par le système d'exploitation ou putenv).
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne la valeur de la variable d'environnement
+   <parameter>varname</parameter>, ou &false; si la variable
+   d'environnement <parameter>varname</parameter> n'existe pas.
+   Si <parameter>varname</parameter> est omit, toutes les variables
+   d'environnement sont retournée en tant qu'un &array; associatif.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.1.0</entry>
+      <entry>
+       <parameter>varname</parameter> peut désormais être omit pour récupérer
+       un &array; associatif de toutes les variables d'environnement.
+      </entry>
+     </row>
+     <row>
+      <entry>5.5.38, 5.6.24, 7.0.9</entry>
+      <entry>
+       Le paramètre <parameter>local_only</parameter> a été ajouté.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    Si PHP est exécuté dans un SAPI tel que Fast CGI, cette fonction retournera
+    toujours la valeur d'une variable d'environnement définit par le SAPI,
+    même si <function>putenv</function> a été utilisé pour définir une variable
+    d'environnement locale avec le même nom. Le paramètre
+    <parameter>local_only</parameter> doit être utilisé pour retourner les
+    valeurs de variables d'environnements définit localement.
+   </para>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>getenv</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Exemple d'utilisation de getenv()
+$ip = getenv('REMOTE_ADDR');
+
+// Ou utilisez simplement une Superglobale ($_SERVER ou $_ENV)
+$ip = $_SERVER['REMOTE_ADDR'];
+
+// Obtenir en toute sécurité la valeur d'une variable d'environnement,
+// ignorant si elle a été définie par un SAPI ou a été modifiée avec putenv
+$ip = getenv('REMOTE_ADDR', true) ?: getenv('REMOTE_ADDR')
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>putenv</function></member>
+    <member><function>apache_getenv</function></member>
+    <member><link linkend="language.variables.superglobals">Superglobales</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

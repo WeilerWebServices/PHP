@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.9 $ -->
+<classentry id="gtk.gtkimcontext">
+ <classmeta>
+  <classtitle>GtkIMContext</classtitle>
+  <classparent>GtkObject</classparent>
+  <shortdesc>
+   Base class for input method contexts.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <methods>
+
+  <method id="gtk.gtkimcontext.method.delete_surrounding">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>delete_surrounding</function></funcdef>
+     <paramdef>int <parameter>offset</parameter></paramdef>
+     <paramdef>int <parameter>n_chars</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkIMContext">get_surrounding</function>, 
+     <function class="GtkIMContext">set_surrounding</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkimcontext.method.filter_keypress">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>filter_keypress</function></funcdef>
+     
+     <paramdef><parameter>event</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkimcontext.method.focus_in">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>focus_in</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkimcontext.method.focus_out">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>focus_out</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  
+
+  
+
+  <method id="gtk.gtkimcontext.method.reset">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>reset</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkimcontext.method.set_client_window">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_client_window</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkimcontext.method.set_cursor_location">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_cursor_location</function></funcdef>
+     <paramdef>GdkRectangle <parameter>area</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkimcontext.method.set_surrounding">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_surrounding</function></funcdef>
+     <paramdef>string <parameter>text</parameter></paramdef>
+     <paramdef>int <parameter>len</parameter></paramdef>
+     <paramdef>int <parameter>cursor_index</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkIMContext">delete_surrounding</function>, 
+     <function class="GtkIMContext">get_surrounding</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkimcontext.method.set_use_preedit">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_use_preedit</function></funcdef>
+     <paramdef>bool <parameter>use_preedit</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkimcontext.signal.commit">
+   <signalname>commit</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkIMContext <parameter>imcontext</parameter></paramdef>
+     <paramdef><!-- was: gchararray -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkimcontext.signal.delete-surrounding">
+   <signalname>delete-surrounding</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkIMContext <parameter>imcontext</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkimcontext.signal.preedit-changed">
+   <signalname>preedit-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkIMContext <parameter>imcontext</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkimcontext.signal.preedit-end">
+   <signalname>preedit-end</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkIMContext <parameter>imcontext</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkimcontext.signal.preedit-start">
+   <signalname>preedit-start</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkIMContext <parameter>imcontext</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkimcontext.signal.retrieve-surrounding">
+   <signalname>retrieve-surrounding</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkIMContext <parameter>imcontext</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

@@ -1,0 +1,1113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.16 $ -->
+<classentry id="gtk.gtknotebook">
+ <classmeta>
+  <classtitle>GtkNotebook</classtitle>
+  <classparent>GtkContainer</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtknotebook.png" frame="no"/>
+  <shortdesc>
+   A tabbed notebook container
+  </shortdesc>
+  <desc>
+   <para>
+    The GtkNotebook widget is a <classname>GtkContainer</classname> whose
+    children are pages that can be switched between using tab labels
+    along one edge.
+   </para>
+   <para>
+    There are many configuration options for GtkNotebook. Among other things,
+    you can choose on which edge the tabs appear (see
+    <function class="GtkNotebook">set_tab_pos</function>), whether, if there
+    are too many tabs to fit the noteobook should be made bigger or scrolling
+    arrows added (see <function class="GtkNotebook">set_scrollable</function>),
+    and whether there will be a popup menu allowing the users to switch pages.
+    (see <function class="GtkNotebook">popup_enable</function>,
+    <function class="GtkNotebook">popup_disable</function>)
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtknotebook.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkNotebook</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new GtkNotebook widget with no pages.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Creates a new GtkNotebook widget with no pages.
+    </simpara>
+    <example>
+     <title>Creating a GtkNotebook</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtknotebook/constructor.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtknotebook.method.append_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>append_page</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter><optional>tab_label = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Appends a new page to the notebook.
+   </shortdesc>
+   <desc>
+    <para>
+     Appends a new page to the notebook. The widget passed as
+     <parameter>child</parameter> will be visible when the page is active,
+     the <parameter>tab_label</parameter> will be shown in the tab bar.
+    </para>
+    <para>
+     If you omit the second <parameter>tab_label</parameter> parameter, the
+     default one "page N" (label) will be used.
+    </para>
+    <para>
+     The method returns the index (starting from <literal>0</literal>) of the
+     appended page in the notebook, or <literal>-1</literal> if the method
+     fails.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">insert_page</function>,
+     <function class="GtkNotebook">prepend_page</function>,
+     <function class="GtkNotebook">remove_page</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.append_page_menu">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>append_page_menu</function></funcdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+     <paramdef>GtkWidget <parameter><optional>tab_label = null</optional></parameter></paramdef>
+     <paramdef>GtkWidget <parameter><optional>menu_label = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME: should be merged into append_page
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">insert_page_menu</function>, 
+     <function class="GtkNotebook">prepend_page_menu</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.current_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>current_page</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+     Use <function class="GtkNotebook">get_current_page</function>.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_current_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_current_page</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the page number of the current page.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the page number of the current page, starting from 0.
+     If the notebook has no pages, then <literal>-1</literal> will be
+     returned.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">set_current_page</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_menu_label">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkWidget</classname> <function>get_menu_label</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retrieves the menu label widget of the page containing child.
+   </shortdesc>
+   <desc>
+    <para>
+     Retrieves the menu label widget of the page containing
+     <parameter>child</parameter>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">set_menu_label</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_menu_label_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_menu_label_text</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retrieves the text of the menu label for the page containing child.
+   </shortdesc>
+   <desc>
+    <para>
+     Retrieves the text of the menu label for the page containing
+     <parameter>child</parameter>.
+    </para>
+    <para>
+     Returns the text of the tab label, or <literal>null</literal> if the
+     widget does not have a menu label other than the default menu label,
+     or the menu label widget is not a <classname>GtkLabel</classname>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">set_menu_label_text</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_n_pages">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_n_pages</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the number of pages in a notebook.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Gets the number of pages in a notebook.
+    </simpara>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_nth_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkWidget</classname> <function>get_nth_page</function></funcdef>
+     <paramdef>int <parameter>page_num</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the child widget contained in the given page number.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the child widget contained in page number
+     <parameter>page_num</parameter>.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_scrollable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_scrollable</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether the tab label area has arrows for scrolling.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether the tab label area has arrows for scrolling.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">set_scrollable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_show_border">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_show_border</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether a bevel will be drawn around the notebook pages.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Returns whether a bevel will be drawn around the notebook pages.
+    </simpara>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">set_show_border</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_show_tabs">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_show_tabs</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether the tabs of the notebook are shown.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether the tabs of the notebook are shown.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">set_show_tabs</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_tab_label">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkWidget</classname> <function>get_tab_label</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the tab label widget for the page child.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the tab label widget for the page child.
+     <literal>null</literal> is returned if child is not in notebook or if no
+     tab label has specifically been set for <parameter>child</parameter>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">set_tab_label</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_tab_label_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_tab_label_text</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retrieves the text of the tab label for the page containing child.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the text of the tab label, or <literal>null</literal> if the tab
+     label widget is not a <classname>GtkLabel</classname>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">set_tab_label_text</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.get_tab_pos">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GtkPositionType</enumname> <function>get_tab_pos</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the edge at which the tabs are drawn.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the edge at which the tabs for switching pages in the
+     notebook are drawn.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">set_tab_pos</function>, 
+     <fieldname class="GtkNotebook">tab_pos</fieldname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.insert_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>insert_page</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter><optional>tab_label = null</optional></parameter></paramdef>
+     <paramdef>int <parameter><optional>position = -1</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Insert a page into notebook at the given position.
+   </shortdesc>
+   <desc>
+    <para>
+     Insert a page into notebook at the given
+     <parameter>position</parameter>. The widget passed as
+     <parameter>child</parameter> will be visible when the page is active,
+     the <parameter>tab_label</parameter> will be shown in the tab bar.
+    </para>
+    <para>
+     If you omit the second <parameter>tab_label</parameter> parameter, the
+     default one "page N" (label) will be used.
+    </para>
+    <para>
+     The method returns the index (starting from <literal>0</literal>) of the
+     appended page in the notebook, or <literal>-1</literal> if the method
+     fails.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">append_page</function>,
+     <function class="GtkNotebook">prepend_page</function>,
+     <function class="GtkNotebook">remove_page</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.insert_page_menu">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>insert_page_menu</function></funcdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+     <paramdef>GtkWidget <parameter><optional>tab_label = null</optional></parameter></paramdef>
+     <paramdef>GtkWidget <parameter><optional>menu_label = null</optional></parameter></paramdef>
+     <paramdef>int <parameter><optional>position = -1</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME: Should be merged with insert_page
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">append_page_menu</function>, 
+     <function class="GtkNotebook">prepend_page_menu</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.next_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>next_page</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Switches to the next page.
+   </shortdesc>
+   <desc>
+    <para>
+     Switches to the next page. Nothing happens if the current page
+     is the last page.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_current_page</function>, 
+     <function class="GtkNotebook">prev_page</function>, 
+     <function class="GtkNotebook">set_current_page</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.page_num">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>page_num</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Finds the index of the page which contains the given child widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Finds the index of the page which contains the given
+     <parameter>child</parameter> widget.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.popup_disable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>popup_disable</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Disables the popup menu.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Disables the popup menu.
+    </simpara>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">popup_enable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.popup_enable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>popup_enable</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Enables the popup menu.
+   </shortdesc>
+   <desc>
+    <para>
+     Enables the popup menu: if the user clicks with the right mouse button
+     on the bookmarks, a menu with all the pages will be popped up.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">popup_disable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.prepend_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>prepend_page</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter><optional>tab_label = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Prepends a page to the notebook.
+   </shortdesc>
+   <desc>
+    <para>
+     Prepends a page to the notebook. The widget passed as
+     <parameter>child</parameter> will be visible when the page is active,
+     the <parameter>tab_label</parameter> will be shown in the tab bar.
+    </para>
+    <para>
+     If you omit the second <parameter>tab_label</parameter> parameter, the
+     default one "page N" (label) will be used.
+    </para>
+    <para>
+     The method returns the index (starting from <literal>0</literal>) of the
+     appended page in the notebook, or <literal>-1</literal> if the method
+     fails.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">append_page</function>,
+     <function class="GtkNotebook">insert_page</function>,
+     <function class="GtkNotebook">remove_page</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.prepend_page_menu">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>prepend_page_menu</function></funcdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+     <paramdef>GtkWidget <parameter><optional>tab_label = null</optional></parameter></paramdef>
+     <paramdef>GtkWidget <parameter><optional>menu_label = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME: Should be merged with prepend_page
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">append_page_menu</function>, 
+     <function class="GtkNotebook">insert_page_menu</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.prev_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>prev_page</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Switches to the previous page.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Switches to the previous page. Nothing happens if the current page is
+     the first page.
+    </simpara>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_current_page</function>,
+     <function class="GtkNotebook">next_page</function>,
+     <function class="GtkNotebook">set_current_page</function>
+    </para>
+   </desc>
+  </method>
+<!-- FIXME: not implemented yet
+  <method id="gtk.gtknotebook.method.query_tab_label_packing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>query_tab_label_packing</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">set_tab_label_packing</function>
+    </para>
+
+   </desc>
+  </method>
+-->
+  <method id="gtk.gtknotebook.method.remove_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>remove_page</function></funcdef>
+     <paramdef>int <parameter>page_num</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Removes a page from the notebook.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Removes a page from the notebook given its index in the notebook.
+    </simpara>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">append_page</function>, 
+     <function class="GtkNotebook">get_current_page</function>, 
+     <function class="GtkNotebook">insert_page</function>, 
+     <function class="GtkNotebook">prepend_page</function>, 
+     <function class="GtkNotebook">set_current_page</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.reorder_child">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>reorder_child</function></funcdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+     <paramdef>int <parameter>position</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Reorders the page containing child.
+   </shortdesc>
+   <desc>
+    <para>
+     Reorders the page containing child, so that it appears in position
+     <parameter>position</parameter>. If <parameter>position</parameter>
+     is greater than or equal to the number of children in the list or
+     negative, child will be moved to the end of the list.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_current_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_current_page</function></funcdef>
+     <paramdef>int <parameter>page_num</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Switches to the given page number.
+   </shortdesc>
+   <desc>
+    <para>
+     Switches to the page number <parameter>page_num</parameter>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_current_page</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_homogeneous_tabs">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_homogeneous_tabs</function></funcdef>
+     <paramdef>bool <parameter>homogeneous</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets whether the tabs must have all the same size or not.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method; Sets whether the tabs must have all the same size or not.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_menu_label">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_menu_label</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter><optional>menu_label = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Changes the menu label for the page.
+   </shortdesc>
+   <desc>
+    <para>
+     Changes the menu label for the page containing
+      <parameter>child</parameter>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_menu_label</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_menu_label_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_menu_label_text</function></funcdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+     <paramdef>string <parameter>menu_text</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new label and sets it as the menu label.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new label and sets it as the menu label of
+     <parameter>child</parameter>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_menu_label_text</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_page</function></funcdef>
+     <paramdef>int <parameter>page_num</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+    <para>
+     Use <function class="GtkNotebook">set_current_page</function>
+     instead.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_scrollable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_scrollable</function></funcdef>
+     <paramdef>bool <parameter>scrollable</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets whether the tab label area will have arrows for scrolling.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets whether the tab label area will have arrows for scrolling
+     if there are too many tabs to fit in the area.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_scrollable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_show_border">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_show_border</function></funcdef>
+     <paramdef>bool <parameter>show_border</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets whether a bevel will be drawn around the notebook pages.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets whether a bevel will be drawn around the notebook pages.
+     This only has a visual effect when the tabs are not shown.
+     See <function class="GtkNotebook">set_show_tabs</function>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_show_border</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_show_tabs">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_show_tabs</function></funcdef>
+     <paramdef>bool <parameter>show_tabs</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   Sets whether to show the tabs for the notebook or not.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Sets whether to show the tabs for the notebook or not.
+    </simpara>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_show_tabs</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_tab_border">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_tab_border</function></funcdef>
+     <paramdef>int <parameter>border_width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_tab_hborder">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_tab_hborder</function></funcdef>
+     <paramdef>int <parameter>tab_hborder</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_tab_label">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_tab_label</function></funcdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+     <paramdef>GtkWidget <parameter><optional>tab_label = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Changes the tab label for a child.
+   </shortdesc>
+   <desc>
+    <para>
+     Changes the tab label for <parameter>child</parameter>. If
+     <literal>null</literal> is specified for
+     <parameter>tab_label</parameter>, then the page will have the label
+     '<literal>page N</literal>'.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_tab_label</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_tab_label_packing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_tab_label_packing</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+     <paramdef>bool <parameter>expand</parameter></paramdef>
+     <paramdef>bool <parameter>fill</parameter></paramdef>
+     <paramdef><enumname>GtkPackType</enumname> <parameter>pack_type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the packing parameters for the tab label
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the packing parameters for the tab label of the page containing child.
+     See <function class="GtkBox">pack_start</function> for the exact meaning
+     of the parameters.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">query_tab_label_packing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_tab_label_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_tab_label_text</function></funcdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+     <paramdef>string <parameter>tab_text</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new label for a child.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new label and sets it as the tab label for the page
+     containing <parameter>child</parameter>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_tab_label_text</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_tab_pos">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_tab_pos</function></funcdef>
+     <paramdef><enumname>GtkPositionType</enumname> <parameter>pos</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the edge at which the tabs are drawn.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the edge at which the tabs for switching pages in the notebook are drawn.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_tab_pos</function>,
+     <fieldname class="GtkNotebook">tab_pos</fieldname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtknotebook.method.set_tab_vborder">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_tab_vborder</function></funcdef>
+     <paramdef>int <parameter>tab_vborder</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+   </desc>
+  </method>
+ </methods>
+
+ <fields>
+  <field id="gtk.gtknotebook.field.tab_pos" type="ro">
+   <fieldname>tab_pos</fieldname>
+   <fieldtype><enumname>GtkPositionType</enumname></fieldtype>
+   <shortdesc>
+    Which side of the notebook holds the tabs.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Which side of the notebook holds the tabs.
+    </simpara>
+    <para>
+     &seealso;
+     <function class="GtkNotebook">get_tab_pos</function>, 
+     <function class="GtkNotebook">set_tab_pos</function>
+    </para>
+   </desc>
+  </field>
+ </fields>
+
+
+
+ <signals>
+  <!--
+   FIXME: difference between change-current-page, switch-page and select-page
+  -->
+  <signal id="gtk.gtknotebook.signal.change-current-page">
+   <signalname>change-current-page</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkNotebook</classname> <parameter>notebook</parameter></paramdef>
+     <paramdef>int <parameter>page_num</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Another page has been made active.
+   </shortdesc>
+   <desc>
+    <para>
+     Called whenever the current page is switched to another one.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtknotebook.signal.focus-tab">
+   <signalname>focus-tab</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkNotebook</classname> <parameter>notebook</parameter></paramdef>
+     <paramdef>GtkNotebookTab <parameter>tab</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    A tab got the focus.
+   </shortdesc>
+   <desc>
+    <para>
+     Called when a tab got the focus.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtknotebook.signal.move-focus-out">
+   <signalname>move-focus-out</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkNotebook</classname> <parameter>notebook</parameter></paramdef>
+     <paramdef>GtkDirectionType <parameter>direction</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtknotebook.signal.select-page">
+   <signalname>select-page</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkNotebook</classname> <parameter>notebook</parameter></paramdef>
+     <paramdef>bool <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    A page has been selected
+   </shortdesc>
+   <desc>
+    <para>
+     A page has been selected.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtknotebook.signal.switch-page">
+   <signalname>switch-page</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkNotebook</classname> <parameter>notebook</parameter></paramdef>
+     <paramdef>pointer <parameter>pointer</parameter></paramdef>
+     <paramdef>int <parameter>page_num</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The page has been switched.
+   </shortdesc>
+   <desc>
+    <para>
+     Called when the page has been switched.
+    </para>
+    <example>
+     <title>Listening to the switch-page signal</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtknotebook/switch-page.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </signal>
+
+ </signals>
+
+</classentry>

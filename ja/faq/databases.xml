@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 340962 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi -->
+ <chapter xml:id="faq.databases" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>データベースに関する問題</title>
+  <titleabbrev>データベースに関する問題</titleabbrev>
+
+  <para>
+   このセクションでは PHP とデータベースとの関係に関する一般的な質問を
+   扱います。なんと! PHP は事実上あらゆるデータベースにアクセスすることが
+   できます。
+  </para>
+
+  <qandaset>
+   <qandaentry xml:id="faq.databases.mssql">
+    <question>
+     <para>
+      PHP は Microsoft SQL Server にアクセスできると聞きました。どうすれば
+      よいのでしょうか？
+     </para>
+    </question>
+    <answer>
+     <para>
+      Unix マシン上では、<link linkend="ref.pdo-odbc">PDO_ODBC</link>
+      や <link linkend="book.uodbc">Unified ODBC API</link> が使えます。
+     </para>
+     <para>
+      Windows マシン上では、<link linkend="ref.pdo-sqlsrv">PDO_SQLSRV</link>
+      や <link linkend="book.sqlsrv">SQLSRV</link> も使えます。
+     </para>
+     <para>
+      次の質問に対する回答も参照してください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.databases.access">
+    <question>
+     <para>Microsoft Access データベースにアクセスできますか？</para>
+    </question>
+    <answer>
+     <para>
+      はい。もし全て (PHP と Microsoft Access) を Windows9x/Me/NT/2000
+      上で動作させるのであり、ODBC と Microsoft が提供する Microsoft Access 用
+      ODBC ドライバ が使用できる状態ならば、
+      すべての必要なツールは揃っています。
+     </para>
+     <para>
+      Unix で PHP を動作させて Windows マシンで動作する MS Access
+      に接続したい場合には Unix ODBC ドライバが必要です。<link
+      xlink:href="&url.openlink;">OpenLink Software</link> が Unix ベースの
+      ODBC ドライバを提供しています。
+     </para>
+     <para>
+      他には、Microsoft SQL Server に ODBC ドライバを使用してデータを
+      保存するという手段もあります。これによって、Microsoft Access (ODBC
+      を使用します) と PHP (組み込まれているドライバを使用します) でデータに
+      アクセスすることができます。また、Microsoft Access と PHP 両者共に
+      解釈可能な中間ファイル(例えば単層からなるファイルや、dBase
+      データベース等)を使用する手もあります。これに関しては OpenLink
+      Software の Tim Hayes が以下のように述べています。
+      <blockquote>
+       <para>
+        PHP からじかに ODBC ドライバが使用できる場合(つまり OpenLink の
+        ドライバを使用している場合)には、他のデータベースを中継手段として
+        用いることはよいアイデアとは言えない。どうしても中間ファイルが
+        必要な場合のために、OpenLink は NT、Linux、そして他の Unix 用の
+        Virtuoso(仮想データベースエンジン)をリリースした。私たちの
+        <link xlink:href="&url.openlink;">ウェブサイト</link>を
+        訪れてもらえれば、無料でダウンロードできる。
+       </para>
+      </blockquote>
+     </para>
+     <para>
+      うまくいくことが分かってるもう一つの方法は、MySQL と Windows 用の
+      MyODBC ドライバを利用してデータベースを同期する方法です。Steve
+      Lawrence が言うには、
+     </para>
+     <para>
+      <itemizedlist>
+       <listitem>
+        <simpara>
+         MySQL を説明に従って任意のプラットフォームにインストールします。
+         最新バージョンは <link
+         xlink:href="&url.mysql;">&url.mysql;</link>
+         にあります。データベースを作成するとき、そしてユーザーアカウントを
+         を設定するときに、ホストフィールドに % か MySQL を使って
+         アクセスする Windows マシンのホスト名を入力する、ということ以外には
+         特別な設定は必要ありません。
+         使用するサーバー名、ユーザー名、パスワードを書きとめておいてください。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         MySQL サイトから Windows 用 MyODBC ドライバをダウンロードします。
+         それを Windows マシンにインストールします。
+         アーカイブに含まれるユーティリティプログラムで、
+         テストを行うことができます。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         コントロールパネルの ODBC administrator を使用して、ユーザー
+         もしくはシステム DSN を作成します。DSN 名を決定して、Step1 で MySQL
+         に設定したホスト名、ユーザー名、パスワード、ポート等を入力します。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Access をフルインストールでインストールします。これは適切な
+         アドインをインストールするためです。少なくとも ODBC サポートと
+         リンクテーブルマネージャが必要です。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         ここからがお楽しみです。新規データベースを作成しましょう。
+         テーブルウィンドウで右クリックしてリンクテーブルを選択します。
+         もしくはファイルメニューから外部データの取り込みを選び
+         リンクテーブルを選択します。ファイルブラウザが表示されたら
+         ファイルタイプから ODBC を選択します。次にシステム DSN で
+         選択肢 STEP3 で作成した DSN 名を選択します。リンクするテーブルを
+         選んで OK ボタンを押しましょう。MySQL サーバーでテーブルを
+         オープンできるようになっていて、データの追加/削除/編集ができるように
+         なっています。さらに、クエリの構築、テーブルのインポート/エクスポート、
+         フォームやレポートの構築等が可能です。
+        </simpara>
+       </listitem>
+      </itemizedlist>
+     </para>
+     <para>
+      Tips and Tricks(役に立つヒント):
+      <itemizedlist>
+       <listitem>
+        <simpara>
+         Access でテーブルを作成してそれを MySQL へエクスポートします。
+         それを再度アクセスからリンクすれば素早くテーブルを作成すること
+         ができます。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Access でテーブルを作成するときは、そのテーブルに書き込み権限を
+         もたせるためにプライマリキーを設定しておく必要があります。
+         Access とテーブルをリンクする前に MySQL にプライマリキーを設定
+         しておくことも忘れないでください。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         MySQL 側でテーブル(の構成)を変更した場合、再度 Access とリンクする
+         必要があります。ツール>アドイン>リンクテーブルマネージャから
+         適切な ODBC DSN を選んで再リンクが必要なテーブルを選択します。
+         また、ここで OK ボタンを押す前に「リンク先を更新するための
+         プロンプトを毎回表示する」をチェックしておけば DSN ソースを
+         移動させることができます。
+        </simpara>
+       </listitem>
+      </itemizedlist>
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.databases.mysql.deprecated">
+    <question>
+     <para>
+      10 年前からずーっと MySQL 拡張モジュール (ext/mysql)
+      を使ってきました。なぜ今さら「使ってはいけない」と言われるのですか?
+      廃止されちゃうんですか? 私はいったいどうすればいいの?
+      今までのコードはどうなるの?
+     </para>
+    </question>
+    <answer>
+     <para>
+      現在、MySQL 用の拡張モジュールは 3 種類用意されています。
+      <link linkend="mysqlinfo.api.choosing">MySQL API の選択</link> にあるとおりです。
+      古い API は使ってはいけません。PHP 5.5.0 以降では非推奨になっており、PHP 7.0.0 から本体に同梱されなくなって PECL に移ります。
+      でも、今後新しく書くコードでは <link linkend="book.mysqli">mysqli</link> か
+      <link linkend="ref.pdo-mysql">PDO_MySQL</link> を使うことを強く推奨します。
+     </para>
+     <para>
+      今までのコードの移行用スクリプトは、今のところ用意されていません。
+      しかし、mysqli の API には手続き型とオブジェクト指向型の 2 種類が用意されており、
+      手続き型の API は ext/mysql と似ています。
+     </para>
+     <para>
+      複数の拡張モジュールを混ぜて使うことはできません。つまり、
+      たとえば mysqli のコネクションを
+      PDO_MySQL や ext/mysql に渡しても動作しないということです。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.databases.mysqlresource">
+    <question>
+     <para>
+      "Warning: 0 is not a MySQL
+      result index in &lt;file&gt; on line &lt;x&gt;" もしくは "Warning: Supplied argument
+      is not a valid MySQL result resource in &lt;file&gt; on line &lt;x&gt;"
+      のようなエラーが出るのはなぜでしょうか?
+     </para>
+    </question>
+    <answer>
+     <para>
+      あなたは値が 0 である結果(result)ID を指定しようとしています。0 は
+      あなたのクエリが何らかの理由で失敗したことを示しています。結果
+      (result)ID を使用する前に、クエリを送信したあとのエラーをチェック
+      する必要があります。以下のようなコードが正しい方法です。
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$result = mysql_query("SELECT * FROM tables_priv");
+if (!$result) {
+    echo mysql_error();
+    exit;
+}
+?>
+]]>
+      </programlisting>
+      もしくは
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$result = mysql_query("SELECT * FROM tables_priv")
+    or die("Bad query: " . mysql_error());
+?>
+]]>
+      </programlisting>
+     </para>
+    </answer>
+   </qandaentry>
+  </qandaset>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

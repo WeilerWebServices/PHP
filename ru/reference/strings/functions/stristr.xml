@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 350655 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.stristr">
+ <refnamediv>
+  <refname>stristr</refname>
+  <refpurpose>Регистронезависимый вариант функции <function>strstr</function></refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>stristr</methodname>
+   <methodparam><type>string</type><parameter>haystack</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>needle</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>before_needle</parameter><initializer>&false;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Возвращает всю строку <parameter>haystack</parameter> начиная с
+   первого вхождения <parameter>needle</parameter> включительно.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>haystack</parameter></term>
+     <listitem>
+      <para>
+       Строка, в которой производится поиск
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>needle</parameter></term>
+     <listitem>
+      &strings.parameter.needle.non-string;
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>before_needle</parameter></term>
+     <listitem>
+      <para>
+       Если установлен в &true;, <function>stristr</function>
+       возвращает часть строки <parameter>haystack</parameter>
+       до первого вхождения <parameter>needle</parameter> (не включая needle).
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+  <para>
+   <parameter>needle</parameter> и <parameter>haystack</parameter>
+   обрабатываются без учета регистра.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Возвращает указанную подстроку. Если подстрока <parameter>needle</parameter> не найдена,
+   возвращается &false;.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        Передача целого числа (&integer;) в <parameter>needle</parameter> объявлена устаревшей.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>stristr</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+  $email = 'USER@EXAMPLE.com';
+  echo stristr($email, 'e'); // выводит ER@EXAMPLE.com
+  echo stristr($email, 'e', true); // Начиная с PHP 5.3.0, выводит US
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Проверка на вхождение строки</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+  $string = 'Hello World!';
+  if(stristr($string, 'earth') === FALSE) {
+    echo '"earth" не найдена в строке';
+  }
+// выводит: "earth" не найдена в строке
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Использование не строки в поиске</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+  $string = 'APPLE';
+  echo stristr($string, 97); // 97 = a в нижнем регистре
+// выводит: APPLE
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.bin-safe;
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>strstr</function></member>
+    <member><function>strrchr</function></member>
+    <member><function>stripos</function></member>
+    <member><function>strpbrk</function></member>
+    <member><function>preg_match</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

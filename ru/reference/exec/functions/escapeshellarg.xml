@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 350656 Maintainer: mch Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+<!-- $Revision$ -->
+<!-- splitted from ./en/functions/exec.xml, last change in rev 1.8 -->
+<refentry xml:id="function.escapeshellarg" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>escapeshellarg</refname>
+  <refpurpose>Экранировать строку для того, чтобы она могла быть использована как аргумент командной строки</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>escapeshellarg</methodname>
+   <methodparam><type>string</type><parameter>arg</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Функция <function>escapeshellarg</function> добавляет одинарные кавычки вокруг строки и кавычек
+   и экранирует любые существующие одинарные кавычки, позволяя вам
+   передать строку непосредственно в функцию оболочки и рассматривать её как один
+   безопасный аргумент. Эта функция должна использоваться для того, чтобы экранировать
+   отдельные аргументы для функций оболочки, полученные из пользовательского ввода. Экранирование
+   аргумента необходимо в таких функциях оболочки как <function>exec</function>,
+   <function>system</function> и оператор <link linkend="language.operators.execution">"обратный апостроф"</link>.
+  </para>
+  <para>
+   В Windows <function>escapeshellarg</function> заменяет восклицательный знак,
+   знак процента (позднее связывание переменных) и двойные кавычки на пробелы и
+   добавляет двойные кавычки вокруг строки.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>arg</parameter></term>
+     <listitem>
+      <para>
+       Аргумент, который будет экранирован.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Экранированная строка.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>escapeshellarg</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+system('ls '.escapeshellarg($dir));
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>escapeshellcmd</function></member>
+    <member><function>exec</function></member>
+    <member><function>popen</function></member>
+    <member><function>system</function></member>
+    <member><link linkend="language.operators.execution">Оператор исполнения</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

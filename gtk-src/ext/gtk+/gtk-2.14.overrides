@@ -1,0 +1,55 @@
+%% include gtk-2.12.overrides
+
+%%
+override gtk_window_group_list_windows
+PHP_METHOD
+{
+    GList *list, *item;
+    
+    NOT_STATIC_METHOD();
+    
+    if (!php_gtk_parse_args(ZEND_NUM_ARGS(), "")){
+        return;
+    }
+
+    list = gtk_window_group_list_windows(GTK_WINDOW_GROUP(PHPG_GOBJECT(this_ptr)));
+
+    array_init(return_value);
+
+    for (item = list; item; item = item->next) {
+        zval *php_item = NULL;
+        GtkWidget *window = item->data;
+        phpg_gobject_new(&php_item, G_OBJECT(window) TSRMLS_CC);
+        add_next_index_zval(return_value, php_item);
+    }
+
+    g_list_free(list);
+}
+
+%%
+deprecate gtk_box_pack_end_defaults
+since GTK+ 2.14, use GtkBox::pack_end() instead
+
+%%
+deprecate gtk_box_pack_start_defaults
+since GTK+ 2.14, use GtkBox::pack_start() instead
+
+%%
+deprecate gtk_file_chooser_button_new_with_backend
+since GTK+ 2.14, Use GtkFileChooserButton::__construct() instead
+
+%%
+deprecate gtk_file_chooser_dialog_new_with_backend
+since GTK+ 2.14, Use GtkFileChooserDialog::__construct() instead
+
+%%
+deprecate gtk_file_chooser_widget_new_with_backend
+since GTK+ 2.14, Use GtkFileChooserWidget::__construct() instead
+
+%%
+deprecate gtk_toolbar_set_tooltips
+since GTK+ 2.14, The toolkit-wide \"gtk-enable-tooltips\" property is now used instead.
+
+%%
+deprecate gtk_toolbar_get_tooltips
+since GTK+ 2.14, The toolkit-wide \"gtk-enable-tooltips\" property is now used instead.

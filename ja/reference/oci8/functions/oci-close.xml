@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 336715 Maintainer: satoruyoshida Status: ready -->
+<refentry xml:id="function.oci-close" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>oci_close</refname>
+  <refpurpose>Oracleとの接続を閉じる</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>oci_close</methodname>
+   <methodparam><type>resource</type><parameter>connection</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   接続 <parameter>connection</parameter> を閉じます。
+   他のいかなるリソースも利用しない、なおかつ <function>oci_connect</function>
+   または <function>oci_new_connect</function> で作成された場合、
+   基礎となるデータベース接続が閉じられます。
+  </para>
+  <para>
+   もはや不要となった接続を閉じることを推奨します。
+   なぜなら、これにより他のユーザーがデータベースリソースを利用できるようになるからです。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>connection</parameter></term>
+     <listitem>
+      <para>
+       <function>oci_connect</function>、<function>oci_pconnect</function>
+       あるいは <function>oci_new_connect</function> が返す Oracle 接続 ID。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <example>
+   <title>接続を閉じる</title>
+   <para>
+    基礎となるデータベース接続がきちんと終了され、データベースリソースが解放されることを確実にするために、
+    接続に関連したリソースは閉じられるべきです。
+   </para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+$stid = oci_parse($conn, 'SELECT * FROM departments');
+$r = oci_execute($stid);
+oci_fetch_all($stid, $res);
+var_dump($res);
+
+// 接続を閉じるときにステートメント識別子を解放します
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>参照の全てが閉じられるまでデータベース接続は閉じられません</title>
+   <para>
+    基礎となるデータベースへの接続が閉じられる前に
+    接続の内部的な参照回数識別子はゼロで無ければいけません
+   </para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+$stid = oci_parse($conn, 'SELECT * FROM departments');  // これは $conn の参照回数を増やします
+oci_execute($stid);
+oci_fetch_all($stid, $res);
+var_dump($res);
+
+oci_close($conn);
+
+// $conn はもはやスクリプトで使用できませんが、基礎となるデータベース接続は
+// $stid が解放されるまで開かれたまま保たれます。
+var_dump($conn);  // NULL を出力 
+
+// PHP が活動していない間にターミナルウィンドウで Oracle の V$SESSION ビューを
+// 参照すると、データベースユーザーがまだ接続されていると表示します。
+sleep(10);
+
+// $stid が解放されると、データベース接続は物理的に閉じられます。
+oci_free_statement($stid);  
+
+// PHP が活動していない間にターミナルウィンドウで Oracle の V$SESSION ビューを
+// 参照すると、データベースユーザーが切断されたと表示します。
+sleep(10);
+
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>一回以上開かれた接続を閉じる</title>
+   <para>
+     データベースクレデンシャルが再利用されるときは、基礎となるデータベース接続が閉じられる前に、
+     両方の接続がともに閉じられていなければいけません。
+   </para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn1 = oci_connect('hr', 'welcome', 'localhost/XE');
+
+// 同じ基礎となるデータベース接続を再利用するクレデンシャルを使用すると、
+// $conn1 上でなされたコミットされていない変更は全て、 $conn2 で認識できます。
+$conn2 = oci_connect('hr', 'welcome', 'localhost/XE');
+
+// PHP が活動していない間にターミナルウィンドウで Oracle の V$SESSION ビューを
+// 参照すると、データベースユーザーが一つだけ接続されたと表示します。
+sleep(10);
+
+oci_close($conn1); // 基礎となるデータベース接続を閉じません。
+var_dump($conn1);  // 変数 $conn1 がもはや利用できないので NULL を出力します
+var_dump($conn2);  // $conn2 はまだ有効な接続リソースと表示されます。
+
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>変数がスコープから外れると接続が閉じられます</title>
+   <para>
+    接続を参照する変数の全てがスコープを外れてPHPにより解放されると、
+    （必要に応じて）ロールバックが発生します。
+    そしてデータベースへの基礎となる接続が閉じられます。
+   </para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+function myfunc() {
+    $conn = oci_connect('hr', 'hrpwd', 'localhost/XE');
+    if (!$conn) {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    $stid = oci_parse($conn, 'UPDATE mytab SET id = 100');
+    oci_execute($stid, OCI_NO_AUTO_COMMIT);
+    return "Finished";
+}
+
+$r = myfunc();
+// この時点でロールバックが発生し、基礎となるデータベース接続が閉じられます。
+
+print $r;  // 関数の返り値 "Finished" を表示します
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    接続識別子に依存する変数、たとえば <function>oci_parse</function> により返される
+    ステートメント識別子のような変数は、基礎となるデータベース接続が閉じられる前に
+    解放されなければいけません。
+   </para>
+  </note>
+  <note>
+   <para>
+    PHP 5.1.2 (PECL OCI8 1.1) より前のバージョンでは、<function>oci_close</function>
+    は実際には何もしませんでした。最近のバージョンでは、きちんと Oracle 接続を閉じます。
+    この関数の古い動作をさせる場合は <link
+    linkend="ini.oci8.old-oci-close-semantics">oci8.old_oci_close_semantics</link>
+    オプションを使用してください。
+   </para>
+  </note>
+  <note>
+   <para>
+    <function>oci_close</function> 関数は
+    <function>oci_pconnect</function> で作成された基礎となるデータベース接続を
+    閉じません。
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>oci_connect</function></member>
+    <member><function>oci_free_statement</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

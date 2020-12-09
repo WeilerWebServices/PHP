@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 345634 Maintainer: ae Status: revision --><!-- CREDITS: fabioluciano, ae, adiel, geekcom -->
+
+<sect1 xml:id="migration70.changed-functions">
+ <title>Funções alteradas</title>
+
+ <sect2 xml:id="migration70.changed-functions.core">
+  <title>Núcleo do PHP</title>
+  <!--
+   Let's assume that functions from extensions bundled by default with PHP are 'core functions',
+   like in PHP 5.6.x migration guide.
+  -->
+
+  <itemizedlist>
+  <listitem>
+    <simpara>
+     <function>debug_zval_dump</function> agora imprime "int" ao invés de "long"
+     e "float" ao invés de "double".
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>dirname</function> agora opcionalmente recebe um segundo parâmetro,
+     <parameter>depth</parameter>, para obter o nome do diretório
+     <parameter>depth</parameter> níveis acima do diretório atual.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>getrusage</function> agora é suportada no Windows.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     As funções <function>mktime</function> e <function>gmmktime</function>
+     não aceitam mais o parâmetro <parameter>is_dst</parameter> (é horário de verão).
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     A função <function>preg_replace</function> não suporta mais o modificador
+     "\e" (<constant>PREG_REPLACE_EVAL</constant>). Em vez disso, a função <function>preg_replace_callback</function>
+     deve ser usada.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     A função <function>setlocale</function> não aceita mais o parâmetro <parameter>category</parameter>
+     passado como string. Em vez disso, as constantes <constant>LC_*</constant> devem ser usadas.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     As funções <function>exec</function>, <function>system</function> e <function>passthru</function>
+     agora possuem proteção contra bytes nulos.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     A função <function>shmop_open</function> agora retorna um recurso ao invés de um inteiro,
+     que deve ser passado para as funções <function>shmop_size</function>,
+     <function>shmop_write</function>, <function>shmop_read</function>,
+     <function>shmop_close</function> e <function>shmop_delete</function>.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     As funções <function>substr</function> e <function>iconv_substr</function> agora retornam uma string vazia
+     caso o comprimento do parâmetro string seja igual ao valor do parâmetro start.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>xml_parser_free</function> não é mais suficiente para liberar o
+     recurso parser, se ele faz referência a um objeto e este objeto faz referência a esse
+     recurso parser. Neste caso, é necessário, adicionalmente, indeterminar o $parser.
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </sect2>
+
+<!-- skeleton; replace ext with extension name
+ <sect2 xml:id="migration70.changed-functions.ext">
+  <title><link linkend="book.ext">ext</link></title>
+
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     Change.
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </sect2>
+-->
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

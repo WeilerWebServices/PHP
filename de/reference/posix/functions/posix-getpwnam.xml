@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 324015 Maintainer: samesch Status: ready -->
+<refentry xml:id="function.posix-getpwnam" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>posix_getpwnam</refname>
+  <refpurpose>Liefert zu einem Benutzernamen Informationen über diesen Benutzer</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>posix_getpwnam</methodname>
+   <methodparam><type>string</type><parameter>username</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Gibt ein <type>Array</type> mit Informationen über den angegebenen
+   Benutzer zurück.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>username</parameter></term>
+     <listitem>
+      <para>
+       Ein alphanumerischer Benutzername
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Bei Erfolg wird ein Array mit den folgenden Elementen zurückgegeben,
+   andernfalls &false;:
+   <table>
+    <title>Das Benutzerinformation-Array</title>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>Element</entry>
+       <entry>Beschreibung</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>name</entry>
+       <entry>
+        Das name-Element enthält den Benutzernamen. Es handelt sich dabei
+        nicht um den wirklichen, kompletten Namen, sondern um einen kurzen
+        "Bezeichner" des Benutzers mit normalerweise weniger als 16 Zeichen.
+        Der Benutzername sollte derselbe wie der bei Aufruf der Funktion
+        verwendete Parameter <parameter>username</parameter> sein und ist von
+        daher redundant.
+       </entry>
+      </row>
+      <row>
+       <entry>passwd</entry>
+       <entry>
+        Das passwd-Element enthält das verschlüsselte Passwort des Benutzers.
+        Häufig, zum Beispiel wenn auf einem System "shadow"-Passwörter
+        verwendet werden, wird stattdessen ein Sternchen zurückgegeben.
+       </entry>
+      </row>
+      <row>
+       <entry>uid</entry>
+       <entry>Die Benutzer-ID in numerischem Format.</entry>
+      </row>
+      <row>
+       <entry>gid</entry>
+       <entry>
+        Die Gruppen-ID des Benutzers. Benutzen Sie die Funktion
+        <function>posix_getgrgid</function>, um den Gruppennamen und eine
+        Liste der Gruppenmitglieder aufzulösen.
+       </entry>
+      </row>
+      <row>
+       <entry>gecos</entry>
+       <entry>
+        GECOS ist ein veralteter Begriff, der sich auf das
+        finger-Informationsfeld auf einem Honeywell Stapelverarbeitungssystem
+        bezieht. Das Feld gibt es aber immer noch und sein Inhalt wurde durch
+        POSIX formalisiert. Es enthält eine durch Komma getrennte Liste,
+        bestehend aus dem kompletten Namen der Benutzerin, der Telefonnummer
+        des Büros, der Zimmernummer des Büros und der privaten Telefonnummer.
+        Auf den meisten Systemen ist nur der komplette Name des Benutzers
+        verfügbar.
+       </entry>
+      </row>
+      <row>
+       <entry>dir</entry>
+       <entry>
+        Dieses Element enthält den absoluten Pfad des Homeverzeichnisses des
+        Benutzers.
+       </entry>
+      </row>
+      <row>
+       <entry>shell</entry>
+       <entry>
+        Das shell-Element enthält den absoluten Pfad zur standardmäßigen Shell
+        des Benutzers.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>posix_getpwnam</function>-Beispiel</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$benutzerinfo = posix_getpwnam("tom");
+
+print_r($benutzerinfo);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Array
+(
+    [name]    => tom
+    [passwd]  => x
+    [uid]     => 10000
+    [gid]     => 42
+    [gecos]   => "tom,,,"
+    [dir]     => "/home/tom"
+    [shell]   => "/bin/bash"
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>posix_getpwuid</function></member>
+    <member>POSIX GETPWNAM(3)-Manpage</member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

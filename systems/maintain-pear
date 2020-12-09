@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# $Id$
+#
+# regular housekeeping for PEAR
+#
+
+#if test "$how" = "weekly";
+#then
+#	# clean trackbacks that are marked as spam
+#	/usr/bin/env php /local/web/pear.php.net/cron/trackback-cleanup.php
+#fi
+
+if test "$how" =  "monthly";
+then
+	/usr/bin/env php /local/web/pear.php.net/cron/bug-summary.php > /dev/null
+fi

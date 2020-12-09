@@ -1,0 +1,54 @@
+Version 2.0.3 "the evergreen you never heard" XX-XXX-201X
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    - Fixed bug #51093 (segfault with signal_autoconnect function of class 
+      GladeXML) (Kalle, jboffel at gmail dot com)
+    - Fixed bug #50889 (Fixes to confutils.js) 
+      (Kalle, thomas dot worm at thomas-worm dot de)
+    - Fixed bug #50888 (Detection of Microsoft VS.NET 2008) (Kalle)
+
+Version 2.0.2 "and then there was none" 07-March-2010
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    - API coverage improved, specifically for 2.14, 2.16 and 2.18 gtk+ additions
+    - Lots of bugfixes and segfault prevents (Thank you Felipe Pena)
+    - Cairo support - WARNING: php-gtk now requires the PECL cairo extension
+    - Full support for PHP 5.3 - WARNING: PHP 5.3 only works on XP or higher
+    
+
+Version 2.0.1 "you knew this was coming" 16-May-2008
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    - GtkBuilder support
+    - Support for the new GTK+ 2.12 tooltips API
+    - Prevent segfaults when clone is used
+    - Miscellaneous bug fixes, and support for PHP 5.3+ features
+
+Version 2.0.0 "leap day special" 29-February-2008
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    - API coverage improved
+    - GTK+ 2.12 support
+    - Custom GTypes, signals and properties support (see demos/examples)
+    - Shared extensions are now prefixed with "php_gtk_"
+    - Some constants moved to GObject:: class
+
+Version 2.0.0beta "extension extravaganza" : 17-June-2007
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    - custom tree models, clipboard support, enhanced gobject construction
+      (Andrei)
+    - drag and drop support for gtktreeview (Christian)
+    - gtkspell, gtkextra, gtkhtml3, libsexy and scintilla extensions for *nix 
+      (Anant)
+    - lots of unit tests (Christian, Scott)
+    - win32 support for gtksourceview, gtkextra, gtkhtml3, and libsexy
+      (Elizabeth)
+    - win32 support for scintilla (Tom)
+    - support for gtk+ 2.8 and 2.10 (Elizabeth)
+    - more api coverage, bunch of bug fixes (Andrei, et al )
+
+    
+Version 2.0.0alpha "renaissance redux": 15-July-2006
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    - first test release of the new architecture
+    - make PHP 5, ZE 2, and 1.5 gajillion little and big pieces work, basically.
+      (Andrei, et al )
+
+
+# vim: set et tw=80 ai sts=4:

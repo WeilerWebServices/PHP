@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 344396 Maintainer: tmn Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+<!-- $Revision$ -->
+<refentry xml:id="function.getenv" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>getenv</refname>
+  <refpurpose>
+   Получение значения переменной окружения
+  </refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>getenv</methodname>
+   <methodparam><type>string</type><parameter>varname</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>local_only</parameter><initializer>&false;</initializer></methodparam>
+  </methodsynopsis>
+  <methodsynopsis>
+   <type>array</type><methodname>getenv</methodname>
+   <void/>
+  </methodsynopsis>
+  <para>
+   Получает значение переменной среды.
+  </para>
+  <para>
+   Список всех переменных окружения можно посмотреть с помощью функции
+   <function>phpinfo</function>. Многие из этих переменных есть в документе
+   <link xlink:href="&url.rfc;3875">RFC 3875</link>, по большей части в разделе
+   4.1, "Request Meta-Variables".
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>varname</parameter></term>
+     <listitem>
+      <para>
+       Имя переменной.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>local_only</parameter></term>
+     <listitem>
+      <para>
+       Установите в значение &true; для получения только локальных переменных окружения
+       (установленные операционной системой или командой putenv).
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Возвращает значение переменной среды <parameter>varname</parameter> или &false;,
+   если переменной <parameter>varname</parameter> не существует.
+   Если <parameter>varname</parameter> опущен, будет возвращены все переменные окружения в виде ассоциативного массива (<type>array</type>).
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+       Параметр <parameter>varname</parameter> теперь может быть опущен для получения ассоциативного массива (<type>array</type>) всех переменных окружения.
+       </entry>
+      </row>
+      <row>
+       <entry>5.5.38, 5.6.24, 7.0.9</entry>
+       <entry>
+        Был добавлен параметр <parameter>local_only</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    Если PHP запущен в SAPI, например как Fast CGI, эта функция будет возвращать
+    значения переменных окружения установленных SAPI, даже если вы использовали
+    <function>putenv</function> для установки локальной переменной с таким же именем.
+    Используйте параметр <parameter>local_only</parameter> для получения установленных
+    локально переменных.
+   </para>
+  </warning>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>getenv</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Пример использования getenv()
+$ip = getenv('REMOTE_ADDR');
+
+// Можно еще воспользоваться суперглобальной переменной ($_SERVER или $_ENV)
+$ip = $_SERVER['REMOTE_ADDR'];
+
+// Гарантированно получаем значение переменной окружения, не обращая внимания,
+// была ли она переопределена SAPI или изменена с помощью putenv
+$ip = getenv('REMOTE_ADDR', true) ?: getenv('REMOTE_ADDR');
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>putenv</function></member>
+    <member><function>apache_getenv</function></member>
+    <member><link linkend="language.variables.superglobals">Суперглобальные переменные</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

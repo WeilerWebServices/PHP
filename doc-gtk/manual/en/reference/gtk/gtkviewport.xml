@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.10 $ -->
+<classentry id="gtk.gtkviewport">
+ <classmeta>
+  <classtitle>GtkViewport</classtitle>
+  <classparent>GtkBin</classparent>
+  <shortdesc>
+   A container for adding scrolling capabilities to widgets without native
+   scrolling support.
+  </shortdesc>
+  <desc>
+   <para>
+    A GtkViewport provides scrolling capabilities to widgets that
+    don't support native scrolling. E.g., a <classname>GtkLabel</classname>
+    or a <classname>GtkVBox</classname> could be packed into a
+    <classname>GtkScrolledWindow</classname>, but since the classes
+    don't support the
+    <signalname class="GtkViewport">set-scroll-adjustments</signalname>
+    signal, using the scrollbars wouldn't work.
+   </para>
+   <para>
+    A viewport also takes care to show only a certain part of
+    the widget, hiding the rest of it that is not in the visible area.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+  <constructor id="gtk.gtkviewport.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkViewport</function></funcdef>
+    <paramdef><classname>GtkAdjustment</classname> <parameter><optional>hadjustment = null</optional></parameter></paramdef>
+    <paramdef><classname>GtkAdjustment</classname> <parameter><optional>vadjustment = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new viewport.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new viewport. If one of the parameters is omitted or
+     <literal>null</literal>, the adjustment is created automatically.
+    </para>
+    <para>
+     After creation, you should use <classname>GtkContainer</classname>'s
+     <function class="GtkContainer">add</function> method to set the child.
+    </para>
+    <para>
+     If you plan to add the viewport to a <classname>GtkScrolledWindow</classname>,
+     you should think about using
+     <function class="GtkScrolledWindow">add_with_viewport</function> function.
+    </para>
+   </desc>
+  </constructor>
+ </constructors>
+
+ <methods>
+  <method id="gtk.gtkviewport.method.get_hadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkAdjustment</classname> <function>get_hadjustment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the horizontal adjustment.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the horizontal adjustment.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkViewport">set_hadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkviewport.method.get_shadow_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GtkShadowType</enumname> <function>get_shadow_type</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the shadow type.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the shadow type.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkViewport">set_shadow_type</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkviewport.method.get_vadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkAdjustment</classname> <function>get_vadjustment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the vertical adjustment.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the vertical adjustment.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkViewport">set_vadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkviewport.method.set_hadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_hadjustment</function></funcdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>adjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the horizontal adjustment.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the horizontal adjustment.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkViewport">get_hadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkviewport.method.set_shadow_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_shadow_type</function></funcdef>
+     <paramdef><enumname>GtkShadowType</enumname> <parameter>type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the shadow type.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the shadow type of the viewport.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkViewport">get_shadow_type</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkviewport.method.set_vadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_vadjustment</function></funcdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>adjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the vertical adjustment.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the vertical adjustment.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkViewport">get_vadjustment</function>
+    </para>
+   </desc>
+  </method>
+ </methods>
+
+ <properties>
+  <prop id="gtk.gtkviewport.property.hadjustment" type="rw">
+   <propname>hadjustment</propname>
+   <proptype><classname>GtkAdjustment</classname></proptype>
+   <shortdesc>
+    Horizontal adjustment.
+   </shortdesc>
+   <desc>
+    <para>
+     The adjustment used for the horizontal position.
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkviewport.property.shadow-type" type="rw">
+   <propname>shadow-type</propname>
+   <proptype><enumname>GtkShadowType</enumname></proptype>
+   <shortdesc>
+    Shadow type.
+   </shortdesc>
+   <desc>
+    <para>
+     Determines how the shadowed box around the viewport is drawn.
+    </para>
+    <para>
+     Default: <optionname enum="GtkShadowType">Gtk::SHADOW_IN</optionname>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkviewport.property.vadjustment" type="rw">
+   <propname>vadjustment</propname>
+   <proptype><classname>GtkAdjustment</classname></proptype>
+   <shortdesc>
+    Vertical adjustment
+   </shortdesc>
+   <desc>
+    <para>
+     The adjustment used for the vertical position.
+    </para>
+   </desc>
+  </prop>
+
+ </properties>
+
+ <signals>
+  <signal id="gtk.gtkviewport.signal.set-scroll-adjustments">
+   <signalname>set-scroll-adjustments</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkViewport</classname> <parameter>viewport</parameter></paramdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>hadjustment</parameter></paramdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>vadjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    One or both adjustments are changed.
+   </shortdesc>
+   <desc>
+    <para>
+     The <literal>set-scroll-adjustments</literal> signal is emitted when one
+     or both of the horizontal and vertical <classname>GtkAdjustment</classname>
+     objects is changed.
+    </para>
+   </desc>
+  </signal>
+ </signals>
+
+</classentry>

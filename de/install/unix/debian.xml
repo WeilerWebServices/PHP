@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 299778 Maintainer: wiesemann Status: ready -->
+<sect1 xml:id="install.unix.debian" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Debian GNU/Linux-Installationshinweise</title>
+ <para>
+  Dieser Abschnitt beinhaltet Hinweise und Tipps für die Installation
+  von PHP unter <link xlink:href="&url.debian;">Debian GNU/Linux</link>.
+ </para>
+ <warning>
+  <para>
+   Nicht offizielle Pakete von Drittanbietern werden hier nicht unterstützt.
+   Alle Bugs sollten an das Debian-Team gemeldet werden, außer falls sie
+   mit den letzten Paketen von unserer <link
+   xlink:href="&url.php.downloads;">Download-Seite</link> reproduzierbar sind.
+  </para>
+ </warning>
+ <para>
+  Auch wenn die Anweisungen zum Kompilieren von PHP unter Unix auch für
+  Debian gelten, enthält diese Handbuchseite spezielle Informationen
+  für weitere Optionen, wie z.B. über die Nutzung der
+  <literal>apt-get</literal>- oder <literal>aptitude</literal>-Kommandos.
+  Diese Handbuchseite nutzt beide Kommandos synonym.
+ </para>
+ <sect2 xml:id="install.unix.debian.apt">
+  <title>APT verwenden</title>
+   <simpara>
+    Beachten Sie zunächst, dass andere verwandte Pakete wie
+    <literal>libapache2-mod-php5</literal> (zur Integration mit Apache 2)
+    oder <literal>php-pear</literal> (für PEAR) existieren.
+   </simpara>
+   <simpara>
+    Außerdem sollten Sie vor der Installation eines Pakets sicherstellen,
+    dass die Paketliste auf dem aktuellen Stand ist. Üblicherweise kann dies
+    durch das Kommando <command>apt-get update</command> erledigt werden.
+   </simpara>
+   <example xml:id="install.unix.debian.apt.example">
+    <title>Debian-Installations-Beispiel mit Apache 2</title>
+    <programlisting role="shell">
+<![CDATA[
+# apt-get install php5-common libapache2-mod-php5 php5-cli
+]]>
+    </programlisting>
+   </example>
+   <simpara>
+    APT wird automatisch das PHP-5-Modul für Apache 2 sowie alle seine
+    Abhängigkeiten installieren und danach aktivieren. Damit die Änderungen
+    in Kraft treten, muss Apache neu gestart werden. Zum Beispiel:
+   </simpara>
+   <example xml:id="install.unix.debian.apt.example2">
+    <title>Stoppen und Starten von Apache nach der Installation von PHP</title>
+    <programlisting role="shell">
+<![CDATA[
+# /etc/init.d/apache2 stop
+# /etc/init.d/apache2 start
+]]>
+    </programlisting>
+   </example>
+ </sect2>
+ <sect2 xml:id="install.unix.debian.config">
+  <title>Bessere Kontrolle über die Konfiguration</title>
+   <simpara>
+    Im letzten Abschnitt wurde PHP nur mit den Basismodulen installiert. In
+    den meisten Fällen werden Sie weitere Module wie
+    <link linkend="book.mysql">MySQL</link>,
+    <link linkend="book.curl">cURL</link> oder
+    <link linkend="book.image">GD</link> benötigen. Auch diese Module können
+    mit dem <literal>apt-get</literal>-Kommando installiert werden.
+   </simpara>
+   <example xml:id="install.unix.debian.config.example">
+    <title>Methoden zur Anzeige weiterer PHP-5-Pakete</title>
+    <programlisting role="shell">
+<![CDATA[
+# apt-cache search php5
+# aptitude search php5
+# aptitude search php5 |grep -i mysql
+]]>
+    </programlisting>
+   </example>
+   <simpara>
+    Diese Beispiel werden eine große Zahl von Paketen, inklusive spezieller
+    PHP-Pakete wie php5-cgi, php5-cli und php5-dev, anzeigen. Entscheiden Sie,
+    welche Sie benötigen und installieren Sie diese wie jedes andere Paket
+    entweder mit <literal>apt-get</literal> oder <literal>aptitude</literal>.
+    Weil Debian Abhängigkeiten prüft, wird es Sie ggf. fragen, um MySQL
+    und cURL zu installieren:
+   </simpara>
+   <example xml:id="install.unix.debian.config.example2">
+    <title>PHP mit MySQL und cURL installieren</title>
+    <programlisting role="shell">
+<![CDATA[
+# apt-get install php5-mysql php5-curl
+]]>
+    </programlisting>
+   </example>
+   <simpara>
+    APT wird automatisch die passenden Zeilen zu Ihren verschiedenen
+    mit der &php.ini; verwandten Dateien hinzufügen, wie z.B.
+    <filename>/etc/php5/apache2/php.ini</filename>,
+    <filename>/etc/php5/conf.d/pdo.ini</filename> etc. Abhängig von
+    der Erweiterung wird es Einträge ähnlich wie
+    <literal>extension=foo.so</literal> hinzufügen. Das Neustarten des
+    Web-Server (z.B. Apache) ist erforderlich, damit die Änderungen
+    sich auswirken.
+   </simpara>
+ </sect2>
+ <sect2 xml:id="install.unix.debian.faq">
+  <title>Bekannte Probleme</title>
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     Wenn die PHP-Skripte nicht vom Web-Server geparst werden, ist es
+     wahrscheinlich, dass PHP nicht zur Konfigurationsdatei des Web-Servers
+     hinzugefügt wurde. Unter Debian ist dies meist
+     <filename>/etc/apache2/apache2.conf</filename> (oder ähnlich). Im
+     Debian-Handbuch finden Sie weitere Details hierzu.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Falls eine Erweiterung anscheinend installiert wurde, aber die Funktionen
+     nicht definiert sind, müssen Sie sicherstellen, dass die entsprechede
+     INI-Datei geladen wurde und/oder dass der Web-Server nach der Installation
+     neu gestartet wurde.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Es gibt zwei grundlegende Kommandos für die Installation von Paketen
+     unter Debian (und anderen Linux-Varianten): <literal>apt-get</literal>
+     und <literal>aptitude</literal>. Die Erläuterung der feinen Unterschiede
+     zwischen diesen Kommandos liegt außerhalb dessen, was dieses Handbuch
+     umfasst.
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </sect2>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

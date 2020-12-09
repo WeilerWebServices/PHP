@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 343511 Maintainer: ae Status: ready --><!-- CREDITS: rogeriopradoj,ae -->
+
+<appendix xml:id="password.constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.constants;
+ &extension.constants.core;
+
+ <para>
+  <variablelist>
+   <varlistentry xml:id="constant.password-bcrypt">
+    <term>
+     <constant>PASSWORD_BCRYPT</constant>
+     (<type>integer</type>)
+    </term>
+    <listitem>
+     <para>
+      <constant>PASSWORD_BCRYPT</constant> é usada para criar novos password
+      hashes usando o algoritmo <constant>CRYPT_BLOWFISH</constant>.
+     </para>
+     <para>
+      Sempre terminará com um hash usando o formato "$2y$" de encriptação,
+      com 60 caracteres.
+     </para>
+     <para>
+      Opções suportadas:
+     </para>
+     <itemizedlist>
+      <listitem>
+       <para>
+        <literal>salt</literal> (<type>string</type>)  - para fornecer manualmente um salt a ser usado quando estiver sendo feito o hash do password.
+        Perceba que isso irá sobrepor e evitar que um salt seja gerado automaticamente.
+       </para>
+       <para>
+        Se omitido, um salt aleatório será gerado pela função <function>password_hash</function> para
+        cada password sofrendo hash. Esse é o modo de operação desejado
+        e desde o PHP 7.0.0 a opção salt foi descontinuada.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <literal>cost</literal> (<type>integer</type>) - indica o custo de algoritmo que deve ser usado.
+        Exemplos desses valores podem ser encontrados na página da função <function>crypt</function>.
+        
+       </para>
+       <para>
+        Se omitido, um valor padrão <literal>10</literal> será usado. Este é um bom
+        patamar de custo, mas pode-se considerar aumentar esse valor dependendo do hardware.
+       </para>
+      </listitem>
+     </itemizedlist>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.password-argon2i">
+    <term>
+     <constant>PASSWORD_ARGON2I</constant>
+     (<type>integer</type>)
+    </term>
+    <listitem>
+     <para>
+      <constant>PASSWORD_ARGON2I</constant> é utilizado para criar novos hashs
+      utilizando o algoritmo Argon2.
+     </para>
+     <para>
+      Opções:
+     </para>
+     <itemizedlist>
+      <listitem>
+       <para>
+        <literal>memory_cost</literal> (<type>integer</type>) - Memória máxima (em bytes) que poderá
+        ser utilizada para calcular o hash Argon2. Padrão: <constant>PASSWORD_ARGON2_DEFAULT_MEMORY_COST</constant>.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <literal>time_cost</literal> (<type>integer</type>) - Tempo máximo que poderá
+        demorar para calcula o hash Argon2. Padrão: <constant>PASSWORD_ARGON2_DEFAULT_TIME_COST</constant>.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <literal>threads</literal> (<type>integer</type>) - Número de threads utilizada para calcular
+        o hash Argon2. Padrão: <constant>PASSWORD_ARGON2_DEFAULT_THREADS</constant>.
+       </para>
+      </listitem>
+     </itemizedlist>
+     <para>
+      Disponível desde o PHP 7.2.0.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.password-argon2-default-memory-cost">
+    <term>
+     <constant>PASSWORD_ARGON2_DEFAULT_MEMORY_COST</constant>
+     (<type>integer</type>)
+    </term>
+    <listitem>
+     <para>
+      Quantidade de memória padrão, em bytes, que a Argon2lib irá utilizar ao tentar
+      calcular um hash.
+     </para>
+     <para>
+      Disponível desde o PHP 7.2.0.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.password-argon2-default-time-cost">
+    <term>
+     <constant>PASSWORD_ARGON2_DEFAULT_TIME_COST</constant>
+     (<type>integer</type>)
+    </term>
+    <listitem>
+     <para>
+      Demora padrão qual a Argon2lib irá utilizar tentando calcular hash.
+     </para>
+     <para>
+      Disponível desde o PHP 7.2.0.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.password-argon2-default-threads">
+    <term>
+     <constant>PASSWORD_ARGON2_DEFAULT_THREADS</constant>
+     (<type>integer</type>)
+    </term>
+    <listitem>
+     <para>
+      Número de threads padrão qual a Argon2lib irá utilizar.
+     </para>
+     <para>
+      Disponível desde o PHP 7.2.0.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.password-default">
+    <term>
+     <constant>PASSWORD_DEFAULT</constant>
+     (<type>integer</type>)
+    </term>
+    <listitem>
+     <para>
+      O algoritmo padrão a ser usado para fazer o hash se nenhum algoritmo for fornecido.
+      Ele pode mudar com as novas versões do PHP quando novos e mais fortes algoritmos
+      de hash forem suportados.
+     </para>
+     <para>
+      É importante notar que ao longo do tempo essa constante pode (e provavelmente vai)
+      mudar. Assim sendo, você deve estar ciente que o comprimento do hash resultante
+      pode mudar. Portanto, se usar <constant>PASSWORD_DEFAULT</constant>
+      deve-se armazenar o hash resultante de um modo que possa guardar mais do que 60
+      caracteres (255 é o comprimento recomendado).
+     </para>
+     <para>
+      Valores para esta constante:
+     </para>
+     <itemizedlist>
+      <listitem>
+       <simpara>
+        PHP 5.5.0 - <constant>PASSWORD_BCRYPT</constant>
+       </simpara>
+      </listitem>
+     </itemizedlist>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </para>
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

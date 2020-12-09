@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.10 $ -->
+<classentry id="gtk.gtkfileselection">
+ <classmeta>
+  <classtitle>GtkFileSelection</classtitle>
+  <classparent>GtkDialog</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkfileselection.png"/>
+  <shortdesc>
+    Prompts the user for a file/directory name.
+  </shortdesc>
+  <desc>
+   <para>
+    This widget is particularly useful when you want to retrieve a file or
+    directory name from the user. It is slightly more advanced than the
+    file selector in two ways: firstly, the user may select a directory
+    here, and secondly, you have the choice to let the user create
+   </para>
+   <para>
+    You may create a new <classname>GtkFileSelection</classname> by using
+    its constructor. This will generate a dialog box containing a directory
+    list, and a file list corresponding to the current working directory.
+    The file system may be navigated using the directory list or the
+    drop-down history menu (the visibility of which may be controlled).
+   </para>
+   <para>
+    Note that the TAB key may also be used for completing file/directory
+    names.
+   </para>
+   <note>
+    The <classname>GtkFileSelection</classname> is actually made of the
+    following <classname>GtkWidget</classname> fields:
+    <itemizedlist>
+     <listitem>
+      fileop_dialog: This dialog box is used to display the
+      GtkFileSelection. You may customize it using the standard 
+      <classname>GtkDialog</classname>
+      functions.
+     </listitem>
+     <listitem>
+      ok_button, cancel_button: These two buttons should be connected
+      appropriately to handle situations when the user clicks the OK or
+      Cancel buttons respectively in the
+      <classname>GtkFileSelection</classname> widget.
+     </listitem>
+     <listitem>
+      history_pulldown: This is effectively a
+      <classname>GtkOptionMenu</classname> that may be used to control the
+      drop-down history of directories.
+     </listitem>
+     <listitem>
+      fileop_c_dir, fileop_del_file, fileop_ren_file: These are the operation
+      buttons that appear at the top of the
+      <classname>GtkFileSelection</classname> and perform the operations of
+      creating a directory, deleting a file and renaming a file
+      respectively. You may use the <function classname="GtkFileSelection">hide_fileop_buttons</function> and <function classname="GtkFileSelection">show_fileop_buttons</function> methods
+      to control their visibility.
+     </listitem>
+    </itemizedlist>
+   </note>
+  </desc>
+ </classmeta>
+ <constructors>
+
+  <constructor id="gtk.gtkfileselection.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkFileSelection</function></funcdef>
+    <paramdef>string <parameter><optional>title = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a <classname>GtkFileSelection</classname> prompt.
+   </shortdesc>
+   <desc>
+    <para>
+     Use the constructor to create a prompt for the user to select a file or
+     directory. By default, a <classname>GtkTreeView</classname> of the
+     application's current working directory and its file listing will be
+     displayed. Operation buttons and the drop-down history of directories
+     are also visible.
+    </para>
+    <example>
+     <title>An example for a GtkFileSelection prompt.</title>
+      <programlisting role="php">
+       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkfileselection/constructor.phpw" parse="text">
+        <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+       </xi:include>
+      </programlisting>
+    </example>
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkfileselection.method.complete">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>complete</function></funcdef>
+     <paramdef>string <parameter>pattern</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Matches the given pattern to valid file/directory names. 
+   </shortdesc>
+   <desc>
+    Use this method to match a particular string to valid file names and
+    sub-directories in the current directory. If a match is made, the
+    matched file/directory name will appear in the text entry field of the
+    file selection prompt. If partial matches have been made, the files are all
+    listed in the files list (usually on the right hand side) and the 
+    sub-directories in the directories (usually on the left hand side) list.
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfileselection.method.get_filename">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_filename</function></funcdef>
+     
+     <paramdef><parameter><optional>convert</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the selected filename.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to determine the filename selected by the user. The
+     method will simply return the current filename selected by the user.
+     See the constructor example for usage.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileSelection">set_filename</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfileselection.method.get_select_multiple">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_select_multiple</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether or not multiple selections are allowed.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to determine whether a user is allowed to select
+     multiple files in the file list. The function returns
+     <literal>true</literal> if it is allowed, <literal>false</literal>
+     otherwise.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileSelection">set_select_multiple</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfileselection.method.get_selections">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_selections</function></funcdef>
+     
+     <paramdef><parameter><optional>convert</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the list of file selection made by the user.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to retrieve a list of all the files selected by the
+     user. Obviously this function may be used only when multiple selections
+     have been allowed.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfileselection.method.hide_fileop_buttons">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>hide_fileop_buttons</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Hides the file operation buttons.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to hide the three operations buttons, namely, file
+     rename, file delete and folder create; that appear by default on the
+     top the file selection dialog.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileSelection">show_fileop_buttons</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfileselection.method.set_filename">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_filename</function></funcdef>
+     <paramdef>string <parameter>filename</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the default path for the file selector.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the default path that is displayed to the user.
+     If the given filename is actually a directory, then that directory is
+     set as the current working directory of the file selection dialog.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileSelection">get_filename</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfileselection.method.set_select_multiple">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_select_multiple</function></funcdef>
+     <paramdef>bool <parameter>select_multiple</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets whether multiple selections are allowed.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method if you want to allow the user to select multiple files
+     in the file list of the file selection dialog. After selection, you
+     may use 
+     <function classname="GtkFileSelection">get_select_multiple</function>
+     to return a list of the files selected by the user.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileSelection">get_select_multiple</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfileselection.method.show_fileop_buttons">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>show_fileop_buttons</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Shows the file operation buttons.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method if you want to show the three file operation buttons
+     at the top of the file selection dialog, namely, file rename, file
+     delete and folder create.
+    </para>
+    <note>
+     The file operation button are shown by default. There is no need to
+     call this method explicitly.
+    </note>
+    <para>
+     &seealso;
+     <function class="GtkFileSelection">hide_fileop_buttons</function>
+    </para>
+   </desc>
+  </method>
+
+ </methods>
+
+ <fields>
+
+  <field id="gtk.gtkfileselection.field.action_area" type="ro">
+   <fieldname>action_area</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.button_area" type="ro">
+   <fieldname>button_area</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.cancel_button" type="ro">
+   <fieldname>cancel_button</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    Refers to the cancel button of the file selection prompt.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.dir_list" type="ro">
+   <fieldname>dir_list</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    Refers to the directory list displayed on the left of the file
+    selection prompt.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.file_list" type="ro">
+   <fieldname>file_list</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    Refers to the file list displayed on the right of the file selection
+    prompt.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.fileop_c_dir" type="ro">
+   <fieldname>fileop_c_dir</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    Refers to the create directory operation button of the dialog.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.fileop_del_file" type="ro">
+   <fieldname>fileop_del_file</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    Refers to the delete file operation button of the dialog.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.fileop_dialog" type="ro">
+   <fieldname>fileop_dialog</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    Refers to the dialog that contains the operation buttons.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.fileop_entry" type="ro">
+   <fieldname>fileop_entry</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.fileop_file" type="ro">
+   <fieldname>fileop_file</fieldname>
+   <fieldtype>string</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.fileop_ren_file" type="ro">
+   <fieldname>fileop_ren_file</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    Refers to the rename file operation button of the dialog.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.help_button" type="ro">
+   <fieldname>help_button</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    Refers to the help button of the file selection prompt.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.history_menu" type="ro">
+   <fieldname>history_menu</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.history_pulldown" type="ro">
+   <fieldname>history_pulldown</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.main_vbox" type="ro">
+   <fieldname>main_vbox</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.ok_button" type="ro">
+   <fieldname>ok_button</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    Refers to the OK button of the file selection prompt.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.selection_entry" type="ro">
+   <fieldname>selection_entry</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkfileselection.field.selection_text" type="ro">
+   <fieldname>selection_text</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+ </fields>
+
+</classentry>

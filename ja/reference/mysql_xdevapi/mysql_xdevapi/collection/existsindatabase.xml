@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 345637 $ -->
+<!-- EN-Revision: 350720 Maintainer: mumumu Status: ready -->
+
+<refentry xml:id="mysql-xdevapi-collection.existsindatabase" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>Collection::existsInDatabase</refname>
+  <refpurpose>コレクションがデータベースに存在するかをチェックする</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>bool</type><methodname>mysql_xdevapi\Collection::existsInDatabase</methodname>
+   <void />
+  </methodsynopsis>
+  <para>
+   コレクションオブジェクトが、データベース(スキーマ)内のコレクションを参照しているかを調べます。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   コレクションがデータベースに存在していれば &true; を返します。
+   そうでなければ、&false; を返します。
+  </para>
+  <para>
+    2つのカラム (doc と _id) で定義されたテーブルは、
+    コレクションと見なされます。
+    MySQL 8.0.21 以降では、doc, _id, _json_schema
+    の3つのカラムで構成されたテーブルが
+    コレクションと見なされます。
+    これに対してカラムを追加すると、
+    existsInDatabase() はコレクションとは見なさなくなります。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <example>
+   <title><function>mysql_xdevapi\Collection::existsInDatabase</function> の例</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$session = mysql_xdevapi\getSession("mysqlx://user:password@localhost");
+$session->sql("DROP DATABASE IF EXISTS addressbook")->execute();
+$session->sql("CREATE DATABASE addressbook")->execute();
+
+$schema = $session->getSchema("addressbook");
+$create = $schema->createCollection("people");
+
+// ...
+
+$collection = $schema->getCollection("people");
+
+// ...
+
+if (!$collection->existsInDatabase()) {
+    echo "The collection no longer exists in the database named addressbook. What happened?";
+}
+?>
+]]>
+   </programlisting>
+  </example>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

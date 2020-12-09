@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 349216 Maintainer: nobody Status: ready -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.money-format">
+ <refnamediv>
+  <refname>money_format</refname>
+  <refpurpose>Formatiert eine Zahl als Währungs-Zeichenkette</refpurpose>
+ </refnamediv>
+ 
+ <refsynopsisdiv>
+   &warn.deprecated.function-7-4-0;
+ </refsynopsisdiv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>money_format</methodname>
+   <methodparam><type>string</type><parameter>format</parameter></methodparam>
+   <methodparam><type>float</type><parameter>number</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>money_format</function> gibt eine formatierte Version von
+   <parameter>number</parameter> zurück.  Diese Funktion nutzt die C Funktion
+   <function>strfmon</function>, mit dem Unterschied, dass diese Implementierung
+   jeweils nur eine Zahl auf einmal konvertiert.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>format</parameter></term>
+     <listitem>
+      <para>
+       Die Formatangabe besteht aus folgender Sequenz:
+       <itemizedlist>
+        <listitem><para>ein <literal>%</literal> Zeichen</para></listitem>
+        <listitem><para>optionales Flag</para></listitem>
+        <listitem><para>optionale Feldbreite</para></listitem>
+        <listitem><para>optionale Links-Genauigkeit</para></listitem>
+        <listitem><para>optionale Rechts-Genauigkeit</para></listitem>
+        <listitem><para>ein erforderliches Umwandlungszeichen</para></listitem>
+       </itemizedlist>
+      </para>
+      <formalpara>
+       <title>Flags</title>
+       <para>
+        Eines oder mehrere der folgenden optionalen Flags können benutzt werden:
+        <variablelist>
+         <varlistentry>
+          <term><literal>=</literal><replaceable>f</replaceable></term>
+          <listitem>
+           <para>
+            Das Zeichen <literal>=</literal> , gefolgt von einem (single byte)
+            Zeichen <replaceable>f</replaceable> wird als numerisches Füllzeichen benutzt.
+            Das Standard-Füllzeichen ist das Leerzeichen.
+           </para>
+          </listitem>
+         </varlistentry>
+         <varlistentry>
+          <term><literal>^</literal></term>
+          <listitem>
+           <para>
+            Deaktiviert die Verwendung von Gruppierungszeichen (wie in der
+            aktuellen locale-Einstellung definiert).
+           </para>
+          </listitem>
+         </varlistentry>
+         <varlistentry>
+          <term><literal>+</literal> or <literal>(</literal></term>
+          <listitem>
+           <para>
+            Gibt den Formatierungsstil für positive und negative Zahlen an.
+            Wird <literal>+</literal> benutzt, wird das locale Äquivalent für
+            <literal>+</literal> und <literal>-</literal> benutzt. Wird
+            <literal>(</literal> benutzt, werden negative Beträge von Klammern
+            umschlossen. Ist kein Formatierungsstil angegeben, wird der Standardwert
+            <literal>+</literal> benutzt.
+           </para>
+          </listitem>
+         </varlistentry>
+         <varlistentry>
+          <term><literal>!</literal></term>
+          <listitem>
+           <para>
+            Unterdrückt das Währungssymbol aus dem Ausgabestring.
+           </para>
+          </listitem>
+         </varlistentry>
+         <varlistentry>
+          <term><literal>-</literal></term>
+          <listitem>
+           <para>
+            Falls vorhanden, werden alle Felder linksbündig angeordnet, im Gegensatz
+            zum Standardverhalten, welches die Felder rechtsbündig anordnet.
+           </para>
+          </listitem>
+         </varlistentry>
+        </variablelist>
+       </para>
+      </formalpara>
+      <formalpara>
+       <title>Feldbreite</title>
+       <para>
+        <variablelist>
+         <varlistentry>
+          <term><replaceable>w</replaceable></term>
+          <listitem>
+           <para>
+            Eine aus dezimalen Ziffern bestehende Zeichenkette, die die Mindestfeldbreite
+            angibt. Das Feld wird rechtbündig ausgerichtet, es sei denn, das Flag
+            <literal>-</literal> wird verwendet. Der Standardwert ist 0 (Null).
+           </para>
+          </listitem>
+         </varlistentry>
+        </variablelist>
+       </para>
+      </formalpara>
+      <formalpara>
+       <title>Links-Genauigkeit</title>
+       <para>
+        <variablelist>
+         <varlistentry>
+          <term><literal>#</literal><replaceable>n</replaceable></term>
+          <listitem>
+           <para>
+            Die Höchstanzahl von Ziffern (<replaceable>n</replaceable>), die
+            links vom Dezimaltrenner (z.B. dem Dezimalkomma) erwartet werden.
+            Dies wird üblicherweise verwendet, um die formatierten Ausgabe an
+            derselben Spalte auszurichten, wobei das Füllzeichen verwendet wird,
+            wenn die Ziffernanzahl kleiner ist als <replaceable>n</replaceable>.
+            Ist die Anzahl der tatsächlichen Ziffern größer als
+            <replaceable>n</replaceable>, dann wird diese Angabe ignoriert.
+           </para>
+           <para>
+            Wurde die Gruppierung durch Verwendung des <literal>^</literal> Flags
+            nicht unterdrückt, werden die Gruppentrennzeichen eingefügt, bevor
+            die Füllzeichen (falls es welche gibt) ergänzt werden. Gruppentrenner
+            werden nicht auf die Füllzeichen angewandt, auch wenn das Füllzeichen
+            eine Ziffer sein sollte.
+           </para>
+           <para>
+            Um die Ausrichtung zu gewährleisten, werden jegliche Zeichen vor oder
+            nach der Zahl in der formatierten Ausgabe, wie etwa Währungs- oder
+            Vorzeichen, mit Leerzeichen aufgefüllt, so dass die positiven und
+            negativen Formate die gleiche Länge haben.
+           </para>
+          </listitem>
+         </varlistentry>
+        </variablelist>
+       </para>
+      </formalpara>
+      <formalpara>
+       <title>
+        Rechts-Genauigkeit
+       </title>
+       <para>
+        <variablelist>
+         <varlistentry>
+          <term><literal>.</literal><replaceable>p</replaceable></term>
+          <listitem>
+           <para>
+            Ein Punkt, gefolgt von der Ziffernanzahl (<replaceable>p</replaceable>)
+            nach dem Dezimaltrenner. Ist der Wert von <replaceable>p</replaceable>
+            gleich 0 (Null), wird der Dezimaltrenner und die Ziffern rechts davon
+            ausgelassen. Ist keine Rechts-Genauigkeit angegeben, wird der Standardwert
+            durch das aktuelle Locale bestimmt. Der zu formatierende Betrag wird
+            vor der Formatierung auf die angegebene Ziffernanzahl gerundet.
+           </para>
+          </listitem>
+         </varlistentry>
+        </variablelist>
+       </para>
+      </formalpara>
+      <formalpara>
+       <title>
+        Umwandlungszeichen
+       </title>
+       <para>
+        <variablelist>
+         <varlistentry>
+          <term><literal>i</literal></term>
+          <listitem>
+           <para>
+            Die Zahl wird gemäß des internationalen Währungsformats des Locale
+            formatiert (z.B. für das USA Locale: USD 1,234.56).
+           </para>
+          </listitem>
+         </varlistentry>
+         <varlistentry>
+          <term><literal>n</literal></term>
+          <listitem>
+           <para>
+            Die Zahl wird gemäß des nationalen Währungsformats des Locale
+            formatiert (z.B. für das de_DE Locale: EU1.234,56).
+           </para>
+          </listitem>
+         </varlistentry>
+         <varlistentry>
+          <term><literal>%</literal></term>
+          <listitem>
+           <para>
+            Gibt das <literal>%</literal>-Zeichen zurück.
+           </para>
+          </listitem>
+         </varlistentry>
+        </variablelist>
+       </para>
+      </formalpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>number</parameter></term>
+     <listitem>
+      <para>
+       Die zu formatierende Zahl.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Gibt die formatierte Zeichenkette zurück. Zeichen vor und nach der
+   Formatzeichenkette werden unverändert zurückgegeben. Eine nicht-numerische
+   <parameter>number</parameter> führt zur Rückgabe von &null;, und dem Erzeugen
+   eines <constant>E_WARNING</constant>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.4.0</entry>
+       <entry>
+        Diese Funktion wurde missbilligt. Stattdessen sollte 
+        <methodname>NumberFormatter::formatCurrency</methodname> verwendet werden.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Die Funktion <function>money_format</function> ist nur definiert, wenn das
+    System strfmon unterstützt. Beispielsweise ist dies unter Windows nicht so,
+    so dass <function>money_format</function> unter Windows nicht definiert ist.
+   </para>
+  </note>
+  <note>
+   <para>
+    Die Kategorie <constant>LC_MONETARY</constant> der Locale-Einstellungen
+    hat Einfluss auf das Verhalten dieser Funktion. <function>setlocal</function>
+    ist zu verwenden, um das gewünschte Locale einzustellen bevor diese Funktion
+    verwendet wird.
+   </para>
+  </note>   
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>money_format</function> Beispiel</title>
+    <para>
+     Wir verwenden unterschiedliche Locales und Formatangaben, um die Verwendung
+     dieser Funktion zu verdeutlichen.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$number = 1234.56;
+
+// wir geben das internationale Format für das  en_US Locale aus
+setlocale(LC_MONETARY, 'en_US');
+echo money_format('%i', $number) . "\n";
+// USD 1,234.56
+
+// das italienische nationale Format mit 2 Dezimalstellen
+setlocale(LC_MONETARY, 'it_IT');
+echo money_format('%.2n', $number) . "\n";
+// Eu 1.234,56
+
+// Verwendung einer negativen Zahl
+$number = -1234.5672;
+
+// das national US Format, unter Verwendung von () für negative Zahlen
+// und 10 Ziffern für die Links-Genauigkeit
+setlocale(LC_MONETARY, 'en_US');
+echo money_format('%(#10n', $number) . "\n";
+// ($        1,234.57)
+
+// ein ähnliches Format wie zuvor, aber mit zusätzlich 2 Ziffern
+// Rechts-Genauigkeit und '*' al Füllzeichen
+echo money_format('%=*(#10.2n', $number) . "\n";
+// ($********1,234.57)
+
+// wir richten linksbündig aus, mit 14 Zeichen Breite, 8 Ziffern
+// Links-Genauigkeit, 2 Rechts-Genauigkeit, ohne Gruppentrenner
+// und unter Verwendung des internationalen Formats für das de_DE Locale.
+setlocale(LC_MONETARY, 'de_DE');
+echo money_format('%=*^-14#8.2i', 1234.56) . "\n";
+// Eu 1234,56****
+
+// wir ergänzen etwas Text vor und nach der Formatangabe
+setlocale(LC_MONETARY, 'en_GB');
+$fmt = 'Der Endwert ist %i (mit 10%% Nachlass)';
+echo money_format($fmt, 1234.56) . "\n";
+// Der Endwert ist  GBP 1,234.56 (mit 10% Nachlass)
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>setlocale</function></member>
+    <member><function>sscanf</function></member>
+    <member><function>sprintf</function></member>
+    <member><function>printf</function></member>
+    <member><function>number_format</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

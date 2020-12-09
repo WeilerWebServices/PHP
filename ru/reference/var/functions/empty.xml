@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 350656 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+<!-- $Revision$ -->
+<refentry xml:id="function.empty" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>empty</refname>
+  <refpurpose>Проверяет, пуста ли переменная</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>empty</methodname>
+   <methodparam><type>mixed</type><parameter>var</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Проверяет, считается ли переменная пустой. Переменная считается пустой, если она не существует или её значение равно &false;.
+   <function>empty</function> не генерирует предупреждение, если переменная не существует.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>var</parameter></term>
+     <listitem>
+      <para>
+       Проверяемая переменная
+      </para>
+      <note>
+       <para>
+        До PHP 5.5 <function>empty</function> проверяет только переменные,
+        и попытка проверить что-то еще вызовет ошибку синтаксиса.
+        Другими словами, следующий код не будет работать:
+        <command>empty(trim($name))</command>.
+        Используйте вместо него <command>trim($name) == false</command>.
+       </para>
+      </note>
+      <para>
+       Если переменная не существует, предупреждение не генерируется. Это значит, что <function>empty</function> фактически является точным эквивалентом конструкции <command>!isset($var) || $var == false</command>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Возвращает &false;, если <parameter>var</parameter> существует и содержит непустое ненулевое значение.
+   В противном случае возвращает &true;.
+  </para>
+  <para>
+   Следующие значения воспринимаются как пустые:
+   <simplelist>
+    <member><literal>""</literal> (пустая строка)</member>
+    <member><literal>0</literal> (целое число)</member>
+    <member><literal>0.0</literal> (число с плавающей точкой)</member>
+    <member><literal>"0"</literal> (строка)</member>
+    <member>&null;</member>
+    <member>&false;</member>
+    <member><literal>array()</literal> (пустой массив)</member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>
+     Простое сравнение <function>empty</function> и <function>isset</function>.
+    </title>  
+    <programlisting role="php">
+<![CDATA[
+<?php
+$var = 0;
+
+// Принимает значение true, потому что $var пусто
+if (empty($var)) {
+    echo '$var или 0, или пусто, или вообще не определена';
+}
+
+// Принимает значение true, потому что $var определена
+if (isset($var)) {
+    echo '$var определена, даже если она пустая';
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <example>
+   <title><function>empty</function> и строковые индексы</title>
+   <para>
+    В PHP 5.4 был изменен способ обработки строковых индексов в
+    <function>empty</function>.
+   </para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$expected_array_got_string = 'somestring';
+var_dump(empty($expected_array_got_string['some_key']));
+var_dump(empty($expected_array_got_string[0]));
+var_dump(empty($expected_array_got_string['0']));
+var_dump(empty($expected_array_got_string[0.5]));
+var_dump(empty($expected_array_got_string['0.5']));
+var_dump(empty($expected_array_got_string['0 Mostel']));
+?>
+]]>
+   </programlisting>
+   &example.outputs.53;
+   <screen>
+<![CDATA[
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+]]>
+   </screen>
+   &example.outputs.54;
+   <screen>
+<![CDATA[
+bool(true)
+bool(false)
+bool(false)
+bool(false)
+bool(true)
+bool(true)
+]]>
+   </screen>
+  </example>
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.language-construct;
+  <note>
+   <para>
+    При использовании функции <function>empty</function> на
+    недоступных (необъявленных) свойствах объекта будет вызван
+    встроенный метод объекта <link linkend="object.isset">__isset()</link>,
+    если он определен.
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>isset</function></member>
+    <member><link linkend="object.isset">__isset()</link></member>
+    <member><function>unset</function></member>
+    <member><function>array_key_exists</function></member>
+    <member><function>count</function></member> 
+    <member><function>strlen</function></member>
+    <member><link linkend="types.comparisons">Таблица сравнения типов</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

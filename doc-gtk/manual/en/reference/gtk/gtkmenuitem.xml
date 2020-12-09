@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.12 $ -->
+<classentry id="gtk.gtkmenuitem">
+ <classmeta>
+  <classtitle>GtkMenuItem</classtitle>
+  <classparent>GtkItem</classparent>
+  <shortdesc>
+   A widget used for holding items in menus.
+  </shortdesc>
+  <desc>
+   <para>
+    The <classname>GtkMenuItem</classname> is the fundamental building block
+    of all menus. These widgets are responsible for holding valid children
+    that will make up the menu. Their function is to correctly handle
+    highlighting, alignment, events and the addition of sub-menus.
+   </para>
+   <para>
+    Since this widget derives itself from <classname>GtkBin</classname>, it
+    can hold any valid child widget, although only a few may aid in the
+    creation of menus.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkmenuitem.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkMenuItem</function></funcdef>
+    <paramdef><optional>string <parameter>label</parameter></optional></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>GtkMenuItem</classname>.
+   </shortdesc>
+   <desc>
+    <para>
+     You may use the constructor to create a new menu item, optionally with
+     a label that may be passed as a parameter.
+    </para>
+    <note>
+     You may precede any character of the string parameter with an
+     <literal>_</literal>, to set that character as the mnemonic for the
+     item. This behavior is automatic.
+    </note>
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+  <method id="gtk.gtkmenuitem.method.get_right_justified">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_right_justified</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether the menu item appears justified to the right of its menu
+    bar.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to determine whether or not the
+     <classname>GtkMenuItem</classname> appears justified to the right of
+     the menu bar it is attached to. The function return
+     <literal>true</literal> if it does, <literal>false</literal> if not,
+     or if it is not attached to any menu bar.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkMenuItem">set_right_justified</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenuitem.method.get_submenu">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkWidget <function>get_submenu</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Return the submenu attached to the menu item.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to return the submenu attached to the menu item. The
+     function will return the submenu widget, <literal>null</literal> if no
+     submenu is associated with the menu item.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkMenuItem">remove_submenu</function>, 
+     <function class="GtkMenuItem">set_submenu</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenuitem.method.remove_submenu">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>remove_submenu</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Removes the submenu associated with the menu item.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to remove the submenu that is associated with the menu
+     item.
+    </para>
+    <note>
+     This method does not result in the submenu being destroyed, merely
+     detached from the menu item. You may reuse the submenu widget
+     elsewhere.
+    </note>
+    <para>
+     &seealso;
+     <function class="GtkMenuItem">get_submenu</function>, 
+     <function class="GtkMenuItem">set_submenu</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenuitem.method.right_justify">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>right_justify</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated; Sets the menu item to be right aligned.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the menu item to be justified to the right.
+    </para>
+    &deprecated.method;
+    <note>
+     Use <function class="GtkMenuItem">set_right_justified</function> instead.
+    </note>    
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenuitem.method.set_right_justified">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_right_justified</function></funcdef>
+     <paramdef>bool <parameter>right_justified</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Aligns the menu item to the right.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method if you want the menu item appear at the far right when
+     you add it to a menu bar.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkMenuItem">get_right_justified</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenuitem.method.set_submenu">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_submenu</function></funcdef>
+     <paramdef>GtkWidget <parameter>submenu</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the submenu for the menu item.
+   </shortdesc>
+   <desc>
+    <para>
+     This method is useful in associating a <classname>GtkMenu</classname>
+     as a submenu for the specified menu item. The parameter passed must be
+     a valid <classname>GtkWidget</classname> (most of the time, a 
+     <classname>GtkMenu</classname>)
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkMenuItem">get_submenu</function>, 
+     <function class="GtkMenuItem">remove_submenu</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenuitem.method.toggle_size_allocate">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>toggle_size_allocate</function></funcdef>
+     <paramdef>int <parameter>allocation</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emits the <literal>toggle-size-allocate</literal> signal for the menu
+    item. 
+   </shortdesc>
+   <desc>
+    <!-- FIXME -->
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenuitem.method.set_item_accel_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_item_accel_path</function></funcdef>
+     <paramdef>string <parameter>accel_path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the accelerator path for the menu item.
+   </shortdesc>
+   <desc>
+    <para>
+     Set the accelerator path on the menu item, through which runtime changes
+     of the menu item's accelerator caused by the user can be identified and
+     saved to persistant storage (see <function 
+     class="Gtk">accel_map_save</function>).
+    </para>
+    <para>
+     To setup a default accelerator for this menu item, call <function 
+     class="Gtk">accel_map_add_entry</function> with the same 
+     <parameter>accel_path</parameter>.
+    </para>
+    <para>
+     &seealso;
+     <function class="Gtk">accel_map_save</function>,
+     <function class="Gtk">accel_map_add_entry</function>,
+     <function class="GtkMenu">set_menu_accel_path</function>
+    </para>
+   </desc>
+  </method>
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkmenuitem.signal.activate">
+   <signalname>activate</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>
+      <classname>GtkMenuItem</classname> <parameter>menuitem</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the menu item is activated.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the menu item is activated. The menu item can be activated by
+     the user selecting the item or by calling <function 
+     class="GtkMenuItem">activate</function>.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkmenuitem.signal.activate-item">
+   <signalname>activate-item</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>
+      <classname>GtkMenuItem</classname> <parameter>menuitem</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the menu item is activated and has a submenu.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the menu item is activated and has a submenu. A menu item can
+     be activated by the user selecting the item or by calling <function
+     class="GtkMenuItem">activate</function>.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkmenuitem.signal.toggle-size-allocate">
+   <signalname>toggle-size-allocate</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkMenuItem <parameter>menuitem</parameter></paramdef>
+     <paramdef>int <parameter>allocation</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the size allocation is changed.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the size allocation is changed. The allocation can be changed
+     by calling <function class="GtkMenuItem">toggle_size_allocate</function>.
+     <parameter>allocation</parameter> will be the value passed to <function
+     class="GtkMenuItem">toggle_size_allocate</function>.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkmenuitem.signal.toggle-size-request">
+   <signalname>toggle-size-request</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkMenuItem <parameter>menuitem</parameter></paramdef>
+     <paramdef>int <parameter>requisition</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when a size change request is made.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when a size change request is made. A size change request can be
+     made by calling <function
+     class="GtkMenuItem">toggle_size_request</function>.
+    </para>
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

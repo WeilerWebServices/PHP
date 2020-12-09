@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision: 1.7 $ -->
+<classentry id="gdk.gdkpixbufloader">
+ <classmeta>
+  <classtitle>GdkPixbufLoader</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   An object to allow applications to manage the process of loading an image.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gdk.gdkpixbufloader.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GdkPixbufLoader</function></funcdef>
+    <paramdef>string <parameter>image_type</parameter></paramdef>
+    <paramdef>GError <parameter>error</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gdk.gdkpixbufloader.method.close">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>close</function></funcdef>
+     <paramdef>GError <parameter>error</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkpixbufloader.method.get_animation">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GdkPixbufAnimation <function>get_animation</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkpixbufloader.method.get_format">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_format</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkpixbufloader.method.get_pixbuf">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GdkPixbuf <function>get_pixbuf</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkpixbufloader.method.set_size">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_size</function></funcdef>
+     <paramdef>int <parameter>width</parameter></paramdef>
+     <paramdef>int <parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkpixbufloader.method.write">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>write</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gdk.gdkpixbufloader.signal.area-prepared">
+   <signalname>area-prepared</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GdkPixbufLoader <parameter>pixbufloader</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gdk.gdkpixbufloader.signal.area-updated">
+   <signalname>area-updated</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GdkPixbufLoader <parameter>pixbufloader</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gdk.gdkpixbufloader.signal.closed">
+   <signalname>closed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GdkPixbufLoader <parameter>pixbufloader</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gdk.gdkpixbufloader.signal.size-prepared">
+   <signalname>size-prepared</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GdkPixbufLoader <parameter>pixbufloader</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.10 $ -->
+<classentry id="gtk.gtkmessagedialog">
+ <classmeta>
+  <classtitle>GtkMessageDialog</classtitle>
+  <classparent>GtkDialog</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkmessagedialog.png" frame="no"/>
+  <shortdesc>
+   A convenient message window.
+  </shortdesc>
+  <desc>
+   <para>
+    <classname>GtkMessageDialog</classname> presents a dialog with an image 
+    representing the type of message (Error, Question, etc.) alongside some
+    message text. It's simply a convenience widget; you could construct the
+    equivalent of <classname>GtkMessageDialog</classname> from 
+    <classname>GtkDialog</classname> without too much effort, 
+    but <classname>GtkMessageDialog</classname> saves typing.
+   </para>
+   <para>
+    The easiest way to do a modal message dialog is to use 
+    <function class="GtkDialog">run</function>, though you can also pass in the
+    <optionname enum="GtkDialogFlags">Gtk::DIALOG_MODAL</optionname> flag,
+    <function class="GtkDialog">run</function> automatically makes the dialog
+    modal and waits for the user to respond to it. <function class="GtkDialog">run</function> returns when any dialog button is clicked
+    or the dialog is closed.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+  <constructor id="gtk.gtkmessagedialog.constructor">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>GtkMessageDialog</function></funcdef>
+     <paramdef>
+      <classname>GtkWindow</classname> <parameter>parent</parameter>
+     </paramdef>
+     <paramdef>
+      <enumname>GtkDialogFlags</enumname> <parameter>flags</parameter>
+     </paramdef>
+     <paramdef>
+      <enumname>GtkMessageType</enumname> <parameter>type</parameter>
+     </paramdef>
+     <paramdef>
+      <enumname>GtkButtonsType</enumname> <parameter>buttons</parameter>
+     </paramdef>
+     <paramdef>string <parameter>message</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new message dialog.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new message dialog with icon, text and buttons.
+    </para>
+    <example>
+     <title>A modal <classname>GtkMessageDialog</classname></title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkmessagedialog/constructor.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+    <para>
+     The second parameter could be set to <literal>0</literal>, as
+     the <function class="GtkDialog">run</function> method automatically 
+     makes the dialog modal.
+    </para>
+   </desc>
+  </constructor>
+ </constructors>
+
+ <methods>
+
+  
+
+  
+
+  <method id="gtk.gtkmessagedialog.method.set_markup">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_markup</function></funcdef>
+     <paramdef>string <parameter>str</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set pango-marked up text.
+   </shortdesc>
+   <desc>
+    <para>
+     Allows you to override the text with a pango-marked up version
+     which may contain colors and other text attributes.
+    </para>
+   </desc>
+  </method>
+
+ </methods>
+
+ <fields>
+
+  <field id="gtk.gtkmessagedialog.field.image" type="ro">
+   <fieldname>image</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    The image icon widget.
+   </shortdesc>
+   <desc>
+    <para>
+     The image icon widget which displays the question/information/whatever
+     symbol.
+    </para>
+   </desc>
+  </field>
+
+  <field id="gtk.gtkmessagedialog.field.label" type="ro">
+   <fieldname>label</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+    The label containing the text.
+   </shortdesc>
+   <desc>
+    <para>
+     The label containing the text.
+    </para>
+   </desc>
+  </field>
+
+ </fields>
+
+</classentry>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

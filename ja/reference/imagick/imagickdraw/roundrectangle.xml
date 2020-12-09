@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 336315 Maintainer: takagi Status: ready -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="imagickdraw.roundrectangle">
+ <refnamediv>
+  <refname>ImagickDraw::roundRectangle</refname>
+  <refpurpose>角が丸い矩形を描画する</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>ImagickDraw::roundRectangle</methodname>
+   <methodparam><type>float</type><parameter>x1</parameter></methodparam>
+   <methodparam><type>float</type><parameter>y1</parameter></methodparam>
+   <methodparam><type>float</type><parameter>x2</parameter></methodparam>
+   <methodparam><type>float</type><parameter>y2</parameter></methodparam>
+   <methodparam><type>float</type><parameter>rx</parameter></methodparam>
+   <methodparam><type>float</type><parameter>ry</parameter></methodparam>
+  </methodsynopsis>
+  &warn.undocumented.func;
+  <para>
+   2 つの座標、そして角の x &amp; y 方向の丸めを与え、
+   現在の枠線や線幅、塗りつぶしの設定を使用して角が丸い矩形を描画します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>x1</parameter></term>
+     <listitem>
+      <para>
+       左上の角の x 座標。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>y1</parameter></term>
+     <listitem>
+      <para>
+       左上の角の y 座標。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>x2</parameter></term>
+     <listitem>
+      <para>
+       右下の角の x 座標。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>y2</parameter></term>
+     <listitem>
+      <para>
+       右下の角の y 座標。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>rx</parameter></term>
+     <listitem>
+      <para>
+       x 方向の丸め。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>ry</parameter></term>
+     <listitem>
+      <para>
+       y 方向の丸め。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.void;
+  </para>
+ </refsect1>
+
+
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+    <example>
+      <title> <function>ImagickDraw::roundRectangle</function></title>
+      <programlisting role="php">
+      <![CDATA[
+<?php
+function roundRectangle($strokeColor, $fillColor, $backgroundColor, $startX, $startY, $endX, $endY, $roundX, $roundY) {
+
+    $draw = new \ImagickDraw();
+
+    $draw->setStrokeColor($strokeColor);
+    $draw->setFillColor($fillColor);
+    $draw->setStrokeOpacity(1);
+    $draw->setStrokeWidth(2);
+
+    $draw->roundRectangle($startX, $startY, $endX, $endY, $roundX, $roundY);
+
+    $imagick = new \Imagick();
+    $imagick->newImage(500, 500, $backgroundColor);
+    $imagick->setImageFormat("png");
+
+    $imagick->drawImage($draw);
+
+    header("Content-Type: image/png");
+    echo $imagick->getImageBlob();
+}
+
+?>
+]]>
+      </programlisting>
+    </example>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351129 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xml:id="function.echo">
+ <refnamediv>
+  <refname>echo</refname>
+  <refpurpose>Affiche une chaîne de caractères</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>void</type><methodname>echo</methodname>
+   <methodparam><type>string</type><parameter>arg</parameter></methodparam>
+   <methodparam rep="repeat"><type>string</type><parameter>args</parameter></methodparam>
+  </methodsynopsis>
+  <simpara>
+   Affiche tous les paramètres. Aucune nouvelle ligne n'est ajoutée.
+  </simpara>
+  <para>
+   <literal>echo</literal> n'est pas vraiment une fonction (c'est
+   techniquement une structure du langage), cela fait que vous n'êtes
+   pas obligé d'utiliser des parenthèses. <literal>echo</literal>
+   (contrairement à d'autres structures de langage) ne se comporte pas
+   comme une fonction, il ne peut donc pas être utilisé dans le contexte d'une
+   fonction. De même, si vous voulez passer plusieurs paramètres à
+   <literal>echo</literal>, les paramètres ne doivent pas être entourés
+   de parenthèses.
+  </para>
+  <para>
+   <literal>echo</literal> dispose aussi d'une version courte,
+   où vous pouvez faire suivre la balise PHP ouvrante d'un
+   signe égal (<literal>=</literal>). Avant PHP 5.4.0, cette syntaxe
+   n'était possible que si la directive de configuration <link
+   linkend="ini.short-open-tag"><option>short_open_tag</option></link>
+   était activée.
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+J'ai <?=$foo?> foo.
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  <para>
+   La plus grosse différente avec <literal>print</literal> est que
+   <literal>echo</literal> accepte une liste d'arguments et ne retourne
+   aucune valeur.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>arg</parameter></term>
+     <listitem>
+      <para>
+       Le paramètre à afficher.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>args</parameter></term>
+     <listitem>
+      <para>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.void;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <literal>echo</literal></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo "Bonjour le monde";
+
+// Si vous n'utilisez pas d'autres caractères,
+// vous pouvez afficher plusieurs variables
+// en les séparant par des virgules
+echo $foo;          // foobar
+echo $foo,$bar;     // foobarbarbaz
+
+// Les chaînes peuvent être passées individuellement comme arguments multiples ou
+// concaténées et passées comme un seul argument
+echo 'Cette ', 'chaîne ', 'a été ', 'faite ', 'avec plusieurs paramètres.', chr(10);
+echo 'Cette ' . 'chaîne ' . 'a été ' . 'faite ' . 'à l\'aide de la concaténation.' . "\n";
+
+// Parce que echo() ne se comporte pas comme une fonction, le code suivant est invalide.
+($some_var) ? echo 'true' : echo 'false';
+
+// Cependant, les exemples suivants sont valides :
+($some_var) ? print 'Oui' : print 'Non'; // print est aussi une structure de langage,
+                                         // mais il se comporte comme une fonction, donc,
+                                         // il peut être utilisé dans ce contexte.
+
+echo $some_var ? 'Oui': 'Non'; // échanger la déclaration
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.language-construct;
+  <tip>
+   <para>
+    Un bénéfice de passe par plusieurs arguments au lieu d'utiliser la
+    concaténation dans la fonction <function>echo</function> concerne la
+    priorité de l'opérateur point ".". Si plusieurs arguments sont passés,
+    alors les parenthèses ne sont pas requises pour accroitre la priorité. :
+   </para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+echo "Somme : ", 1 + 2;
+echo "Bonjour ", isset($name) ? $name : "John Doe", "!";
+]]>
+   </programlisting>
+
+   <para>
+    Avec la concaténation, l'opérateur "point" a une précédence identique
+    à l'addition et une précédence plus élevée que l'opérateur ternaire,
+    c'est pour cela que les parenthèses doivent être utilisées
+    pour un comportement correct :
+   </para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+echo 'Somme : ' . (1 + 2);
+echo 'Bonjour ' . (isset($name) ? $name : 'John Doe') . '!';
+]]>
+   </programlisting>
+  </tip>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>print</function></member>
+    <member><function>printf</function></member>
+    <member><function>flush</function></member>
+    <member><link linkend="language.types.string.syntax.heredoc">Syntaxe Heredoc</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

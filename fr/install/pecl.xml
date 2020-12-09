@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 350464 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<chapter xml:id="install.pecl" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Installation d'extensions PECL</title>
+ 
+ <sect1 xml:id="install.pecl.intro">
+  <title>Introduction aux installations PECL</title>
+  <simpara>
+   <link xlink:href="&url.pecl;">PECL</link> est un dépôt d'extensions PHP
+   qui est disponibles via le système de paquet
+   <link xlink:href="&url.php.pear;">PEAR</link>. Cette section du manuel
+   vous guide dans l'obtention et l'installation d'extensions PECL.
+  </simpara>
+  <simpara>
+   Ces instructions supposent que <literal>/your/phpsrcdir/</literal> est le
+   chemin jusqu'aux sources de la distribution PHP, et <literal>extname</literal> est le nom
+   de votre extension PECL : adaptez les commandes qui suivent à votre situation.
+   Ces instructions supposent aussi que vous êtes familier avec l'utilisation
+   des <link xlink:href="&url.php.pear.cli;">commandes pear</link>.
+   Les informations dans le manuel PEAR pour la commande <literal>pear</literal>
+   sont également applicables à la commande <literal>pecl</literal>.
+  </simpara>
+  <simpara>
+   Pour être utilisée, une extension partagée doit être compilée, installée
+   et chargée. Les méthodes décrites ci-dessous vous fournissent diverses
+   instructions sur la façon de compiler et d'installer des extensions mais
+   ne les chargent pas automatiquement. Les extensions peuvent être chargées
+   en ajoutant une directive d'<link linkend="ini.extension">extension</link>
+   au fichier &php.ini; ou à l'aide de la fonction <function>dl</function>.
+  </simpara>
+  <simpara>
+   Lorsque vous compilez des modules PHP, il est important d'avoir les
+   outils dans leurs versions appropriées, tels que autoconf, automake, libtool, etc. Voyez les
+   <link xlink:href="&url.php.anongit;">Instructions pour le Git anonyme</link>, afin
+   de connaître les utilitaires nécessaires, et leurs versions.
+  </simpara>
+ </sect1>
+ 
+ <sect1 xml:id="install.pecl.downloads">
+  <title>Télécharger des extensions PECL</title>
+  <simpara>
+   Il existe plusieurs méthodes pour télécharger des extensions PECL :
+  </simpara>
+  <itemizedlist>
+   <simpara>
+    La commande <literal>pecl install extname</literal> télécharge le code
+    des extensions automatiquement, ce qui évite de réaliser
+    un téléchargement particulier.
+   </simpara>
+   <listitem>
+    <simpara>
+     <link xlink:href="&url.pecl;">&url.pecl;</link>
+    </simpara>
+    <simpara>
+     Le site Web de PECL contient diverses informations sur les différentes extensions
+     offertes par l'équipe de développement de PHP. Vous pourrez consulter les modifications
+     entre les versions, les notes de versions, ce qui est requis pour faire fonctionner l'extension
+     ainsi que d'autres détails similaires.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <literal>pecl download extname</literal>
+    </simpara>
+    <simpara>
+     Les extensions PECL listées sur le site web de PECL sont disponibles
+     et peuvent être téléchargées et installées en utilisant la
+     <link xlink:href="&url.php.pear.cli;">commande pecl</link>.
+     La version spécifique de l'extension peut également être spécifiée.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <acronym>SVN</acronym>
+    </simpara>
+    <simpara>
+     La plupart des fichiers PECL sont conservés dans le serveur <acronym>SVN</acronym>.
+     Une interface Web est disponible à <link xlink:href="&url.php.svn;pecl/">&url.php.svn;pecl/</link>.
+     Pour télécharger directement depuis <acronym>SVN</acronym>, suivez la séquence d'instructions
+     ci-dessous :
+    </simpara>
+    <para>
+     <screen>
+$ svn checkout http://svn.php.net/repository/pecl/extname/trunk extname
+     </screen>
+    </para>
+   </listitem>
+   <listitem>
+    <simpara>
+     Téléchargements pour Windows : 
+    </simpara>
+    <simpara>
+     Le projet PHP compile et offre des DLLs Windows pour la plupart des 
+     extensions PECL disponible sur la page du package.
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </sect1>
+ 
+ <sect1 xml:id="install.pecl.windows">
+  <title>Installer une extension PHP sous Windows</title>
+  <para>
+   Sur Windows, vous avez deux moyens de charger une extension PHP : 
+   soit vous la compilez dans PHP, soit vous chargez une DLL. Charger une
+   extension précompilée est la méthode la plus pratique et la plus recommandée.
+  </para>
+  <para>
+   Pour charger une extension, vous devez disposer de son fichier ".dll" sur votre système.
+   Toutes les extensions sont automatiquement et périodiquement compilées par le groupe PHP
+   (voyez la section de téléchargements).
+  </para>
+  <para>
+   Pour compiler une extension dans PHP, reportez-vous à la 
+   documentation sur <link linkend="install.windows.legacy.building">
+   la compilation des sources</link>.
+  </para>
+  <para>
+   Pour compiler une extension autonome, (c'est-à-dire un fichier DLL), reportez-vous
+   documentation sur <link linkend="install.windows.legacy.building">
+   la compilation des sources</link>. Si le fichier DLL est absent de votre distribution
+   PHP et de PECL, il vous faudra la compiler avant de pouvoir l'utiliser.
+  </para>
+  
+  <sect2 xml:id="install.pecl.windows.find">
+   <title>Où trouver une extension ?</title>
+   <para>
+    Les extensions PHP sont généralement appelées "php_*.dll" (où les astérisques
+    représentent le nom de l'extension) et elles sont rangées dans le dossier 
+    "PHP\ext".
+   </para>
+   <para>
+    PHP est livré avec les extensions qui sont les plus utiles à la majorité des utilisateurs.
+    Elles sont appelées des extensions coeur, ou "core".
+   </para>
+   <para>
+    Cependant, si vous avez besoin de fonctionnalités qui ne sont pas fournies par 
+    une extension coeur, vous pourriez quand même les trouver dans
+    <link xlink:href="&url.pecl;">PECL</link>. Le 
+    PHP Extension Community Library (PECL, aussi dit Bibliothèque d'Extensions Communautaires de PHP)
+    est un dépôt de code pour les extensions PHP, qui fournit un annuaire de toutes les 
+    extensions connues, et un service d'hébergement pour télécharger et 
+    développer ces extensions. 
+   </para>
+   <para>
+    Si vous avez développé une extension pour votre propre usage, vous pourriez avoir envie
+    de l'héberger sur PECL, pour que tous ceux qui ont eu le même problème que vous, puissent
+    avoir accès à la même solution. Cela vous donne de bonnes chances d'avoir des retours
+    de la communauté, et, peut-être, des remerciements, des rapports de bugs, et même des
+    correctifs. Avant que vous n'envoyiez votre extension sur les serveurs PECL, il est
+    recommandé de lire <link xlink:href="&url.pecl.submit;">PECL submit</link>.
+   </para>
+  </sect2>
+  
+  <sect2 xml:id="install.pecl.windows.which">
+   <title>Quelles extensions télécharger ?</title>
+   <para>
+    <emphasis>Souvent, vous trouverez plusieurs versions de chaque DLL : </emphasis>
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       Différents numéros de versions (au moins, les deux premiers chiffres doivent être les mêmes)
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       Différentes configurations de sécurité de threads
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       Différentes architectures de processeurs (x86, x64...)
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       Différentes configurations de débogage
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>etc.</literal>
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </para>
+   <para>
+    Il est recommandé de choisir les extensions pour qu'elles soient adaptées
+    à la machine serveur sur laquelle vous utilisez PHP. Le script suivant 
+    va vous afficher <emphasis>toutes</emphasis> vos configurations PHP : 
+   </para>
+   <para>
+    <example>
+     <title>Appel de la fonction <function>phpinfo</function></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+phpinfo();
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Ou bien, en ligne de commande : 
+    <screen>
+<![CDATA[
+drive:\\path\to\php\executable\php.exe -i
+]]>
+    </screen>
+   </para>
+  </sect2>
+  
+  <sect2 xml:id="install.pecl.windows.loading">
+   <title>Charger une extension</title>
+   <para>
+    Le moyen le plus courant pour charger une extension PHP est de l'inclure dans votre
+    fichier de configuration <filename>php.ini</filename>. Notez que de nombreuses extensions
+    sont déjà présentes dans le fichier <filename>php.ini</filename> et que vous avez
+    simplement à supprimer le point-virgule pour les activer.
+    
+   </para>
+   <para>
+    A partir de PHP 7.2.0, le nom de l'extension peut être utilisé à la place 
+    du nom de l'extension. Comme il est indépendant de l'os et plus facile, en 
+    particulier pour les nouveaux arrivants, il devient la manière recommandée 
+    de spécifier des extensions à charger. Les noms de fichiers restent pris en 
+    charge pour la compatibilité avec les versions antérieures.
+   </para>
+    <screen>
+<![CDATA[
+;extension=php_extname.dll
+]]>
+    </screen>
+    <screen>
+<![CDATA[
+extension=php_extname.dll
+]]>
+    </screen>
+    <screen>
+<![CDATA[
+; Dans PHP 7.2 et supérieur, préférer :
+extension=extname
+zend_extension=another_extension
+]]>
+    </screen>
+   <para>
+    Cependant, certains serveurs Web sont déroutants, car ils n'utilisent pas le fichier 
+    <filename>php.ini</filename> rangé avec votre exécutable PHP. Pour en savoir plus sur votre véritable 
+    <filename>php.ini</filename>, recherchez son dossier dans le fichier 
+    <function>phpinfo</function>:
+   </para>
+    <screen>
+<![CDATA[
+Configuration File (php.ini) Path   C:\WINDOWS
+]]>
+    </screen>
+    <screen>
+<![CDATA[
+Loaded Configuration File   C:\Program Files\PHP\5.2\php.ini
+]]>
+    </screen>
+   <para>
+    Après activation d'une extension, sauvegardez le fichier <filename>php.ini</filename>, et
+    relancez le serveur Web, puis vérifiez à nouveau le fichier <function>phpinfo</function>.
+    La nouvelle extension devrait y avoir sa section.
+   </para>
+  </sect2>
+  
+  <sect2 xml:id="install.pecl.windows.problemsolving">
+   <title>Résolution de problèmes</title>
+   <para>
+    Si l'extension n'apparaît pas dans le fichier <function>phpinfo</function>, 
+    vous devriez jeter un oeil dans les logs pour savoir d'où vient le problème.
+   </para>
+   <para>
+    Si vous utilisez PHP en ligne de commande (CLI), l'erreur de chargement de l'extension
+    devrait être lisible directement sur l'écran.
+   </para>
+   <para>
+    Si vous utilisez PHP sur un serveur Web, la position et le format des logs 
+    varient grandement d'un serveur à l'autre. Lisez la documentation de votre
+    serveur Web pour savoir où ils sont : PHP ne peut pas vous aider pour cela.
+   </para>
+   <para>
+    Les problèmes les plus courants sont la localisation du fichier DLL, 
+    la valeur de la directive "<link linkend="ini.extension-dir">extension_dir</link>"
+    dans le <filename>php.ini</filename> et les incohérences de compilations.
+   </para>
+   <para>
+    Si le problème est une incohérence de compilation, vous avez probablement téléchargé
+    une mauvaise DLL. Essayez d'en charger une nouvelle, avec les bonnes configurations pour 
+    votre serveur. <function>phpinfo</function> vous sera alors très utile.
+   </para>
+  </sect2>
+  
+ </sect1>
+ 
+ <sect1 xml:id="install.pecl.pear">
+  <title>Compilation d'extensions PECL partagées avec la commande pecl</title>
+  <simpara>
+   PECL facilite la création d'extension PHP partagées. En utilisant la
+   <link xlink:href="&url.php.pear.cli;">commande pecl</link>, faites ceci :
+  </simpara>
+  <para>
+   <screen>
+$ pecl install extname
+   </screen>
+  </para>
+  <simpara>
+   Ceci va télécharger le fichier source de l'extension <emphasis>extname</emphasis>,
+   le compiler et installer le fichier <filename>extname.so</filename> dans votre
+   dossier <link linkend="ini.extension-dir">extension_dir</link>.
+   <filename>extname.so</filename> doit ensuite être chargé via &php.ini;.
+  </simpara>
+  <simpara>
+   Par défaut, la commande <literal>pecl</literal> n'installera pas les paquets
+   marqués comme étant <literal>alpha</literal> ou
+   <literal>beta</literal>. Si aucun paquet <literal>stable</literal> est disponible,
+   vous devrez installer un paquet <literal>beta</literal> en utilisant la commande suivante :
+  </simpara>
+  <para>
+   <screen>
+$ pecl install extname-beta
+   </screen>
+  </para>
+  <para>
+   Vous pouvez également installer une version spécifique en utilisant la commande :
+  </para>
+  <para>
+   <screen>
+$ pecl install extname-0.1
+   </screen>
+  </para>
+  <note>
+   <para>
+    Après avoir activée cette extension dans le &php.ini;, relancez le serveur Web
+    afin de la prendre en compte.
+   </para>
+  </note>
+ </sect1>
+ 
+ <sect1 xml:id="install.pecl.phpize">
+  <title>Compilation des extensions partagées avec phpize</title>
+  <simpara>
+   Parfois, l'utilisation de l'installeur <literal>pecl</literal> n'est pas une bonne option.
+   Ceci parce que vous êtes derrière un pare-feu ou parce que l'extension que vous voulez
+   installer n'est pas disponible en tant que paquet PECL comme une extension
+   uniquement disponible via SVN. Si vous devez compiler une telle extension,
+   vous pouvez utiliser l'utilitaire de compilation afin d'exécuter la compilation
+   manuellement.
+  </simpara>
+  <simpara>
+   La commande <literal>phpize</literal> est utilisée pour préparer
+   l'environnement de compilation pour une extension PHP. Dans l'exemple suivant, les
+   sources de l'extension sont dans un dossier appelé <filename>extname</filename> :
+  </simpara>
+  <para>
+   <screen>
+<![CDATA[
+$ cd extname
+$ phpize
+$ ./configure
+$ make
+# make install
+]]>
+   </screen>
+  </para>
+  <simpara>
+   Une installation réussie aura créé un fichier <filename>extname.so</filename>
+   et l'aura placé dans le <link linkend="ini.extension-dir">dossier des extensions</link>
+   de PHP. Vous devez ajouter la ligne <literal>extension=extname.so</literal>
+   dans votre &php.ini; avant de pouvoir utiliser l'extension.
+  </simpara>
+  <simpara>
+   Si le système ne possède pas la commande <literal>phpize</literal> et que
+   vous utilisez des paquets précompilés (comme des RPM), assurez-vous d'installer
+   également la version de développement appropriée des paquets PHP car
+   elle inclut également la commande <literal>phpize</literal> ainsi que les en-têtes
+   appropriés pour construire PHP et ses extensions.
+  </simpara>
+  <simpara>
+   Exécutez la commande <command>phpize --help</command> pour afficher des informations
+   d'utilisation supplémentaires.
+  </simpara>
+ </sect1>
+ 
+ <sect1 xml:id="install.pecl.php-config">
+  <title>php-config</title>
+  
+  <para>
+   php-config est un petit script shell pour obtenir des informations
+   sur la configuration installée de PHP.
+  </para>
+  
+  <para>
+   Lors de la compilation des extensions, si vous avez plusieurs
+   versions PHP d'installées, vous devez spécifier l'installation
+   pour laquelle vous souhaitez les compiler en utilisant l'option
+   <literal>--with-php-config</literal> lors de la configuration,
+   spécifiant ainsi le chemin vers le script php-config.
+  </para>
+  
+  <para>
+   La liste des options de ligne de commande fournies par le script
+   php-config peut être obtenue en exécutant le script php-config
+   avec l'option <option>-h</option> :
+   <screen>
+<![CDATA[
+Usage: /usr/local/bin/php-config [OPTION]
+Options:
+  --prefix            [...]
+  --includes          [...]
+  --ldflags           [...]
+  --libs              [...]
+  --extension-dir     [...]
+  --include-dir       [...]
+  --php-binary        [...]
+  --php-sapis         [...]
+  --configure-options [...]
+  --version           [...]
+  --vernum            [...]
+]]>
+   </screen>
+  </para>
+  
+  <para>
+   <table>
+    <title>Options de ligne de commande</title>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>Option</entry>
+       <entry>Description</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>--prefix</entry>
+       <entry>Préfixe du dossier où PHP est installé, i.e. /usr/local</entry>
+      </row>
+      <row>
+       <entry>--includes</entry>
+       <entry>Liste des options -I avec tous les fichiers inclus</entry>
+      </row>
+      <row>
+       <entry>--ldflags</entry>
+       <entry>Drapeaux LD qui ont été compilés avec PHP</entry>
+      </row>
+      <row>
+       <entry>--libs</entry>
+       <entry>Bibliothèques additionnelles qui ont été compilées avec PHP</entry>
+      </row>
+      <row>
+       <entry>--extension-dir</entry>
+       <entry>Dossiers où les extensions sont recherchées par défaut</entry>
+      </row>
+      <row>
+       <entry>--include-dir</entry>
+       <entry>Préfixe du dossier où les en-têtes de fichiers sont
+        installés par défaut</entry>
+      </row>
+      <row>
+       <entry>--php-binary</entry>
+       <entry>Chemin complet vers le CLI PHP ou le binaire CGI</entry>
+      </row>
+      <row>
+       <entry>--php-sapis</entry>
+       <entry>Affiche tous les modules SAPI disponibles</entry>
+      </row>
+      <row>
+       <entry>--configure-options</entry>
+       <entry>Options de configuration pour recréer la configuration
+        de l'installation courante de PHP</entry>
+      </row>
+      <row>
+       <entry>--version</entry>
+       <entry>Version de PHP</entry>
+      </row>
+      <row>
+       <entry>--vernum</entry>
+       <entry>Version de PHP sous la forme d'un entier</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+  </para>
+ </sect1>
+ 
+ <sect1 xml:id="install.pecl.static">
+  <title>Compilation des extensions PECL statiquement dans PHP</title>
+  <simpara>
+   Il peut arriver que vous ayez à compiler votre extension PECL
+   statiquement dans votre binaire PHP. Pour ce faire, vous devez placer
+   les sources de l'extension dans le dossier <filename>/votre/dossierphpsrc/ext/</filename>
+   et exécuter à nouveau le script de configuration de PHP.
+  </simpara>
+  <para>
+   <screen>
+<![CDATA[
+$ cd /your/phpsrcdir/ext
+$ pecl download extname
+$ gzip -d < extname.tgz | tar -xvf -
+$ mv extname-x.x.x extname
+$ rm package.xml
+]]>
+   </screen>
+  </para>
+  <simpara>
+   Cela générera le dossier suivant :
+  </simpara>
+  <para>
+   <screen>
+/your/phpsrcdir/ext/extname
+   </screen>
+  </para>
+  <simpara>
+   À partir de la, forcez PHP à reconstruire le script de configuration, 
+   puis, suivez le processus classique de compilation de PHP :
+  </simpara>
+  <para>
+   <screen>
+$ cd /your/phpsrcdir
+$ rm configure
+$ ./buildconf --force
+$ ./configure --help
+$ ./configure --with-extname --enable-someotherext --with-foobar
+$ make
+$ make install
+   </screen>
+  </para>
+  <note>
+   <simpara>
+    Pour exécuter le script 'buildconf', vous devez posséder autoconf 2.13 et
+    automake 1.4+ (les versions plus récentes de autoconf peuvent fonctionner,
+    mais ne sont pas supportées).
+   </simpara>
+  </note>
+  <simpara>
+   L'utilisation de <literal>--enable-extname</literal> ou
+   <literal>--with-extname</literal> dépend de l'extension. Généralement,
+   une extension qui ne dépend pas d'une bibliothèque externe utilise
+   <literal>--enable</literal>. Pour être certain, utilisez la commande
+   suivante après avoir utilisé buildconf :
+  </simpara>
+  <para>
+   <screen>
+$ ./configure --help | grep extname
+   </screen>
+  </para>
+ </sect1>
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

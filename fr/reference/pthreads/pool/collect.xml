@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 341655 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+<refentry xml:id="pool.collect" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>Pool::collect</refname>
+  <refpurpose>Collecte les références des tâches achevées</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>int</type><methodname>Pool::collect</methodname>
+   <methodparam choice="opt"><type>Callable</type><parameter>collector</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Permet au pool de collecter des références déterminées pour être collectée 
+   par le collecteur donné optionnellement.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <variablelist>
+   <varlistentry>
+    <term><parameter>collector</parameter></term>
+    <listitem>
+     <para>
+      Un collecteur pouvant être appelé retournant une valeur booléenne pour 
+      déterminer si la tâche peut être collectée ou non. Ce n'est que dans de 
+      rares cas qu'un collecteur personnalisé doit être utilisé.
+     </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+ Nombre de tâches restantes dans le pool à collecter.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>v3</entry>
+       <entry>
+        Un entier est maintenant retourné, et le paramètre 
+        <parameter>collector</parameter> est maintenant facultatif.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Un exemple de base de <methodname>Pool::collect</methodname></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$pool = new Pool(4);
+
+for ($i = 0; $i < 15; ++$i) {
+    $pool->submit(new class extends Threaded {});
+}
+
+while ($pool->collect()); // blocks until all tasks have finished executing
+
+$pool->shutdown();
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

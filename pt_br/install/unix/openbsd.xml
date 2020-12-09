@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 339171 Maintainer: ae Status: ready --><!-- CREDITS: narigone,ae -->
+<sect1 xml:id="install.unix.openbsd" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Notas de instalação para o OpenBSD</title>
+ <para>
+ Essa seção contêm notas e dicas específicas para a instalação
+ do PHP no <link xlink:href="&url.openbsd;">OpenBSD 5.8</link>.
+ </para>
+ <sect2 xml:id="install.unix.openbsd.packages">
+  <title>Usando Pacotes Binários</title>
+   <simpara>
+    Usando pacotes binários para instalar o PHP no OpenBSD é o método recomendado
+    e o mais simples. O pacote núcleo foi separado dos vários módulos,
+    e cada um pode ser instalado e removido independentemente dos outros.
+    Os arquivos necessários podem ser encontrados no CD do OpenBSD ou no FTP do site.
+   </simpara>
+   <simpara>
+    O pacote principal que você precisa instalar é o <filename>php</filename>,
+    que contem o engine básico (mais gettext e iconv). Depois, olhe
+    os pacotes com módulos, como o <filename>php-mysql</filename>
+    ou <filename>php-imap</filename>. Você precisa usar o comando
+    <command>phpxs</command> para ativar e desativar esses módulos no seu arquivo &php.ini;.
+   </simpara>
+   <example xml:id="install.unix.openbsd.ports.example">
+    <title>Exemplo de instalação de pacote no OpenBSD</title>
+    <programlisting role="shell">
+<![CDATA[
+# pkg_add php
+# pkg_add php-fpm
+# pkg_add php-mysql
+  (install the PEAR libraries)
+# pkg_add pear
+
+Follow the instructions shown with each package!
+
+  (to remove packages)
+# pkg_delete php
+# pkg_delete php-fpm
+# pkg_delete php-mysql
+# pkg_delete pear
+]]>
+    </programlisting>
+   </example>
+   <simpara>
+   Leia o manual de <link xlink:href="&url.openbsd.packages;">packages(7)</link>
+   para mais informações sobre pacotes binários no OpenBSD.
+   </simpara>
+ </sect2>
+ <sect2 xml:id="install.unix.openbsd.ports">
+  <title>Usando Ports</title>
+  <simpara>
+   Você também pode compilar o PHP dos fontes usando a <link xlink:href="&url.openbsd.ports;">árvore ports</link>.
+   No entanto, isso só é recomendado para usuários familiarizado com OpenBSD. O port do PHP 4
+   é dividido em dois sub-diretórios: núcleo e extensões. O
+   diretório de extensões gera sub-pacotes para todos os módulos
+   suportados pelo PHP. Se você achar que não quer criar alguns dos módulos,
+   use o comando <command>no_*</command> FLAVOR. Por exemplo, se você quiser que
+   o módulo imap seja ignorado, atribua à FLAVOR o valor <command>no_imap</command>.
+  </simpara>
+ </sect2>
+ <sect2 xml:id="install.unix.openbsd.faq">
+  <title>Problemas Comuns</title>
+  <itemizedlist>
+   <listitem>
+     <simpara>Apache e Nginx não são mais os servidores padrão no OpenBSD, mas eles podem ser facilmente
+      encontrados em ports e pacotes. O novo servidor é chamado 'httpd'.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>A instalação padrão do Apache roda dentro de uma
+    <link xlink:href="&url.openbsd.chroot;">prisão de chroot(2)</link>, que restrigirá os scripts PHP a 
+    acessar arquivos abaixo de <filename>/var/www</filename>. Você irá, portanto, precisar criar um
+    diretório <filename>/var/www/tmp</filename> para que os arquivos de sessão do PHP sejam guardados, ou usar um
+    backend alternativo para sessões. Além disso, sockets de bancos de dados devem ser colocados dentro
+    da prisão ou escutar na interface <filename>localhost</filename>. Se você usar funções de rede,
+    alguns arquivos do diretório <filename>/etc</filename> como <filename>/etc/resolv.conf</filename> e
+    <filename>/etc/services</filename> precisarão ser movidos para <filename>/var/www/etc</filename>.
+    O pacote OpenBSD PEAR se instala automaticamente nos diretórios chroot corretos.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+    O pacote do OpenBSD 5.7+ para a extensão <link xlink:href="&url.gd;">gd</link> precisa 
+    do XFree86 instalado. Isto pode ser adicionado após a instalação (Veja o OpenBSD FAQ #4) através do acréscimo
+    do file set <filename>xbase.tgz</filename>.
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </sect2>
+   
+ <sect2 xml:id="install.unix.openbsd.older">
+  <title>Releases Antigas</title>
+  <simpara>
+   Releases mais antigas do OpenBSD usam o sistema de FLAVORS para compilar
+   um PHP estaticamente linkado. Já que é difícil gerar pacotes binários usando
+   esse método, ele é depreciado agora. Você pode ainda usar as árvores de port velhas
+   e estáveis se assim desejar, mas eles não tem suporte pelo time do OpenBSD.
+   Se você tiver algum comentário sobre isso, o atual responsável pela manutenção do port
+   é Anil Madhavapeddy (avsm at openbsd dot org).
+  </simpara>
+ </sect2>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

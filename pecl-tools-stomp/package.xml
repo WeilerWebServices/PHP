@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.4.7" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+    <name>stomp</name>
+    <channel>pecl.php.net</channel>
+    <summary>Stomp client extension</summary>
+    <description>
+This extension allows php applications to communicate with any Stomp compliant Message Brokers through easy object oriented and procedural interfaces.
+    </description>
+    <lead>
+        <name>Pierrick Charron</name>
+        <user>pierrick</user>
+        <email>pierrick@php.net</email>
+        <active>yes</active>
+    </lead>
+    <lead>
+        <name>Gennady Feldman</name>
+        <user>gena01</user>
+        <email>gena01@php.net</email>
+        <active>yes</active>
+    </lead>
+    <lead>
+        <name>Xinchen Hui</name>
+        <user>laruence</user>
+        <email>laruence@php.net</email>
+        <active>yes</active>
+    </lead>
+    <lead>
+        <name>Remi Collet</name>
+        <user>remi</user>
+        <email>remi@php.net</email>
+        <active>yes</active>
+    </lead>
+    <date>2018-06-29</date>
+    <version><release>2.0.3dev</release><api>2.0.1</api></version>
+    <stability><release>stable</release><api>stable</api></stability>
+    <license uri="http://www.php.net/license">PHP License</license>
+	<notes>
+        -
+    </notes>
+    <contents>
+        <dir name="/">
+            <file role="doc" name="CREDITS" />
+            <file role="doc" name="LICENSE" />
+            <file role="doc" name="README" />
+            <file role="src" name="config.m4" />
+            <file role="src" name="config.w32" />
+            <file role="src" name="php_stomp.c" />
+            <file role="src" name="php_stomp.h" />
+            <file role="src" name="stomp.c" />
+            <file role="src" name="stomp.h" />
+            <file role="test" name="tests/config.inc" />
+            <file role="test" name="tests/skipif.inc" />
+            <file role="test" name="tests/001-stomp.phpt" />
+            <file role="test" name="tests/002-version.phpt" />
+            <file role="test" name="tests/003-connect/001.phpt" />
+            <file role="test" name="tests/003-connect/002.phpt" />
+            <file role="test" name="tests/003-connect/003.phpt" />
+            <file role="test" name="tests/004-getSessionId/001.phpt" />
+            <file role="test" name="tests/005-close/001.phpt" />
+            <file role="test" name="tests/005-close/002.phpt" />
+            <file role="test" name="tests/006-send/001.phpt" />
+            <file role="test" name="tests/006-send/002.phpt" />
+            <file role="test" name="tests/006-send/003.phpt" />
+            <file role="test" name="tests/007-subscribe/001.phpt" />
+            <file role="test" name="tests/008-unsubscribe/001.phpt" />
+            <file role="test" name="tests/009-readFrame/001.phpt" />
+            <file role="test" name="tests/009-readFrame/002.phpt" />
+            <file role="test" name="tests/009-readFrame/003.phpt" />
+            <file role="test" name="tests/009-readFrame/004.phpt" />
+            <file role="test" name="tests/009-readFrame/005.phpt" />
+            <file role="test" name="tests/009-readFrame/006.phpt" />
+            <file role="test" name="tests/010-timeout/001.phpt" />
+            <file role="test" name="tests/010-timeout/002.phpt" />
+            <file role="test" name="tests/011-commit/001.phpt" />
+            <file role="test" name="tests/bug_16930.phpt" />
+            <file role="test" name="tests/bug_16936.phpt" />
+            <file role="doc" name="doc/classes.php" />
+            <file role="doc" name="doc/functions.php" />
+            <file role="doc" name="examples/oop.php" />
+            <file role="doc" name="examples/procedural.php" />
+        </dir>
+    </contents>
+
+    <dependencies>
+        <required>
+            <php>
+                <min>7.0.0</min>
+            </php>
+            <pearinstaller>
+                <min>1.4.0</min>
+            </pearinstaller>
+        </required>
+        <optional>
+            <extension>
+                <name>openssl</name>
+            </extension>
+        </optional>
+    </dependencies>
+
+    <providesextension>stomp</providesextension>
+
+    <extsrcrelease>
+        <configureoption default="/usr" name="with-openssl-dir" prompt="OpenSSL install prefix (no to disable SSL support)" />
+    </extsrcrelease>
+
+    <changelog>
+        <release>
+            <date>2018-06-29</date>
+            <version><release>2.0.2</release><api>2.0.1</api></version>
+            <stability><release>stable</release><api>stable</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <notes>
+                - Fix compatibility with PHP 7.3
+                - Fix -Wformat issues
+            </notes>
+        </release>
+        <release>
+            <version><release>2.0.1</release><api>2.0.1</api></version>
+            <stability><release>stable</release><api>stable</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2017-05-04</date>
+            <notes>
+				- PHP7.1 Support
+            </notes>
+        </release>
+        <release>
+            <version><release>2.0.0</release><api>2.0.0</api></version>
+            <stability><release>beta</release><api>beta</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2016-05-24</date>
+            <notes>
+				- PHP7 Support
+            </notes>
+        </release>
+        <release>
+            <version><release>1.0.9</release><api>1.0.9</api></version>
+            <stability><release>stable</release><api>stable</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2016-01-04</date>
+            <notes>
+- Adding .travis.yml to enable Travis CI test runner. (Gennady)
+- Adding a basic README file. (Gennady)
+- Check stomp connection status after _stomp_recv. (Gennady)
+- Commenting out activemq.prefetchSize hardcoded header for SUBSCRIBE frame. (Gennady)
+- Make login and passcode headers optional (if no creds provided). (Gennady)
+- Fixing type cast warning, introduced a new int variable. (Gennady)
+- Fixing stomp_writable() check so we can catch when connect failed. (Gennady)
+            </notes>
+        </release>
+        <release>
+            <version><release>1.0.8</release><api>1.0.8</api></version>
+            <stability><release>stable</release><api>stable</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2015-05-18</date>
+            <notes>
+- Fix perm on source files. (Remi)
+- Fixing PHP_STOMP_VERSION constant, per Remi's request. (Gennady)
+            </notes>
+        </release>
+        <release>
+            <version><release>1.0.7</release><api>1.0.7</api></version>
+            <stability><release>stable</release><api>stable</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2015-05-15</date>
+            <notes>
+- add LICENSE file as documentation (Remi)
+- Fixed Windows compilation regression due to new TCP_NODELAY code. (Gennady Feldman)
+- Fixed bug where error checking was missing after stomp_send(). (Gennady Feldman)
+            </notes>
+        </release>
+        <release>
+            <version><release>1.0.6</release><api>1.0.6</api></version>
+            <stability><release>stable</release><api>stable</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2014-12-07</date>
+            <notes>
+- Add two new ini options stomp.default_username and stomp.default_passowrd (Pierrick)
+- General performance improvements (Pierrick)
+- Fix stomp_read_frame when buffered (Pierrick)
+- Fixed bug #59217 (Connections to RabbitMQ via CLI). (Pierrick).
+- Fixed bug #59970 (acking a message makes rabbitmq disconnect the server). (Pierrick)
+- Fixed bug #67170 (Disable Nagle's Algorithm with TCP_NODELAY, it delays sending small messages). (Yarek Tyshchenko)
+- Fixed bug #68497 (Stomp client doesn't parse ERROR response on CONNECT). (Lorenzo Fontana)
+- Fixed bug #64671 (Add stomp_nack and Stomp::nack functions). (Pierrick)
+            </notes>
+        </release>
+        <release>
+            <version><release>1.0.5</release><api>1.0.5</api></version>
+            <stability><release>stable</release><api>stable</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2012-11-18</date>
+            <notes>
+- Fix memory leak when Stomp can't write the message on the queue. (Pierrick)
+- Add a buffer for receipts. (Pierrick)
+- Fixed bug #62831 (Stomp module seems not initializing SSL library first).
+  (Patch by lwhsu at lwhsu dot org)
+- Fixed bug #59972 (Message body are not binary safe). (Pierrick)
+            </notes>
+        </release>
+		<release>
+			<version><release>1.0.4</release><api>1.0.4</api></version>
+			<stability><release>stable</release><api>stable</api></stability>
+			<license uri="http://www.php.net/license">PHP License</license>
+			<date>2012-09-17</date>
+			<notes>
+- Fix compatibility with 5.4
+			</notes>
+		</release>
+		<release>
+			<version><release>1.0.3</release><api>1.0.3</api></version>
+			<stability><release>stable</release><api>stable</api></stability>
+			<license uri="http://www.php.net/license">PHP License</license>
+			<date>2010-10-12</date>
+			<notes>
+- Fixed bug #18772 (setTimeout usecs not honored)
+			</notes>
+		</release>
+		<release>
+			<version><release>1.0.2</release><api>1.0.2</api></version>
+			<stability><release>stable</release><api>stable</api></stability>
+			<license uri="http://www.php.net/license">PHP License</license>
+			<date>2010-08-13</date>
+			<notes>
+- Fixed SSL connection bug introduced in 1.0.1
+			</notes>
+		</release>
+		<release>
+			<version><release>1.0.1</release><api>1.0.1</api></version>
+			<stability><release>stable</release><api>stable</api></stability>
+			<license uri="http://www.php.net/license">PHP License</license>
+			<date>2010-08-03</date>
+			<notes>
+- Add new parameter to the constructor to allow client to send extra informations
+- Add zend engine runtime cache support (introduced into trunk)
+- Add new details property in the StompException class
+- Add new StompException::getDetails() method
+- Add the frame body content in the Stomp::Error() method
+- Fixed bug #17262 (Server is not responding on win32)
+			</notes>
+		</release>
+		<release>
+			<version><release>1.0.0</release><api>1.0.0</api></version>
+			<stability><release>stable</release><api>stable</api></stability>
+			<license uri="http://www.php.net/license">PHP License</license>
+			<date>2010-02-11</date>
+			<notes>
+- Bump to stable
+			</notes>
+		</release>
+        <release>
+            <version><release>0.4.1</release><api>0.4.1</api></version>
+            <stability><release>beta</release><api>beta</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2010-01-19</date>
+            <notes>
+- Fix compilation issue on PHP5.2 branch
+            </notes>
+        </release>
+        <release>
+            <version><release>0.4.0</release><api>0.4.0</api></version>
+            <stability><release>beta</release><api>beta</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2010-01-17</date>
+            <notes>
+- Adds the ability to specify an alternative class for readFrame
+            </notes>
+        </release>
+        <release>
+            <version><release>0.3.2</release><api>0.3.2</api></version>
+            <stability><release>beta</release><api>beta</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2009-11-22</date>
+            <notes>
+- Adds alt class
+- Fixed bug #16936 (Module segfaults on readFrame if Frame > STOMP_BUFSIZE)
+- Fixed bug #16933 (readFrame does not notice when server shuts down)
+- Fixed bug #16930 (readFrame reports error-frames as "timeout")
+            </notes>
+        </release>
+        <release>
+            <version><release>0.3.1</release><api>0.3.1</api></version>
+            <stability><release>beta</release><api>beta</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2009-11-08</date>
+            <notes>
+- Fix memory leak in stomp_send and in stomp_ack
+- Reduced minimum php version to 5.2.2
+            </notes>
+        </release>
+        <release>
+            <version><release>0.3.0</release><api>0.3.0</api></version>
+            <stability><release>beta</release><api>beta</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2009-11-06</date>
+            <notes>
+- new stomp_connect_error() function (pierrick)
+- stomp_begin, stomp_abort and stomp_commit now accept additional headers (pierrick)
+- new connection timeout and read timeout ini configuration (pierrick)
+- Fix a memory leak in stomp_read_line (pierrick)
+- Better set of test (Pierrick and Anis)
+            </notes>
+        </release>
+        <release>
+            <version><release>0.2.0</release><api>0.2.0</api></version>
+            <stability><release>beta</release><api>beta</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2009-11-01</date>
+            <notes>
+- Windows build fix (kalle)
+- Add SSL support (pierrick)
+            </notes>
+        </release>
+        <release>
+            <version><release>0.1.0</release><api>0.1.0</api></version>
+            <stability><release>alpha</release><api>alpha</api></stability>
+            <license uri="http://www.php.net/license">PHP License</license>
+            <date>2009-10-30</date>
+            <notes>
+- Initial PECL release. (pierrick)
+            </notes>
+        </release>
+    </changelog>
+</package>

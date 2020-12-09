@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 332343 Maintainer: satoruyoshida Status: ready -->
+<!-- CREDITS: shimooka -->
+<refentry xml:id="function.oci-fetch-object" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>oci_fetch_object</refname>
+  <refpurpose>クエリの次の行をオブジェクトとして返す</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>object</type><methodname>oci_fetch_object</methodname>
+   <methodparam><type>resource</type><parameter>statement</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   クエリから、結果セットの次の行を含むオブジェクトを返します。
+   オブジェクトの各属性が行の各カラムをあらわします。
+   この関数の典型的な使い方は、ループの中で &false; を返すまでコールすることです。
+   &false; は、もう行がないことを意味します。
+  </para>
+  &oci.datatypes;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>statement</parameter></term>
+     <listitem>
+       &oci.arg.statement.id;
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   オブジェクトを返します。
+   オブジェクトの属性は文中のフィールドと一致しています。
+   <parameter>statement</parameter> にもう行がない場合は &false; を返します。
+  </para>
+  <para>
+    <literal>LOB</literal> カラムは LOB ディスクリプタを返します。
+  </para>
+  <para>
+   <literal>DATE</literal> カラムは、現行のデータフォーマットにフォーマットされた
+   文字列として返されます。既定のフォーマットは <literal>NLS_LANG</literal>
+   のような Oracle 環境変数で変更したり、またはあらかじめ
+   <literal>ALTER SESSION SET NLS_DATE_FORMAT</literal> コマンドを実行して変更します。
+  </para>
+  <para>
+   Oracle のデフォルトでは、文字の大小を区別しないカラム名はすべて大文字となります。
+   文字の大小を区別するカラム名は、属性の名前もそれと同じになります。
+   結果のオブジェクト配列を <function>var_dump</function> すれば、
+   属性にアクセスするための大文字小文字の区別を確かめられます。
+  </para>
+  <para>
+    <literal>NULL</literal> データ・フィールドの全てに対して、属性の値は &null; になります。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>oci_fetch_object</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+/*
+  実行する前にテーブルを作成します。
+    CREATE TABLE mytab (id NUMBER, description VARCHAR2(30));
+    INSERT INTO mytab (id, description) values (1, 'Fish and Chips');
+    COMMIT;
+*/
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+$stid = oci_parse($conn, 'SELECT id, description FROM mytab');
+oci_execute($stid);
+
+while (($row = oci_fetch_object($stid)) != false) {
+    // 標準的な Oracle カラム それぞれに対して大文字の属性名を使います
+    echo $row->ID . "<br>\n";
+    echo $row->DESCRIPTION . "<br>\n"; 
+}
+
+// 出力です。
+//    1
+//    Fish and Chips
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>文字の大小を区別するカラム名を持つ <function>oci_fetch_object</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+/*
+  実行する前に、文字の大小を区別するカラム名を持つテーブルを作成します。
+    CREATE TABLE mytab (id NUMBER, "MyDescription" VARCHAR2(30));
+    INSERT INTO mytab (id, "MyDescription") values (1, 'Iced Coffee');
+    COMMIT;
+*/
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+$stid = oci_parse($conn, 'SELECT id, "MyDescription" FROM mytab');
+oci_execute($stid);
+
+while (($row = oci_fetch_object($stid)) != false) {
+    // 標準的な Oracle カラム それぞれに対して大文字の属性名を使います
+    echo $row->ID . "<br>\n";
+    // 文字の大小を区別するカラム名と同じケースを使います
+    echo $row->MyDescription . "<br>\n";   
+}
+
+// 出力です。
+//    1
+//    Iced Coffee
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>LOB を持つ <function>oci_fetch_object</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+/*
+  実行する前にテーブルを作成します。
+    CREATE TABLE mytab (id NUMBER, description CLOB);
+    INSERT INTO mytab (id, description) values (1, 'A very long string');
+    COMMIT;
+*/
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+$stid = oci_parse($conn, 'SELECT id, description FROM mytab');
+oci_execute($stid);
+
+while (($row = oci_fetch_object($stid)) != false) {
+    echo $row->ID . "<br>\n";
+    // 下記では、 DESCRIPTION から最初の 11 バイトを出力します
+    echo $row->DESCRIPTION->read(11) . "<br>\n"; 
+}
+
+// 出力です。
+//    1
+//    A very long
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>oci_fetch</function></member>
+    <member><function>oci_fetch_all</function></member>
+    <member><function>oci_fetch_assoc</function></member>
+    <member><function>oci_fetch_array</function></member>
+    <member><function>oci_fetch_row</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

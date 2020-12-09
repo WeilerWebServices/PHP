@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351135 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+<!-- CREDITS: DAnnebicque -->
+
+<refentry xml:id="function.date-sun-info" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>date_sun_info</refname>
+  <refpurpose>Retourne un tableau avec les informations sur le lever/coucher 
+   du soleil ainsi que le début et la fin de l'aube</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>array</type><type>false</type></type><methodname>date_sun_info</methodname>
+   <methodparam><type>int</type><parameter>timestamp</parameter></methodparam>
+   <methodparam><type>float</type><parameter>latitude</parameter></methodparam>
+   <methodparam><type>float</type><parameter>longitude</parameter></methodparam>
+  </methodsynopsis>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>timestamp</parameter></term>
+     <listitem>
+      <para>
+       Horodatage Unix.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>latitude</parameter></term>
+     <listitem>
+      <para>
+       Latitude, en degrés.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>longitude</parameter></term>
+     <listitem>
+      <para>
+       Longitude, en degrés.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne un tableau en cas de succès&return.falseforfailure;.
+   La structure du tableau est détaillé dans la liste suivante :
+  </para>
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><literal>sunrise</literal></term>
+     <listitem>
+      <simpara>
+       L'horodatage du levé du soleil (angle de zenith = 90°35').
+      </simpara>
+     </listitem> 
+    </varlistentry>
+    <varlistentry>
+     <term><literal>sunset</literal></term>
+     <listitem>
+      <simpara>
+       L'horodatage du coucher du soleil (angle de zenith = 90°35').
+      </simpara>
+     </listitem> 
+    </varlistentry>
+    <varlistentry>
+     <term><literal>transit</literal></term>
+     <listitem>
+      <simpara>
+       L'horodatage où le soleil est à son zénith, c'est-à-dire a
+       atteint son point le plus haut.
+      </simpara>
+     </listitem> 
+    </varlistentry>
+    <varlistentry>
+     <term><literal>civil_twilight_begin</literal></term>
+     <listitem>
+      <simpara>
+       Le début de l'aube civile (angle de zenith = 96°). Il termine au <literal>sunrise</literal>.
+      </simpara>
+     </listitem> 
+    </varlistentry>
+    <varlistentry>
+     <term><literal>civil_twilight_end</literal></term>
+     <listitem>
+      <simpara>
+       La fin du crépuscule civil (angle de zenith = 96°). Elle commence au <literal>sunset</literal>.
+      </simpara>
+     </listitem> 
+    </varlistentry>
+    <varlistentry>
+     <term><literal>nautical_twilight_begin</literal></term>
+     <listitem>
+      <simpara>
+       Le début de l'aube nautique (angle de zenith = 102°). Il termine au
+       <literal>civil_twilight_begin</literal>.
+      </simpara>
+     </listitem> 
+    </varlistentry>
+    <varlistentry>
+     <term><literal>nautical_twilight_end</literal></term>
+     <listitem>
+       <simpara>
+       La fin du crépuscule nautique (angle de zenith = 102°). Elle commence a
+       <literal>civil_twilight_end</literal>.
+      </simpara>
+     </listitem> 
+    </varlistentry>
+    <varlistentry>
+     <term><literal>astronomical_twilight_begin</literal></term>
+     <listitem>
+      <simpara>
+       Le début de l'aube astronomique (angle de zenith = 108°). Il termine au
+       <literal>nautical_twilight_begin</literal>.
+      </simpara>
+     </listitem> 
+    </varlistentry>
+    <varlistentry>
+     <term><literal>astronomical_twilight_end</literal></term>
+     <listitem>
+      <simpara>
+       La fin du crépuscule astronomique (angle de zenith = 108°). Elle commence a
+       <literal>nautical_twilight_end</literal>.
+      </simpara>
+     </listitem> 
+    </varlistentry>
+   </variablelist>
+  </para>
+  <para> 
+   Les valeurs des éléments du tableau sont soit des
+   timestamps UNIX, &false;, si le soleil est sous le zenith
+   respectif pour la journée entière, ou &true;, si le soleil
+   est au dessus du zenith respectif pour toute la journée.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>date_sun_info</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$sun_info = date_sun_info(strtotime("2006-12-12"), 31.7667, 35.2333);
+foreach ($sun_info as $key => $val) {
+  echo "$key: " . date("H:i:s", $val) . "\n";
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+sunrise: 05:52:11
+sunset: 15:41:21
+transit: 10:46:46
+civil_twilight_begin: 05:24:08
+civil_twilight_end: 16:09:24
+nautical_twilight_begin: 04:52:25
+nautical_twilight_end: 16:41:06
+astronomical_twilight_begin: 04:21:32
+astronomical_twilight_end: 17:12:00
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Nuit polaire</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(date_sun_info(strtotime("2017-12-21"), 90, 0));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+array(9) {
+  ["sunrise"]=>
+  bool(false)
+  ["sunset"]=>
+  bool(false)
+  ["transit"]=>
+  int(1513857490)
+  ["civil_twilight_begin"]=>
+  bool(false)
+  ["civil_twilight_end"]=>
+  bool(false)
+  ["nautical_twilight_begin"]=>
+  bool(false)
+  ["nautical_twilight_end"]=>
+  bool(false)
+  ["astronomical_twilight_begin"]=>
+  bool(false)
+  ["astronomical_twilight_end"]=>
+  bool(false)
+}
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Soleil de minuit</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(date_sun_info(strtotime("2017-06-21"), 90, 0));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+array(9) {
+  ["sunrise"]=>
+  bool(true)
+  ["sunset"]=>
+  bool(true)
+  ["transit"]=>
+  int(1498046510)
+  ["civil_twilight_begin"]=>
+  bool(true)
+  ["civil_twilight_end"]=>
+  bool(true)
+  ["nautical_twilight_begin"]=>
+  bool(true)
+  ["nautical_twilight_end"]=>
+  bool(true)
+  ["astronomical_twilight_begin"]=>
+  bool(true)
+  ["astronomical_twilight_end"]=>
+  bool(true)
+}
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>date_sunrise</function></member>
+    <member><function>date_sunset</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

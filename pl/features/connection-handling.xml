@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 333194 Maintainer: joeaccord Status: ready -->
+<!-- $Revision$ -->
+<!-- CREDITS: slawek, sobak -->
+ <chapter xml:id="features.connection-handling" xmlns="http://docbook.org/ns/docbook">
+  <title>Obsługa połączeń</title>
+
+  <para>
+   PHP wewnętrznie zarządza stanem połączenia. Mogą wystąpić
+   cztery stany:
+   <itemizedlist>
+    <listitem><simpara>0 - NORMAL</simpara></listitem>
+    <listitem><simpara>1 - ABORTED (przerwany)</simpara></listitem>
+    <listitem><simpara>2 - TIMEOUT (przekroczony czas)</simpara></listitem>
+    <listitem><simpara>3 - ABORTED i TIMEOUT (przerwany i przekroczony czas)</simpara></listitem>
+   </itemizedlist>
+  </para>
+
+  <simpara>
+   Kiedy skrypt PHP się wykonuje, aktywny jest stan NORMAL.
+   Jeśli klient się rozłączy, stan przechodzi w ABORTED.
+   Zwykle ma to miejsce gdy użytkownik naciśnie przycisk STOP w
+   przeglądarce. Jeśli przekroczony zostanie narzucony limit czasu
+   (patrz <function>set_time_limit</function>), stan zmienia się
+   na TIMEOUT.
+  </simpara>
+
+  <simpara>
+   Możesz zdecydować czy po rozłączeniu klienta praca skryptu ma zostać
+   przerwana. Czasem przydatne jest by skrypty działały do końca, nawet
+   gdy braknie przeglądarki do której można wysyłać dane. Domyślnie,
+   po rozłączeniu się klienta, działanie skryptu jest przerywane. To
+   zachowanie można zmienić dzięki opcji ignore_user_abort w &php.ini;, jak
+   również dyrektywie Apache &httpd.conf; <literal>php_value ignore_user_abort</literal> 
+   lub funkcji <function>ignore_user_abort</function>. Jeśli nie każesz PHP ignorować
+   rozłączeń klienta, a klient rozłączy się, skrypt zakończy działanie.
+   Jedyny wyjątek wystąpi, jeśli zarejestrujesz funkcję zamykającą, używając
+   <function>register_shutdown_function</function>. Wtedy, gdy użytkownik
+   wciśnie przycisk STOP i przy kolejnej próbie wysłania wyniku PHP
+   wykryje przerwanie połączenia, zostanie wykonana funkcja zamykająca.
+   Będzie ona również wywoływana przy normalnym zakończeniu pracy skryptu,
+   zatem, by wykonać inne czynności gdy klient się rozłączy, można
+   użyć funkcji <function>connection_aborted</function>. Zwraca ona
+   &true; jeśli połączenie zostało przerwane.
+  </simpara>
+
+  <simpara>
+   Skrypt może zostać również zakończony przez wbudowany licznik czasu.
+   Domyślnie czas ten wynosi 30 sekund. Wartość tę można zmienić
+   używając opcji <option>max_execution_time</option> w &php.ini;, jak również dyrektywy
+   Apache &httpd.conf; <literal>php_value max_execution_time</literal> lub funkcji
+   <function>set_time_limit</function>. Kiedy czas na wykonanie się
+   skończy, skrypt zostanie przerwany podobnie jak w przypadku rozłączenia
+   się klienta (patrz wyżej). Jeśli funkcja zamykająca była zarejestrowana,
+   zostanie wywołana. Wewnątrz funkcji zamykającej możesz sprawdzić czy
+   została ona wywołana wskutek przekroczenia czasu. Do tego celu użyj
+   funkcji <function>connection_status</function>. Funkcja zwróci 2, jeśli to
+   przekroczenie limitu czasu spowodowało wywołanie funkcji
+   zamykającej.
+  </simpara>
+
+  <simpara>
+   Należy zwrócić uwagę, że stany ABORTED i TIMEOUT mogą być aktywne
+   jednocześnie. Jest to możliwe, jeśli każesz PHP ignorować rozłączenia
+   klienta. PHP będzie brało pod uwagę fakt, że połączenie z klientem
+   mogło zostać zerwane, ale skrypt będzie pracował dalej. Gdy minie czas
+   przeznaczony na wykonanie skryptu, zostanie on przerwany i uruchomiona
+   zostanie funkcja zamykająca (jeśli była ustawiona). W tym momencie funkcje
+   <function>connection_timeout</function> i
+   <function>connection_aborted</function> będą zwracały &true;. Możesz
+   także sprawdzić oba stany przy pomocy funkcji
+   <function>connection_status</function> w takim wypadku zwróci ona 3.
+  </simpara>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 344980 Maintainer: cmb Status: ready -->
+<!-- CREDITS: tom -->
+
+<refentry xml:id="function.array-push" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>array_push</refname>
+  <refpurpose>Fügt ein oder mehr Elemente an das Ende eines Arrays an</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>array_push</methodname>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_push</function> behandelt
+   <parameter>array</parameter> als Stapel (Stack), und fügt die
+   übergebenen Variablen an das Ende von
+   <parameter>array</parameter> an.  Die Länge von
+   <parameter>array</parameter> wird dabei um die Anzahl der
+   angefügten Variablen erhöht. Dies hat den selben Effekt wie:
+   <programlisting role="php">
+<![CDATA[
+<?php
+$array[] = $var;
+?>
+]]>
+   </programlisting>
+   für jeden übergebenen Wert wiederholt.
+  </para>
+  <note>
+   <simpara>
+    Wenn Sie <function>array_push</function> verwenden, um ein Element an
+    ein Array anzuhängen, ist es besser <literal>$array[] = </literal> zu
+    benutzen, da dies den zusätzlichen Aufwand vermeidet, eine Funktion
+    aufzurufen
+   </simpara>
+  </note>
+  <note>
+   <simpara>
+    <function>array_push</function> gibt eine Warnung aus, wenn das erste
+    Argument kein Array ist. Dies unterscheidet sich vom Verhalten von
+    <literal>$var[]</literal>, welches ein neues Array erzeugt.
+   </simpara>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Das Eingabe-Array.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>...</parameter></term>
+     <listitem>
+      <para>
+       Die Werte, die am Ende von <parameter>array</parameter> angefügt
+       werden sollen.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Liefert die neue Anzahl Elemente des Arrays.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        Diese Funktion kann nun mit nur einem Parameter aufgerufen werden. Zuvor
+        waren mindestens zwei Parameter erforderlich.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>array_push</function> Beispiel</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$stack = array("Orange", "Banane");
+array_push($stack, "Apfel", "Himbeere");
+print_r($stack);
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen role="php">
+<![CDATA[
+Array
+(
+    [0] => Orange
+    [1] => Banane
+    [2] => Apfel
+    [3] => Himbeere
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>array_pop</function></member>
+    <member><function>array_shift</function></member>
+    <member><function>array_unshift</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

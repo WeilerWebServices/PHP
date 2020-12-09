@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 350654 Maintainer: radical Status: ready -->
+<!-- CREDITS: simionea -->
+
+<refentry xml:id="function.json-decode" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>json_decode</refname>
+  <refpurpose>Convertește într-o variabilă un șir reprezentat JSON</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>json_decode</methodname>
+   <methodparam><type>string</type><parameter>json</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>assoc</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>depth</parameter><initializer>512</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>options</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Preia un șir de caractere reprezentat JSON și îl convertește într-o
+   variabilă PHP.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>json</parameter></term>
+     <listitem>
+      <para>
+       Șirul (<type>string</type>) reprezentat <parameter>json</parameter> care
+       trebuie convertit.
+      </para>
+      <para>
+       Această funcție operează doar cu șiruri codificate în UTF-8.
+      </para>
+      &json.implementation.superset;
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>assoc</parameter></term>
+     <listitem>
+      <para>
+       Când este &true;, obiectele JSON vor fi întoarse ca tablouri asociative;
+       când este &false;, obiectele JSON vor fi întoarse ca obiecte.
+       Când este &null;, obiectele JSON vor fi întoarse ca tablouri asociative sau obiecte în dependență dacă <constant>JSON_OBJECT_AS_ARRAY</constant>
+       este setat în <parameter>options</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>depth</parameter></term>
+     <listitem>
+      <para>
+       Limita adâncimii de imbricare specificată de utilizator.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>options</parameter></term>
+     <listitem>
+      <para>
+       Masca de biți a opțiunilor
+       <constant>JSON_BIGINT_AS_STRING</constant>,
+       <constant>JSON_INVALID_UTF8_IGNORE</constant>,
+       <constant>JSON_INVALID_UTF8_SUBSTITUTE</constant>,
+       <constant>JSON_OBJECT_AS_ARRAY</constant>,
+       <constant>JSON_THROW_ON_ERROR</constant>.
+       Efectele acestor constante sunt descrise pe pagina
+       <link linkend="json.constants">Constante JSON</link>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Întoarce valoarea codificată în <parameter>json</parameter> cu tipul PHP
+   corespunzător. Valorile <literal>true</literal>, <literal>false</literal> și
+   <literal>null</literal> sunt întoarse ca &true;, &false; și &null; respectiv.
+   &null; este întors dacă parametrul <parameter>json</parameter> nu poate fi
+   decodificat sau dacă datele pentru codificare sunt mai adânci decât limita de
+   imbricare.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        A fost adăugată valoarea <constant>JSON_THROW_ON_ERROR</constant>
+        a parametrului <parameter>options</parameter>.
+       </entry>
+      </row>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        Parametrul <parameter>assoc</parameter> poate fi acum nul.
+       </entry>
+      </row>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        Au fost adăugate valorile <constant>JSON_INVALID_UTF8_IGNORE</constant> și
+        <constant>JSON_INVALID_UTF8_SUBSTITUTE</constant> a parametrului
+        <parameter>options</parameter>.
+       </entry>
+      </row>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        O cheie JSON vidă ("") poate fi codificată într-o proprietate vidă a
+        obiectului în loc de a folosi o cheie cu valoarea <literal>_empty_</literal>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple <function>json_decode</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$json = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
+
+var_dump(json_decode($json));
+var_dump(json_decode($json, true));
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(stdClass)#1 (5) {
+    ["a"] => int(1)
+    ["b"] => int(2)
+    ["c"] => int(3)
+    ["d"] => int(4)
+    ["e"] => int(5)
+}
+
+array(5) {
+    ["a"] => int(1)
+    ["b"] => int(2)
+    ["c"] => int(3)
+    ["d"] => int(4)
+    ["e"] => int(5)
+}
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Accesarea proprietăților nevalide ale unui obiect</title>
+    <simpara>
+     Accesarea elementelor dintr-un obiect, care conțin caractere nepermise
+     conform convenției de denumiri PHP (de ex. liniuța), poate fi realizată
+     prin încapsularea denumirii elementului între paranteze figurate și
+     apostrofuri.
+    </simpara>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$json = '{"foo-bar": 12345}';
+
+$obj = json_decode($json);
+print $obj->{'foo-bar'}; // 12345
+
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Greșeli tipice la utilizarea <function>json_decode</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// următoarele șiruri sunt valide în JavaScript, dar nu sunt valide în JSON
+
+// denumirea și valoarea trebuie să fie cuprinse între ghilimele duble
+// ghilimelele singulare nu sunt valide
+$bad_json = "{ 'bar': 'baz' }";
+json_decode($bad_json); // null
+
+// denumirea trebuie să fie cuprinsă între ghilimele duble
+$bad_json = '{ bar: "baz" }';
+json_decode($bad_json); // null
+
+// virgule în plus la sfârșit nu sunt permise
+$bad_json = '{ bar: "baz", }';
+json_decode($bad_json); // null
+
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Erori la parametrul <parameter>depth</parameter></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Codificarea datelor.
+$json = json_encode(
+    array(
+        1 => array(
+            'English' => array(
+                'One',
+                'January'
+            ),
+            'French' => array(
+                'Une',
+                'Janvier'
+            )
+        )
+    )
+);
+
+// Definirea erorilor.
+$constants = get_defined_constants(true);
+$json_errors = array();
+foreach ($constants["json"] as $name => $value) {
+    if (!strncmp($name, "JSON_ERROR_", 11)) {
+        $json_errors[$value] = $name;
+    }
+}
+
+// Arată erorile pentru diferite adâncimi.
+foreach (range(4, 3, -1) as $depth) {
+    var_dump(json_decode($json, true, $depth));
+    echo 'Last error: ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+array(1) {
+  [1]=>
+  array(2) {
+    ["English"]=>
+    array(2) {
+      [0]=>
+      string(3) "One"
+      [1]=>
+      string(7) "January"
+    }
+    ["French"]=>
+    array(2) {
+      [0]=>
+      string(3) "Une"
+      [1]=>
+      string(7) "Janvier"
+    }
+  }
+}
+Last error: JSON_ERROR_NONE
+
+NULL
+Last error: JSON_ERROR_DEPTH
+]]>
+    </screen>
+   </example>
+   <example>
+    <title><function>json_decode</function> cu numere întregi mari</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$json = '{"number": 12345678901234567890}';
+
+var_dump(json_decode($json));
+var_dump(json_decode($json, false, 512, JSON_BIGINT_AS_STRING));
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(stdClass)#1 (1) {
+  ["number"]=>
+  float(1.2345678901235E+19)
+}
+object(stdClass)#1 (1) {
+  ["number"]=>
+  string(20) "12345678901234567890"
+}
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Specificația JSON nu este JavaScript, ci un subset al JavaScript.
+   </para>
+  </note>
+  <note>
+   <para>
+    În cazul decodificării cu eșec funcția <function>json_last_error</function>
+    poate fi utilizată pentru a determina natura exactă a erorii.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>json_encode</function></member>
+    <member><function>json_last_error</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

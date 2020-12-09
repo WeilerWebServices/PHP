@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 340481 Maintainer: ae Status: ready --><!-- CREDITS: rarruda,ae -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.basename">
+ <refnamediv>
+  <refname>basename</refname>
+  <refpurpose>Retorna apenas a parte que corresponde ao nome do arquivo de um caminho/path</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>basename</methodname>
+   <methodparam><type>string</type><parameter>path</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>suffix</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Dado uma string contendo um caminho para um arquivo ou diretório, essa função
+   irá retornar apenas a parte que corresponde ao nome do arquivo.
+  </para>
+  <note>
+   <para>
+    <function>basename</function> trabalha de forma básica na string fornecida
+    não interpretando o caminho no sistema de arquivos ou componentes de caminho
+    como "<literal>..</literal>".
+   </para>
+  </note>
+  <caution>
+   <para>
+    <function>basename</function> depende do locale, então para obter o
+    basename correto para caminhos com caracteres multibytes, o locale correspondente deve
+    estar configurado com a função <function>setlocale</function>.
+   </para>
+  </caution>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>path</parameter></term>
+     <listitem>
+      <para>
+       Um caminho.
+      </para>
+      <para>
+       No Windows, tanto a barra (<literal>/</literal>) quanto a barra invertida
+       (<literal>\</literal>) são usadas como caracteres separadores de caminho. Mas em
+       outros ambientes, apenas a barra (<literal>/</literal>).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>suffix</parameter></term>
+     <listitem>
+      <para>
+       Se o nome do arquivo termina em <parameter>suffix</parameter>, o sufixo será
+       removido.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retorna o nome do arquivo de um dado <parameter>path</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemplo da <function>basename</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo "1) ".basename("/etc/sudoers.d", ".d").PHP_EOL;
+echo "2) ".basename("/etc/sudoers.d").PHP_EOL;
+echo "3) ".basename("/etc/passwd").PHP_EOL;
+echo "4) ".basename("/etc/").PHP_EOL;
+echo "5) ".basename(".").PHP_EOL;
+echo "6) ".basename("/");
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+1) sudoers
+2) sudoers.d
+3) passwd
+4) etc
+5) .
+6) 
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>dirname</function></member>
+    <member><function>pathinfo</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+   
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

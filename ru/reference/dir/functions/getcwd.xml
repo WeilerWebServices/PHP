@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 350045 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+<!-- splitted from ./en/functions/dir.xml, last change in rev 1.7 -->
+<refentry xml:id="function.getcwd" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>getcwd</refname>
+  <refpurpose>Получает имя текущего рабочего каталога</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>getcwd</methodname>
+   <void/>
+  </methodsynopsis>
+  <para>
+   Возвращает имя текущего рабочего каталога.
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Возвращает текущий рабочий каталог в случае успешного выполнения или &false; в
+   случае ошибки.
+  </para>
+  <para>
+   На некоторых вариантах Unix <function>getcwd</function> вернет
+   &false;, если на каком-либо из родительских каталогов не
+   установлен режим чтения или поиска, даже если он установлен на
+   текущем каталоге. Больше информации о режимах доступа смотрите
+   в документации функции <function>chmod</function>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  <caution>
+   <para>
+    Если PHP-интерпретатор собран с поддержкой ZTS (Zend Thread Safety), текущий рабочий каталог, возвращаемый <function>getcwd</function>, может отличаться от того, что возвращают интерфейсы операционной системы.
+    Буду задействованы внешние библиотеки (подключенные через <link linkend="book.ffi">FFI</link>), использующие текущий рабочий каталог.
+   </para>
+  </caution>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>getcwd</function></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+// текущий каталог
+echo getcwd() . "\n";
+
+chdir('cvs');
+
+// текущий каталог
+echo getcwd() . "\n";
+
+?>
+]]>
+     </programlisting>
+     &example.outputs.similar;
+     <screen>
+<![CDATA[
+/home/didou
+/home/didou/cvs
+]]>
+     </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>chdir</function></member>
+    <member><function>chmod</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

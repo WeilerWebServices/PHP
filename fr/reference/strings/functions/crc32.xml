@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 337619 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.crc32">
+ <refnamediv>
+  <refname>crc32</refname>
+  <refpurpose>Calcule la somme de contrôle CRC32</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>crc32</methodname>
+   <methodparam><type>string</type><parameter>str</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Génère la somme de contrôle cyclique CRC32, calculée sur 32 bits, et
+   appliquée à la chaîne <parameter>str</parameter>. Cette fonction est
+   généralement utilisée pour valider l'intégrité de données durant une
+   transmission.
+  </para>
+  <warning>
+   <simpara>
+    En raison du fait que le type entier de PHP est signé,
+    la plupart des sommes de contrôle crc32 se trouve être des
+    entiers négatifs sur les plateformes 32bits. Sur des installations
+    64bits, tous les résultats de la fonction <function>crc32</function>
+    seront des entiers positifs.
+   </simpara>
+   <simpara>
+    Aussi, vous devez utiliser le formatteur "%u" de la fonction
+    <function>sprintf</function> ou de la fonction <function>printf</function>
+    pour récupérer une représentation en chaîne de caractères de la somme
+    de contrôle non-signée de la fonction <function>crc32</function>
+    au format décimal.
+   </simpara>
+   <simpara>
+    Pour une représentation hexadécimale de la somme de contrôle, vous
+    pouvez utiliser soit le formatteur "%x" de la fonction <function>sprintf</function>
+    ou de la fonction <function>printf</function> , ou bien les fonctions de
+    conversion <function>dechex</function>, les deux solutions prennent soin
+    de convertir le résultat de la fonction <function>crc32</function>
+    en un entier non-signé.
+   </simpara>
+   <simpara>
+    Sur les installations 64bits, la fonction retournera aussi des entiers
+    négatifs pour des valeurs retournées très grandes, mais cela va casser
+    la conversion en héxadécimal en ayant une position 0xFFFFFFFF########
+    supplémentaire. Sachant que la représentation décimale semble être le
+    cas le plus largement utilisé, nous avons décidé de ne pas la casser
+    même si elle casse directement la comparaison décimale dans 50% des
+    cas lors d'un passage de 32 à 64bits.
+   </simpara>
+   <simpara>
+    Avec du recul, le fait que la fonction retourne un entier n'était peut-être
+    pas la meilleure idée, et retourner dès le début une représentation hexadécimale
+    sous la forme d'une chaîne de caractères (tel que le fait la fonction
+    <function>md5</function>), aurait été meilleure solution.
+   </simpara>
+   <simpara>
+    Pour une solution plus pérenne, vous pouvez vous retourner vers la fonction
+    générique <function>hash</function>. <code>hash("crc32b", $str)</code>
+    va retourner la même chaîne de caractères que <code>str_pad(dechex(crc32($str)), 8, '0', STR_PAD_LEFT)</code>.
+   </simpara>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>str</parameter></term>
+     <listitem>
+      <para>
+       Les données.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne la somme de contrôle crc32 de la chaîne
+   <parameter>str</parameter>, sous la forme d'un entier.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Afficher une somme de contrôle CRC32</title>
+    <para>
+     Cet exemple illustre comment afficher la somme de contrôle
+     avec la fonction <function>printf</function> :
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$checksum = crc32("Le vif zéphyr jubile sur les kumquats du clown gracieux.");
+printf("%u\n", $checksum);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>hash</function></member>
+    <member><function>md5</function></member>
+    <member><function>sha1</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

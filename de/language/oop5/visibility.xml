@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 342692 Maintainer: wiesemann Status: ready -->
+ <sect1 xml:id="language.oop5.visibility" xmlns="http://docbook.org/ns/docbook">
+  <title>Sichtbarkeit</title>
+  <para>
+   Die Sichtbarkeit einer Eigenschaft, Methode oder (von PHP 7.1.0 an) einer Konstante kann definiert werden, indem
+   man der Deklaration eines der Schlüsselwörter <emphasis>public</emphasis>,
+   <emphasis>protected</emphasis> oder <emphasis>private</emphasis> voranstellt.
+   Auf public deklarierte Elemente kann von überall her zugegriffen werden.
+   Protected beschränkt den Zugang auf Elternklassen und abgeleitete Klassen
+   (sowie die Klasse, die das Element definiert). Private grenzt die Sichtbarkeit
+   einzig auf die Klasse ein, die das Element definiert.
+  </para>
+
+  <sect2 xml:id="language.oop5.visiblity-members">
+   <title>Sichtbarkeit von Membern</title>
+   <para>
+   Klasseneigenschaften müssen als public, private oder protected definiert
+   werden. Wenn sie mit <emphasis>var</emphasis> deklariert werden, werden sie
+   als public definiert.
+   </para>
+   <para>
+    <example>
+     <title>Eigenschaftendeklaration</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+/**
+ * Definiere MyClass
+ */
+class MyClass
+{
+    public $public = 'Public';
+    protected $protected = 'Protected';
+    private $private = 'Private';
+
+    function printHello()
+    {
+        echo $this->public;
+        echo $this->protected;
+        echo $this->private;
+    }
+}
+
+$obj = new MyClass();
+echo $obj->public; // Funktioniert
+echo $obj->protected; // Fataler Fehler
+echo $obj->private; // Fataler Fehler
+$obj->printHello(); // Zeigt Public, Protected und Private
+
+
+/**
+ * Definiere MyClass2
+ */
+class MyClass2 extends MyClass
+{
+    // Wir können die public- und protected-Eigenschaften neu deklarieren, 
+    // aber nicht die private
+    public $public = 'Public2';
+    protected $protected = 'Protected2';
+
+    function printHello()
+    {
+        echo $this->public;
+        echo $this->protected;
+        echo $this->private;
+    }
+}
+
+$obj2 = new MyClass2();
+echo $obj2->public; // Funktioniert
+echo $obj2->protected; // Fataler Fehler
+echo $obj2->private; // Undefiniert
+$obj2->printHello(); // Zeigt Public2, Protected2, Undefined
+
+?> 
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <note>
+    <simpara>
+     Die PHP-4-Methode, Variablen mit dem Schlüsselwort <emphasis>var</emphasis>
+     zu deklarieren, wird aus Gründen der Abswärtskompatibilität weiterhin
+     unterstützt (als Synonym für das public-Schlüsselwort). In PHP 5
+     vor 5.1.3 hat dessen Verwendung eine <constant>E_STRICT</constant>-Warnung
+     erzeugt.
+    </simpara>
+   </note>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.visiblity-methods">
+   <title>Sichtbarkeit von Methoden</title>
+   <para>
+    Klassenmethoden müssen mit public, private oder protected definiert werden.
+    Methoden ohne jede explizite Deklaration sind als public definiert.
+   </para>
+   <para>
+    <example>
+     <title>Methodendeklaration</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+/**
+ * Definiere MyClass
+ */
+class MyClass
+{
+    // Deklariert einen public Konstruktor
+    public function __construct() { }
+
+    // Deklariere eine public Funktion
+    public function MyPublic() { }
+
+    // Deklariere eine protected Funktion
+    protected function MyProtected() { }
+
+    // Deklariere eine private Funktion
+    private function MyPrivate() { }
+
+    // Dies ist public
+    function Foo()
+    {
+        $this->MyPublic();
+        $this->MyProtected();
+        $this->MyPrivate();
+    }
+}
+
+$myclass = new MyClass;
+$myclass->MyPublic(); // Funktioniert
+$myclass->MyProtected(); // Fataler Fehler
+$myclass->MyPrivate(); // Fataler Fehler
+$myclass->Foo(); // Public, Protected und Private funktionieren
+
+
+/**
+ * Definiere MyClass2
+ */
+class MyClass2 extends MyClass
+{
+    // Dies ist public
+    function Foo2()
+    {
+        $this->MyPublic();
+        $this->MyProtected();
+        $this->MyPrivate(); // Fataler Fehler
+    }
+}
+
+$myclass2 = new MyClass2;
+$myclass2->MyPublic(); // Funktioniert
+$myclass2->Foo2(); // Public und Protected funktionieren, Private nicht
+
+class Bar 
+{
+    public function test() {
+        $this->testPrivate();
+        $this->testPublic();
+    }
+
+    public function testPublic() {
+        echo "Bar::testPublic\n";
+    }
+    
+    private function testPrivate() {
+        echo "Bar::testPrivate\n";
+    }
+}
+
+class Foo extends Bar 
+{
+    public function testPublic() {
+        echo "Foo::testPublic\n";
+    }
+    
+    private function testPrivate() {
+        echo "Foo::testPrivate\n";
+    }
+}
+
+$myFoo = new Foo();
+$myFoo->test(); // Bar::testPrivate 
+                // Foo::testPublic
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.visiblity-constants">
+   <title>Constant Visibility</title>
+   <para>
+    Von PHP 7.1.0 an können Klassenkonstanten als public, private, oder
+    protected definiert werden. Konstanten, die ohne eine explizite
+    Sichtbarkeitsangabe deklariert wurden, sind public.
+   </para>
+   <para>
+    <example>
+     <title>Konstantendeklaration von PHP 7.1.0 an</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+/**
+ * Definiere MyClass
+ */
+class MyClass
+{
+    // Deklariere eine öffentliche Konstante
+    public const MY_PUBLIC = 'öffentlich';
+
+    // Deklariere eine geschützte Konstante
+    protected const MY_PROTECTED = 'geschützt';
+
+    // Deklariere eine private Konstante
+    private const MY_PRIVATE = 'privat';
+
+    public function foo()
+    {
+        echo self::MY_PUBLIC;
+        echo self::MY_PROTECTED;
+        echo self::MY_PRIVATE;
+    }
+}
+
+$myclass = new MyClass();
+MyClass::MY_PUBLIC; // funktioniert
+MyClass::MY_PROTECTED; // fataler Fehler
+MyClass::MY_PRIVATE; // fataler Fehler
+$myclass->foo(); // öffentlich, geschützt und private funktioniert
+
+
+/**
+ * Definiere MyClass2
+ */
+class MyClass2 extends MyClass
+{
+    // Dies ist öffentlich
+    function foo2()
+    {
+        echo self::MY_PUBLIC;
+        echo self::MY_PROTECTED;
+        echo self::MY_PRIVATE; // fataler Fehler
+    }
+}
+
+$myclass2 = new MyClass2;
+echo MyClass2::MY_PUBLIC; // funktioniert
+$myclass2->foo2(); // öffentlich und geschützt funktioniert, aber nicht privat
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.visibility-other-objects">
+   <title>Sichtbarkeit von anderen Objekten</title>
+   <para>
+    Objekte des gleichen Types haben untereinander Zugriff auf die als private
+    und protected markierten Member, obwohl es sich nicht um die
+    gleichen Instanzen handelt. Dies liegt daran, dass die Details über die
+    Implementierung innerhalb solcher Objekte bekannt sind.
+   </para>
+   <example>
+    <title>Zugriff auf als private markierte Member des gleichen Objekttyps</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Test
+{
+    private $foo;
+
+    public function __construct($foo)
+    {
+        $this->foo = $foo;
+    }
+
+    private function bar()
+    {
+        echo 'Zugriff auf die private Methode';
+    }
+
+    public function baz(Test $other)
+    {
+        // Ändern der privaten Eigenschaft ist möglich:
+        $other->foo = 'Hallo';
+        var_dump($other->foo);
+
+        // Aufruf der privaten Methode ist ebenfalls möglich:
+        $other->bar();
+    }
+}
+
+$test = new Test('test');
+
+$test->baz(new Test('other'));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+string(5) "Hallo"
+Zugriff auf die private Methode
++]]>
+    </screen>
+   </example>
+  </sect2>
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 334762 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes Maintainer: pmartin -->
+
+<appendix xml:id="history" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Histoire de PHP</title>
+ <para>
+  PHP a suivi un long chemin depuis sa naissance au milieu de l'année 1990.
+  Depuis ses débuts modestes, jusqu'à devenir l'un des plus éminents
+  langage de programmation pour le web, l'évolution de PHP
+  est un véritable conte de fées technologique. Figurez-vous
+  qu'une telle croissance n'a pas été tâche facile. Ceux d'entre
+  vous qui sont intéressés par un bref récapitulatif de ce qu'a été
+  l'histoire de PHP jusqu'à aujourd'hui, poursuivez la lecture de
+  ce document. Si vous souhaitez récupérer des pièces uniques de l'histoire
+  d'Internet, vous pouvez trouver les anciennes versions de PHP
+  dans notre <link xlink:href="&url.php.museum;">musée</link>.
+ </para>
+ <sect1 xml:id="history.php">
+  <title>Histoire de PHP</title>
+  <sect2 xml:id="history.phpfi">
+   <title>PHP Tools, FI, Construction Kit, et PHP/FI</title>
+   <para>
+    PHP, tel qu'il est connu aujourd'hui, est le successeur d'un produit appelé
+    PHP/FI. Créée en 1994 par Rasmus Lerdorf, la toute première incarnation
+    de PHP était un simple jeu de binaires CGI écrits en langage C.
+    Originairement utilisée pour suivre les visiteurs de son curriculum vitae
+    en ligne, il nomme cette suite de scripts "Personal
+    Home Page Tools" (ndt : Outils pour page personnelle), plus
+    fréquemment appelée "PHP Tools". Au fil du temps, de plus en plus
+    de fonctionnalités sont demandées, et Rasmus ré-écrit les outils PHP,
+    produisant ainsi une implémentation plus large et plus riche.
+    Ce nouveau modèle était capable d’interagir avec une base de données,
+    mais aussi, fournissait un framework permettant aux utilisateurs de
+    développer une application dynamique simple pour le web, comme des
+    livres d'or. En Juin 1995, Rasmus 
+    <link xlink:href="&url.php.release1.0.0;">fournit</link>
+    le code source de PHP Tools au grand public, permettant ainsi aux
+    développeurs de l'utiliser comme bon leur semblait. Ceci a également
+    permis - et encouragé - aux utilisateurs de fournir des patches pour
+    corriger les bogues, mais aussi pour éprouver la stabilité du produit.
+   </para>
+   <para>
+    En septembre de cette année là, Rasmus continua d'élargir PHP et -
+    pour un temps très court - supprima le nom PHP. Faisant dorénavant
+    référence aux outils sous le nom de FI (abréviation pour "Forms Interpreter"
+    ou interpréteur de formulaire), la nouvelle implémentation incluait plusieurs
+    fonctionnalités de base que nous connaissons encore aujourd'hui.
+    Elle avait ces variables qui ressemblent au Perl, un système
+    d'interprétation automatique des variables de formulaires, et une
+    syntaxe qui s'intègre facilement dans HTML. La syntaxe elle-même
+    était similaire à celle du Perl, bien que beaucoup plus
+    limitée, plus simple, et un peu incohérente. En fait, pour embarquer
+    du code dans un fichier HTML, les développeurs devaient utiliser
+    des commentaires HTML. Malgré le fait que cette méthode ne soit
+    pas accueillie avec un grand enthousiasme, FI continua de rassembler
+    de plus en plus de monde, et fut accepté comme outil CGI --- mais toujours
+    pas comme un langage. Cependant, ceci commença à changer les mois suivants ;
+    en octobre 1995, Rasmus livra une nouvelle version totalement ré-écrite.
+    Reprenant le nom de PHP, elle était maintenant nommée (brièvement)
+    "Personal Home Page Construction Kit", et était la première version à mettre
+    en avant le fait que PHP était considéré comme une interface de scripts avancée.
+    Le langage fut délibérément architecturé pour ressembler à la structure du C,
+    rendant ainsi son adoption facile pour les développeurs familiers avec les
+    langages comme C, Perl et consorts. Dans un premier temps limité aux systèmes
+    Unix et POSIX, son potentiel pour une implémentation sous Windows NT
+    commença à être exploré.
+   </para>
+   <para>
+    Le code fut de nouveau repris de zéro, et en Avril 1996,
+    combinant les noms des précédentes versions, Rasmus introduisit
+    PHP/FI. Cette implémentation de seconde génération commença à faire réellement
+    évoluer PHP d'une simple suite d'outils vers un vrai langage de
+    programmation. Il incluait un support interne pour les bases de
+    données DBM, mSQL et Postgres95, pour les cookies,
+    un support des fonctions définies par l'utilisateur, et bien plus.
+    Ce mois de Juin, PHP/FI prenait un statut de version 2.0. Un point
+    intéressant, cependant, était qu'il n'existait qu'une seule et unique
+    version de PHP 2.0. Quand elle est finalement sortie du statut béta en Novembre
+    1997, le moteur d'analyse interne était déjà en cours de ré-écriture complète.
+   </para>
+   <para>
+    Bien qu'il fournît un cycle de développement très court, il
+    continua de gagner en popularité dans ce monde où le développement web
+    était encore très récent. En 1997 et 1998, PHP/FI comptait plusieurs
+    milliers d'utilisateurs à travers le monde. Le site de surveillance Netcraft,
+    en Mai 1998, indiquait qu'environ 60.000 domaines exportaient l'en-tête
+    "PHP", indiquant ainsi que le serveur hôte l'avait d'installé.
+    Ce nombre correspondait à environ 1% des domaines d'Internet de l'époque.
+    Malgré ce chiffre impressionnant, la maturation de PHP/FI était condamnée
+    à ses limitations ; bien qu'il y ait plusieurs contributeurs mineurs,
+    il était encore principalement développé par un seul individu.
+   </para>
+   <para>
+    <example>
+     <title>Exemple de code PHP/FI</title>
+     <programlisting role="html">
+<![CDATA[
+<!--include /text/header.html-->
+
+<!--getenv HTTP_USER_AGENT-->
+<!--ifsubstr $exec_result Mozilla-->
+  Hé, vous utilisez Netscape !<p>
+<!--endif-->
+
+<!--sql database select * from table where user='$username'-->
+<!--ifless $numentries 1-->
+  Désolé, cette ligne n'existe pas<p>
+<!--endif exit-->
+  Bienvenue <!--$user--> !<p>
+  Vous avez <!--$index:0--> crédits sur votre compte.<p>
+
+<!--include /text/footer.html-->
+]]>
+     </programlisting>
+    </example>
+    </para>
+   </sect2>
+  <sect2 xml:id="history.php3">
+   <title>PHP 3</title>
+   <para>
+    PHP 3.0 fut la première version du langage tel que nous le connaissons
+    actuellement. Trouvant que PHP/FI 2.0 était toujours insuffisant et
+    manquait de fonctionnalités nécessaires pour mettre en oeuvre une application
+    d'eCommerce,  qu'ils développaient dans le cadre d'un projet universitaire,
+    Andi Gutmans et Zeev Suraski de la ville de Tel Aviv (Israël) commencèrent
+    encore une autre ré-écriture complète de l'analyseur interne en 1997.
+    Se rapprochant de Rasmus via le web, ils discutèrent de divers aspects
+    de l'implémentation courante et de leur re-développement de PHP.
+    Dans une logique d'amélioration du moteur, et pour profiter des utilisateurs existant
+    de PHP/FI, Andi, Rasmus et Zeev décidèrent de collaborer dans le développement d'un
+    nouvel et indépendant langage de programmation. Ce tout nouveau langage a été
+    publié sous un nouveau nom, qui supprima l'idée d'utilisation personnelle
+    limitée inclue dans le nom de PHP/FI 2.0. Il fut ainsi tout simplement renommé
+    'PHP', dont la signification devint un acronyme récursif -
+    PHP: Hypertext Preprocessor.
+   </para>
+   <para>
+    Une des améliorations notables de PHP 3.0 fut ses capacités
+    d'extension. En plus de fournir une infrastructure mature
+    pour de multiples bases de données, protocoles, et
+    APIs, la facilité d'extension du langage en lui-même attira
+    des dizaines de développeurs, qui produisirent de nombreux modules.
+    Ce fut sans aucun doute une des clés de l'énorme succès de PHP 3.0.
+    Une autre de ces clés fut l'introduction d'un support de programmation
+    orientée objet, ainsi qu'une syntaxe de langage bien plus puissante et
+    plus consistante.
+   </para>
+   <para>
+    En Juin 1998, avec plusieurs nouveaux développeurs de par le monde
+    rejoignant le projet, PHP 3.0 fut annoncé par la nouvelle équipe de
+    développement de PHP comme le successeur officiel de PHP/FI 2.0.
+    Le développement actif de PHP/FI 2.0, qui avait en réalité cessé
+    depuis le mois de Novembre de l'année précédente, était maintenant
+    officiellement terminé. Après environ 9 mois de tests publics, lorsque
+    l'annonce de la version officielle de PHP 3.0 fut publiée, il
+    était déjà installé sur plus de 70.000 domaines à travers le monde, et
+    n'était plus limité aux systèmes POSIX. Une petite partie des domaines
+    rapportant une installation de PHP étaient installés sur des serveurs
+    fonctionnant sous Windows 95, 98, NT, et Macintosh. À son apogée, PHP
+    3.0 était installé sur approximativement 10% des serveurs web d'Internet.
+   </para>
+  </sect2>
+  <sect2 xml:id="history.php4">
+   <title>PHP 4</title>
+   <para>
+    Durant l'hiver 1998, juste après la publication de PHP 3.0,
+    Andi Gutmans et Zeev Suraski commencèrent une réécriture du moteur
+    interne de PHP. Les objectifs étaient d'améliorer les performances
+    de PHP sur les applications complexes, et d'améliorer la modularité du
+    code. Ces applications étaient rendues possibles par les nouvelles fonctionnalités
+    de PHP 3.0 et le support d'un grand nombre de bases de données et d'APIs, mais
+    PHP 3.0 n'était pas conçu pour gérer efficacement des applications si complexes.
+   </para>
+   <para>
+    Le nouveau moteur, appelé 'Zend Engine' (combinaison des prénoms de
+    Zeev et Andi), atteignit cet objectif avec succès, et la première version
+    fut publiée vers la mi-1999. PHP 4.0, s'appuyant sur ce moteur,
+    et amélioré par un grand nombre de nouvelles fonctionnalités,
+    fut publié officiellement en mai 2000, presque 2 ans après son
+    prédécesseur. En plus de performances nettement plus élevées,
+    PHP 4.0 apportait le support de nombreux serveurs web, des sessions
+    HTTP, la bufferisation de sortie, une sécurité accrue de la gestion des
+    informations visiteurs, et plusieurs nouvelles structures de
+    langage.
+   </para>
+  </sect2>
+  <sect2 xml:id="history.php5">
+   <title>PHP 5</title>
+   <para>
+    PHP 5 est sorti en Juillet 2004, après un long développement et plusieurs
+    pré-versions. Il est régi par son moteur, le
+    <literal>Zend Engine 2.0</literal>
+    avec un nouveau modèle objet et des dizaines d'autres nouvelles fonctionnalités.
+   </para>
+   <para>
+    L'équipe de développement de PHP regroupe des dizaines de développeurs,
+    en plus des dizaines d'autres travaillant sur des projets en rapport
+    avec PHP, comme PEAR, PECL, et la documentation, ainsi qu'un réseau d'infrastructure
+    sous-jacent d'une centaine de serveurs web individuels sur 6 des 7 continents
+    du monde. En s'appuyant sur une estimation basée sur les statistiques
+    de l'année précédente, il est convenable de supposer que PHP est maintenant
+    installé sur des dizaines, voire même des centaines, de millions de domaines autour
+    du monde.
+   </para>
+  </sect2>
+ </sect1>
+ <sect1 xml:id="history.php.related">
+  <title>Quelques projets liés à PHP</title>
+  <sect2 xml:id="history.pear">
+   <title>PEAR</title>
+   <para>
+    <link xlink:href="&url.php.pear;">PEAR</link>, qui signifie
+    <literal>PHP Extension and  Application Repository</literal>
+    (initialement, PHP Extension and Add-on Repository), est la première
+    version des classes de base en PHP, et pourrait devenir à terme un moyen
+    privilégié de distribuer des extensions PHP entre développeurs.
+   </para>
+   <para>
+    PEAR est né durant les débats tenus lors des PHP Developers'
+    Meeting (PDM) (Rencontres de développeurs PHP), qui ont eu lieu en
+    Janvier 2000 à Tel Aviv. Il a été créé à l'initiative de
+    Stig S. Bakken, et est dédié à sa première fille, Malin Bakken.
+   </para>
+   <para>
+    Depuis l'an 2000, PEAR a grossi jusqu'à devenir un projet significatif
+    avec un groupe de développeurs compétents, qui travaillent à mettre en place
+    une bibliothèque complète, réutilisable et commune, au bénéfice de la communauté
+    PHP entière. Aujourd'hui, PEAR inclut une vaste sélection de classes de base pour
+    accéder à des bases de données, pour stocker du contenu en cache, réaliser des
+    calculs mathématiques, des transactions de commerce électronique, etc.
+   </para>
+   <para>
+    Plus d'informations sur PEAR sont disponibles dans
+    <link xlink:href="&url.php.pear.manual;">le manuel</link>.
+   </para>
+  </sect2>
+  <sect2 xml:id="history.phpqa">
+   <title>Equipe d'assurance Qualité</title>
+   <para>
+    <link xlink:href="&url.php.prerelease;">L'équipe d'assurance Qualité</link>
+    de PHP a été mise en place durant l'été 2000,
+    en réponse aux critiques reçues par PHP 3.0, qui n'était pas suffisamment
+    testé pour des environnements de production. L'équipe est maintenant composée
+    d'un groupe de développeurs de haut niveau, qui ont une bonne connaissance
+    des sources PHP. Ces développeurs passent une bonne partie de leur temps
+    à localiser et corriger les bogues trouvés dans PHP. De plus, il y a un bon
+    nombre d'autres membres du groupe PHP qui testent et fournissent un
+    compte-rendu fidèle de l'utilisation de PHP sur différentes plate-formes.
+   </para>
+  </sect2>
+  <sect2 xml:id="history.phpgtk">
+   <title>PHP-GTK</title>
+   <para>
+    <link xlink:href="&url.php.gtk;">PHP-GTK</link> est la
+    solution PHP pour écrire des applications avec interface graphique, coté client.
+    Andrei Zmievski se souvient de la création de PHP-GTK :
+   </para>
+   <blockquote>
+    <para>
+     La programmation d'interface GUI m'a toujours intéressée,
+     et je pensais que Gtk+ était une excellente bibliothèque, hormis le fait
+     que programmer avec en C est plutôt laborieux.
+     Après avoir assisté aux implémentations de PyGtk et GTK-Perl,
+     j'ai décidé de  voir si PHP pouvait disposer de sa propre interface
+     avec Gtk+, même minimale. J'ai commencé au mois d'août 2000,
+     alors que j'avais un peu plus de temps libre, et j'ai réalisé les
+     premières expérimentations. Mon guide principal fut l'implémentation de
+     PyGtk, qui était plutôt complète et avait une interface orientée
+     objet. James Henstridge, l'auteur de PyGtk, fut d'une aide précieuse au
+     démarrage de ce projet.
+    </para>
+    <para>
+     Réécrire toutes les interfaces de Gtk+ à la main était hors de question
+     et j'ai pensé à réaliser un générateur de code, exactement comme
+     PyGtk l'avait fait. Le générateur de code est un programme PHP qui
+     lit un ensemble de fichiers <filename>.defs</filename>, contenant
+     les classes, constantes
+     et méthodes Gtk+, puis génére le code C qui sert d'interface à PHP.
+     Ce qui ne peut pas être généré automatiquement peut être écrit à la main,
+     dans le fichier <filename>.overrides</filename>.
+    </para>
+    <para>
+     Travailler sur le générateur de code et sur l'infrastructure prit
+     un peu de temps, car je n'avais que peu de temps à consacrer
+     à PHP-GTK durant l'automne 2000. Après que j'ai montré PHP-GTK à
+     Frank Kromann, il s'y intéressa et commença à m'aider sur le générateur
+     et l'implémentation Win32. Lorsque nous écrivîmes le premier programme
+     'Hello World', ce fut extrêmement exitant. Il fallut encore
+     quelques mois pour que le projet soit présentable, et la version initiale
+     fut publiée en mars 2001. La nouvelle fut rapidement relayée sur SlashDot.
+    </para>
+    <para>
+     Anticipant que PHP-GTK pourrait devenir un projet à part entière, j'ai mis
+     en place des listes de diffusion et un serveur CVS indépendants, de même que
+     le site gtk.php.net avec l'aide de Colin Viebrock. La documentation avait
+     aussi besoin d'être rédigée, et James Moore vint me porter une aide
+     précieuse.
+    </para>
+    <para>
+     Depuis sa publication PHP-GTK a gagné en popularité. Nous avons
+     notre propre équipe de documentation, le manuel s'améliore de
+     plus en plus, des gens ont commencé à écrire des extensions pour PHP-GTK, ainsi
+     des applications de plus en plus importantes l'utilisant.
+    </para>
+   </blockquote>
+  </sect2>
+ </sect1>
+ <sect1 xml:id="history.php.books">
+  <title>Livres traitant de PHP</title>
+  <para>
+   Au fur et à mesure que PHP a évolué, il est petit à petit devenu une plate-forme
+   de développement mondialement populaire. Un des signes qui ne trompent
+   pas est que le nombre de livres dédiés à PHP a
+   augmenté en parallèle, au fil des années.
+  </para>
+  <para>
+   À notre connaissance, le premier livre dédié à
+   PHP fut 'PHP - tvorba interaktivních internetových aplikací'
+   (<emphasis>PHP - Créer des Applications Interactives pour Internet</emphasis>),
+   un livre tchèque publié en avril 1999, écrit par Jirka Kosek. Le mois
+   suivant parut un livre allemand écrit par Egon Schmid, Christian
+   Cartus et Richard Blume. Le premier livre en anglais sur PHP fut
+   publié juste après : 'Core PHP Programming' par Leon Atkinson.
+   Ces livres se rapportaient à PHP 3.0.
+  </para>
+  <para>
+   Même si ces livres étaient les premiers de leur genre, ils
+   furent rapidement suivis par un grand nombre d'autres livres,
+   de différents auteurs et éditeurs. On dénombre plus de 400 livres en anglais,
+   plus de 100 en allemand, et plus de 50 en français ou espagnol !
+   De plus, on peut maintenant trouver des livres à propos de PHP dans de
+   nombreuses autres langues, comme le coréen, le japonais ou l'hébreu.
+  </para>
+  <para>
+   De toute évidence, ce grand nombre de livres, écrits par
+   différents auteurs et publiés par de nombreux
+   éditeurs, ainsi que leur disponibilité en différentes langues,
+   témoigne clairement du succès planétaire de PHP.
+  </para>
+ </sect1>
+ <sect1 xml:id="history.php.publications">
+  <title>Publications à propos de PHP</title>
+  <para>
+   À notre connaissance, le premier article consacré à PHP
+   dans un magazine papier fut publié dans la version tchèque de Computerworld,
+   au printemps 1998, et se rapportait à PHP 3.0. Comme pour les livres, ce
+   fut le premier d'une longue série d'articles publiés dans un nombre important
+   de magazines.
+  </para>
+  <para>
+   Des articles sur PHP ont été publiés dans Dr. Dobbs, Linux Enterprise,
+   Linux Magazine et bien d'autres. Il existe même des articles sur la migration 
+   d'applications ASP vers PHP sous Windows dans la bibliothèque
+   <acronym>MSDN</acronym> de <productname>Microsoft</productname>.
+  </para>
+ </sect1>
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

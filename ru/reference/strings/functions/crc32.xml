@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 337619 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.crc32">
+ <refnamediv>
+  <refname>crc32</refname>
+  <refpurpose>Вычисляет полином CRC32 для строки</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>crc32</methodname>
+   <methodparam><type>string</type><parameter>str</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Функция вычисляет циклический избыточный код 32-битных
+   полиномов (CRC32) для строки <parameter>str</parameter>.
+   Это обычно используется для контроля целостности передаваемых данных.
+  </para>
+  <warning>
+   <simpara>
+    В PHP целые числа имеют знак, поэтому многие контрольные суммы
+    могут оказаться отрицательными на 32-битных платформах. На 64-битных
+    платформах все результаты <function>crc32</function> будут положительными целыми.
+   </simpara>
+   <simpara>
+    Поэтому вам нужно использовать формат "%u" в функциях <function>sprintf</function> или 
+    <function>printf</function> для получения строкового представления 
+    суммы <function>crc32</function> без знака.
+   </simpara>
+   <simpara>
+    Для шестнадцатеричного представления суммы вы можете использовать
+    или формат "%x" в функциях <function>sprintf</function> и <function>printf</function>,
+    или же функцию конвертации <function>dechex</function>. Оба этих способа также 
+    позаботятся о конвертации результата <function>crc32</function> в безнаковое целое.
+   </simpara>
+   <simpara>
+    При использовании 64-битных платформ также рассматривалась возможность
+    возвращать отрицательные целые для больших значений, но это ломало
+    шестнадцатеричное представление, добавляя дополнительные 0xFFFFFFFF########
+    смещения для них. Так как шестнадцатеричное представление является самым востребованным,
+    было решено не ломать его, даже если это ломает прямое сравнение десятиричных
+    значений в 50% случаев при переходе с 32-битных на 64-битные платформы.
+   </simpara>
+   <simpara>
+    Оглядываясь назад, возможно возвращать целое число было не самой лучшей идеей и лучше было 
+    возвращать сразу шестнадцатеричное представление (как например делает
+    <function>md5</function>).
+   </simpara>
+   <simpara>
+    Можно воспользоваться также более общим решением с использованием функции
+    <function>hash</function>. <code>hash("crc32b", $str)</code> вернет 
+    ту же строку, что и <code>str_pad(dechex(crc32($str)), 8, '0', STR_PAD_LEFT)</code>.
+   </simpara>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>str</parameter></term>
+     <listitem>
+      <para>
+       Данные.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Возвращает контрольную сумму crc32 строки <parameter>str</parameter> в виде целого числа.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Вывод контрольной суммы CRC32</title>
+    <para>
+     Этот пример иллюстрирует вывод вычисленной контрольной суммы
+     с помощью функции <function>printf</function>:
+    </para>
+    <programlisting role="php">
+<!-- The quick brown fox jumped over the lazy dog - это панграмма, переводить не надо -->
+<![CDATA[
+<?php
+$checksum = crc32("The quick brown fox jumped over the lazy dog.");
+printf("%u\n", $checksum);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>hash</function></member>
+    <member><function>md5</function></member>
+    <member><function>sha1</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

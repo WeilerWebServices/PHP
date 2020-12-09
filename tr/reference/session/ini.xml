@@ -1,0 +1,1147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 345661 Maintainer: nilgun Status: ready -->
+<section xml:id="session.configuration" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.runtime;
+ &extension.runtime;
+ <para>
+ <table>
+  <title>Oturum Yapılandırma Yönergeleri</title>
+  <tgroup cols="4">
+   <thead>
+    <row>
+     <entry>&Name;</entry>
+     <entry>&Default;</entry>
+     <entry>&Changeable;</entry>
+     <entry>&Changelog;</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry><link linkend="ini.session.save-path"> session.save_path</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.name">session.name</link></entry>
+     <entry>"PHPSESSID"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.save-handler">
+     session.save_handler</link></entry>
+     <entry>"files"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.auto-start">
+     session.auto_start</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.gc-probability">
+     session.gc_probability</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.gc-divisor">
+     session.gc_divisor</link></entry>
+     <entry>"100"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.gc-maxlifetime">
+     session.gc_maxlifetime</link></entry>
+     <entry>"1440"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.serialize-handler">
+     session.serialize_handler</link></entry>
+     <entry>"php"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-lifetime">
+     session.cookie_lifetime</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-path">
+     session.cookie_path</link></entry>
+     <entry>"/"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-domain">
+     session.cookie_domain</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-secure">
+     session.cookie_secure</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cookie-httponly">
+     session.cookie_httponly</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 5.2.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+     <row>
+     <entry><link linkend="ini.session.cookie-samesite">session.cookie_samesite</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.3.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+   <row>
+     <entry><link linkend="ini.session.use-strict-mode">
+     session.use_strict_mode</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 5.5.2'den beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.use-cookies">
+     session.use_cookies</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.use-only-cookies">
+     session.use_only_cookies</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.referer-check">
+     session.referer_check</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cache-limiter">session.cache_limiter</link></entry>
+     <entry>"nocache"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.cache-expire">session.cache_expire</link></entry>
+     <entry>"180"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.use-trans-sid">session.use_trans_sid</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.trans-sid-tags">session.trans_sid_tags</link></entry>
+     <entry>"a=href,area=href,frame=src,form="</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.1.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.trans-sid-hosts">session.trans_sid_hosts</link></entry>
+     <entry><literal>$_SERVER['HTTP_HOST']</literal></entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.1.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.sid-length">session.sid_length</link></entry>
+     <entry>"32"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.1.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.sid-bits-per-character">session.sid_bits_per_character</link></entry>
+     <entry>"5"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.1.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.enabled">session.upload_progress.enabled</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>PHP 5.4.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.cleanup">session.upload_progress.cleanup</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>PHP 5.4.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.prefix">session.upload_progress.prefix</link></entry>
+     <entry>"upload_progress_"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>PHP 5.4.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.name">session.upload_progress.name</link></entry>
+     <entry>"PHP_SESSION_UPLOAD_PROGRESS"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>PHP 5.4.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.freq">session.upload_progress.freq</link></entry>
+     <entry>"1%"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>PHP 5.4.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.upload-progress.min-freq">session.upload_progress.min_freq</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>PHP 5.4.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.lazy-write">session.lazy_write</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.0.0'dan beri kullanılabilmektedir.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.url-rewriter.tags">url_rewriter.tags</link></entry>
+     <entry>"a=href,area=href,frame=src,form="</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.1.0'dan beri bu INI artık oturumlar tarafından 
+     kullanılmamaktadır.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.hash-function">
+     session.hash_function</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.1.0'da kaldırıldı.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.hash-bits-per-character">
+     session.hash_bits_per_character</link></entry>
+     <entry>"4"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.1.0'da kaldırıldı.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.entropy-file">session.entropy_file</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.1.0'da kaldırıldı.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.entropy-length">session.entropy_length</link></entry>
+     <entry>"0"</entry>
+      <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.1.0'da kaldırıldı.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.bug-compat-42">session.bug_compat_42</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 5.4.0'da kaldırıldı.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.session.bug-compat-warn">session.bug_compat_warn</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 5.4.0'da kaldırıldı.</entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+ &ini.php.constants;
+ </para>
+ <para>
+  Oturum yönetim sistemi, &php.ini; dosyanıza yerleştirebileceğiniz bazı
+  yapılandırma yönergelerini destekler. Bu yapılandırma yönergelerinin kısa
+  açıklamalarını aşağıda bulabilirsiniz.
+ <variablelist>
+
+  <varlistentry xml:id="ini.session.save-handler">
+   <term>
+    <parameter>session.save_handler</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.save_handler</literal> yönergesi (kayıt sistemi), bir
+     oturumla ilişkilendirilmiş veriyi saklamakta ve geri almakta nelerin
+     kullanılacağını tanımlar. <literal>files</literal> (dosyalar) öntanımlı
+     değerdir. Bazı eklentilerin kendi <literal>save_handler</literal>
+     yönergeleri vardır; bunları kurulumunuzun <function>phpinfo</function>
+     çıktısında görebilirsiniz. Ayrıca bakınız:
+     <function>session_set_save_handler</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.save-path">
+   <term>
+    <parameter>session.save_path</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.save_path</literal> yönergesi
+     <literal>session.save_handler</literal> yönergesinde belirtilen kayıt
+     sistemine hangi değiştirgelerin aktarılacağını tanımlar. Öntanımlı kayıt
+     sistemin (<literal>files</literal>) seçerseniz bu yönergenin değeri
+     dosyaların oluşturulacağı dosya yolu olacaktır. Ayrıca bakınız:
+     <function>session_save_path</function>.
+    </simpara>
+    <para>
+     Oturum dosyalarınızın yayılacağı dizin derinliğini belirlemekte
+     kullanılmak üzere seçimlik bir <literal>N</literal> değiştirgesi vardır.
+     Örneğin yönergeye <literal>'5;/tmp'</literal> değerini atarsanız, bir
+     oturum dosyası şöyle bir konuma konabilir:
+     <literal>/tmp/4/b/1/e/3/sess_4b1e384ad74619bd212e236e52a5a174If</literal>.
+     <literal>N</literal> değiştirgesini kullanacaksanız bu dizinleri
+     kullanmadan önce oluşturmuş olmalısınız. Bunu yapmak için
+     <filename>ext/session</filename> altında
+     <filename>mod_files.sh</filename> adında bir betik vardır (Windows için
+     <filename>mod_files.bat</filename>). Ayrıca, <literal>N</literal>
+     değiştirgesinin sıfırdan büyük bir değerle kullanılması durumunda
+     özdevinimli bir çöp toplayıcının devreye gireceğine de dikkat ediniz; daha
+     ayrıntılı bilgi için &php.ini; dosyanıza bakınız. Ayrıca,
+     <literal>N</literal> değiştirgesini kullanmanız durumunda,
+     noktalı virgül (<literal>;</literal>) ayracı &php.ini; dosyasında
+     açıklamaları başlatmak için kullanıldığından yönergenin değerini tırnak
+     içine almalısınız.
+    </para>
+    <para>
+     Dosya saklama modülü dosyaları öntanımlı olarak mode 600 kullanarak oluşturur. Bu öntanımlı değer seçimlik <literal>MODE</literal> ile değiştirilebilir: <literal>N;MODE;/path</literal> burada <literal>MODE</literal> dosya kipinin sekizlik tabanda gösterimidir.
+      Dosya kipini bu yolla belirlemek sürecin umask'ını etkilemez.
+    </para>
+    <warning>
+     <para>
+      Bu yönergeyi öntanımlı değeriyle bırakırsanız veya herkesin
+      okuyabileceği bir dizin tanımlarsanız (öntanımlı olan
+      <filename>/tmp</filename> gibi), diğer kullanıcılar bu dizindeki
+      dosyaların listesini alarak oturum bilgilerini sunucu üzerinde kendi
+      amaçları doğrultusunda kullanabilirler.
+     </para>
+    </warning>
+    <caution>
+     <para>
+      Dizin derinliğini belirlemekte kullanılan seçimlik <literal>N</literal>
+      değiştirgesi yukarıda belirtildiği gibi kullanılırken 1 veya 2'den daha
+      yüksek bir değer kullanımı büyük sayıda dizin gerektirmesindan dolayı bir
+      çok site için uygun olmayacaktır; örneğin, 3 değeri dosya sistemi üzerinde
+      <literal>(2 ** session.sid_bits_per_character) ** 3</literal> 
+      dizinin varolabileceğini öngörür, bu da çok sayıda
+      dosya girdisi açılması ve büyük miktarda alanın boşa harcanması demektir.
+     </para>
+     <para>
+      Sadece, sitenizin 2'den büyük bir <literal>N</literal> değeri gerektirecek kadar büyük olması halinde 2'den büyük bir değer kullanabilirsiniz.
+     </para>
+    </caution>
+    <note>
+     <simpara>
+      PHP'nin 4.3.6 sürümünden önce, Windows kullanıcılar bu değeri PHP'nin
+      oturum işlevlerini kullanacağı sırada değiştirmek zorundaydılar. Geçerli
+      bir dosya yolu olarak, örneğin <filename>c:/temp</filename>
+      belirtilebilir.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.name">
+   <term>
+    <parameter>session.name</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.name</literal> yönergesi çerez ismi olarak kullanılacak
+     oturum ismini belirler. İsim sadece abecesayısal karakterler içermelidir.
+     <literal>PHPSESSID</literal> öntanımlıdır. Ayrıca bakınız:
+     <function>session_name</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.auto-start">
+   <term>
+    <parameter>session.auto_start</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.auto_start</literal> yönergesi, bir oturumun özdevinimli
+     olarak isteğin başlangıcında başlatılıp başlatılmayacağını belirler.
+     Öntanımlı değer <literal>0</literal> olup, başlatılmaz.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.serialize-handler">
+   <term>
+    <parameter>session.serialize_handler</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.serialize_handler</literal> yönergesi, veriyi
+     dizgeleştirmek/nesneleştirmek için kullanılacak eylemcinin ismini
+     belirler. Şimdilik sadece PHP dizgeleştirme biçemi (ismi:
+     <literal>php_serialize</literal>), PHP'nin dahili biçemleri
+     (<literal>php</literal> ve <literal>php_binary</literal> ismiyle) ve WDDX
+     (<literal>wddx</literal> ismiyle) desteklenmektedir. PHP,
+     <link linkend="ref.wddx">WDDX desteği</link> ile derlenmişse
+     <literal>wddx</literal> bir seçenek haline gelir.
+     <literal>php_serialize</literal> PHP 5.5.4 ve sonrasında kullanılabilir.
+     <literal>php_serialize</literal> dahili olarak düz serialize/unserialize
+     işlevini kullanır ve <literal>php</literal> ile
+     <literal>php_binary</literal>'nin sahip olduğu sınırlamalardan azadedir.
+     Daha eski digeleştirme eylemcileri $_SESSION içinde ne bir sayısal indis
+     ne de özel karakterleri (<literal>|</literal> ve <literal>!</literal>)
+     içeren bir dizge indisi saklayabilir. Betiğin durmasına yolaçan özel
+     karakter hataları ve sayısal indislerden kaçınmak için
+     <literal>php_serialize</literal> biçemini kullanın.
+     <literal>php</literal> öntanımlıdır.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.gc-probability">
+   <term>
+    <parameter>session.gc_probability</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.gc_probability</literal> yönergesi
+     <literal>session.gc_divisor</literal> yönergesi ile birlikte gc (garbage
+     collection) çöp toplayıcı yordamının başlatılma olasılığını yönetmek için
+     kullanılır. Ayrıntılar için <link linkend="ini.session.gc-divisor">
+     session.gc_divisor</link> yönergesinin açıklamasına bakınız.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.gc-divisor">
+   <term>
+    <parameter>session.gc_divisor</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.gc_divisor</literal> yönergesi
+     <literal>session.gc_probability</literal> yönergesi ile birlikte, her
+     oturum ilklendirilişinde gc (garbage collection) çöp toplayıcı yordamının
+     başlatılma olasılığını yönetmek için kullanılır. Olasılık,
+     gc_probability/gc_divisor şeklinde hesaplanır. Örneğin, 1/100 oranının
+     anlamı: Her istekte GC sürecinin başlatılma şansı %1'dir.
+     <literal>session.gc_divisor</literal> yönergesinin öntanımlı değeri
+     <literal>100</literal>'dür.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.gc-maxlifetime">
+   <term>
+    <parameter>session.gc_maxlifetime</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.gc_maxlifetime</literal> yönergesi verinin kaç saniye
+     sonra 'çöp' olarak ele alınıp temizleneceğini belirler. Çöp toplayıcı
+     oturum başlangıcında etkin olur (<link
+     linkend="ini.session.gc-probability">session.gc_probability</link> ve
+     <link linkend="ini.session.gc-divisor">session.gc_divisor</link>
+     yönergelerine bağlı olarak).
+    </simpara>
+    <note>
+     <para>
+      Eğer <literal>session.gc_maxlifetime</literal> değeri olarak farklı
+      betikler farklı değerler belirtiyorsa fakat oturum verisini saklamak
+      için aynı yeri paylaşıyorlarsa verileri temizlemek için en küçük değere
+      sahip betiğin değeri kullanılır. Bu durumda, bu yönerge
+      <link linkend="ini.session.save-path">session.save_path</link> yönergesi
+      ile birlikte kullanılmalıdır.
+     </para>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.referer-check">
+   <term>
+    <parameter>session.referer_check</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.referer_check</literal> yöntemi, Her HTTP
+     <literal>Referrer</literal> başlığında içerilmesini istediğiniz bir alt
+     dizgeyi tanımlar. <literal>Referrer</literal> başlığı istemci tarafından
+     bu alt dizge içerilmeden gönderilmişse gömülü oturum kimliği geçersiz
+     olur. Yönergenin öntanımlı değeri boş dizgedir.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.entropy-file">
+   <term>
+    <parameter>session.entropy_file</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.entropy_file</literal> yönergesi, oturum kimliğinin
+     oluşturulma sürecinde ek döküntü kaynağı olarak kullanılacak harici bir
+     özkaynağa (bir dosyaya) bir yol belirtir. Çoğu Unix sisteminde kullanılan
+     örnekler: <literal>/dev/random</literal> veya
+     <literal>/dev/urandom</literal>.
+    </simpara>
+    <simpara>
+     Bu özellik Windows'ta PHP 5.3.3'ten beri desteklenmektedir.
+     <literal>session.entropy_length</literal> yönergesine sıfırdan farklı bir
+     değer atamak PHP'nin Windows Random API'sini bir döküntü kaynağı olarak
+     kullanmasını sağlayacaktır.
+    </simpara>
+    <note>
+     <simpara>
+      PHP 7.1.0'da kaldırıldı.
+     </simpara>
+     <simpara>
+      PHP 5.4.0 ve sonrasında <literal>session.entropy_file</literal> için
+      <literal>/dev/urandom</literal> veya <literal>/dev/arandom</literal>
+      öntanımlıdır (hangisi varsa). PHP 5.3.0'da bu yönergenin öntanımlı değeri
+      boş dizge idi.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.entropy-length">
+   <term>
+    <parameter>session.entropy_length</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.entropy_length</literal> yönergesi yukarıdaki yönergede
+     belirtilen dosyadan okunacak baytların sayısını belirler. Öntanımlı değer
+     <literal>0</literal>'dir (hiç bayt okunmayacak) <literal>32</literal>
+     öntanımlıdır.
+    </simpara>
+    <simpara>
+     PHP 7.1.0'da kaldırıldı.
+    </simpara>
+  </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.use-strict-mode">
+   <term>
+    <parameter>session.use_strict_mode</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.use_strict_mode</literal> modülün katı oturum kimliği
+     kipini kullanıp kullanmayacağını belirler. Bu kip etkinse modül
+     ilklendirilmemiş oturum kimliklerini kabul etmeyecektir. Tarayıcı
+     tarafından ilklendirilmemiş bir oturum kimliği gönderilmişse, tarayıcıya
+     yeni oturum kimliği gönderilir. Uygulamalar katı kipte oturum
+     sabitlemesinden oturum benimsenmesi yoluyla korunur.
+     <literal>0</literal>(iptal) öntanımlıdır .
+    </simpara>
+    <note>
+     <simpara>
+     <literal>session.use_strict_mode</literal> etkinleştirmek genel oturum 
+     güvenliği için zorunludur. Tüm sitelerin bunu etkinleştirmesi önerilir.
+     Ayrıntılar için <function>session_create_id</function> örneğine 
+     bakınız.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.use-cookies">
+   <term>
+    <parameter>session.use_cookies</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.use_cookies</literal> yönergesi modülün, oturum
+     kimliğini istemci tarafında saklamak için çerezleri kullanıp
+     kullanmayacağını belirler. Öntanımlı değer <literal>1</literal> olup
+     çerezler kullanılır.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.use-only-cookies">
+   <term>
+    <parameter>session.use_only_cookies</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.use_only_cookies</literal> yönergesi modülün, oturum
+     kimliğini istemci tarafında saklamak için <emphasis role="strong">
+     sadece</emphasis> çerezlerin mi kullanılacağını belirler. Bu yönergeyi
+     etkin kılarak oturum kimliklerinin URL'lerde aktarılmaması sağlamak
+     suretiyle saldırıları önlemiş olursunuz. PHP 5.3.0'dan beri öntanımlı 
+     değer <literal>1</literal>'dir (etkin).
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+
+  <varlistentry xml:id="ini.session.cookie-lifetime">
+   <term>
+    <parameter>session.cookie_lifetime</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cookie_lifetime</literal> yönergesi tarayıcıya
+     gönderilen çerezin ömrünü saniye cinsinden belirler. Öntanımlı olan
+     <literal>0</literal> değerinin anlamı "tarayıcı kapatılıncaya kadar"dır.
+     Ayrıca bakınız: <function>session_get_cookie_params</function> ve
+     <function>session_set_cookie_params</function>.
+    </simpara>
+    <note>
+     <simpara>
+      Zaman aşımı zaman damgası sunucu zamanına göre belirlenir. Sunucu
+      zamanının istemci zamanıyla aynı olma zorunluluğu yoktur.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cookie-path">
+   <term>
+    <parameter>session.cookie_path</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cookie_path</literal> yönergesi oturum çerezinin
+      <literal>path</literal> anahtarını tanımlar. Bölü çizgisi
+      <literal>/</literal> öntanımlıdır. Ayrıca bakınız:
+      <function>session_get_cookie_params</function> ve
+     <function>session_set_cookie_params</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cookie-domain">
+   <term>
+    <parameter>session.cookie_domain</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cookie_domain</literal> yönergesi oturum çerezinin
+      <literal>domain</literal> anahtarını tanımlar. Öntanımlı değer
+      <literal>none</literal> olup, çerez belirtimine göre çerezi üreten
+      sunucunun konak isminin kullanılacağı anlamına gelir. Ayrıca bakınız:
+      <function>session_get_cookie_params</function> ve
+     <function>session_set_cookie_params</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cookie-secure">
+   <term>
+    <parameter>session.cookie_secure</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cookie_secure</literal> yönergesi oturum çerezinin
+     <literal>secure</literal> anahtarını tanımlar. Öntanımlı olarak
+     <literal>off</literal> olup anlamı: Çerezler sadece güvenli bağlantılar
+     üzerinden gönderilmez. Ayrıca bakınız: 
+     <function>session_get_cookie_params</function> ve
+     <function>session_set_cookie_params</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cookie-httponly">
+   <term>
+    <parameter>session.cookie_httponly</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cookie_httponly</literal> yönergesi oturum çerezinin
+     <literal>httponly</literal> anahtarını tanımlar. Etkin olduğu takdirde
+     çerezlere sadece HTTP protokolü üzerinden erişilebilir. Yani çerezlere
+     JavaScript betik dilleriyle erişilemez. Bu ayar, (tüm tarayıcılar
+     tarafından desteklenmiyor olsa da) özellikle XSS saldırılarıyla kimlik
+     hırsızlığını önlemek için çok etkilidir.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cookie-samesite">
+   <term>
+    <parameter>session.cookie_samesite</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     Sunucuların bir çerezin siteler arası isteklerle birlikte gönderilmemesi 
+     gerektiğini öne sürmelerine izin verir. Bu sav, istemcilerin siteler 
+     arası bilgi sızıntısı riskini azaltmasına izin verir ve siteler arası 
+     istek sahteciliği saldırılarına karşı bir miktar koruma sağlar. Bunun 
+     tüm tarayıcılar tarafından desteklenmediğini unutmayın.
+     Boş bir değer, herhangi bir atama yapılmadığını belirtir.
+     <literal>Lax</literal> ve <literal>Strict</literal> değerleri POST 
+     isteklerinde siteler arasında çerez gönderilmeyeceğini belirtir.
+     Get isteklerinde <literal>Lax</literal> siteler-arası çerez gönderilmesine 
+     sebep olurken <literal>Strict</literal> buna sebep olmaz.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.cache-limiter">
+   <term>
+    <parameter>session.cache_limiter</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cache_limiter</literal> yönergesi, oturum sayfaları
+     için kullanılacak önbellek denetim yöntemini belirler. Şu değerlerden
+     biri olabilir: <literal>nocache</literal>, <literal>private</literal>,
+     <literal>private_no_expire</literal> ve <literal>public</literal>
+     <literal>nocache</literal> öntanımlıdır. Bu değerlerin anlamları için
+     <function>session_cache_limiter</function> işlevinin belgesine de
+     bakınız.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+
+  <varlistentry xml:id="ini.session.cache-expire">
+   <term>
+    <parameter>session.cache_expire</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.cache_expire</literal> yönergesi, önbelleğe alınan
+     oturumlar için dakika cinsinden ömür (ttl) tanımlar. Önbellek sınırlayıcı
+     yoksa bu ayar etkisizdir. <literal>180</literal> öntanımlı değerdir.
+     Ayrıca bakınız: <function>session_cache_expire</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.use-trans-sid">
+   <term>
+    <parameter>session.use_trans_sid</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.use_trans_sid</literal> yönergesi, şeffaf SID desteğinin
+     etkin olup olmayacağını belirler. Öntanımlı değer <literal>0</literal>
+     olup etkin değildir.
+    </simpara>
+    <note>
+     <simpara>
+      URL'ye dayalı oturum yönetiminin çerezlere dayalı oturum yönetimine göre
+      daha fazla güvenlik riski vardır. Örneğin, kullanıcılar, etkin oturum
+      kimliğini içeren bir URL'yi epostayla arkadaşlarına gönderebilir veya
+      sık kullanılanlarına kaydedebilir; böylece bu kişiler sitenize hep aynı
+      oturum kimliğiyle oturum açarlar.
+     </simpara>
+     <simpara>
+      PHP 7.1.0'dan beri, tam URL yolu, örn, https://php.net/,  trans sid 
+      özelliği tarafından elde edilmektedir. Öncesinde PHP sadece göreli URL yolunu 
+      değerlendirirdi. Rewrite hedef konakları <link
+      linkend="ini.session.trans-sid-hosts">session.trans_sid_hosts</link>
+      ile tanımlanır.
+     </simpara>
+   </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.trans-sid-tags">
+   <term>
+    <parameter>session.trans_sid_tags</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     Şeffaf oturum kimliği desteği etkinken oturum kimliğini içerecek HTML
+     etiketlerini belirtmek için kullanılır. 
+     <literal>a=href,area=href,frame=src,input=src,form=</literal> öntanımlıdır.
+    </simpara>
+    <simpara>
+     <literal>form</literal> özel bir etikettir. 
+     <literal>&lt;input hidden="oturum_kimliği" name="oturum_ismi"&gt;</literal>
+     form değişkeni olarak eklenir.
+    </simpara>
+    <note>
+     <simpara>
+      PHP 7.1.0 öncesinde, 
+      <link linkend="ini.url-rewriter.tags">url_rewriter.tags</link> bu amaçla
+      kullanılırdı. PHP 7.1.0'dan beri, <literal>fieldset</literal> özel bir 
+      etiket değildir.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.trans-sid-hosts">
+   <term>
+    <parameter>session.trans_sid_hosts</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     Şeffaf oturum kimliği desteği etkinken oturum kimliğini içerecek 
+     konakları belirtmek için kullanılır.
+     <literal>$_SERVER['HTTP_HOST']</literal> öntanımlıdır.
+     Aralarda "," kullanarak çok sayıda konak belirtilebilir, konaklar 
+     arasında boşluk bulunmasına izin verilmez.
+     Örnek: <literal>php.net,wiki.php.net,bugs.php.net</literal>
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.bug-compat-42">
+   <term>
+    <parameter>session.bug_compat_42</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     PHP'nin 4.2.3 ve önceki sürümlerinde, belgelenmemiş bir hata vardı:
+     <link linkend="ini.register-globals">register_globals</link> ektin
+     olmadığı halde bir oturum değişkeninin küresel etki alanında
+     ilklendirilmesine izin verilirdi. PHP 4.3.0 ve sonrasında <link
+     linkend="ini.session.bug-compat-warn">session.bug_compat_warn</link>
+     ektin olduğunda, bu özellik kullanılırsa bir uyarı verilmektedir. Bu
+     özellik/hata bu yönergeye <literal>Off</literal> değeri atanarak iptal
+     edilebilmektedir.
+    </simpara>
+    <note>
+     <simpara>
+      PHP 5.4.0'da kaldırıldı.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.bug-compat-warn">
+   <term>
+    <parameter>session.bug_compat_warn</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     PHP'nin 4.2.3 ve önceki sürümlerinde, belgelenmemiş bir hata vardı:
+     <link linkend="ini.register-globals">register_globals</link> ektin
+     olmadığı halde bir oturum değişkeninin küresel etki alanında
+     ilklendirilmesine izin verilirdi. PHP 4.3.0 ve sonrasında bu yönerge
+     <link linkend="ini.session.bug-compat-42">session.bug_compat_42</link>
+     yönergesi ile birlikte etkin kılındığında, bu özellik kullanılırsa bir
+     uyarı verilmektedir.
+    </simpara>
+    <note>
+     <simpara>
+      PHP 5.4.0'da kaldırıldı.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.sid-length">
+   <term>
+    <parameter>session.sid_length</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.sid_length</literal> oturum kimliği dizesinin uzunluğunu 
+     belirtmek içindir. 22 ile 256 arasında olabilir.
+    </simpara>
+    <simpara>
+     32 öntanımlıdır. Uymluluk ihtiyacı varsa 32,40,vs. belirtilebilir. 
+     Uzun oturum kimliklerini tahmin etmek zordur. En azından 32 karakter
+     olması önerilir.
+    </simpara>
+    <para>
+      Uyumluluk bilgisi: 
+      <literal>session.hash_func</literal>=0 (MD5) ve
+      <literal>session.hash_bits_per_character</literal>=4,
+      <literal>session.hash_func</literal>=1 (SHA1) ve
+      <literal>session.hash_bits_per_character</literal>=6 için 32 kullanın.
+
+      <literal>session.hash_func</literal>=0 (MD5) ve
+      <literal>session.hash_bits_per_character</literal>=5 için 26 kullanın. 
+
+      <literal>session.hash_func</literal>=0 (MD5) ve
+      <literal>session.hash_bits_per_character</literal>=6 için 22 kullanın. 
+      INI değerlerini, oturum kimliklerinde en azından 128 bit olacak 
+      şekilde yapılandırın. <literal>session.sid_bits_per_character</literal>
+      için uygun bir değer atamayı unutmayın, yoksa daha zayıf bir oturum 
+      kimliğiniz olur.
+    </para>
+    <note>
+     <simpara>
+      PHP 7.1.0 ve sonrasında kullanılabilir.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.sid-bits-per-character">
+   <term>
+    <parameter>session.sid_bits_per_character</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.sid_per_character</literal> kodlu oturum kimliği karakterlerinin bir sayısını belirtmek içindir. Olası değerler: 
+     '4' (0-9, a-f), '5' (0-9, a-v), and '6' (0-9, a-z, A-Z, "-", ",").
+    </simpara>
+    <simpara>
+     4 öntanımlıdır. Bit sayısı arttıkça daha güçlü oturum kiklikleri elde 
+     edilir. Çoğu ortam için 5 yeterlidir.
+    </simpara>
+    <para>
+    </para>
+    <note>
+     <simpara>
+       PHP 7.1.0 ve sonrasında kullanılabilir.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.hash-function">
+   <term>
+    <parameter>session.hash_function</parameter>
+    <type>mixed</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.hash_function</literal> yönergesi oturum kimliğinin
+     üretilmesinde kullanılmak üzere bir ileti özeti algoritması
+     belirtilmesini sağlar. '<literal>0</literal>' değeri MD5 (128 bitlik)
+     algoritmasının, '<literal>1</literal>' ise SHA-1 (160 bitlik)
+     algoritmasının kullanılmasını sağlar.
+    </simpara>
+    <para>
+     PHP 5.3.0'dan itibaren <link linkend="ref.hash">hash eklentisini</link>
+     (kullanılabilir durumdaysa) kullanarak <literal>sha512</literal> veya
+     <literal>whirlpool</literal> gibi algoritmalar belirtilebilmektedir.
+     Desteklenen algoritmaların tam listesi <function>hash_algos</function>
+     işlevi ile edinilebilir
+    </para>
+    <note>
+     <para>
+      Bu yönerge PHP 5'ten itibaren kullanılabilmektedir. 
+      PHP 7.1.0'da kaldırıldı.
+     </para>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.hash-bits-per-character">
+   <term>
+    <parameter>session.hash_bits_per_character</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.hash_bits_per_character</literal> yönergesi, ikil ileti
+     özeti dizgesi okunur biçeme dönüştürülürken karakterlerin kaç bitle
+     saklanacağını belirler. Olası değerler: '<literal>4</literal>' (0-9, a-f),
+     '<literal>5</literal>' (0-9, a-v), '<literal>6</literal>' (0-9, a-z, A-Z,
+     "-", ",").
+    </simpara>
+    <note>
+     <para>
+      PHP 7.1.0'da kaldırıldı.
+     </para>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.enabled">
+   <term>
+    <parameter>session.upload_progress.enabled</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     Yükleme işleminin izlenmesini etkinleştirir. Öntanımlı olarak 1, yani
+     etkindir.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.cleanup">
+   <term>
+    <parameter>session.upload_progress.cleanup</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     Tüm POST verisi okunur okunmaz (yani, yükleme tamamlandığında) işlem
+     bilgisi temizlenir. Öntanımlı olarak 1, yani etkindir.
+    </simpara>
+    <note>
+     <simpara>
+      Bu özelliğin daima etkin olması şiddetle önerilir.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.prefix">
+   <term>
+    <parameter>session.upload_progress.prefix</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     A prefix used for the upload progress key in the
+     <varname>$_SESSION</varname> içinde yükleme işlemi anahtarı için
+     kullanılacak önek. Bu önek, eşsiz bir indis elde ertmek için
+     <literal>$_POST[ini_get("session.upload_progress.name")]</literal>
+     değeriyle birleştirilir.
+    </simpara>
+    <simpara>
+     "upload_progress_" öneki öntanımlıdır.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.name">
+   <term>
+    <parameter>session.upload_progress.name</parameter>
+    <type>string</type>
+   </term>
+   <listitem>
+    <simpara>
+     İşlem bilgisini <varname>$_SESSION</varname> içinde saklamak için
+     kullanılacak anahtar. Ayrıca bakınız:
+     <link linkend="ini.session.upload-progress.prefix">session.upload_progress.prefix</link>.
+    </simpara>
+    <simpara>
+     <literal>$_POST[ini_get("session.upload_progress.name")]</literal> değeri
+     aktarılmammışsa veya kullanılabilir değilseyükleme işlemi kaydedilmez.
+    </simpara>
+    <simpara>
+     "PHP_SESSION_UPLOAD_PROGRESS" öntanımlıdır.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.freq">
+   <term>
+    <parameter>session.upload_progress.freq</parameter>
+    <type>mixed</type>
+   </term>
+   <listitem>
+    <simpara>
+     Yükleme izleme bilgisinin ne sıklıkla güncelleneceğini tanımlar. Bayt
+     cinsinden veya yüzde olarak belirtilebilir. Örneğin, yükleme izleme
+     bilgisi her 100 baytta bir veya dosyanın her %1'i alındığında
+     güncellenebilir.
+    </simpara>
+    <simpara>
+     "1%" öntanımlıdır.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.upload-progress.min-freq">
+   <term>
+    <parameter>session.upload_progress.min_freq</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <simpara>
+     Güncellemeler arasındaki asgari bekleme süresi (saniye cinsinden).
+     "1" öntanımlıdır.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.session.lazy-write">
+   <term>
+    <parameter>session.lazy_write</parameter>
+    <type>boolean</type>
+   </term>
+   <listitem>
+    <simpara>
+     <literal>session.lazy_write = 1</literal> atandığında oturum verisi sadece değişirse yeniden yazılır. Bu öntanımlı değerdir ve etkindir.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+ </variablelist>
+ </para>
+
+ <para>
+  <link linkend="ini.register-globals">
+  <literal>register_globals</literal></link> yapılandıma yönergesi oturum
+  değişkenlerinin nasıl saklanacağını ve eski haline getirileceğini belirler.
+ </para>
+ <para>
+  Yükleme işlemi, session.upload_progress.enabled etkin olmadıkça ve
+  $_POST[ini_get("session.upload_progress.name")] değişkenine bir atama
+  yapılmadıkça kaydedilmeyecektir. Daha ayrıntılı bilgi çin bakınız:
+  <link linkend="session.upload-progress">Oturumda Yüklemelerin İzlenmesi</link>
+ </para>
+
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

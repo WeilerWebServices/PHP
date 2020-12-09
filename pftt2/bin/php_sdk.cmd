@@ -1,0 +1,4 @@
+@ECHO OFF
+CALL %~dp0set_env
+CD %PFTT_JOB_WORK%
+@ECHO ON

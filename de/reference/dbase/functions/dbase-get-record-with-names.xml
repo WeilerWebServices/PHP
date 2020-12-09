@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 350685 Maintainer: samesch Status: ready -->
+
+<refentry xml:id="function.dbase-get-record-with-names" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>dbase_get_record_with_names</refname>
+  <refpurpose>Liefert einen Datensatz aus einer Datenbank als assoziatives Array</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>dbase_get_record_with_names</methodname>
+   <methodparam><type>resource</type><parameter>database</parameter></methodparam>
+   <methodparam><type>int</type><parameter>number</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Gibt einen Datensatz aus einer dBase-Datenbank als assoziatives Array
+   zurück.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>database</parameter></term>
+     <listitem>
+      <para>
+       Die Datenbank-Ressource, die von
+       <function>dbase_open</function> oder <function>dbase_create</function>
+       zurückgegeben wurde.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>number</parameter></term>
+     <listitem>
+      <para>
+       Der Index des Datensatzes zwischen <literal>1</literal> und
+       <literal>dbase_numrecords($dbase_identifier)</literal>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Ein assoziatives Array mit dem Datensatz. Dieses Array enthält einen
+   zusätzlichen Schlüssel namens <literal>deleted</literal>, der auf 1
+   gesetzt ist, wenn der Datensatz zum Löschen markiert wurde (siehe
+   <function>dbase_delete_record</function>).
+   Daher ist es nicht möglich den Wert eines Feldes mit dem Namen
+   <literal>deleted</literal> mit dieser Funktion zu ermitteln.
+  </para>
+  &dbase.type-conversion;
+  <para>
+   Falls ein Fehler auftritt, gibt
+   <function>dbase_get_record_with_names</function> &false; zurück.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>dbase 7.0.0</entry>
+      <entry>
+       <parameter>database</parameter> ist nun eine <type>resource</type>
+       statt eines <type>int</type>.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Liste aller in der Datenbank eingetragener Mitglieder</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// im nur-lesen-Modus öffnen
+$db = dbase_open('/tmp/test.dbf', 0);
+
+if ($db) {
+  $anzahl_datensaetze = dbase_numrecords($db);
+  for ($i = 1; $i <= $anzahl_datensaetze; $i++) {
+      $datensatz = dbase_get_record_with_names($db, $i);
+      if ($datensatz['IstMitglied'] == 1) {
+          echo "Mitglied #$i: " . trim($datensatz['Name']) . "\n";
+      }
+  }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>dbase_get_record</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

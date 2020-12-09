@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.8 $ -->
+<classentry id="gtk.gtkitem">
+ <classmeta>
+  <classtitle>GtkItem</classtitle>
+  <classparent>GtkBin</classparent>
+  <shortdesc>
+   Abstract base class for GtkMenuItem, GtkListItem and GtkTreeItem.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <methods>
+
+  <method id="gtk.gtkitem.method.deselect">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>deselect</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitem.method.select">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>select</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkitem.method.toggle">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>toggle</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkitem.signal.deselect">
+   <signalname>deselect</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkItem <parameter>item</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkitem.signal.select">
+   <signalname>select</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkItem <parameter>item</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkitem.signal.toggle">
+   <signalname>toggle</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkItem <parameter>item</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

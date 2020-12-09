@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 351129 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+<refentry xml:id="function.unset" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>unset</refname>
+  <refpurpose>Удаляет переменную</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>void</type><methodname>unset</methodname>
+   <methodparam><type>mixed</type><parameter>var</parameter></methodparam>
+   <methodparam rep="repeat"><type>mixed</type><parameter>vars</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>unset</function> удаляет перечисленные переменные. 
+  </para>
+  <para>
+   Поведение <function>unset</function> внутри пользовательской функции
+   может отличаться, в зависимости от того, какой тип имеет переменная, которую необходимо
+   удалить.
+  </para>
+  <para>
+   Если переменная, объявленная глобальной, удаляется внутри
+   функции, то будет удалена только локальная переменная. Переменная
+   в области видимости вызова функции сохранит то же значение, что и до вызова
+   <function>unset</function>.
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function destroy_foo() 
+{
+    global $foo;
+    unset($foo);
+}
+
+$foo = 'bar';
+destroy_foo();
+echo $foo;
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  &example.outputs;
+  <para>
+   <informalexample>
+    <screen>
+<![CDATA[
+bar
+]]>
+    </screen>
+   </informalexample>
+  </para>
+  <para>
+   Если необходимо удалить глобальную переменную внутри функции,
+   то для этого нужно использовать массив <varname>$GLOBALS</varname>:
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function foo() 
+{
+    unset($GLOBALS['bar']);
+}
+
+$bar = "something";
+foo();
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  <para>
+   Если переменная, которая передается ПО ССЫЛКЕ,
+   удаляется внутри функции, то будет удалена только локальная
+   переменная. Переменная в области видимости вызова функции сохранит то же значение,
+   что и до вызова <function>unset</function>.
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function foo(&$bar) 
+{
+    unset($bar);
+    $bar = "blah";
+}
+
+$bar = 'something';
+echo "$bar\n";
+
+foo($bar);
+echo "$bar\n";
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  &example.outputs;
+  <para>
+   <informalexample>
+    <screen>
+<![CDATA[
+something
+something
+]]>
+    </screen>
+   </informalexample>
+  </para>
+  <para>
+   Если статическая переменная удаляется внутри
+   функции, <function>unset</function> удалит переменную только
+   в контексте дальнейшего выполнения функции. При последующем
+   вызове предыдущее значение переменной будет восстановлено.
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function foo()
+{
+    static $bar;
+    $bar++;
+    echo "До удаления: $bar, ";
+    unset($bar);
+    $bar = 23;
+    echo "После удаления: $bar\n";
+}
+
+foo();
+foo();
+foo();
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  &example.outputs;
+  <para>
+   <informalexample>
+    <screen>
+<![CDATA[
+До удаления: 1, После удаления: 23
+До удаления: 2, После удаления: 23
+До удаления: 3, После удаления: 23
+]]>
+    </screen>
+   </informalexample>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>var</parameter></term>
+     <listitem>
+      <para>
+       Удаляемая переменная.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>vars</parameter></term>
+     <listitem>
+      <para>
+       Следующие переменные.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.void;
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>unset</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// удаляем одну переменную
+unset($foo);
+
+// удаляем один элемент массива
+unset($bar['quux']);
+
+// удаляем несколько переменных
+unset($foo1, $foo2, $foo3);
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Использование приведения типа <literal>(unset)</literal></title>
+    <para>
+     Приведение типа <link linkend="language.types.null.casting"><literal>(unset)
+     </literal></link> часто путают с функцией
+     <function>unset</function>. Приведение типа <literal>(unset)</literal>
+     приводит только к значению <literal>NULL</literal> и было добавлено
+     исключительно для полноты реализации. Оно не меняет значение приводимой
+     переменной.
+     С PHP 7.2.0 преобразование типа (unset) объявлено устаревшим.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$name = 'Felipe';
+
+var_dump((unset) $name);
+var_dump($name);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+NULL
+string(6) "Felipe"
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.language-construct;
+  <note>
+   <para>
+    Существует возможность удалить даже атрибуты объекта, видимые в текущем контексте.
+   </para>
+  </note>
+  <note>
+   <para>
+    Невозможно удалить <literal>$this</literal> внутри метода объекта.
+   </para>
+  </note>
+  <note>
+   <para>
+    При использовании <function>unset</function> на недоступных или необъявленных свойствах объекта,
+    будет вызван встроенный метод объекта <link linkend="object.unset">__unset()</link>,
+    если он определен.
+   </para>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>isset</function></member>
+    <member><function>empty</function></member>
+    <member><link linkend="object.unset">__unset()</link></member>
+    <member><function>array_splice</function></member>
+    <member><link linkend="language.types.null.casting">Приведение типа (unset)</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

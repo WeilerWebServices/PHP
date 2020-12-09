@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351382 Maintainer: mumumu Status: ready -->
+
+<sect1 xml:id="language.types.declarations">
+ <title>型宣言</title>
+
+ <para>
+  関数のパラメータや戻り値、
+  クラスのプロパティ (PHP 7.4.0 以降) に対して型を宣言することができます。
+  これによって、その値が特定の型であることを保証できます。
+  その型でない場合は、<classname>TypeError</classname> がスローされます。
+ </para>
+
+ <!-- Find better place where to put this note -->
+ <note>
+  <!-- TODO Link to covariance section -->
+  <para>
+   親クラスのメソッドをオーバーライドする場合、
+   子クラスのメソッドは、
+   親クラスで宣言された戻り値の型のいずれかに一致させなければなりません。
+   親クラスが戻り値の型を宣言していない場合、
+   子クラスのメソッドもそうしなければなりません。
+  </para>
+ </note>
+
+ <sect2 xml:id="language.types.declarations.base">
+  <title>基本的な型</title>
+  <informaltable>
+   <tgroup cols="3">
+    <thead>
+     <row>
+      <entry>&Type;</entry>
+      <entry>&Description;</entry>
+      <entry>&Version;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>クラス/インターフェイス の名前</entry>
+      <entry>
+       値が、指定したクラスやインターフェイスのインスタンスでなければいけません。
+      </entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><type>self</type></entry>
+      <entry>
+      値が、そのメソッドが定義されているクラスと同じクラスのインスタンスでなければいけません。
+      クラスの内部でのみ使えます。
+      </entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><type>array</type></entry>
+      <entry>
+       値が、配列でなければいけません。
+      </entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><type>callable</type></entry>
+      <entry>
+       値が、<type>callable</type> でなければいけません。
+       クラスのプロパティの型では宣言できません。
+      </entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><type>bool</type></entry>
+      <entry>
+       値が、bool 値でなければいけません。
+      </entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><type>float</type></entry>
+      <entry>
+       値が、float でなければいけません。
+      </entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><type>int</type></entry>
+      <entry>
+       値が、int でなければいけません。
+      </entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><type>string</type></entry>
+      <entry>
+       値が、文字列でなければいけません。
+      </entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><type>iterable</type></entry>
+      <entry>
+       値が、配列か、<classname>Traversable</classname> のインスタンスでなければなりません。
+      </entry>
+      <entry>PHP 7.1.0 以降</entry>
+     </row>
+     <row>
+      <entry><type>object</type></entry>
+      <entry>
+       値が、<type>object</type> でなければなりません。
+      </entry>
+      <entry>PHP 7.2.0 以降</entry>
+     </row>
+     <row>
+      <entry><type>mixed</type></entry>
+      <entry>
+       値は、あらゆる値であることができます。
+      </entry>
+      <entry>PHP 8.0.0 以降</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+
+  <warning>
+   <para>
+    上記のスカラー型のエイリアスはサポートされていません。
+    つまり、これらはクラスやインターフェイスの名前として扱われているということです。
+    たとえば、型の宣言に <literal>boolean</literal> を使った場合、
+    値が <literal>boolean</literal>
+    クラスまたはインターフェイスのインスタンスであることが要求されます。
+    <type>bool</type> 型ではありません。
+   </para>
+   <para>
+    <example>
+     <programlisting role="php">
+<![CDATA[
+<?php
+    function test(boolean $param) {}
+    test(true);
+?>
+]]>
+     </programlisting>
+     &example.outputs.8;
+     <screen>
+<![CDATA[
+Warning: "boolean" will be interpreted as a class name. Did you mean "bool"? Write "\boolean" to suppress this warning in /in/9YrUX on line 2
+
+Fatal error: Uncaught TypeError: test(): Argument #1 ($param) must be of type boolean, bool given, called in - on line 3 and defined in -:2
+Stack trace:
+#0 -(3): test(true)
+#1 {main}
+  thrown in - on line 2
+]]>
+     </screen>
+    </example>
+   </para>
+  </warning>
+
+  <sect3 xml:id="language.types.declarations.examples">
+   &reftitle.examples;
+   <example>
+    <title>クラスによる型宣言の基本</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class C {}
+class D extends C {}
+
+// このクラスは C を継承していません
+class E {}
+
+function f(C $c) {
+    echo get_class($c)."\n";
+}
+
+f(new C);
+f(new D);
+f(new E);
+?>
+]]>
+    </programlisting>
+    &example.outputs.8;
+    <screen>
+<![CDATA[
+C
+D
+
+Fatal error: Uncaught TypeError: f(): Argument #1 ($c) must be of type C, E given, called in /in/gLonb on line 14 and defined in /in/gLonb:8
+Stack trace:
+#0 -(14): f(Object(E))
+#1 {main}
+  thrown in - on line 8
+]]>
+    </screen>
+   </example>
+
+   <example>
+    <title>インターフェイスによる型宣言の基本</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+interface I { public function f(); }
+class C implements I { public function f() {} }
+
+// このクラスは I を実装していません
+class E {}
+
+function f(I $i) {
+    echo get_class($i)."\n";
+}
+
+f(new C);
+f(new E);
+?>
+]]>
+    </programlisting>
+    &example.outputs.8;
+    <screen>
+<![CDATA[
+C
+
+Fatal error: Uncaught TypeError: f(): Argument #1 ($i) must be of type I, E given, called in - on line 13 and defined in -:8
+Stack trace:
+#0 -(13): f(Object(E))
+#1 {main}
+  thrown in - on line 8
+]]>
+    </screen>
+   </example>
+
+   <example>
+    <title>基本的な戻り値の型宣言</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function sum($a, $b): float {
+    return $a + $b;
+}
+
+// float が返される点に注意
+var_dump(sum(1, 2));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+float(3)
+]]>
+    </screen>
+   </example>
+
+   <example>
+    <title>オブジェクトを返す</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class C {}
+
+function getC(): C {
+    return new C;
+}
+
+var_dump(getC());
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(C)#1 (0) {
+}
+]]>
+    </screen>
+   </example>
+  </sect3>
+ </sect2>
+
+ <sect2 xml:id="language.types.declarations.nullable">
+  <title>Null を許容する型宣言</title>
+
+  <para>
+   PHP 7.1.0 以降では、型の名前の前にクエスチョンマーク
+   (<literal>?</literal>) を付けることで、null を許容する印を付けられるようになりました。
+   こうすることで、その値の型が指定されたものか、&null; であることを指定できます。
+  </para>
+
+  <para>
+   <example>
+    <title>Null を許容する型宣言</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class C {}
+
+function f(?C $c) {
+    var_dump($c);
+}
+
+f(new C);
+f(null);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(C)#1 (0) {
+}
+NULL
+]]>
+    </screen>
+   </example>
+
+   <example>
+    <title>Null を許容する戻り値の型宣言</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function get_item(): ?string {
+    if (isset($_GET['item'])) {
+        return $_GET['item'];
+    } else {
+        return null;
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <note>
+   <para>
+    PHP 7.1.0 より前のバージョンでは、
+    デフォルト値に <literal>null</literal> を指定することで
+    null を許容する引数を指定することが出来ました。
+    これは、継承関係を破壊するので推奨できません。
+   </para>
+   <example>
+    <title>引数にnullを許容する古いやり方</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class C {}
+
+function f(C $c = null) {
+    var_dump($c);
+}
+
+f(new C);
+f(null);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(C)#1 (0) {
+}
+NULL
+]]>
+    </screen>
+   </example>
+  </note>
+ </sect2>
+
+ <sect2 xml:id="language.types.declarations.union">
+  <title>union 型</title>
+  <para>
+   型を union として宣言すると、ひとつではなく、
+   複数の異なる型を値として受け入れることができます。
+   union 型は、<literal>T1|T2|...</literal> という文法を使って指定します。
+   union 型は、PHP 8.0.0 以降で利用可能です。
+  </para>
+
+  <sect3 xml:id="language.types.declarations.union.nullable">
+   <title>Nullを受け入れる union 型</title>
+   <para>
+    <literal>null</literal> 型も union 型の一部としてサポートされています。
+    null を受け入れる union を作るために、
+    <literal>T1|T2|null</literal> のような指定をすることができます。
+    既にある <literal>?T</literal> 記法は、
+    よくある <literal>T|null</literal> の短縮記法と考えられます。
+   </para>
+
+   <caution>
+    <simpara>
+     <literal>null</literal> は、単独の、独立した型として使うことは出来ません。
+    </simpara>
+   </caution>
+  </sect3>
+
+  <sect3 xml:id="language.types.declarations.union.false">
+   <title>false 疑似型</title>
+   <para>
+    <literal>false</literal> リテラルの型が、union の一部としてサポートされています。
+    歴史的な理由で、多くの内部関数が失敗時に <literal>null</literal>
+    ではなく <literal>false</literal>  を返しているためです。
+    <function>strpos</function> 関数は、このような関数の典型例です。
+   </para>
+
+   <caution>
+    <simpara>
+     <literal>false</literal> 疑似型は、単独の、独立した型
+     (単独な null を許容する型としても)
+     として使うことは出来ません。
+     したがって、<literal>false</literal>, <literal>false|null</literal>,
+     <literal>?false</literal> はいずれも許されません。
+    </simpara>
+   </caution>
+
+   <caution>
+    <simpara>
+     <literal>true</literal> リテラルの型は存在 <emphasis>しません</emphasis>
+    </simpara>
+   </caution>
+  </sect3>
+
+  <sect3 xml:id="language.types.declarations.union.redundant">
+   <title>重複した冗長な型</title>
+   <para>
+    union 型の宣言に関する単純なバグを見つけるため、
+    クラスの読み込みを行わずに検出できる冗長な型はコンパイル時にエラーになります。
+    たとえば、以下のような場合です:
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       名前が解決された型は、一度しか現れることができません。
+       <literal>int|string|INT</literal> のような型はエラーになります。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <type>bool</type> 型が使われている場合、<type>false</type> 疑似型は追加で使えません。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <type>object</type> 型が使われている場合、クラスの型は追加で使えません。
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <type>iterable</type> 型が使われている場合、 <type>array</type>
+       と <classname>Traversable</classname> は追加で使えません。
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </para>
+
+   <note>
+    <simpara>
+     これによって、型が "最低限" であることは保証しません。
+     なぜなら、最低限であることを保証するためには、
+     使われている全てのクラスの型を読み込まなければならないからです。
+    </simpara>
+   </note>
+
+   <para>
+    たとえば、<literal>A</literal> と <literal>B</literal> 
+    がクラスのエイリアスだったとします。
+    この場合、<literal>A|B</literal> は
+    <literal>A</literal> または <literal>B</literal> のみに縮めることができますが、
+    正しい union 型です。
+    同様に、<code>B extends A {}</code> というクラスがあった場合、
+    <literal>A|B</literal> は
+    <literal>A</literal> のみに縮めることができますが、
+    正しい union 型です。
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function foo(): int|INT {} // 許されません
+function foo(): bool|false {} // 許されません
+
+use A as B;
+function foo(): A|B {} // 許されません ("use" は名前解決の一部です)
+
+class_alias('X', 'Y');
+function foo(): X|Y {} // 問題ありません (冗長かどうかは、実行時にだけわかります)
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect3>
+
+ </sect2>
+
+ <sect2 xml:id="language.types.declarations.return-only">
+  <title>返り値でのみ有効な型</title>
+
+  <sect3 xml:id="language.types.declarations.void">
+   <title>void</title>
+   <para>
+    <literal>void</literal> は、関数が値を返さないことを示す戻り値の型です。
+    よって、この型は union 型の一部として指定することが出来ません。
+    PHP 7.1.0 以降で利用できます。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="language.types.declarations.static">
+   <title>static</title>
+   <para>
+    値が、メソッドが呼び出されているクラスと同じインスタンスでなければなりません。
+    PHP 8.0.0 以降で利用できます。
+   </para>
+  </sect3>
+ </sect2>
+
+ <sect2 xml:id="language.types.declarations.strict">
+  <title>厳密な型付け</title>
+
+  <para>
+   デフォルトでは、PHP は誤った型の値を
+   可能であれば期待されたスカラー型の宣言に従うように強制します。
+   たとえば、関数に <type>int</type> が与えられたが、
+   引数に文字列が期待されていた場合、
+   文字列型の値を取得します。
+  </para>
+
+  <para>
+   ファイルごとに strict モードを有効にすることができます。
+   strict モードでは、型宣言に正確に対応する値のみを受け入れ、
+   そうでない場合、<classname>TypeError</classname> がスローされます。
+   このルールに関する唯一の例外は、<type>int</type> の値が
+   <type>float</type> 型の宣言に渡せることだけです。
+  </para>
+
+  <warning>
+   <simpara>
+    内部関数の中からの関数呼び出しは、
+    <literal>strict_types</literal> 宣言の影響を受けません。
+   </simpara>
+  </warning>
+
+  <para>
+   strict モードを有効にするには、&declare; 文を
+   <literal>strict_types</literal> 宣言と一緒に使います。
+  </para>
+
+  <note>
+   <para>
+    厳密な型付けは、strict モードが有効になったファイルの
+    <emphasis>内部</emphasis> から行われる関数呼び出しに適用されます。
+    そのファイルで宣言された関数への呼び出しに対して適用されるわけではありません。
+    厳密な型付けが有効になっていないファイルから、
+    厳密な型付けが有効になっているファイルで定義された関数を呼び出した場合は、
+    呼び出し側の好み(型の強制)が尊重され、値は型変換されます。
+   </para>
+  </note>
+
+  <note>
+   <para>
+    厳密な型付けは、スカラー型の宣言に対してのみ定義されます。
+   </para>
+  </note>
+
+  <example>
+   <title>引数の値に対する厳密な型付け</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+declare(strict_types=1);
+
+function sum(int $a, int $b) {
+    return $a + $b;
+}
+
+var_dump(sum(1, 2));
+var_dump(sum(1.5, 2.5));
+?>
+]]>
+   </programlisting>
+   &example.outputs.8;
+   <screen>
+<![CDATA[
+int(3)
+
+Fatal error: Uncaught TypeError: sum(): Argument #1 ($a) must be of type int, float given, called in - on line 9 and defined in -:4
+Stack trace:
+#0 -(9): sum(1.5, 2.5)
+#1 {main}
+  thrown in - on line 4
+]]>
+   </screen>
+  </example>
+
+  <example>
+   <title>引数の値に対する型の強制</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+function sum(int $a, int $b) {
+    return $a + $b;
+}
+
+var_dump(sum(1, 2));
+
+// これらは、整数型に強制されます: 以下の出力を参照!
+var_dump(sum(1.5, 2.5));
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+int(3)
+int(3)
+]]>
+   </screen>
+  </example>
+
+  <example>
+   <title>戻り値に対する厳密な型付け</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+declare(strict_types=1);
+
+function sum($a, $b): int {
+    return $a + $b;
+}
+
+var_dump(sum(1, 2));
+var_dump(sum(1, 2.5));
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+int(3)
+
+Fatal error: Uncaught TypeError: sum(): Return value must be of type int, float returned in -:5
+Stack trace:
+#0 -(9): sum(1, 2.5)
+#1 {main}
+  thrown in - on line 5
+]]>
+   </screen>
+  </example>
+ </sect2>
+
+ <sect2 xml:id="language.types.declarations.union.coercive">
+  <title>union 型と型の強制</title>
+
+  <para>
+   <literal>strict_types</literal> が有効になっていない場合、
+   スカラー型の宣言は、限られた暗黙の型強制に従います。
+   値の正確な型が union の一部に指定されていない場合、
+   次の順に対象となる型が選択されます:
+
+   <orderedlist>
+    <listitem>
+     <simpara>
+      <type>int</type>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <type>float</type>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <type>string</type>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <type>bool</type>
+     </simpara>
+    </listitem>
+   </orderedlist>
+
+   正確な型が union の中に存在するか、
+   値が PHP の既存の型チェックのセマンティクスによって型を強制できる場合、
+   その型が選択されます。
+   そうでない場合、次の型を試そうとします。
+  </para>
+
+  <caution>
+   <para>
+    例外として、値が文字列で、int と float が union に含まれていた場合、
+    型は既存の "数値文字列" を解釈するセマンティクスによって決まります。
+    たとえば、<literal>"42"</literal> の場合、
+    <type>int</type> が選ばれますし、
+    <literal>"42.0"</literal> の場合、<type>float</type> が選ばれます。
+   </para>
+  </caution>
+
+  <note>
+   <para>
+    上のリストに入っていない型については、暗黙の型の強制が行われる対象ではありません。
+    特に、暗黙のうちに
+    <literal>null</literal> や <literal>false</literal> に強制されることはありません。
+   </para>
+  </note>
+
+  <example>
+   <title>union の型のひとつに強制される例</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+// int|string
+42    --> 42          // 正確に型が一致
+"42"  --> "42"        // 正確に型が一致
+new ObjectWithToString --> "Result of __toString()"
+                      // オブジェクトは int と互換性がないので、文字列にフォールバック
+42.0  --> 42          // float は int と互換性がある
+42.1  --> 42          // float は int と互換性がある
+1e100 --> "1.0E+100"  // int には大きすぎる float なので、文字列にフォールバック
+INF   --> "INF"       // int には大きすぎる float なので、文字列にフォールバック
+true  --> 1           // bool は int と互換性がある
+[]    --> TypeError   // 配列はint, string と互換性はない。
+
+// int|float|bool
+"45"    --> 45        // int の数値文字列
+"45.0"  --> 45.0      // float の文字列
+
+"45X"   --> true      // 数値文字列ではない。boolにフォールバック
+""      --> false     // 数値文字列ではない。boolにフォールバック
+"X"     --> true      // 数値文字列ではない。boolにフォールバック
+[]      --> TypeError // 配列はint, float, bool と互換性はない。
+?>
+]]>
+   </programlisting>
+  </example>
+ </sect2>
+
+<!-- TODO figure out what do to with these things -->
+ <sect2 xml:id="language.types.declarations.misc">
+  <title>その他</title>
+   <example>
+    <title>参照渡しの引数に対する型宣言</title>
+    <simpara>
+     参照渡しの引数に対して宣言される方は、関数の入り口でチェックされますが、
+     関数から返される時はチェックされません。よって、関数から戻った後は、
+     引数の型が変わっているかもしれません。
+    </simpara>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function array_baz(array &$param)
+{
+    $param = 1;
+}
+$var = [];
+array_baz($var);
+var_dump($var);
+array_baz($var);
+?>
+]]>
+    </programlisting>
+    &example.outputs.8;
+    <screen>
+<![CDATA[
+int(1)
+
+Fatal error: Uncaught TypeError: array_baz(): Argument #1 ($param) must be of type array, int given, called in - on line 9 and defined in -:2
+Stack trace:
+#0 -(9): array_baz(1)
+#1 {main}
+  thrown in - on line 2
+]]>
+    </screen>
+   </example>
+
+   <example>
+    <title><classname>TypeError</classname> をキャッチする</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+declare(strict_types=1);
+
+function sum(int $a, int $b) {
+    return $a + $b;
+}
+
+try {
+    var_dump(sum(1, 2));
+    var_dump(sum(1.5, 2.5));
+} catch (TypeError $e) {
+    echo 'Error: ', $e->getMessage();
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs.8;
+    <screen>
+<![CDATA[
+int(3)
+Error: sum(): Argument #1 ($a) must be of type int, float given, called in - on line 10
+]]>
+    </screen>
+   </example>
+ </sect2>
+
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

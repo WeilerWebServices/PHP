@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 345139 Maintainer: khp Status: ready -->
+<refentry xml:id="function.fileperms" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>fileperms</refname>
+  <refpurpose>Liefert die Zugriffsrechte einer Datei</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>fileperms</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Liefert Zugriffsrechte für die übergebene Datei.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filename</parameter></term>
+     <listitem>
+      <para>
+       Pfad zu der Datei.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Gibt die Zugriffsrechte einer Datei als numerischen Modus zurück. Die
+   niedrigen Bits dieses Modus sind die gleichen wie die Zugriffsrechte, die
+   <function>chmod</function> erwartet, allerdings beinhaltet der Rückgabewert
+   auf den meisten Plattformen ebenfalls Informationen über den Typ der Datei,
+   die als <parameter>filename</parameter> angegeben wurde. Die Beispiele weiter
+   unten demonstrieren wie der Rückgabewert auf spezifische Zugriffsrechte und
+   Datei-Typen auf POSIX Systemen einschließlich Linux und macOS geprüft
+   werden kann.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Zeige Rechte als Oktal-Wert an</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo substr(sprintf('%o', fileperms('/tmp')), -4);
+echo substr(sprintf('%o', fileperms('/etc/passwd')), -4);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+1777
+0644
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Zeige komplette Rechte an</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$perms = fileperms('/etc/passwd');
+
+switch ($perms & 0xF000) {
+    case 0xC000: // Socket
+        $info = 's';
+        break;
+    case 0xA000: // Symbolischer Link
+        $info = 'l';
+        break;
+    case 0x8000: // Regulär
+        $info = 'r';
+        break;
+    case 0x6000: // Block special
+        $info = 'b';
+        break;
+    case 0x4000: // Verzeichnis
+        $info = 'd';
+        break;
+    case 0x2000: // Character special
+        $info = 'c';
+        break;
+    case 0x1000: // FIFO pipe
+        $info = 'p';
+        break;
+    default: // unbekannt
+        $info = 'u';
+}
+
+// Besitzer
+$info .= (($perms & 0x0100) ? 'r' : '-');
+$info .= (($perms & 0x0080) ? 'w' : '-');
+$info .= (($perms & 0x0040) ?
+            (($perms & 0x0800) ? 's' : 'x' ) :
+            (($perms & 0x0800) ? 'S' : '-'));
+
+// Gruppe
+$info .= (($perms & 0x0020) ? 'r' : '-');
+$info .= (($perms & 0x0010) ? 'w' : '-');
+$info .= (($perms & 0x0008) ?
+            (($perms & 0x0400) ? 's' : 'x' ) :
+            (($perms & 0x0400) ? 'S' : '-'));
+
+// Andere
+$info .= (($perms & 0x0004) ? 'r' : '-');
+$info .= (($perms & 0x0002) ? 'w' : '-');
+$info .= (($perms & 0x0001) ?
+            (($perms & 0x0200) ? 't' : 'x' ) :
+            (($perms & 0x0200) ? 'T' : '-'));
+
+echo $info;
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+-rw-r--r--
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.clearstatcache;
+  &tip.fopen-wrapper.stat;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>chmod</function></member>
+    <member><function>is_readable</function></member>
+    <member><function>stat</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

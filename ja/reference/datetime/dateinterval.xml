@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: takagi Status: ready -->
+<!-- Credits: mumumu -->
+
+<phpdoc:classref xml:id="class.dateinterval" xmlns:phpdoc="http://php.net/ns/phpdoc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+ <title>DateInterval クラス</title>
+ <titleabbrev>DateInterval</titleabbrev>
+
+ <partintro>
+
+<!-- {{{ DateInterval intro -->
+  <section xml:id="dateinterval.intro">
+   &reftitle.intro;
+   <para>
+    日付の間隔をあらわします。
+   </para>
+   <para>
+    格納方式は、固定値 (年、月、日、時など)
+    あるいは相対時刻 (<classname>DateTime</classname> のコンストラクタがサポートしている書式)
+    となります。
+   </para>
+   <para>
+    さらに厳密に言うと、
+    <classname>DateInterval</classname> オブジェクトが保持している情報は、
+    ある date/time オブジェクトから別の date/time オブジェクトに情報を移す手順です。
+    この過程は必ずしも可逆ではありません。
+   </para>
+   <para>
+    <classname>DateInterval</classname> オブジェクトを生成する一般的なやり方は、
+    2つの date/time オブジェクトの差分を
+    <function>DateTimeInterface::diff</function> 経由で計算することです。
+   </para>
+  </section>
+<!-- }}} -->
+
+  <section xml:id="dateinterval.synopsis">
+   &reftitle.classsynopsis;
+
+<!-- {{{ Synopsis -->
+   <classsynopsis>
+    <ooclass><classname>DateInterval</classname></ooclass>
+
+<!-- {{{ Class synopsis -->
+    <classsynopsisinfo>
+     <ooclass>
+      <classname>DateInterval</classname>
+     </ooclass>
+    </classsynopsisinfo>
+<!-- }}} -->
+
+    <classsynopsisinfo role="comment">&Properties;</classsynopsisinfo>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <type>int</type>
+     <varname linkend="dateinterval.props.y">y</varname>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <type>int</type>
+     <varname linkend="dateinterval.props.m">m</varname>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <type>int</type>
+     <varname linkend="dateinterval.props.d">d</varname>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <type>int</type>
+     <varname linkend="dateinterval.props.h">h</varname>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <type>int</type>
+     <varname linkend="dateinterval.props.i">i</varname>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <type>int</type>
+     <varname linkend="dateinterval.props.s">s</varname>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <type>float</type>
+     <varname linkend="dateinterval.props.f">f</varname>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <type>int</type>
+     <varname linkend="dateinterval.props.invert">invert</varname>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <type>mixed</type>
+     <varname linkend="dateinterval.props.days">days</varname>
+    </fieldsynopsis>
+    
+    <classsynopsisinfo role="comment">&Methods;</classsynopsisinfo>
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.dateinterval')/db:refentry/db:refsect1[@role='description']/descendant::db:constructorsynopsis[not(@role='procedural')])">
+     <xi:fallback />
+    </xi:include>
+    <!--
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.dateinterval')/db:refentry/db:refsect1[@role='description']/descendant::db:destructorsynopsis[not(@role='procedural')])">
+     <xi:fallback />
+    </xi:include>
+    -->
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.dateinterval')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[not(@role='procedural')])">
+     <xi:fallback />
+    </xi:include>
+
+   </classsynopsis>
+<!-- }}} -->
+
+  </section>
+  
+  <section xml:id="dateinterval.props">
+   &reftitle.properties;
+   <variablelist>
+    <varlistentry xml:id="dateinterval.props.y">
+     <term><varname>y</varname></term>
+     <listitem>
+      <para>
+       年。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="dateinterval.props.m">
+     <term><varname>m</varname></term>
+     <listitem>
+      <para>
+       月。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="dateinterval.props.d">
+     <term><varname>d</varname></term>
+     <listitem>
+      <para>
+       日。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="dateinterval.props.h">
+     <term><varname>h</varname></term>
+     <listitem>
+      <para>
+       時間。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="dateinterval.props.i">
+     <term><varname>i</varname></term>
+     <listitem>
+      <para>
+       分。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="dateinterval.props.s">
+     <term><varname>s</varname></term>
+     <listitem>
+      <para>
+       秒。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="dateinterval.props.f">
+     <term><varname>f</varname></term>
+     <listitem>
+      <para>
+       マイクロ秒。1秒の100万分の1です。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="dateinterval.props.invert">
+     <term><varname>invert</varname></term>
+     <listitem>
+      <para>
+       間隔が負の数になっている場合は <literal>1</literal>、そうでない場合は
+       <literal>0</literal>。
+       <methodname>DateInterval::format</methodname> を参照ください。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="dateinterval.props.days">
+     <term><varname>days</varname></term>
+     <listitem>
+      <para>
+       <function>DateTime::diff</function> で作られた DateInterval
+       オブジェクトの場合は、開始日と終了日の間の日数。
+       それ以外の場合は <varname>days</varname> は &false; となります。
+      </para>
+      <para>
+       PHP 5.4.20/5.5.4 より前のバージョンでは、
+       &false; ではなく -99999 となっていました。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </section>
+
+  <section role="changelog" xml:id="dateinterval.changelog"><!-- {{{ -->
+   &reftitle.changelog;
+   <para>
+    <informaltable>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>&Version;</entry>
+        <entry>&Description;</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>7.1.0</entry>
+        <entry><varname>f</varname> プロパティが追加されました</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </informaltable>
+   </para>
+  </section><!-- }}} -->
+
+ </partintro>
+
+ &reference.datetime.entities.dateinterval;
+
+</phpdoc:classref>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

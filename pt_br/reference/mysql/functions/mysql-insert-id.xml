@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 328734 Maintainer: fernandoc Status: ready -->
+<refentry xml:id="function.mysql-insert-id" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>mysql_insert_id</refname>
+  <refpurpose>Obtém o ID gerado pela operação INSERT anterior</refpurpose>
+ </refnamediv>
+
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_insert_id</function></member>
+    <member><methodname>PDO::lastInsertId</methodname></member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>mysql_insert_id</methodname>
+   <methodparam choice="opt"><type>resource</type><parameter>link_identifier</parameter><initializer>NULL</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Obtém o ID gerado para uma coluna AUTO_INCREMENT pela consulta
+   anterior (normalmente INSERT).
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    &mysql.linkid.description;
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   O ID gerado para uma coluna AUTO_INCREMENT pela consulta 
+   anterior em caso de sucesso, <literal>0</literal> se a consulta anterior
+   não gerou um valor AUTO_INCREMENT, ou &false; se
+   não foi estabelecido conexão com o MySQL.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemplo <function>mysql_insert_id</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$link = mysql_connect('localhost', 'mysql_user', 'mysql_password');
+if (!$link) {
+    die('Could not connect: ' . mysql_error());
+}
+mysql_select_db('mydb');
+
+mysql_query("INSERT INTO mytable (product) values ('kossu')");
+printf("Last inserted record has id %d\n", mysql_insert_id());
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <caution>
+   <para>
+    <function>mysql_insert_id</function> irá converter o tipo de retorno da
+    API nativa em C do MySQL <literal>mysql_insert_id()</literal> para um tipo
+    <literal>long</literal> (chamado <type>int</type> no PHP). Se a sua
+    coluna AUTO_INCREMENT for uma coluna do tipo BIGINT (64 bits), a
+    conversão pode resultar em um valor incorreto. Ao invés disto, use a
+    função LAST_INSERT_ID() interna do MySQL em uma consulta SQL. Para mais informações
+    sobre valores máximos de inteiros do PHP, visite a documentação
+    <link linkend="language.types.integer">integer</link>.
+   </para>
+  </caution>
+  <note>
+   <para>
+    Devido <function>mysql_insert_id</function> agir sobre a última consulta
+    realizada, tenha certeza de chamar <function>mysql_insert_id</function> imediatamente
+    após a consulta que gerou o valor.
+   </para>
+  </note>
+  <note>
+   <para>
+    O valor da função SQL do MySQL
+    <literal>LAST_INSERT_ID()</literal> sempre contém o
+    valor AUTO_INCREMENT mais recentemente gerado e não é reiniciado
+    entre as consultas.
+  </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mysql_query</function></member>
+    <member><function>mysql_info</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

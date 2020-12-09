@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 297645 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes Maintainer: pmartin -->
+
+<chapter xml:id="security.apache" xmlns="http://docbook.org/ns/docbook">
+ <title>Installé en tant que module Apache</title>
+ <simpara>
+  Lorsque <acronym>PHP</acronym> est utilisé en tant que module Apache, celui-ci hérite des
+  permissions accordées à l'utilisateur faisant tourner Apache (par défaut,
+  l'utilisateur "nobody"). Ceci a plusieurs impacts sur la sécurité et
+  les autorisations.
+  Par exemple, si vous utilisez <acronym>PHP</acronym> pour accéder à une base de données, à
+  moins que la base n'ait un système de droits d'accès interne, vous devrez
+  la rendre accessible à l'utilisateur "nobody". Cela signifie qu'un
+  script mal intentionné peut accéder à la base et la modifier, sans
+  identification. Il est même possible qu'un robot accède une page
+  d'administration, et détruise toutes les bases de données. Vous pouvez vous protéger
+  contre cela avec les autorisations Apache, ou définir votre
+  propre modèle d'accès en utilisant LDAP, des fichiers &htaccess;, etc. et inclure ce code
+  dans vos scripts <acronym>PHP</acronym>.
+ </simpara>
+ <simpara>
+  Souvent, lorsqu'on a établi les droits de l'utilisateur <acronym>PHP</acronym> (ici,
+  l'utilisateur Apache) pour minimiser les risques, on s'aperçoit que
+  <acronym>PHP</acronym> ne peut plus écrire de fichiers dans les répertoires des utilisateurs.
+  Ou encore, qu'il ne peut plus accéder à, ou modifier, une base de données privée.
+  En somme, les sécurités mises en place empêchent à la fois l'écriture de bons et de mauvais fichiers,
+  en même temps que les bonnes et mauvaises opérations en bases de données.
+ </simpara>
+ <simpara>
+  Arrivé là, une erreur de sécurité fréquente est de donner à l'utilisateur Apache
+  les droits de superadministrateur ("root"), ou d'accroitre les possibilités d'Apache
+  d'une quelconque autre façon.
+ </simpara>
+ <simpara>
+  Donner de telles permissions à l'utilisateur Apache est extrêmement
+  dangereux, et pourrait compromettre tout le système ; en conséquence, l'utilisation de sudo,
+  de chroot, ou de toute autre solution permettant de fonctionner en tant que superadministrateur
+  ("root"), ne devrait pas être envisagée par toute personne qui ne soit pas experte en sécurité.
+ </simpara>
+ <simpara>
+  Il existe des solutions plus simples. En utilisant
+  <link linkend="ini.open-basedir">open_basedir</link>, vous pouvez contrôler et restreindre
+  les dossiers qui seront accessibles par <acronym>PHP</acronym>. Vous pouvez
+  aussi créer des aires de restrictions Apache, pour limiter les activités
+  en provenance du web à des fichiers qui ne soient en rapport ni avec des utilisateurs,
+  ni avec le système.
+ </simpara>
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

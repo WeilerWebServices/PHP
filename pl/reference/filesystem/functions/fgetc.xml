@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 297028 Maintainer: adi Status: ready -->
+<!-- $Revision$ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fgetc">
+ <refnamediv>
+  <refname>fgetc</refname>
+  <refpurpose>Pobiera znak ze wskaźnika pliku</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>fgetc</methodname>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Pobiera znak ze wskaźnika pliku.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>uchwyt</parameter></term>
+     <listitem>
+      &fs.validfp.all;
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca łańcuch znaków zawierający pojedynczy znak odczytany z pliku wskazanego
+   przez <parameter>uchwyt</parameter>. Zwraca &false; lub EOF.
+  </para>
+  &return.falseproblem;
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>fgetc</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$fp = fopen('plik.txt', 'r');
+if (!$fp) {
+    echo 'Nie można otworzyć plik.txt';
+}
+while (false !== ($char = fgetc($fp))) {
+    echo "$char\n";
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.bin-safe;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>fread</function></member>
+    <member><function>fopen</function></member>
+    <member><function>popen</function></member>
+    <member><function>fsockopen</function></member>
+    <member><function>fgets</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

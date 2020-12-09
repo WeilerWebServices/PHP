@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 297028 Maintainer: wiesemann Status: ready -->
+ <chapter xml:id="chm.about" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Über diese Ausgabe</title>
+
+  <para>
+   Die Version des Handbuchs im Windows-HTML-Hilfe-Format wendet sich an
+   Entwickler, die das Handbuch inklusive der Kommentare immer griffbreit 
+   haben wollen und trotzdem nicht auf das Laden einer Webseite warten wollen. 
+   Diese Ausgabe bietet den kompletten Inhalt des Handbuchs, ergänzt um die
+   Nutzer-Kommentare sowie einige nützliche Features, die das Anzeigeprogramm
+   zur Verfügung stellt. Nur Erstellung nutzen wir Skripte, außerdem binden
+   wir verschiedene "Skins" ein.
+  </para>
+  <para>
+   Diese Distribution des PHP Handbuchs enthält viele Dateien, unter anderem
+   die Hauptdatei <filename>php_manual_de.chm</filename>. Um diese anzusehen,
+   doppelklicken Sie darauf (vermutlich haben Sie das schon).
+   <!--
+   Die Kommentare sind in <filename>php_manual_notes.chm</filename>. Sie
+   benötigen nur eine Kopie dieser Datei, egal, in wie vielen Sprachen Sie das
+   Handbuch verwenden wollen. Sie benötigen jeweils nur die Datei
+   <filename>php_manual_SPRACHE.chm</filename> im selben Verzeichnis wie die
+   Datei <filename>php_manual_notes.chm</filename>.
+   -->
+   Eventuell sehen Sie auch eine Datei <filename>php_manual_de.chw</filename>
+   in diesem Verzeichnis. Diese Datei wird angelegt, wenn Sie das erste Mal
+   den Index-Reiter öffnen; sie enthält einen Index der Handbuchseiten.
+  </para>
+
+  <para>
+   Für alle, die an den technischen Details der Microsoft-HTML-Hilfe interessiert
+   sind, ist <link xlink:href="&url.chm.helpware;">&url.chm.helpware;</link> eine
+   gute Quelle. Weitere Informationen und den Stand der Windows-HTML-Hilfe
+   in den Microsoft-Hilfe-Formaten in der Vergangenheit finden Sie in einem
+   <link xlink:href="&url.chm.history;">WinWriters-Artikel</link>.
+  </para>
+   
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

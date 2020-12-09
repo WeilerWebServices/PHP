@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351369 Maintainer: takagi Status: ready -->
+<!-- CREDITS: hirokawa,shimooka,mumumu -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.session-set-save-handler" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>session_set_save_handler</refname>
+  <refpurpose>ユーザー定義のセッション保存関数を設定する</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>session_set_save_handler</methodname>
+   <methodparam><type>callable</type><parameter>open</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>close</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>read</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>write</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>destroy</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>gc</parameter></methodparam>
+   <methodparam choice="opt"><type>callable</type><parameter>create_sid</parameter></methodparam>
+   <methodparam choice="opt"><type>callable</type><parameter>validate_sid</parameter></methodparam>
+   <methodparam choice="opt"><type>callable</type><parameter>update_timestamp</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   PHP 5.4 以降は次のプロトタイプでも登録できます。
+  </para>
+  <methodsynopsis>
+   <type>bool</type><methodname>session_set_save_handler</methodname>
+   <methodparam><type>object</type><parameter>sessionhandler</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>register_shutdown</parameter><initializer>&true;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>session_set_save_handler</function> は、セッションに
+   関連するデータを保存および取得するために使用されるユーザー定義の
+   セッション保存関数を設定します。この関数は、PHP セッションにより
+   提供されるもの以外の保存方法を使用したい場合に有用です。
+   例えば、セッションデータをローカルデータベースに保存します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   この関数には二種類のプロトタイプがあります。
+   <variablelist>
+    <varlistentry>
+     <term><parameter>sessionhandler</parameter></term>
+     <listitem>
+      <para>
+       <interfacename>SessionHandlerInterface</interfacename>、
+       <interfacename>SessionIdInterface</interfacename>(オプション)
+       または
+       <interfacename>SessionUpdateTimestampHandlerInterface</interfacename>
+        を実装したクラス、たとえば
+       <classname>SessionHandler</classname> のインスタンスで、
+       これをセッションハンドラとして登録する。PHP 5.4 以降限定。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>register_shutdown</parameter></term>
+     <listitem>
+      <para>
+       <function>session_write_close</function> を
+       <function>register_shutdown_function</function> 関数として登録するかどうか。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+
+   あるいは
+
+   <variablelist>
+    <varlistentry>
+     <term><parameter>open</parameter></term>
+     <listitem>
+      <para>
+       以下のシグナチャを持つ callable:
+       <methodsynopsis>
+        <type>bool</type><methodname><replaceable>open</replaceable></methodname>
+        <methodparam><type>string</type><parameter>savePath</parameter></methodparam>
+        <methodparam><type>string</type><parameter>sessionName</parameter></methodparam>
+       </methodsynopsis>
+      </para>
+      <para>
+       open コールバックはクラスのコンストラクタのようなもので、セッションを開くときに実行されます。
+       セッションが自動で開始したり、あるいは手動で <function>session_start</function>
+       で開始させたりするときに、最初に実行されるコールバック関数がこれです。
+       成功した場合は &true;、失敗した場合は &false; を返します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>close</parameter></term>
+     <listitem>
+      <para>
+       以下のシグナチャを持つ callable:
+       <methodsynopsis>
+        <type>bool</type><methodname><replaceable>close</replaceable></methodname>
+        <void/>
+       </methodsynopsis>
+      </para>
+      <para>
+       close コールバックはクラスのデストラクタのようなもので、write コールバックがコールされた後で実行されます。
+       また、<function>session_write_close</function> がコールされたときにも実行されます。
+       成功した場合は &true;、失敗した場合は &false; を返します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>read</parameter></term>
+     <listitem>
+      <para>
+       以下のシグナチャを持つ callable:
+       <methodsynopsis>
+        <type>string</type><methodname><replaceable>read</replaceable></methodname>
+        <methodparam><type>string</type><parameter>sessionId</parameter></methodparam>
+       </methodsynopsis>
+      </para>
+      <para>
+       <parameter>read</parameter> コールバックは、常にセッションエンコード (シリアライズ)
+       された文字列を返さなければなりません。何もデータを読み込まなかった場合は空文字列を返します。
+      </para>
+      <para>
+       このコールバックは、セッションが開始したときや
+       <function>session_start</function> がコールされたときに PHP が内部的に実行します。
+       このコールバックを実行する前に、PHP は
+       <parameter>open</parameter> コールバックを実行します。
+      </para>
+      <para>
+       このコールバックが返す値は、
+       <parameter>write</parameter> コールバックがストレージに渡した形式とまったく同じシリアライズ形式でなければなりません。
+       返された値を PHP が自動的にアンシリアライズして、スーパーグローバル <varname>$_SESSION</varname>
+       に格納します。データの形式は <function>serialize</function> したものと似ていますが、実際は違う形式であることに注意しましょう。
+       シリアライズの方法は ini 設定 <link linkend="ini.session.serialize-handler">session.serialize_handler</link> で指定します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>write</parameter></term>
+     <listitem>
+      <para>
+       以下のシグナチャを持つ callable:
+       <methodsynopsis>
+        <type>bool</type><methodname><replaceable>write</replaceable></methodname>
+        <methodparam><type>string</type><parameter>sessionId</parameter></methodparam>
+        <methodparam><type>string</type><parameter>data</parameter></methodparam>
+       </methodsynopsis>
+      </para>
+      <para>
+       <parameter>write</parameter> コールバックは、セッションの保存や終了が必要となったときにコールされます。
+       このコールバックが受け取るのは、現在のセッション ID とシリアライズ後のスーパーグローバル <varname>$_SESSION</varname> です。
+       PHP が内部で利用するシリアライズ方法は、ini 設定
+       <link linkend="ini.session.serialize-handler">session.serialize_handler</link> で指定します。
+      </para>
+      <para>
+       このコールバックに渡されたシリアライズ後のセッションデータを、
+       渡されたセッション ID に対応させて格納しなければなりません。
+       このデータを取得した <parameter>read</parameter> コールバックは、
+       <parameter>write</parameter> コールバックに最初に渡されたのとまったく同じ値を返さなければなりません。
+      </para>
+      <para>
+       このコールバックが実行されるのは、PHP のスクリプトが終了するときか、あるいは明示的に <function>session_write_close</function>
+       がコールされたときです。この関数の実行後には、PHP が内部的に <parameter>close</parameter>
+       コールバックを実行することに注意しましょう。
+       <note>
+        <para>
+         "write" ハンドラは、出力ストリームが閉じてから実行されます。
+         したがって、"write" ハンドラ内でデバッグ出力を行っても、
+         それはブラウザに表示されません。
+         デバッグ出力が必要なら、それをファイルに書き出すようにしましょう。
+        </para>
+       </note>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>destroy</parameter></term>
+     <listitem>
+      <para>
+       以下のシグナチャを持つ callable:
+       <methodsynopsis>
+        <type>bool</type><methodname><replaceable>destroy</replaceable></methodname>
+        <methodparam><type>string</type><parameter>sessionId</parameter></methodparam>
+       </methodsynopsis>
+      </para>
+      <para>
+       このコールバックが実行されるのは、
+       <function>session_destroy</function> あるいは
+       <function>session_regenerate_id</function> (destroy パラメータを &true; にした場合)
+       を実行し、セッションを破棄した場合です。
+       成功した場合は &true;、失敗した場合は &false; を返します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>gc</parameter></term>
+     <listitem>
+      <para>
+       以下のシグナチャを持つ callable:
+       <methodsynopsis>
+        <type>bool</type><methodname><replaceable>gc</replaceable></methodname>
+        <methodparam><type>int</type><parameter>lifetime</parameter></methodparam>
+       </methodsynopsis>
+      </para>
+      <para>
+       ガベージコレクタコールバックは PHP が内部で定期的に実行し、古いセッションデータを破棄します。
+       実行頻度は <link linkend="ini.session.gc-probability">session.gc_probability</link>
+       および <link linkend="ini.session.gc-divisor">session.gc_divisor</link> で設定します。
+       この関数に渡される有効期限の値は <link linkend="ini.session.gc-maxlifetime">session.gc_maxlifetime</link>
+       で設定できます。
+       成功した場合は &true;、失敗した場合は &false; を返します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>create_sid</parameter></term>
+     <listitem>
+      <para>
+       以下のシグナチャを持つ callable:
+       <methodsynopsis>
+        <type>string</type><methodname><replaceable>create_sid</replaceable></methodname>
+        <void/>
+       </methodsynopsis>
+      </para>
+      <para>
+       このコールバックは、新しいセッション ID が必要になったときに実行されます。
+       パラメータは不要です。返り値は、使っているハンドラで有効なセッション ID を表す文字列となります。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>validate_sid</parameter></term>
+     <listitem>
+      <para>
+       以下のシグナチャを持つ callable:
+       <methodsynopsis>
+        <type>bool</type><methodname><replaceable>validate_sid</replaceable></methodname>
+        <methodparam><type>string</type><parameter>key</parameter></methodparam>
+       </methodsynopsis>
+      </para>
+      <para>
+       このコールバックは、セッションが開始された場合に実行されます。
+       但し、セッションID が渡され、
+       <link linkend="ini.session.use-strict-mode">session.use_strict_mode</link> 
+       が有効な場合に限ります。
+       <parameter>key</parameter> は検証する セッションID を指定します。
+       渡されたID のセッションが既に存在する場合、セッションID は有効です。
+       成功した場合は &true;、失敗した場合は &false; を返します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>update_timestamp</parameter></term>
+     <listitem>
+      <para>
+       以下のシグナチャを持つ callable:
+       <methodsynopsis>
+        <type>bool</type><methodname><replaceable>update_timestamp</replaceable></methodname>
+        <methodparam><type>string</type><parameter>key</parameter></methodparam>
+        <methodparam><type>string</type><parameter>val</parameter></methodparam>
+       </methodsynopsis>
+      </para>
+      <para>
+       このコールバックは、セッションが更新された時に実行されます。
+       <parameter>key</parameter> はセッションID、
+       <parameter>val</parameter> はセッションデータを指定します。
+       成功した場合は &true;、失敗した場合は &false; を返します。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>
+     自作のセッションハンドラ: 完全なコードは <classname>SessionHandlerInterface</classname> を参照
+    </title>
+    <para>
+     このコードは、PHP 5.4.0 以降のバージョンで動作します。
+     ここでは実行するところだけを示します。完全な例は、上でリンクしている
+     <classname>SessionHandlerInterface</classname> のページを参照ください。
+    </para>
+    <para>
+     <function>session_set_save_handler</function> でオブジェクト指向型のプロトタイプを使っていることと、
+     シャットダウン関数をその parameter フラグで登録していることに注目しましょう。
+     オブジェクトをセッション保存ハンドラとして使うときには、この方法をおすすめします。
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class MySessionHandler implements SessionHandlerInterface
+{
+    // ここでインターフェイスを実装します
+}
+
+$handler = new MySessionHandler();
+session_set_save_handler($handler, true);
+session_start();
+
+// $_SESSION への値の設定や格納されている値の取得を進めます
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>セッション保存ハンドラでオブジェクトを使う例</title>
+    <para>
+     このコードは、PHP 5.4.0 より前のバージョンで動作します。
+    </para>
+    <para>
+     この例では、ファイルベースのセッションストレージをつくります。これは
+     PHP のデフォルトのセッション保存ハンドラである <parameter>files</parameter>
+     と似たものです。この例をさらに拡張すれば、
+     PHP がサポートするお好みのデータベースを使ってセッションを保存させるようにするのも簡単です。
+    </para>
+    <para>
+     シャットダウン関数 <function>session_write_close</function> を、
+     <function>register_shutdown_function</function> を使って追加登録していることに注目しましょう。
+     PHP 5.4.0 より前のバージョンでオブジェクトをセッション保存ハンドラとして使うときには、この方法をおすすめします。
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class FileSessionHandler
+{
+    private $savePath;
+
+    function open($savePath, $sessionName)
+    {
+        $this->savePath = $savePath;
+        if (!is_dir($this->savePath)) {
+            mkdir($this->savePath, 0777);
+        }
+
+        return true;
+    }
+
+    function close()
+    {
+        return true;
+    }
+
+    function read($id)
+    {
+        return (string)@file_get_contents("$this->savePath/sess_$id");
+    }
+
+    function write($id, $data)
+    {
+        return file_put_contents("$this->savePath/sess_$id", $data) === false ? false : true;
+    }
+
+    function destroy($id)
+    {
+        $file = "$this->savePath/sess_$id";
+        if (file_exists($file)) {
+            unlink($file);
+        }
+
+        return true;
+    }
+
+    function gc($maxlifetime)
+    {
+        foreach (glob("$this->savePath/sess_*") as $file) {
+            if (filemtime($file) + $maxlifetime < time() && file_exists($file)) {
+                unlink($file);
+            }
+        }
+
+        return true;
+    }
+}
+
+$handler = new FileSessionHandler();
+session_set_save_handler(
+    array($handler, 'open'),
+    array($handler, 'close'),
+    array($handler, 'read'),
+    array($handler, 'write'),
+    array($handler, 'destroy'),
+    array($handler, 'gc')
+    );
+
+// これは、オブジェクトを保存ハンドラとして使ったときの予期せぬ副作用を防ぎます
+register_shutdown_function('session_write_close');
+
+session_start();
+// $_SESSION への値の設定や格納されている値の取得を進めます
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    オブジェクトをセッション保存ハンドラとして使うときには、
+    シャットダウン関数を PHP に登録しておくことが重要です。
+    これで、PHP スクリプトの終了時に内部的にオブジェクトを破棄する処理による副作用や、
+    <parameter>write</parameter> および <parameter>close</parameter>
+    がコールされてしまうことを防げます。
+    一般的には、<parameter>'session_write_close'</parameter> を
+    <function>register_shutdown_function</function> 関数で登録しなければなりません。
+   </para>
+   <para>
+    PHP 5.4.0 以降では <function>session_register_shutdown</function>
+    を使えます。あるいは <function>session_set_save_handler</function>
+    をオブジェクト指向のメソッドとして実行するときに 'register shutdown'
+    フラグを使い、<classname>SessionHandlerInterface</classname>
+    を実装したインスタンスを渡すという方法もあります。
+   </para>
+  </warning>
+  <warning>
+   <para>
+    PHP 5.0.5 以降、<parameter>write</parameter> ハンドラおよび
+    <parameter>close</parameter> ハンドラはオブジェクトが破棄されたあとにコールされます。
+    そのため、これらのハンドラでオブジェクトを使ったり例外をスローしたりすることはできません。
+    例外をキャッチできないのでその情報をトレースすることもできず、
+    例外は単純に無視されてしまいます。
+    しかし、オブジェクトのデストラクタではセッションを使えます。
+   </para>
+   <para>
+    この「ニワトリが先かタマゴが先か」の問題を解決するために、
+    デストラクタから <function>session_write_close</function>
+    をコールできますが、より確実なのは先述のとおりシャットダウン関数を登録することです。
+   </para>
+  </warning>
+  <warning>
+   <para>
+    SAPI の種類によっては、スクリプトの終了時にセッションを閉じると
+    現在の作業ディレクトリが変わってしまうことがあります。これを防ぐには、
+    事前に <function>session_write_close</function> でセッションを閉じます。
+   </para>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member>
+     設定ディレクティブ <link linkend="ini.session.save-handler">session.save_handler</link>
+    </member>
+    <member>
+     設定ディレクティブ <link linkend="ini.session.serialize-handler">session.serialize_handler</link>
+    </member>
+    <member><function>register_shutdown_function</function></member>
+    <member><function>session_register_shutdown</function> (PHP 5.4.0 以降)</member>
+    <member>
+     手続き型の完全なリファレンス実装は
+     <link xlink:href="&url.session-save-handler;">save_handler.inc</link> を参照してください。
+    </member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

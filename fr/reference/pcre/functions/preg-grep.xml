@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 335337 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="function.preg-grep" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>preg_grep</refname>
+  <refpurpose>Retourne un tableau avec les résultats de la recherche</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>preg_grep</methodname>
+   <methodparam><type>string</type><parameter>pattern</parameter></methodparam>
+   <methodparam><type>array</type><parameter>input</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>preg_grep</function> retourne un &array; qui contient
+   les éléments de <parameter>input</parameter>
+   qui satisfont le masque <parameter>pattern</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>pattern</parameter></term>
+     <listitem>
+      <para>
+       Le motif à chercher, sous la forme d'une &string;.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>input</parameter></term>
+     <listitem>
+      <para>
+       Le tableau d'entrée.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>flags</parameter></term>
+     <listitem>
+      <para>
+       Si cette option vaut <constant>PREG_GREP_INVERT</constant>,
+       cette fonction retourne les éléments du tableau
+       <parameter>input</parameter> qui ne correspondent 
+       <emphasis>pas</emphasis> au motif
+       <parameter>pattern</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne un &array; indexé, en utilisant les clés du
+   tableau <parameter>input</parameter> d'entrée.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>preg_grep</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Recherche les nombres à virgule flottante dans le tableau
+$fl_array = preg_grep("/^(\d+)?\.\d+$/", $array);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member>Les <link linkend="pcre.pattern">Patterns PCRE</link></member>
+    <member><function>preg_quote</function></member>
+    <member><function>preg_match_all</function></member>
+    <member><function>preg_filter</function></member>
+    <member><function>preg_last_error</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

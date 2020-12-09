@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 328795 Maintainer: takagi Status: ready -->
+
+<chapter xml:id="imagick.examples" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.examples;
+ <section xml:id="imagick.examples-1">
+  <title>基本的な使用法</title>
+  <para>
+   Imagick は、PHP による画像の操作を、
+   とても簡単なオブジェクト指向インターフェイスで行います。
+   画像のサムネイルを作成する簡単な例をごらんください。
+   <example>
+    <title>Imagick によるサムネイルの作成</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+header('Content-type: image/jpeg');
+
+$image = new Imagick('image.jpg');
+
+// 幅あるいは高さに 0 を指定すると、
+// 元の画像のアスペクト比を維持します
+$image->thumbnailImage(100, 0);
+
+echo $image;
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   SPL および Imagick がサポートするその他のオブジェクト指向機能を使用すると、
+   ディレクトリ内のすべてのファイルのサイズを変更するのも簡単です
+   (デジタルカメラで撮影した巨大な画像ファイル群をウェブ用に変換するような
+   バッチ処理で有用です)。この例では、リサイズ機能を使用しています。
+   これは、画像のメタデータを残しておきたいからです。
+   <example>
+    <title>ディレクトリ内のすべての JPG ファイルのサムネイルの作成</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$images = new Imagick(glob('images/*.JPG'));
+
+foreach($images as $image) {
+
+    // 0 を指定することで、thumbnailImage にアスペクト比を維持させています
+    $image->thumbnailImage(1024,0);
+
+}
+
+$images->writeImages();
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   これは、鏡像を作成する例です。
+   鏡像を作成するには、まず画像を反転させてその上に階調を重ねます。
+   そして、もとの画像と反転画像をキャンバスの上で合成します。
+   <example>
+    <title>画像の鏡像の作成</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+/* 画像を読み込みます */
+$im = new Imagick("test.png");
+
+/* 画像のサムネイルを作成します */
+$im->thumbnailImage(200, null);
+
+/* 画像の枠線を作成します */
+$im->borderImage(new ImagickPixel("white"), 5, 5);
+
+/* 画像をコピーし、反転させます */
+$reflection = $im->clone();
+$reflection->flipImage();
+
+/* 階調を作成します。これを後で鏡像にかぶせます */
+$gradient = new Imagick();
+
+/* 階調は、画像と枠線をあわせたものより大きくなければなりません */
+$gradient->newPseudoImage($reflection->getImageWidth() + 10, $reflection->getImageHeight() + 10, "gradient:transparent-black");
+
+/* 階調を合成します */
+$reflection->compositeImage($gradient, imagick::COMPOSITE_OVER, 0, 0);
+
+/* 不透明度を設定します。ImageMagick 6.2.9 以降が必要です */
+$reflection->setImageOpacity( 0.3 );
+
+/* 空のキャンバスを作成します */
+$canvas = new Imagick();
+
+/* キャンバスは、どちらの画像よりも大きくなければなりません */
+$width = $im->getImageWidth() + 40;
+$height = ($im->getImageHeight() * 2) + 30;
+$canvas->newImage($width, $height, new ImagickPixel("black"));
+$canvas->setImageFormat("png");
+
+/* もとの画像と鏡像をキャンバスに合成します */
+$canvas->compositeImage($im, imagick::COMPOSITE_OVER, 20, 10);
+$canvas->compositeImage($reflection, imagick::COMPOSITE_OVER, 20, $im->getImageHeight() + 10);
+
+/* 画像を出力します */
+header("Content-Type: image/png");
+echo $canvas;
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <mediaobject>
+     <alt>出力例 : 鏡像の作成</alt>
+     <imageobject>
+      <imagedata fileref="en/reference/imagick/figures/hello_world_reflection.png"/>
+     </imageobject>
+    </mediaobject>
+   </example>
+  </para>
+  <para>
+   この例では、描画時に塗りつぶしパターンを使用する方法を説明します。
+   <example>
+    <title>グラデーションつきテキスト</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+/* 新しい imagick オブジェクトを作成します */
+$im = new Imagick();
+
+/* 新しい画像を作成して、これを塗りつぶしパターンとして使用します */
+$im->newPseudoImage(50, 50, "gradient:red-black");
+
+/* imagickdraw オブジェクトを作成します */
+$draw = new ImagickDraw();
+
+/* "gradient" という新しいパターンを開始します */
+$draw->pushPattern('gradient', 0, 0, 50, 50);
+
+/* パターン上のグラデーションを合成します */
+$draw->composite(Imagick::COMPOSITE_OVER, 0, 0, 50, 50, $im);
+
+/* パターンを閉じます */
+$draw->popPattern();
+
+/* "gradient" を塗りつぶしパターンとして指定します */
+$draw->setFillPatternURL('#gradient');
+
+/* フォントサイズを 52 に設定します */
+$draw->setFontSize(52);
+
+/* テキストを追加します */
+$draw->annotation(20, 50, "Hello World!");
+
+/* 新しいキャンバスオブジェクトと白い画像をを作成します */
+$canvas = new Imagick();
+$canvas->newImage(350, 70, "white");
+
+/* ImagickDraw をキャンバス上に描画します */
+$canvas->drawImage($draw);
+
+/* 幅 1px の黒い枠線で画像の周りを囲みます */
+$canvas->borderImage('black', 1, 1);
+
+/* フォーマットを PNG に設定します */
+$canvas->setImageFormat('png');
+
+/* 画像を出力します */
+header("Content-Type: image/png");
+echo $canvas;
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <mediaobject>
+     <alt>出力例 : グラデーションつきテキスト</alt>
+     <imageobject>
+      <imagedata fileref="en/reference/imagick/figures/hello_world.png"/>
+     </imageobject>
+    </mediaobject>
+   </example>
+  </para>
+  <para>
+   アニメーション GIF 画像を操作します。
+   <example>
+    <title>GIF 画像の読み込みと全フレームのサイズ変更</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+/* 新しい imagick オブジェクトを作成して GIF を読み込みます */
+$im = new Imagick("example.gif");
+
+/* 全フレームのサイズを変更します */
+foreach ($im as $frame) {
+    /* 50x50 のフレーム */
+    $frame->thumbnailImage(50, 50);
+
+    /* 仮想キャンバスを正しい大きさに設定します */
+    $frame->setImagePage(50, 50, 0, 0);
+}
+
+/* writeImage ではなく writeImages を使うことに注意しましょう */
+$im->writeImages("example_small.gif", true);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   楕円形を使ったりカスタムフォントを使ったりします。
+   <example>
+    <title>PHP ロゴの作成</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+/* 幅と高さを、本物の PHP ロゴにあわせて設定します */
+$width = 400;
+$height = 210;
+
+/* Imagick オブジェクトを透過キャンバスで作ります */
+$img = new Imagick();
+$img->newImage($width, $height, new ImagickPixel('transparent'));
+
+/* 楕円の描画用に、新しい ImagickDraw のインスタンスを作ります */
+$draw = new ImagickDraw();
+/* 楕円の塗りつぶし色を紫にします */
+$draw->setFillColor('#777bb4');
+/* 楕円の大きさを設定します */
+$draw->ellipse($width / 2, $height / 2, $width / 2, $height / 2, 0, 360);
+/* 楕円をキャンバス上に描画します */
+$img->drawImage($draw);
+
+/* 楕円の塗りつぶし色をリセットして黒に戻し、テキストの描画に備えます (ImagickDraw オブジェクトを再利用していることに注目) */
+$draw->setFillColor('black');
+/* 縁取りの色を白に設定します */
+$draw->setStrokeColor('white');
+/* 線の太さを設定します */
+$draw->setStrokeWidth(2);
+/* フォントのカーニングを設定します (負の値は、文字と文字の間隔を狭くすることを意味します) */
+$draw->setTextKerning(-8);
+/* PHP ロゴで使うフォントとそのサイズを設定します */
+$draw->setFont('Handel Gothic.ttf');
+$draw->setFontSize(150);
+/* テキストを縦横ともに中央寄せにします */
+$draw->setGravity(Imagick::GRAVITY_CENTER);
+
+/* "php" という文字を、キャンバス内の Y オフセット -10 の位置 (楕円の中) に描画します */
+$img->annotateImage($draw, 0, -10, 0, 'php');
+$img->setImageFormat('png');
+
+/* PNG のヘッダーを設定して、画像を出力します */
+header('Content-Type: image/png');
+echo $img;
+?>
+
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <mediaobject>
+     <alt>出力例: Imagick で作った PHP ロゴ</alt>
+     <imageobject>
+      <imagedata fileref="en/reference/imagick/figures/php_logo.png"/>
+     </imageobject>
+    </mediaobject>
+   </example>
+  </para>
+ </section>
+</chapter>
+
+

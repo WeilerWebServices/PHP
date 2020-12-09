@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 340765 Maintainer: nobody  Status: ready -->
+
+<appendix xml:id="userlandnaming" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Userland-Namensregeln</title>
+ <para>
+  Es folgen einige Vorgaben zur Namensgebung für Bezeichner in PHP Code.
+  Diese Vorgaben sollten zumindest immer dann beachtet werden, wenn Code 
+  Symbole im globalen Namensraum anlegt, um Konflikte zwischen
+  ihrem Code und zukünftigen Versionen von PHP zu vermeiden.
+ </para>
+
+ <section xml:id="userlandnaming.globalnamespace">
+  <title>Globaler Namensraum</title>
+  <para>
+   Die folgende Liste bietet einen Überblick über die verschiedenen
+   möglichen Programmkonstrukte im globalen Namensraum:
+  </para>
+
+  <itemizedlist>
+   <listitem><para>Funktionen</para></listitem>
+   <listitem><para>Klassen</para></listitem>
+   <listitem><para>Schnittstellen (interfaces)</para></listitem>
+   <listitem><para>Konstanten (aber keine Klassenkonstanten)</para></listitem>
+   <listitem>
+    <para>außerhalb von Funktionen oder Methoden definierte Variablen</para>
+   </listitem>
+  </itemizedlist>
+ </section>
+
+ <section xml:id="userlandnaming.rules">
+  <title>Regeln</title>
+  <para>
+   Die folgende Liste gibt einen Überblick über die Rechte, die das PHP
+   Projekt bei der Auswahl von Namen für neue interne Bezeichner für
+   sich selbst in Anspruch nimmt. Die definitiven Vorgaben finden sich 
+   in den offiziellen 
+   <link xlink:href="&url.userlandnaming.cs;">CODING STANDARDS</link>:
+  </para>
+
+  <itemizedlist>
+   <listitem>
+    <para>
+     PHP ist Eigentümer des globalen Namensraumes, versucht aber
+     vernünftige sprechende Namen zu finden, und offensichtliche
+     Konflikte zu vermeiden.
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     Funktionsnamen benutzten Unterstriche als Trennzeichen zwischen
+     Wörtern, während Klassennamen den <literal>camelCase</literal> und
+     <literal>PascalCase</literal> Regeln folgen.
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     PHP wird jedem globalen Symbol einer Erweiterung den Namen der
+     Erweiterung voranstellen (in der Vergangenheit gab es allerdings
+     zahlreiche Abweichungen von dieser Regel), z.B.:
+    </para>
+
+    <itemizedlist>
+     <listitem><para><function>curl_close</function></para></listitem>
+     <listitem><para><function>mysql_query</function></para></listitem>
+     <listitem><para>PREG_SPLIT_DELIM_CAPTURE</para></listitem>
+     <listitem><para>new DOMDocument()</para></listitem>
+     <listitem>
+      <para>
+       <function>strpos</function> (Beispiel einer früheren Abweichung)
+      </para>
+     </listitem>
+     <listitem><para>new SplFileObject()</para></listitem>
+    </itemizedlist>
+   </listitem>
+   <listitem>
+    <para>
+     Bei Iteratoren und Ausnahmen wird dagegen einfach ein
+     "<literal>Iterator</literal>" oder "<literal>Exception</literal>"
+     an den Namen angehängt, z.B.:
+    </para>
+    <itemizedlist>
+     <listitem><para><classname>ArrayIterator</classname></para></listitem>
+     <listitem><para><classname>LogicException</classname></para></listitem>
+    </itemizedlist>
+   </listitem>
+   <listitem>
+    <para>
+     PHP reserviert alle Symbole, die mit zwei Unterstrichen
+     <literal>__</literal> beginnen, für interne Zwecke.
+     Sie sollten nur dann Namen mit <literal>__</literal>
+     beginnen lassen, wenn Sie eine der dokumentierten
+     "magischen" Funktionalitäten in PHP nutzen wollen, z.B:
+    </para>
+    <itemizedlist>
+     <listitem><para><link linkend="object.get">__get()</link></para></listitem>
+     <listitem><para><function>__autoload</function></para></listitem>
+    </itemizedlist>
+   </listitem>
+  </itemizedlist>
+ </section>
+
+ <section xml:id="userlandnaming.tips">
+  <title>Tipps</title>
+  <para>
+   Um zukunftssicheren Code zu schreiben, wird empfohlen möglichst wenig
+   Variablen, Funktionen oder Klassen im globalen Namensraum zu platzieren. Das
+   wird Namenskonflikte mit Code von Drittanbietern sowie auch möglichen zukünftigen
+   Erweiterung der Sprache verhindern.
+  </para>
+  <para>
+   Eine übliche Maßnahme, um Namenskonflikte von Funktionen und Klassen zu
+   vermeiden, ist diese zu ihrem eigenen <link
+   linkend="language.namespaces">Namensraum</link> hinzuzufügen.
+  </para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+namespace MyProject;
+
+function my_function() {
+    return true;
+}
+
+\MyProject\my_function();
+]]>
+   </programlisting>
+  </informalexample>
+  <para>
+   Das erfordert noch immer den Überblick über bereits verwendete Namesräume zu
+   behalten, aber sobald entschieden wurde, welcher Namensraum verwendet werden
+   soll, können diesem alle Funktionen und Klassen hinzugefügt werden, ohne
+   weitere Gedanken an Konflikte verschwenden zu müssen.
+  </para>
+  <para>
+   Es wird als beste Praxis angesehen, die Zahl von Variablen, die zum globalen
+   Geltungsbereich hinzugefügt werden, zu beschränken, um Namenskonflikte mit
+   Code von Drittanbietern zu vermeiden.
+  </para>
+  <note>
+   <title>Geltungsbereich von Variablen </title>
+   <para>
+    Aufgrund der <link
+    linkend="language.variables.scope">Geltungsbereichsregeln</link> von PHP
+    befinden sich Variablen, die in Funktionen oder Methoden definiert sind,
+    nicht im globalen Geltungsbereich, und können daher nicht mit anderen
+    Variablen, die im globalen Geltungsbereich definiert sind, kollidieren.
+   </para>
+  </note>
+ </section>
+
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

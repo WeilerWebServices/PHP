@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 344082 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+<phpdoc:classref xml:id="class.sessionhandler" xmlns:phpdoc="http://php.net/ns/phpdoc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+ <title>La classe SessionHandler</title>
+ <titleabbrev>SessionHandler</titleabbrev>
+
+ <partintro>
+
+<!-- {{{ SessionHandler intro -->
+  <section xml:id="sessionhandler.intro">
+   &reftitle.intro;
+   <para>
+    La classe <classname>SessionHandler</classname> est une classe spéciale
+    qui peut être utilisée pour exposer le gestionnaire de sauvegarde
+    de session courant en interne de PHP, par héritage. Il y a sept méthodes
+    qui représentent les septs fonctions de rappel du gestionnaire de sauvegarde
+    de session interne (<parameter>open</parameter>, <parameter>close</parameter>,
+    <parameter>read</parameter>, <parameter>write</parameter>,
+    <parameter>destroy</parameter>, <parameter>gc</parameter> et
+    <parameter>create_sid</parameter>). Par défaut, cette classe va représenter ce qui
+    est défini dans le gestionnaire de sauvegarde interne, tel que défini par la directive
+    de configuration <link linkend="ini.session.save-handler">session.save_handler</link>,
+    qui vaut habituellement <parameter>files</parameter> par défaut. D'autres
+    gestionnaires de sauvegarde de session interne sont fournis par des
+    extensions PHP, comme SQLite (avec le paramètre <parameter>sqlite</parameter>),
+    Memcache (avec le paramètre <parameter>memcache</parameter>), et Memcached (avec
+    le paramètre <parameter>memcached</parameter>).
+   </para>
+   <para>
+    Lorsqu'une instance complète de <classname>SessionHandler</classname> est définie comme
+    gestionnaire de sauvegarde en utilisant <function>session_set_save_handler</function>, elle
+    remplacera le gestionnaire de sauvegarde courant. Une classe étendue depuis la classe
+    <classname>SessionHandler</classname> vous permet d'écraser les méthodes, de les intercepter,
+    ou de les filtrer en appelant la méthode de la classe parent qui remplace en dernier lieu
+    le gestionnaire de session interne de PHP.
+   </para>
+   <para>
+    Ceci vous permet, par exemple, d'interception les méthodes <parameter>read</parameter> et
+    <parameter>write</parameter> pour crypter/décrypter les données de session, et de passer
+    le résultat à la classe parente. Alternativement, vous pouvez aussi choisir d'écraser
+    totalement une méthode comme la fonction de rappel de collection des gabarits
+    <parameter>gc</parameter>.
+   </para>
+   <para>
+    En raison du fait que la classe <classname>SessionHandler</classname> se comporte comme les
+    méthodes du gestionnaire courant de sauvegarde de sessions interne, l'exemple ci-dessus de cryptage
+    peut être appliqué à n'importe quel gestionnaire de sauvegarde sans avoir besoin de connaître
+    les gestionnaires internes.
+   </para>
+   <para>
+    Pour utiliser cette classe, vous devez commencer par définir un gestionnaire de sauvegarde
+    que vous souhaitez exposer en utilisant <link linkend="ini.session.save-handler">session.save_handler</link>
+    puis, passer une instance de la classe <classname>SessionHandler</classname> ou une étendue à la
+    fonction <function>session_set_save_handler</function>.
+   </para>
+   <para>
+    Veuillez noter que les méthodes de rappel de cette classe sont destinées à être appelées
+    en interne par PHP, et ne sont pas prévues pour être appelées depuis le code de l'espace
+    utilisateur. Les valeurs retournées seront utilisées de la même façon en interne par PHP.
+    Pour plus d'informations sur le mécanisme des sessions, référez-vous à la documentation
+    sur la fonction <function>session_set_save_handler</function>.
+   </para>
+  </section>
+<!-- }}} -->
+
+  <section xml:id="sessionhandler.synopsis">
+   &reftitle.classsynopsis;
+
+<!-- {{{ Synopsis -->
+   <classsynopsis>
+    <ooclass><classname>SessionHandler</classname></ooclass>
+
+<!-- {{{ Class synopsis -->
+    <classsynopsisinfo>
+     <ooclass>
+      <classname>SessionHandler</classname>
+     </ooclass>
+
+     <oointerface><interfacename>SessionHandlerInterface</interfacename></oointerface>
+     <oointerface><interfacename>SessionIdInterface</interfacename></oointerface>
+    </classsynopsisinfo>
+<!-- }}} -->
+    
+    <classsynopsisinfo role="comment">&Methods;</classsynopsisinfo>
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.sessionhandler')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[1])" />
+   </classsynopsis>
+<!-- }}} -->
+
+  </section>
+
+  <section xml:id="session.notes">
+   <warning>
+    <para>
+     Cette classe a pour but d'exposer le gestionnaire de sauvegarde de session interne de PHP ; si vous
+     souhaitez écrire votre gestionnaire de sauvegarde personnalisé, vous devez
+     implémenter l'interface <classname>SessionHandlerInterface</classname> au lieu d'étendre
+     la classe <classname>SessionHandler</classname>.
+    </para>
+   </warning>
+  </section>
+
+  <section role="changelog" xml:id="sessionhandler.changelog"><!-- {{{ -->
+   &reftitle.changelog;
+   <para>
+    <informaltable>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>&Version;</entry>
+        <entry>&Description;</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>5.5.1</entry>
+        <entry>
+         Ajout de la fonction <function>SessionHandler::create_sid</function>.
+        </entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </informaltable>
+   </para>
+  </section><!-- }}} -->
+  
+  <section xml:id="sessionhandler.examples">
+   <example>
+    <title>
+     Utilisation de la classe <classname>SessionHandler</classname>
+     pour ajouter un cryptage aux gestionnaires de sauvegarde interne de PHP.
+    </title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+ /**
+  * Déchiffrement AES 256
+  *
+  * @param data $edata
+  * @param string $password
+  * @return decrypted data
+  */
+function decrypt($edata, $password) {
+    $data = base64_decode($edata);
+    $salt = substr($data, 0, 16);
+    $ct = substr($data, 16);
+
+    $rounds = 3; // depends on key length
+    $data00 = $password.$salt;
+    $hash = array();
+    $hash[0] = hash('sha256', $data00, true);
+    $result = $hash[0];
+    for ($i = 1; $i < $rounds; $i++) {
+        $hash[$i] = hash('sha256', $hash[$i - 1].$data00, true);
+        $result .= $hash[$i];
+    }
+    $key = substr($result, 0, 32);
+    $iv  = substr($result, 32,16);
+
+    return openssl_decrypt($ct, 'AES-256-CBC', $key, true, $iv);
+  }
+
+/**
+ * Chiffrement AES 256
+ *
+ * @param data $data
+ * @param string $password
+ * @return base64 encrypted data
+ */
+function encrypt($data, $password) {
+    // Set a random salt
+    $salt = openssl_random_pseudo_bytes(16);
+
+    $salted = '';
+    $dx = '';
+    // Salt the key(32) and iv(16) = 48
+    while (strlen($salted) < 48) {
+      $dx = hash('sha256', $dx.$password.$salt, true);
+      $salted .= $dx;
+    }
+
+    $key = substr($salted, 0, 32);
+    $iv  = substr($salted, 32,16);
+
+    $encrypted_data = openssl_encrypt($data, 'AES-256-CBC', $key, true, $iv);
+    return base64_encode($salt . $encrypted_data);
+}
+
+class EncryptedSessionHandler extends SessionHandler
+{
+    private $key;
+
+    public function __construct($key)
+    {
+        $this->key = $key;
+    }
+
+    public function read($id)
+    {
+        $data = parent::read($id);
+
+        if (!$data) {
+            return "";
+        } else {
+            return decrypt($data, $this->key);
+        }
+    }
+
+    public function write($id, $data)
+    {
+        $data = encrypt($data, $this->key);
+
+        return parent::write($id, $data);
+    }
+}
+
+// Nous interceptons le gestionnaire 'files' natif, mais ceci
+// fonctionnera de la même façon avec les autres gestionnaires internes
+// comme 'sqlite', 'memcache' ou 'memcached'
+// qui sont fournis via des extensions PHP.
+ini_set('session.save_handler', 'files');
+
+$key = 'secret_string';
+$handler = new EncryptedSessionHandler($key);
+session_set_save_handler($handler, true);
+session_start();
+
+// processus pour définir et récupérer des valeurs avec la clé, depuis $_SESSION
+]]>
+    </programlisting>
+   </example>
+   <note>
+    <para>
+     Vu que les méthodes de cette classe sont prévues pour être appelées en interne par PHP
+     car faisant parties du mécanisme normal des sessions, les classes enfants appèlent les méthodes
+     parents (i.e. le gestionnaire natif interne actuellement) et doivent retourner &false; tant que
+     la session n'a pas encore démarrée (soit automatiquement, ou explicitement via la fonction
+     <function>session_start</function>). Ceci est très important à considérer lors de
+     l'écriture de vos tests unitaires où les méthodes de la classe peuvent être invoquées
+     manuellement.
+    </para>
+   </note>
+  </section>
+
+ </partintro>
+
+ &reference.session.entities.sessionhandler;
+
+</phpdoc:classref>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

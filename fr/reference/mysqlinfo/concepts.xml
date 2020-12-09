@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 338913 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+<chapter xml:id="mysqlinfo.concepts" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Concepts</title>
+ <para>
+  Ces concepts sont spécifiques aux drivers MySQL pour PHP.
+ </para>
+
+ <section xml:id="mysqlinfo.concepts.buffering">
+  <title>Requêtes mises ou non en mémoire tampon</title>
+  
+  <para>
+   Les requêtes utilisent par défaut le mode Mémoire tampon.
+   Cela signifie que le résultat des requêtes est immédiatement
+   transféré du serveur MySQL à PHP et sont ensuite conservé dans la mémoire
+   du processus PHP. Cela permet des opérations complémentaires
+   comme compter le nombre de résultat, et déplacer le
+   pointeur de résultat actuel. Il permet également d'exécuter des
+   requêtes supplémentaires sur la même connexion tout en travaillant
+   sur le jeu de résultats. L'inconvénient de la mise en mémoire
+   tampon est que des jeux de résultats importants peuvent demander
+   beaucoup plus de mémoire. La mémoire restera occupée jusqu'à ce 
+   que toutes les références sur les jeux de résultats soient
+   désactivées ou que les jeux de résultats soient explicitement
+   libérés, ce qui arrive de manière automatique à la fin du
+   processus. La terminologie "store result" est également utilisée
+   avec le mode mémoire tampon, vu que la totalité des résultats
+   est stocké à la fois.
+  </para>
+
+  <note>
+   <para>
+    Lorsque vous utilisez libmysqlclient comme bibliothèque, la limite
+    mémoire de PHP ne comptera pas la mémoire utilisée pour les
+    jeux de résultats à moins que les données sont lues dans les
+    variables PHP. Avec mysqlnd, la mémoire utilisée comprendra
+    le jeu de résultats complet.
+   </para>
+  </note>
+  
+  <para>
+   Les requêtes n'utilisant pas la mémoire tampon, les requêtes
+   MySQL exécutent leur requête et retournent une
+   <type>ressource</type> tandis que les données sont toujours
+   en attente sur le serveur MySQL pour être récupérées. Cela
+   utilise moins de mémoire côté PHP, mais peut augmenter la charge
+   sur le serveur. À moins que le jeu de résultats complet ait été
+   récupéré depuis le serveur, aucune autre requête peut être
+   envoyée sur la même connexion. Les requêtes n'utilisant pas la
+   mémoire tampon peuvent également faire référence à un 
+   "use result".
+  </para>
+
+  <para>
+   Suivant ces caractéristiques, les requêtes utilisant la mémoire
+   tampon devraient être utilisées dans les cas où vous attendez
+   seulement un jeu de résultats limité ou avez besoin de savoir la
+   quantité de lignes retournées avant de lire toutes les lignes.
+   Le mode sans mémoire tampon doit être utilisé lorsque vous
+   attendez plus de résultats.
+  </para>
+  
+  <para>
+   En raison du fait que les requêtes sont mises en mémoire tampon
+   par défaut, les exemples ci-dessous vont vous montrer comment
+   exécuter des requêtes, avec chaque API, sans mise en mémoire
+   tampon.
+  </para>
+
+  <example>
+   <title>Exemple de requêtes n'utilisant pas la mémoire tampon : mysqli</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$mysqli  = new mysqli("localhost", "my_user", "my_password", "world");
+$uresult = $mysqli->query("SELECT Name FROM City", MYSQLI_USE_RESULT);
+
+if ($uresult) {
+   while ($row = $uresult->fetch_assoc()) {
+       echo $row['Name'] . PHP_EOL;
+   }
+}
+$uresult->close();
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>Exemple de requêtes n'utilisant pas la mémoire tampon : pdo_mysql</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$pdo = new PDO("mysql:host=localhost;dbname=world", 'my_user', 'my_pass');
+$pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
+
+$uresult = $pdo->query("SELECT Name FROM City");
+if ($uresult) {
+   while ($row = $uresult->fetch(PDO::FETCH_ASSOC)) {
+       echo $row['Name'] . PHP_EOL;
+   }
+}
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>Exemple de requêtes n'utilisant pas la mémoire tampon: mysql</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$conn = mysql_connect("localhost", "my_user", "my_pass");
+$db   = mysql_select_db("world");
+
+$uresult = mysql_unbuffered_query("SELECT Name FROM City");
+if ($uresult) {
+   while ($row = mysql_fetch_assoc($uresult)) {
+       echo $row['Name'] . PHP_EOL;
+   }
+}
+?>
+]]>
+   </programlisting>
+  </example>
+ </section>
+
+ <section xml:id="mysqlinfo.concepts.charset">
+  <title>Jeux de caractères</title>
+
+  <para>
+   Idéalement, un jeu de caractères propre doit être défini
+   au niveau du serveur, opération décrite dans la section
+   <link xlink:href="&url.mysql.charsets.config;">Configuration du jeu de
+    caractères</link> du manuel MySQL Server. Alternativement, chaque API
+   MySQL offre une méthode pour définir le jeu de caractères lors de
+   l'exécution.
+  </para>
+
+  <caution>
+   <title> Le jeu de caractères et l'échappement des caractères</title>
+   <para>
+    Le jeu de caractères doit être compris et défini, sachant qu'il a un
+    effet sur chaque action, et a des implications au niveau de la
+    sécurité. Par exemple, le mécanisme d'échappement (i.e.
+    <function>mysqli_real_escape_string</function> pour mysqli,
+    <function>mysql_real_escape_string</function> pour mysql, et
+    <methodname>PDO::quote</methodname> pour PDO_MySQL) va utiliser
+    cette configuration. Il est important de garder en tête que ces fonctions
+    n'utiliseront pas le jeu de caractères défini avec une requête, aussi,
+    l'exemple suivant n'aura aucun effet sur le jeu de caractères :
+   </para>
+  </caution>
+
+  <example>
+   <title>Problèmes lors de la définition du jeu de caractères avec SQL</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+
+// N'affectera PAS $mysqli->real_escape_string();
+$mysqli->query("SET NAMES utf8");
+
+// N'affectera PAS $mysqli->real_escape_string();
+$mysqli->query("SET CHARACTER SET utf8");
+
+// Mais, ceci affectera $mysqli->real_escape_string();
+$mysqli->set_charset('utf8');
+
+// Mais, ceci NE l'affectera PAS (utf-8 par rapport à utf8) -- n'utilisez pas les tirets ici
+$mysqli->set_charset('utf-8');
+
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <para>
+   Ci-dessous les exemples qui démontrent la façon de modifier proprement
+   le jeu de caractères lors de l'exécution en utilisant chacune des APIs.
+  </para>
+  
+  <note>
+   <title>Confusion possible avec UTF-8</title>
+   <para>
+    Du au fait que les noms des jeux de charactères dans MySQL ne contiennent pas de tiret,
+    la chaîne "utf8" est correcte dans MySQL et définira le jeu de charactère en UTF-8.
+    La chaîne "utf-8" n'est pas correcte, et utiliser "utf-8" échouera à modifier le
+    jeu de charactère.
+   </para>
+  </note>
+
+  <example>
+   <title>Exemple de définition du jeu de caractères : mysqli</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+
+printf("Jeu de charactère initial : %s\n", $mysqli->character_set_name());
+
+if (!$mysqli->set_charset('utf8')) {
+    printf("Erreur lors du chargement du jeu de caractères utf8 : %s\n", $mysqli->error);
+    exit;
+}
+
+echo "Nouvelle information du jeu de charactère :\n";
+print_r( $mysqli->get_charset() );
+
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>Exemple de définition du jeu de caractères : <link linkend="ref.pdo-mysql.connection">pdo_mysql</link></title>
+   <para>
+    Note : Ceci ne fonctionnera qu'à partir de PHP 5.3.6.
+   </para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$pdo = new PDO("mysql:host=localhost;dbname=world;charset=utf8", 'my_user', 'my_pass');
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>Exemple de définition du jeu de caractères : mysql</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$conn = mysql_connect("localhost", "my_user", "my_pass");
+$db   = mysql_select_db("world");
+
+echo 'Jeu de charactère initial : ' .  mysql_client_encoding($conn) . "\n";
+
+if (!mysql_set_charset('utf8', $conn)) {
+    echo "Erreur : Impossible de définir le jeu de caractères.\n";
+    exit;
+}
+
+echo 'Jeu de caractères courant : ' .  mysql_client_encoding($conn);
+?>
+]]>
+   </programlisting>
+  </example>  
+ </section>
+
+</chapter>

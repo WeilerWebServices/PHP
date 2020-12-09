@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 336794 Maintainer: takagi Status: ready -->
+<!-- CREDITS: hirokawa -->
+ <chapter xml:id="faq.build" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>構築時の問題</title>
+  <titleabbrev>構築時の問題</titleabbrev>
+
+  <para>
+   本節は、構築時に発生する多くの一般的なエラーを集めたものです。
+  </para>
+
+  <qandaset>
+   <qandaentry xml:id="faq.build.configure">
+    <question>
+     <para>
+      anonymous Git サービスで最新版の PHP を入手しましたが、
+      configure スクリプトがありません!
+     </para>
+    </question>
+    <answer>
+     <para>
+      configure.inからconfigureスクリプトを生成するためには、GNU
+      autoconfパッケージが必要です。Gitサーバーからソースを入手した後、
+      最上位のディレクトリで<command>./buildconf</command>を実行して下
+      さい。(また、<command>configure</command> に
+      <literal>--enable-maintainer-mode</literal>オプションを付けて実
+      行した場合以外は、configureスクリプトは<filename>configure.in</filename>
+      ファイルが更新された際に自動的に再構築を行いません。このため、
+      <filename>configure.in</filename>が
+      変更された場合には忘れずに手動で再構築を行う必要があります。
+      再構築の際に行われることの１つは、configureまたは
+      <filename>config.status</filename>を
+      実行した後、Makefileの中の@VARIABLE@のような物を見つけることです。)
+     </para>
+    </answer>
+   </qandaentry>
+   
+   <qandaentry xml:id="faq.build.configuring">
+    <question>
+     <para>
+      PHPをApacheと組みあわせて動作するようにconfigureを行う際に問題が
+      あります。<filename>httpd.h</filename>が見付からないといわれますが、
+      指定した場所にこのファイルはあるのです!
+     </para>
+    </question>
+    <answer>
+     <para>
+      configure/setupスクリプトにApacheソースツリーの最上位の場所を指
+      定する必要があります。これは、<option
+      role="configure">--with-apache=/path/to/apache</option>
+      を指定するのであった、<option 
+      role="configure">--with-apache=/path/to/apache/src</option>
+      <emphasis>ではない</emphasis>ということです。
+     </para>
+    </answer>
+   </qandaentry>
+
+
+   <qandaentry xml:id="faq.build.lex">
+    <question>
+     <para>
+      PHPをconfigureしているときに (<literal>./configure</literal>)
+      以下のようなエラーに遭遇しました。
+     </para>
+     <para>
+      <screen>
+       checking lex output file root... ./configure: lex: command not found
+       configure: error: cannot find output from lex; giving up
+      </screen>
+     </para>
+    </question>
+    <answer>
+     <para>
+      <link linkend="install.unix">インストール</link>の説明をよく読み、
+      PHPのコンパイルにはflexとbisonの両方が必要であることに留意してください。
+      ソースかあるいはRPMのようなパッケージからbisonとflexを
+      インストールしてください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.apache-sharedcore">
+    <question>
+     <para>
+      Apacheを起動するときに以下のようなメッセージが出る:
+     </para>
+     <para>
+      <screen>
+       fatal: relocation error: file /path/to/libphp4.so:
+       symbol ap_block_alarms: referenced symbol not found
+      </screen>
+     </para>
+    </question>
+    <answer>
+     <para>
+      ApacheのcoreプログラムがsharedなDSOライブラリとして
+      コンパイルされている場合にこのエラーが出ます。
+      最低でも以下のフラグを使用してApacheを再configureして
+      ください:
+     </para>
+     <para>
+      <screen>
+      --enable-shared=max --enable-rule=SHARED_CORE
+      </screen>
+     </para>
+     <para>
+      詳細はApacheのソースディレクトリのトップレベルにある
+      <filename>INSTALL</filename>ファイル またはApacheの
+      <link xlink:href="&url.apachedso;">DSO manual page</link>をご覧ください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.not-found">
+    <question>
+     <para>
+      configureを実行した際、GD、gdbmまたは他のパッケージのファイルま
+      たはライブラリを見つけることができないと言われます。
+     </para>
+    </question>
+    <answer>
+     <para>
+      Cプリプロセッサおよびリンカに次のように追加でフラグを指定するこ
+      とにより、configureスクリプトがヘッダファイルまたはライブラリを
+      標準以外の場所で探すことが可能となります。
+      <programlisting>
+<![CDATA[
+    CPPFLAGS=-I/path/to/include LDFLAGS=-L/path/to/library ./configure
+]]>
+      </programlisting>
+      ログインシェルとしてcsh系のシェルを使用している場合、次のように
+      なります。
+      <programlisting>
+<![CDATA[
+    env CPPFLAGS=-I/path/to/include LDFLAGS=-L/path/to/library ./configure
+]]>
+      </programlisting>
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.yytname">
+    <question>
+     <para>
+      ファイル<filename>language-parser.tab.c</filename>をコンパイルする際、 'yytname
+      undeclared'というエラーが発生します。
+     </para>
+    </question>
+    <answer>
+     <para>
+      bisonのバージョンを更新する必要があります。最新版は、
+      <link xlink:href="&url.bison;">&url.bison;</link>にあります。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.link">
+    <question>
+     <para>
+      <command>make</command>を実行する際、実行には成功しているようですがコンパイルする
+      最終的なアプリケーションをリンクしようとした際に何かファイルが見
+      つからないというエラーが発生します。
+     </para>
+    </question>
+    <answer>
+     <para>
+      古いバージョンのmakeには、functionsディレクトリにあるファイルの
+      コンパイルされたものを同じディレクトリに正しく入れないものがあり
+      ます。<command>cp *.o functions</command>を試しに実行してから
+      <command>make</command> を再度実行し、解決されるか確認して下さ
+      い。解決される場合には、GNU makeの最近のバージョンに更新するべき
+      です。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.undefined">
+    <question>
+     <para>
+      PHP をリンクする際、未定義の参照があるというエラーが複数発生します。
+     </para>
+    </question>
+    <answer>
+     <para>
+      最後に適切なライブラリが全てインクルードされているかどうか
+      確認してください。よくあるのは、'-ldl' や
+      指定したデータベースのサポート機能に必要なライブラリの指定が欠けているというものです。
+     </para>
+     <para>
+      何名かの人から、Apache とリンクする際に
+      '<filename>libphp4.a</filename>' の直後に '-ldl'
+      を追加する必要があることも報告されています。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.apache">
+    <question>
+     <para>
+      PHPをApache 1.3と組み合わせて構築する手法が分かりません。
+     </para>
+    </question>
+    <answer>
+     <para>
+      この手順は実際には非常に簡単です。以下の手順に注意深く従って下さ
+      い。
+      <itemizedlist>
+       <listitem>
+        <simpara>
+         <link xlink:href="&url.apache.source;">&url.apache.source;</link>から最新
+         のApache 1.3配布ファイルを取得してください。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         これをどこか、例えば、
+         <filename>/usr/local/src/apache-1.3</filename>で
+         ungzip、untarしてください。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         まず、
+         <command>./configure
+         --with-apache=/&lt;path&gt;/apache-1.3</command>を実行し、PHP
+         をコンパイルしてください。
+         (&lt;path&gt; の部分は実際のapache-1.3ディレクトリのパスに置
+         き換えてください)
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         <command>make</command> を実行した後、<literal>make
+         install</literal>を実行してください。これにより、PHPが構築され、
+         必要なファイルがApacheのソースツリーにコピーされます。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         ディレクトリを
+         <filename>/&lt;path&gt;/apache-1.3/src</filename>に移動し、
+         <filename>Configuration</filename>ファイルを編集してください。
+         このファイルに以下を追加してください。: 
+         <literal>AddModule modules/php4/libphp4.a</literal>
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         <command>./configure</command> を実行した後、
+         <literal>make</literal>を実行してください。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         以上の手順によりPHP対応のhttpdバイナリが構築できました。
+        </simpara>
+       </listitem>
+      </itemizedlist>
+     </para>
+     <para>
+      <emphasis>注意:</emphasis> : Apache の新しい
+      <literal>./configure</literal>スクリプトを使用することも可能です。
+      Apache配布ファイルの<literal>README.configure</literal>ファイル
+      の指示を参照ください。また、PHP配布ファイルの
+      <filename>INSTALL</filename> ファイルも参照ください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.not-running">
+    <question>
+     <para>
+      インストール手順に完全に基づきUnix上でApacheモジュール版をインス
+      トールしましたが、ブラウザでアクセスするとPHPスクリプトが表示さ
+      れ、ファイルを保存しますかと尋ねられます。
+     </para>
+
+    </question>
+    <answer>
+     <para>
+      これは、何らかの理由によりPHPモジュールが起動していないことを意
+      味しています。助けを求める質問を行う前にまず以下を確認ください。
+      <itemizedlist>
+       <listitem>
+        <simpara>
+         実行しているhttpdバイナリが構築したばかりの新しいhttpdバイナ
+         リであることを確認してください。確認を行うには以下のように入力
+         します。
+         <literal>/path/to/binary/httpd -l</literal>
+        </simpara>
+        <simpara>
+         <filename>mod_php4.c</filename> がリストの中にない場合、正し
+         いバイナリが実行されていません。正しいバイナリを見つけて、イ
+         ンストールしてください。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+       <literal>Apache .conf</literal> ファイルの１つに正しいMIME型
+         が追加されていることを確認してください。これは以下のようになります。
+         <literal>AddType application/x-httpd-php .php</literal>
+        </simpara>
+        <simpara> 
+         また、このAddTypeの行が、
+         &lt;Virtualhost&gt; または &lt;Directory&gt; ブロックの中に隠
+         されて、テスト用のスクリプトの場所に適用できていないようなこ
+         とがないことを確認してください。
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         最後に、デフォルトのApache設定ファイルの場所はApache 1.2と
+         Apache 1.3の間で変更されています。AddTypeの行を追加した設定ファ
+         イルが実際に読み込まれていることを確認してください。このファイ
+         ルが正しく読み込まれている場合には、明らかな構文エラーを
+         httpd.confファイルの中に書き込んでしまったり、何らかの明らか
+         な変更があった可能性があります。
+        </simpara>
+       </listitem>
+      </itemizedlist>
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.activate-module">
+    <question>
+     <para>
+      <literal>--activate-module=src/modules/php4/libphp4.a</literal>
+      と書いてありますが、ファイルがありません。このため、
+      <literal>--activate-module=src/modules/php4/libmodphp4.a</literal>に
+      変更しましたが、やはりだめです。何が起きているのでしょう?
+     </para>
+    </question>
+    <answer>
+     <para>
+      libphp4.aファイルはこの時点では存在しない、ということに気をつけてください。
+      このファイルは、Apacheの構築時に自動的に作成されます。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.ansi">
+    <question>
+     <para>
+      <literal>--activate-module=src/modules/php4/libphp4.a</literal>
+      を指定し、PHPを静的モジュールとして組み込んでApacheを構築しよう
+      とした際に、システムがANSI対応ではないというエラーを発生します。
+     </para>
+    </question>
+    <answer>
+     <para>
+      Apacheのこのエラーメッセージは紛らわしく、より新しいバージョンで
+      は修整されています。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.apxs">
+    <question>
+     <para>
+      <option role="configure">--with-apxs</option> を指定して
+      PHP を構築しようとした際、奇妙なエラーメッセージが出力されます。
+     </para>
+    </question>
+    <answer>
+     <para>
+      ここでは、確認すべきことが3点あります。まず、何らかの理由により、
+      Apacheがapxs Perlスクリプトを構築する際に適当なコンパイラやフラ
+      グ変数を付けないで構築されてしまうことが時々あります。
+      使用するapxsの場所を見つけたら(<command>which apxs</command>コマンドを
+      試してみてください。<filename>/usr/local/apache/bin/apxs</filename>
+      または<filename>/usr/sbin/apxs</filename>等にあります)、
+      以下の行を確認してください。
+      <programlisting>
+<![CDATA[
+my $CFG_CFLAGS_SHLIB  = ' ';          # substituted via Makefile.tmpl
+my $CFG_LD_SHLIB      = ' ';          # substituted via Makefile.tmpl
+my $CFG_LDFLAGS_SHLIB = ' ';          # substituted via Makefile.tmpl
+]]>
+      </programlisting>
+      上記のようになっている場合は問題です。これらの行は空白になっているか
+      'q()'のような正しくない値になっていると思います。これを以下のように
+      変更してください。
+      <programlisting>
+<![CDATA[
+my $CFG_CFLAGS_SHLIB  = '-fpic -DSHARED_MODULE'; # substituted via Makefile.tmpl
+my $CFG_LD_SHLIB      = 'gcc';                   # substituted via Makefile.tmpl
+my $CFG_LDFLAGS_SHLIB = q(-shared);              # substituted via Makefile.tmpl 
+]]>
+      </programlisting>
+      可能性のある第2の問題は、RedHat-6.1と6.2でのみ存在する問題です。
+      RedHatが出荷した apxs スクリプトは壊れています。以下の行を見てください。
+      <programlisting>
+<![CDATA[
+my $CFG_LIBEXECDIR    = 'modules';         # substituted via APACI install
+]]>
+      </programlisting>
+      上の行がある場合、これを次のように変更してください。
+      <programlisting>
+<![CDATA[
+my $CFG_LIBEXECDIR    = '/usr/lib/apache'; # substituted via APACI install
+]]>
+      </programlisting>
+      最後に、Apacheのconfigure/再インストールを行います。その際、
+      <command>./configure</command> と<command>make</command>の間に
+      <command>make clean</command>を行ってください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.microtime">
+    <question>
+     <para>
+      <command>make</command>の間、microtimeおよび
+      <literal>RUSAGE_</literal>関連で多くのエラーを発生します。
+     </para>
+    </question>
+    <answer>
+     <para>
+      インストール時に<command>make</command>を行っている際、以下のようなエラーを発生す
+      るとした場合、
+      <programlisting>
+<![CDATA[
+microtime.c: In function `php_if_getrusage':
+microtime.c:94: storage size of `usg' isn't known
+microtime.c:97: `RUSAGE_SELF' undeclared (first use in this function)
+microtime.c:97: (Each undeclared identifier is reported only once
+microtime.c:97: for each function it appears in.)
+microtime.c:103: `RUSAGE_CHILDREN' undeclared (first use in this function)
+make[3]: *** [microtime.lo] Error 1
+make[3]: Leaving directory `/home/master/php-4.0.1/ext/standard'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/home/master/php-4.0.1/ext/standard'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/master/php-4.0.1/ext'
+make: *** [all-recursive] Error 1
+]]>
+      </programlisting>
+     </para>
+     <para>
+      あなたのシステムは壊れています。使用しているglibcと同じバージョンの
+      glibc-develパッケージをインストールして、/usr/include ファイルを修正
+      する必要があります。この問題は、PHPの動作とは全く関係ありません。
+      これを示すには、次のような簡単なテストを行ってみてください。
+     <programlisting>
+<![CDATA[
+$ cat >test.c <<X
+#include <sys/resource.h>
+X
+$ gcc -E test.c >/dev/null
+]]>
+      </programlisting>
+      これが、エラーが発生する場合、インクルードファイルが見つからない
+      ことがわかります。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.mysql.tempnam">
+    <question>
+     <para>
+      MySQLを使用できるようにPHPをコンパイルする際、configureは正常に
+      実行されるが<literal>make</literal>の最中に以下のようなエラーが出る:
+      <emphasis>ext/mysql/libmysqlclient/my_tempnam.o(.text+0x46): In function 
+      my_tempnam': /php4/ext/mysql/libmysqlclient/my_tempnam.c:103: the 
+      use of tempnam' is dangerous, better use mkstemp'</emphasis>
+      何がおかしいのか？
+     </para>
+    </question>
+    <answer>
+     <para>
+      まず、これは<literal>Warning</literal>であって致命的な
+      エラーではないと認識することが重要です。<literal>make</literal>の
+      最後のほうでこの出力がしばしば見られるため致命的なエラーと
+      思われがちですがそうではありません。もちろん、Warningが
+      起きるとコンパイラが停止するような設定をしている場合は別です。
+      また、MySQLサポートはデフォルトで構築されることにも
+      留意してください。
+     </para>
+     <note>
+      <para>
+       PHP4.3.2以降、ビルド(make)完了後に以下のようなテキストが出る
+       ことがあります:
+      </para>
+      <para>
+       <screen>
+        Build complete.
+        (It is safe to ignore warnings about tempnam and tmpnam).
+       </screen>
+      </para>
+     </note>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.upgrade">
+    <question>
+     <para>
+      PHPをアップグレードしたいのですが、現在インストールされているPHPを
+      構築するときに指定した<command>./configure</command>コマンドの
+      オプションはどこで知ることが出来ますか？
+     </para>
+    </question>
+    <answer>
+     <para>
+      現在インストールされているPHPを構築した時のディレクトリにある
+      config.nice ファイルを見るか、もしもうそのディレクトリが無い場合は
+      <programlisting role="php">
+<![CDATA[
+       <?php phpinfo(); ?>
+]]>
+      </programlisting>
+      というスクリプトを実行すれば、最初の方にある<command>./configure</command>
+      という箇所に表示されます。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.build.gdlibs">
+    <question>
+     <para>
+      GDライブラリをリンクしてPHPを構築すると、コンパイルエラーが発生したり
+      実行時にセグメンテーション違反になってしまいます。
+     </para>
+    </question>
+    <answer>
+     <para>
+      リンクしたGDライブラリとPHPが同じライブラリ(例えばlibpng)に依存しているか
+      どうかを確認してください。
+     </para>
+    </answer>
+   </qandaentry>
+   
+   <qandaentry xml:id="faq.installation.needgnu">
+    <question>
+     <para>
+      PHP をコンパイルする際に、よくわからないエラーが発生してハングアップ
+      します。Solaris を使用している場合に起こるようです。
+     </para>
+    </question>
+    <answer>
+     <para>
+      PHP のコンパイル時に 非 GNU ツールを使用すると問題を引き起こします。
+      PHP を正しくコンパイルするには、GNU ツールを使用することを忘れないで
+      ください。たとえば、Solaris で使用される SunOS BSD 互換の <literal>sed</literal>
+      や Solaris 版の <literal>sed</literal> は正しく動作しません。しかし、
+      GNU 版もしくは Sun POSIX (xpg4) 版の <literal>sed</literal> ならうまく
+      動きます。以下を参照ください。
+      <link xlink:href="&url.sed;">GNU sed</link>、
+      <link xlink:href="&url.flex;">GNU flex</link> および
+      <link xlink:href="&url.bison;">GNU bison</link> 。
+     </para>
+    </answer>
+   </qandaentry>
+  </qandaset>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+-->

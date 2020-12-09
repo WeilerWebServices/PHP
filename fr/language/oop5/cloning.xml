@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 346157 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+ <sect1 xml:id="language.oop5.cloning" xmlns="http://docbook.org/ns/docbook">
+  <title>Clonage d'objets</title>
+
+  <para>
+   Le fait de créer une copie d'un objet possédant exactement les mêmes
+   propriétés n'est pas toujours le comportement que l'on souhaite. 
+   Un bon exemple pour illustrer le besoin d'un constructeur de copie : 
+   si vous avez un objet qui représente une fenêtre GTK et que l'objet 
+   contient la ressource représentant cette fenêtre GTK, lorsque vous 
+   créez une copie vous pouvez vouloir créer une nouvelle fenêtre avec
+   les mêmes propriétés, mais que le nouvel objet contienne une ressource
+   représentant la nouvelle fenêtre.
+  </para>
+
+  <para>
+   Une copie d'objet est créée en utilisant le mot-clé 
+   <emphasis>clone</emphasis> (qui fait appel à la méthode 
+   <link linkend="object.clone">__clone()</link>
+   de l'objet, si elle a été définie).
+   La méthode <link linkend="object.clone">__clone()</link>
+   d'un objet ne peut être appelée directement.
+  </para>
+
+  <informalexample>
+   <programlisting role="php5">
+<![CDATA[
+<?php
+
+$copie_d_objet = clone $objet;
+
+?>
+]]>
+   </programlisting>
+  </informalexample>
+
+  <para>
+   Lorsqu'un objet est cloné, PHP effectue une copie superficielle de toutes
+   les propriétés de l'objet. Toutes les propriétés qui sont des références à d'autres 
+   variables demeureront des références.
+  </para>
+
+  <methodsynopsis xml:id="object.clone">
+   <type>void</type><methodname>__clone</methodname>
+   <void/>
+  </methodsynopsis>
+  
+  <para>
+   Une fois le clonage effectué, si une méthode <link linkend="object.clone">__clone()</link>
+   est définie, la méthode <link linkend="object.clone">__clone()</link>
+   du nouvel objet sera appelée, pour permettre à chaque propriété qui doit l'être d'être modifiée.
+  </para>
+
+  <example>
+   <title>Exemple de duplication d'objets</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+class SubObject 
+{
+  static $instances = 0;
+  public $instance;
+
+  public function __construct() {
+    $this->instance = ++self::$instances;
+  }
+
+  public function __clone() {
+    $this->instance = ++self::$instances;
+  }
+}
+
+class MyCloneable 
+{
+  public $objet1;
+  public $objet2;
+
+  function __clone() 
+  {    
+    // Force la copie de this->object, sinon
+    // il pointera vers le même objet.
+    $this->object1 = clone $this->object1;
+  }
+}
+
+$obj = new MyCloneable();
+
+$obj->object1 = new SubObject();
+$obj->object2 = new SubObject();
+
+$obj2 = clone $obj;
+
+
+print("Objet original :\n");
+print_r($obj);
+
+print("Objet cloné :\n");
+print_r($obj2);
+
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen role="php">
+<![CDATA[
+Object original :
+MyCloneable Object
+(
+    [object1] => SubObject Object
+        (
+            [instance] => 1
+        )
+
+    [object2] => SubObject Object
+        (
+            [instance] => 2
+        )
+
+)
+Object cloné :
+MyCloneable Object
+(
+    [object1] => SubObject Object
+        (
+            [instance] => 3
+        )
+
+    [object2] => SubObject Object
+        (
+            [instance] => 2
+        )
+
+)
+]]>
+
+   </screen>
+
+  </example>
+
+  <para>
+   PHP 7.0.0 introduit la possibilité d'accéder à un membre d'un objet 
+   fraîchement cloné dans une seule expression:
+  </para>
+  <example>
+   <title>Accès à un membre d'un objet fraîchement cloné</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$dateTime = new DateTime();
+echo (clone $dateTime)->format('Y');
+?>
+]]>
+   </programlisting>
+   &example.outputs.similar;
+   <screen>
+<![CDATA[
+2016
+]]>
+   </screen>
+  </example>
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

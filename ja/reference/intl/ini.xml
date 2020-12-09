@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: takagi Status: ready -->
+
+<section xml:id="intl.configuration" xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.runtime;
+ &extension.runtime;
+ <para>
+  <table>
+   <title>Intl &ConfigureOptions;</title>
+   <tgroup cols="4">
+    <thead>
+     <row>
+      <entry>&Name;</entry>
+      <entry>&Default;</entry>
+      <entry>&Changeable;</entry>
+      <entry>&Changelog;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry><link linkend="ini.intl.default-locale">intl.default_locale</link></entry>
+      <entry></entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.intl.error-level">intl.error_level</link></entry>
+      <entry>0</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.intl.use-exceptions">intl.use_exceptions</link></entry>
+      <entry>0</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>PHP 5.5 および PECL 3.0.0a1 以降で使用可能。</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+ </para>
+ 
+ &ini.descriptions.title;
+
+ <para>
+  <variablelist>
+   <varlistentry xml:id="ini.intl.default-locale">
+     <term>
+      <parameter>intl.default_locale</parameter>
+      <type>string</type>
+     </term>
+     <listitem>
+      <para>
+       何も指定しなかった
+       (引数を省略したり <literal>NULL</literal> を渡したりした) 場合に intl 関数が使うロケール。
+       これは ICU のロケールであり、システムのロケールではありません。
+       組み込みの ICU ロケールとそのデータは、
+       <link xlink:href="&url.icu.locales;"/> で確認できます。
+      </para>
+      <para>
+       デフォルト値は空文字列で、これは ICU のデフォルトロケールを意味します。
+       いったん設定したら、ini の設定でこのデフォルト値に戻すことはできません。
+       このデフォルトに依存することはおすすめしません。その値がサーバーの環境に依存するからです。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="ini.intl.error-level">
+     <term>
+      <parameter>intl.error_level</parameter>
+      <type>int</type>
+     </term>
+     <listitem>
+      <para>
+       ICU 関数でエラーが発生したときに生成されるエラーメッセージのレベル。
+       PHP のエラーレベル、すなわち <constant>E_WARNING</constant> などになります。
+       <literal>0</literal> を設定すれば、エラーメッセージを抑制できます。
+       この設定は、エラーを表す返り値や
+       <function>intl_get_error_code</function> が返す値、
+       そしてエラーコードやエラーメッセージを取得するクラスメソッドなどには影響しません。
+       <literal>E_ERROR</literal> を選ぶと、intl クラスでエラーが発生したときにスクリプトを停止させます。
+      </para>
+      <para>
+       デフォルト値は <literal>0</literal> です。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="ini.intl.use-exceptions">
+     <term>
+      <parameter>intl.use_exceptions</parameter>
+      <type>int</type>
+     </term>
+     <listitem>
+      <para>
+       true にすると、intl 関数でエラーが発生したときに例外を発生させます。
+       この例外は、<classname>IntlException</classname> 型になります。
+       <link linkend="ini.intl.error-level">intl.error_level</link> によるエラーメッセージと組み合わせて使うことになるでしょう。
+      </para>
+      <para>デフォルト値は &false; です。</para>
+     </listitem>
+    </varlistentry>
+
+  </variablelist>
+ </para>
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

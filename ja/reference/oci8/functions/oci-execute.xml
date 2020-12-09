@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 331842 Maintainer: shimooka Status: ready -->
+<refentry xml:id="function.oci-execute" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>oci_execute</refname>
+  <refpurpose>文を実行する</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>oci_execute</methodname>
+   <methodparam><type>resource</type><parameter>statement</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>mode</parameter><initializer>OCI_COMMIT_ON_SUCCESS</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>oci_parse</function> が返した
+   <parameter>statement</parameter> を実行します。
+  </para>
+  <para>
+   実行後、<literal>INSERT</literal> 文などの場合はデフォルトでデータをデータベースにコミットします。
+   <literal>SELECT</literal> 文などの場合は問い合わせを実行します。
+   問い合わせの結果をその後 PHP で取得するには
+   <function>oci_fetch_array</function> などの関数を使います。
+  </para>
+  <para>
+   一度パースした文は何度でも実行することができ、
+   これを使えば毎回パースするコストを節約することができます。
+   この方法は、<function>oci_bind_by_name</function> でデータをバインドした
+   <literal>INSERT</literal> 文で一般的に使われています。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>statement</parameter></term>
+     <listitem>
+      <para>
+       有効な OCI ステートメント ID。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>mode</parameter></term>
+     <listitem>
+      <para>
+        オプションの二番目のパラメータは、次の定数のいずれかとなります。
+       <table>
+        <title>実行モード</title>
+        <tgroup cols="2">
+         <thead>
+          <row>
+           <entry>定数</entry>
+           <entry>説明</entry>
+          </row>
+         </thead>
+         <tbody>
+          <row>
+           <entry><constant>OCI_COMMIT_ON_SUCCESS</constant></entry>
+           <entry>ステートメントの実行に成功すると、
+             この接続においてまだ確定していない変更をすべてコミットします。
+             これがデフォルトです。</entry>
+          </row>
+          <row>
+           <entry><constant>OCI_DESCRIBE_ONLY</constant></entry>
+           <entry><function>oci_field_name</function>
+             関数などでクエリのメタデータを使えるようにしますが、
+             結果セットは作りません。続けて
+             <function>oci_fetch_array</function>
+             などをコールすると失敗します。</entry>
+          </row>
+          <row>
+           <entry><constant>OCI_NO_AUTO_COMMIT</constant></entry>
+           <entry>変更を自動的にはコミットしません。PHP
+             5.3.2 (PECL OCI8 1.4) より前のバージョンでは
+             <constant>OCI_DEFAULT</constant> を使います。これは、
+             <constant>OCI_NO_AUTO_COMMIT</constant> と同じ意味です。</entry>
+          </row>
+         </tbody>
+        </tgroup>
+       </table>
+      </para>
+      <para>
+       <constant>OCI_NO_AUTO_COMMIT</constant> モードを使うとトランザクションを開始あるいは続行します。
+       接続を閉じたりスクリプトが終了したりしたときに、
+       トランザクションは自動的にロールバックされます。
+       トランザクションをコミットするには
+       <function>oci_commit</function> を、破棄するには
+       <function>oci_rollback</function> をコールします。
+      </para>
+      <para>
+       データを追加したり更新したりする際には、
+       リレーショナルデータの一貫性やパフォーマンスなどを考慮して
+       トランザクションを使うことを推奨します。
+      </para>
+      <para>
+       <constant>OCI_NO_AUTO_COMMIT</constant> モードを使った文を実行した後に
+       <function>oci_commit</function>
+       あるいは <function>oci_rollback</function> をコールしなかった場合、
+       たとえデータが変更されていなくても
+       スクリプトの終了時に OCI8 がロールバックを実行します。
+       不要なロールバックを避けるために、多くのスクリプトはクエリや PL/SQL で
+       <constant>OCI_NO_AUTO_COMMIT</constant> モードを使いません。
+       同じスクリプトの中で異なるモードで
+       <function>oci_execute</function> を実行する場合は、
+       アプリケーション内で適切なトランザクションの一貫性を確保するよう注意しましょう。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>oci_execute</function> での問い合わせの例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+
+$stid = oci_parse($conn, 'SELECT * FROM employees');
+oci_execute($stid);
+
+echo "<table border='1'>\n";
+while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    echo "<tr>\n";
+    foreach ($row as $item) {
+        echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
+    }
+    echo "</tr>\n";
+}
+echo "</table>\n";
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>モードを指定せずに <function>oci_execute</function> を実行する例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// 実行する前にテーブルを作成します。
+//   CREATE TABLE MYTABLE (col1 NUMBER);
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+
+$stid = oci_parse($conn, 'INSERT INTO mytab (col1) VALUES (123)');
+
+oci_execute($stid); // 結果はコミットされ、他のユーザーからもすぐに見えるようになります
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>oci_execute</function> で <constant>OCI_NO_AUTO_COMMIT</constant> を使う例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// 実行する前にテーブルを作成します。
+//   CREATE TABLE MYTABLE (col1 NUMBER);
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+
+$stid = oci_parse($conn, 'INSERT INTO mytab (col1) VALUES (:bv)');
+oci_bind_by_name($stid, ':bv', $i, 10);
+for ($i = 1; $i <= 5; ++$i) {
+    oci_execute($stid, OCI_NO_AUTO_COMMIT);  // PHP <= 5.3.1 の場合は OCI_DEFAULT を使います
+}
+oci_commit($conn);  // 新しい値 1, 2, 3, 4, 5 をすべてコミットします
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>oci_execute</function> でさまざまなコミットモードを使う例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// 実行する前にテーブルを作成します。
+//   CREATE TABLE MYTABLE (col1 NUMBER);
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+
+$stid = oci_parse($conn, 'INSERT INTO mytab (col1) VALUES (123)');
+oci_execute($stid, OCI_NO_AUTO_COMMIT);  // データはコミットされません
+
+$stid = oci_parse($conn, 'INSERT INTO mytab (col1) VALUES (456)');
+oci_execute($stid);  // 123 と 456 が両方コミットされます
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>oci_execute</function> で
+     <constant>OCI_DESCRIBE_ONLY</constant> を使う例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+
+$stid = oci_parse($conn, 'SELECT * FROM locations');
+oci_execute($s, OCI_DESCRIBE_ONLY);
+for ($i = 1; $i <= oci_num_fields($stid); ++$i) {
+    echo oci_field_name($stid, $i) . "<br>\n";
+}
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    トランザクションは接続を閉じたとき、
+    もしくはスクリプトの終了時のいずれの場合でも
+    すぐに自動的にロールバックされます。
+    トランザクションをコミットするには
+    <function>oci_commit</function> をコールする必要があります。
+   </para>
+   <para>
+    <constant>OCI_COMMIT_ON_SUCCESS</constant> モードを指定するか、
+    あるいはデフォルトの状態で <function>oci_execute</function> をコールすると、
+    それ以前の未コミットのトランザクションをコミットします。
+   </para>
+   <para>
+    <literal>CREATE</literal> や <literal>DROP</literal> といった
+    Oracle の DDL は、未コミットのトランザクションを自動的にコミットします。
+   </para>
+  </note>
+  <note>
+   <para>
+    <function>oci_execute</function> 関数は
+    通常はステートメントをデータベースに送信するので、
+    ステートメントの構文エラーなどを特定することもできます。
+    軽量なローカル版の <function>oci_parse</function> ではこれはできません。
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>oci_parse</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

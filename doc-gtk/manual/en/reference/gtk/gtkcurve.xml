@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.10 $ -->
+<classentry id="gtk.gtkcurve">
+ <classmeta>
+  <classtitle>GtkCurve</classtitle>
+  <classparent>GtkDrawingArea</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkcurve.png"/>
+  <shortdesc>
+   Widget that allows editing of a curve.
+  </shortdesc>
+  <desc>
+   <para>
+    The <classname>GtkCurve</classname> is a widget that allows the user to 
+    directly edit a curve covering a range of values.
+   </para>
+   <para>
+    The <classname>GtkCurve</classname> widget has 3 modes of operation; 
+    spline, linear and free. In spline mode the user places points on the 
+    curve which are automatically connected together into a smooth curve. 
+    In linear mode the user places points on the curve which are connected by 
+    straight lines. In free mode the user can draw the points of the curve 
+    freely, and they are not connected at all.
+   </para>
+   <note>
+    &specialized.widget;
+   </note>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkcurve.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkCurve</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>GtkCurve</classname>.
+   </shortdesc>
+   <desc>
+    Use this constructor to create a new <classname>GtkCurve</classname> 
+    widget.
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkcurve.method.get_vector">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_vector</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkCurve">set_vector</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcurve.method.reset">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>reset</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Resets the curve to a straight line.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method when you want to reset the curve to a straight line from 
+     the minimum x and y values to the maximum x and y values (i.e. from the 
+     bottom-left to the top-right corners).
+    </para>
+    <note>
+     The curve type is not changed when this function is called
+    </note>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcurve.method.set_curve_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_curve_type</function></funcdef>
+     <paramdef>GtkCurveType <parameter>type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the type of the curve.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method when you want to set the type of the curve that you want 
+     the user to draw. The existing curve will remain unchanged except when 
+     changing from a free curve to a linear or spline curve, in which case, 
+     the curve will be changed as little as possible.
+    </para>
+    <para>
+     Pass 0 as a parameter if you want the curve type to be linear, 1 for a 
+     spline curve and 2 for a free type curve.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcurve.method.set_gamma">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_gamma</function></funcdef>
+     <paramdef>double <parameter>gamma</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Recomputes the curve using the given gamma value.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this function to precisely control a curve using its gamma value. 
+     The gamma value of a curves, directly correlates with its radius of 
+     curvature. Hence, a gamma value of 1 will result in a straight line. 
+     Values greater than 1 will result in bent curves above the straight 
+     line, while values lesser than 1 give curves bent under the straight 
+     line.
+    </para>
+    <note>
+     The curve type is automatically changed to <literal>Free</literal> when this function is 
+     called.
+    </note>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcurve.method.set_range">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_range</function></funcdef>
+     <paramdef>double <parameter>min_x</parameter></paramdef>
+     <paramdef>double <parameter>max_x</parameter></paramdef>
+     <paramdef>double <parameter>min_y</parameter></paramdef>
+     <paramdef>double <parameter>max_y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the minimum and maximum x and y values of the curve.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method if you want to bind the curve to certain minimum and 
+     maximum values. The four parameters passed are the minimum x, maximum x, 
+     minimum y and maximum y values respectively.
+    </para>
+    <note>
+     The curve is automatically reset with a call to 
+     <function class="GtkCurve">reset</function> when this function is used.
+    </note>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcurve.method.set_vector">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_vector</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkCurve">get_vector</function>
+    </para>
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkcurve.signal.curve-type-changed">
+   <signalname>curve-type-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCurve <parameter>curve</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the curve type has been changed.
+   </shortdesc>
+   <desc>
+    This signal is emitted when the curve type has been changed. The curve 
+    type can be explicitly changed with a call to 
+    <function class="GtkCurve">set_curve_type</function>. It is also changed 
+    as a side-effect of calling <function class="GtkCurve">reset</function> 
+    or <function class="GtkCurve">set_gamma</function>.
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

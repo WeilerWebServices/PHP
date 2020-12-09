@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision: 1.4 $ -->
+<classentry id="atk.atknoopobjectfactory">
+ <classmeta>
+  <classtitle>AtkNoOpObjectFactory</classtitle>
+  <classparent>AtkObjectFactory</classparent>
+  <shortdesc>
+   An object factory for creating AtkNoOpObject instances.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="atk.atknoopobjectfactory.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>AtkNoOpObjectFactory</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+</classentry>

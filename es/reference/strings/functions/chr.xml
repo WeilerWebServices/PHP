@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 334374 Maintainer: benjamin Status: ready -->
+<!-- Reviewed: no --> 
+<refentry xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook"
+xml:id="function.chr">
+ <refnamediv>
+  <refname>chr</refname>
+  <refpurpose>Devuelve un caracter específico</refpurpose>
+  </refnamediv>
+  
+  <refsect1 role="description"> &reftitle.description; <methodsynopsis>
+   <type>string</type>
+  <methodname>chr</methodname>
+  <methodparam>
+   <type>int</type>
+   <parameter>ascii</parameter>
+  </methodparam>
+  </methodsynopsis>
+  <para> Devuelve una cadena de un caracter que contiene el carácter especificado por
+   <parameter>ascii</parameter></para>
+  <para> Esta función complementa a <function>ord</function>. </para>
+  </refsect1>
+  
+  <refsect1 role="parameters"> &reftitle.parameters; <para>
+   <variablelist>
+    <varlistentry>
+     <term>
+      <parameter>ascii</parameter>
+     </term>
+     <listitem>
+      <para> El código ASCII. </para>
+     </listitem>
+    </varlistentry>
+  </variablelist>
+  </para>
+  </refsect1>
+  
+  <refsect1 role="returnvalues"> &reftitle.returnvalues; 
+   <para>
+    Devuelve el carácter especificado.
+   </para>
+  </refsect1>
+  <refsect1 role="examples">
+   &reftitle.examples;
+   <para>
+    <example>
+     <title><function>chr</function> Ejemplo</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$str = "La cadena termina en un escape: ";
+$str .= chr(27); /* añade un carácter de escape al final de  $str */
+
+/* A menudo esto es más útil */
+
+$str = sprintf("TLa cadena termina en un escape: %c", 27);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  </refsect1>
+  
+  <refsect1 role="seealso"> &reftitle.seealso; <para>
+   <simplelist>
+    <member><function>sprintf</function> Devuelve una cadena con formato con un formato de
+     <literal>%c</literal></member>
+    <member>
+     <function>ord</function>
+    </member>
+    <member>Una <link xlink:href="&url.asciitable;">ASCII-tabla</link></member>
+  </simplelist>
+  </para>
+  </refsect1>
+  
+</refentry>

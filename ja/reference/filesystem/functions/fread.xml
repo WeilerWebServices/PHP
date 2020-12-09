@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351135 Maintainer: hirokawa Status: ready -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fread">
+ <refnamediv>
+  <refname>fread</refname>
+  <refpurpose>バイナリセーフなファイルの読み込み</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>string</type><type>false</type></type><methodname>fread</methodname>
+   <methodparam><type>resource</type><parameter>handle</parameter></methodparam>
+   <methodparam><type>int</type><parameter>length</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>fread</function> は、<parameter>handle</parameter>
+   が指すファイルポインタから最高 <parameter>length</parameter>
+   バイト読み込みます。
+   以下のいずれかの条件を満たしたら、読み込みを終了します。
+   <itemizedlist>
+    <listitem>
+     <simpara>
+      <parameter>length</parameter> バイトぶん読み込んだ
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      EOF (ファイルの終端) に達した
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      パケットが利用可能になるか、あるいは
+      <link linkend="function.socket-set-timeout">ソケットのタイムアウト</link>
+      が発生した (ネットワークストリームの場合)
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      バッファつきで読み込まれた、プレーンなファイルでないストリームの場合に、
+      一回の読み込みバイト数がチャンクサイズ (通常は 8192) に達した。
+      それまでにバッファされていたデータの内容によって、返されるデータのサイズはチャンクサイズより大きくなることがあります。
+     </simpara>
+    </listitem>
+   </itemizedlist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>handle</parameter></term>
+     <listitem>
+      &fs.file.pointer;
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>length</parameter></term>
+     <listitem>
+      <para>
+       最大 <parameter>length</parameter> バイトまで読み込む。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   読み込んだ文字列を返します。&return.falseforfailure;。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>シンプルな <function>fread</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// ファイルの中身を読んで文字列に格納する
+$filename = "/usr/local/something.txt";
+$handle = fopen($filename, "r");
+$contents = fread($handle, filesize($filename));
+fclose($handle);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>バイナリの <function>fread</function> の例</title>
+    <warning>
+     <para>
+      バイナリとテキストファイルの形式が異なるシステム(すなわち
+      Windows)では、<function>fopen</function>の mode パラメータに 'b'
+      を指定してファイルをオープンする必要があります。
+     </para>
+    </warning>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$filename = "c:\\files\\somepic.gif";
+$handle = fopen($filename, "rb");
+$contents = fread($handle, filesize($filename));
+fclose($handle);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>リモートファイルの <function>fread</function> の例</title>
+    <warning>
+     <para>
+      通常のローカルファイル以外のもの、例えば
+      <link linkend="features.remote-files">リモートファイル</link> や
+      <function>popen</function>、<function>fsockopen</function> が返す
+      ストリームを読み込んでいる場合には、
+      パケットが有効になった後に読み込みはストップします。
+      つまり以下の例のように分割されたデータを結合すべきであるということです。
+     </para>
+    </warning>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// PHP 5 以降での例
+$handle = fopen("http://www.example.com/", "rb");
+$contents = stream_get_contents($handle);
+fclose($handle);
+?>
+]]>
+    </programlisting>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$handle = fopen("http://www.example.com/", "rb");
+if (FALSE === $handle) {
+    exit("Failed to open stream to URL");
+}
+
+$contents = '';
+
+while (!feof($handle)) {
+    $contents .= fread($handle, 8192);
+}
+fclose($handle);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+<refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    ファイルの中身を文字列に格納したいだけならば、<function>file_get_contents</function>
+    を使うほうが上記の例よりも効率的です。
+   </para>
+  </note>
+  <note>
+   <para>
+    <function>fread</function> は、
+    ファイルポインタが現在指している位置から読み込みを開始することに注意しましょう。
+    ポインタの現在位置を調べるには <function>ftell</function> を、
+    そしてポインタの位置を巻き戻すには <function>rewind</function> を使用します。
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>fwrite</function></member>
+    <member><function>fopen</function></member>
+    <member><function>fsockopen</function></member>
+    <member><function>popen</function></member>
+    <member><function>fgets</function></member>
+    <member><function>fgetss</function></member>
+    <member><function>fscanf</function></member>
+    <member><function>file</function></member>
+    <member><function>fpassthru</function></member>
+    <member><function>ftell</function></member>
+    <member><function>rewind</function></member>
+    <member><function>unpack</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<localization language="bg">
+
+   <gentext key="by" text="от"/>
+   <gentext key="callback" text="Възвратна функция"/>
+   <gentext key="constructor" text="Конструктор"/>
+   <gentext key="constructor" text="Конструктори"/>
+   <gentext key="copyright" text="Авторско право"/>
+   <gentext key="description" text="Описание"/>
+   <gentext key="directsubclasses" text="Директни подкласове"/>
+   <gentext key="editedby" text="Редактирано от:"/>
+   <gentext key="fields" text="Полета"/>
+   <gentext key="glossary" text="Речник"/>
+   <gentext key="implementedby" text="Реализарано от"/>
+   <gentext key="implementedinterfaces" text="Изпълними интерфейси"/>
+   <gentext key="interfacewarning" text="Това е интефейс и не може да бъде стартиран директно."/>
+   <gentext key="listofexamples" text="Списък от Примери"/>
+   <gentext key="listoffigures" text="Списък от Фигури"/>
+   <gentext key="listoftables" text="Списък от Таблици"/>
+   <gentext key="methods" text="Методи"/>
+   <gentext key="nav-prev" text="Предишен"/>
+   <gentext key="nav-next" text="Следващ"/>
+   <gentext key="nav-up" text="Нагоре"/>
+   <gentext key="nav-home" text="Начало"/>
+   <gentext key="nosubclasses" text="Празен."/>
+   <gentext key="note" text="Забележка"/>
+   <gentext key="objecthierarchy" text="Йерархия на обектите"/>
+   <gentext key="PHPGTKauths" text="Автор на PHP-GTK"/>
+   <gentext key="PHPGTKcons" text="Настоящите сътрудници"/>
+   <gentext key="PHPGTKconsp" text="PHP-GTK 1 сътрудниците"/>
+   <gentext key="PHPGTKeditors" text="Настоящите редактори на Наръчника за PHP-GTK"/>
+   <gentext key="PHPGTKeditorsp" text="Редактори на Наръчника за PHP-GTK 1"/>
+   <gentext key="PHPGTKmanauths" text="Настоящите автори на Наръчника за PHP-GTK"/>
+   <gentext key="PHPGTKmanauthsp" text="Автори на Наръчника за PHP-GTK 1"/>
+   <gentext key="properties" text="Свойства"/>
+   <gentext key="propertiesDisclaimer" text="Използвай методите get_property и set_property, за да получиш достъп до това."/>
+   <gentext key="seealso" text="Виж също"/>
+   <gentext key="signals" text="Сигнали"/>
+   <gentext key="symbolicname" text="Символично име"/>
+   <gentext key="tableofcontents" text="Съдържание"/>
+   <gentext key="translatedby" text="Преведено от:"/>
+   <gentext key="tip" text="Трик"/>
+   <gentext key="value" text="Стойност"/>
+
+   <context name="glossary">
+      <template name="seealso" text="Виж също:"/>
+   </context>
+
+   <context name="title">
+      <template name="appendix" text="Приложение %n. %t"/>
+      <template name="book" text="%t"/>
+      <template name="chapter" text="%t"/>
+      <template name="classset" text="%t"/>
+      <template name="classentry" text="%t"/>
+      <template name="classtree" text="%t"/>
+      <template name="constructor" text="%t"/>
+      <template name="constructors" text=""/>
+      <template name="enum" text="%t"/>
+      <template name="enums" text="%t"/>
+      <template name="enumset" text="%t"/>
+      <template name="example" text="Пример %n. %t"/>
+      <template name="field" text="%t"/>
+      <template name="fields" text=""/>
+      <template name="figure" text="Фигура %n. %t"/>
+      <template name="glossary" text="%t"/>
+      <template name="legalnotice" text="%t"/>
+      <template name="index" text="%t"/>
+      <template name="method" text="%t"/>
+      <template name="methods" text=""/>
+      <template name="part" text="%t"/>
+      <template name="partintro" text="%t"/>
+      <template name="prop" text="%t"/>
+      <template name="property" text="%t"/>
+      <template name="properties" text=""/>
+      <template name="reference" text="%t"/>
+      <template name="refentry" text="%t"/>
+      <template name="set" text="%t"/>
+      <template name="setinfo" text=""/>
+      <template name="setindex" text="%t"/>
+      <template name="signal" text="%t"/>
+      <template name="signals" text=""/>
+      <template name="table" text="Таблица %n. %t"/>
+   </context>
+
+   <context name="section-title">
+      <template name="section" text="%t"/>
+      <template name="sect1" text="%t"/>
+      <template name="sect2" text="%t"/>
+   </context>
+
+</localization>

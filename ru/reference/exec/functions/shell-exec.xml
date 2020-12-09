@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 350871 Maintainer: rjhdby Status: ready -->
+<!-- $Revision$ -->
+<!-- Reviewed: yes Maintainer: lex -->
+<!-- splitted from ./en/functions/exec.xml, last change in rev 1.2 -->
+<refentry xml:id='function.shell-exec' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>shell_exec</refname>
+  <refpurpose>Выполнить команду через оболочку и вернуть вывод в виде строки</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>shell_exec</methodname>
+   <methodparam><type>string</type><parameter>cmd</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Эта функция идентична оператору с <link
+   linkend="language.operators.execution">обратным апострофом</link>.
+  </para>
+  <note>
+   <para>
+    В Windows нижележащий канал открывается в текстовом режиме, что может привести к сбою 
+    функции для двоичного вывода. 
+    В таком случае попробуйте вместо этого использовать 
+    <function>popen</function>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>cmd</parameter></term>
+     <listitem>
+      <para>
+       Команда, которая будет выполнена.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Вывод исполняемой команды или &null;, если произошла ошибка или команда не 
+   производит вывод.
+  </para>
+  <note>
+   <para>
+    Эта функция может вернуть &null; в двух случаях: если произошла ошибка или если
+    выполняемая команда ничего не выводит. Не пользуйтесь этой функцией, для 
+    определения, успешно ли выполнилась команда. Вместо этого используйте
+    <function>exec</function>, так как она предоставляет возможность проверить
+    код возврата.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>shell_exec</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$output = shell_exec('ls -lart');
+echo "<pre>$output</pre>";
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>exec</function></member>
+    <member><function>escapeshellcmd</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

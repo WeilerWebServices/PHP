@@ -1,0 +1,97 @@
+#!/usr/local/bin/php -q
+<?php /* vim: set noet ts=2 sw=2 ft=php: : */
+
+// Build complete file with all notes
+define("BUILD_COMPLETE_FILE", TRUE);
+
+if ($argc != 2 && $argc != 3) {
+    die("usage: $argv[0] directory [since]");
+}
+
+$token = getenv("TOKEN");
+if (!$token) {
+    die("you have to set the TOKEN environment variable");
+}
+$token = rawurlencode($token);
+
+$root = $argv[1];
+if (substr($root,-1) != '/') {
+    $root = "$root/";
+}
+$since = ($argc == 3 ? $argv[2] : "");
+
+$SSL_fopen = false;
+if(in_array('https', stream_get_wrappers())) {
+    $SSL_fopen = true;
+}
+
+/* get user notes */
+if($SSL_fopen) {
+    $ctx = stream_context_create([
+        'ssl' => [
+            'ciphers' => 'DEFAULT:!DH',
+        ],
+    ]);
+    $fp = @fopen(
+        "https://master.php.net/fetch/user-notes.php?token=$token".($since?"&since=$since":""),
+        "r",
+        false,
+        $ctx
+    );
+} else {
+    $url = escapeshellarg("https://master.php.net/fetch/user-notes.php?token=$token".($since?"&since=$since":""));
+    $fp = popen("curl -s $url",'r');
+}
+
+if (!$fp) {
+    exit(1);
+}
+
+$count = 0;
+
+if (BUILD_COMPLETE_FILE) {
+    $bz = popen("bzip2 -9 -c > $root/all.bz2", "w");
+}
+
+while (!feof($fp)) {
+    $line = chop(fgets($fp,8096));
+
+    if (!strstr($line,"|")) {
+        continue; # skip invalid lines
+    }
+
+    list($id,$sect,$rate,$ts,$user,$note,$up,$down) = explode("|",$line);
+
+    $hash = substr(md5($sect),0,16);
+    @mkdir($root.substr($hash,0,2),0755);
+
+    $file = $root.substr($hash,0,2)."/$hash";
+    if ($since && !$restarted[$file]++) {
+        unlink($file);
+    }
+
+    $mtime = @filemtime($file);
+    if (!($nf = @fopen($file,"a"))) {
+        echo "unable to open $notes file $hash\n";
+        continue;
+    }
+    if (strlen($note) == 0) {
+        echo "note id $note is broken";
+    } else {
+        $note = gzuncompress(base64_decode($note)) or die ("$id failed\n");
+        fputs($nf, "$id|$sect|$rate|$ts|$user|" . base64_encode($note) . "|$up|$down\n");
+        if (BUILD_COMPLETE_FILE) {
+            fputs($bz, "$id|$sect|$rate|$ts|$user|" . base64_encode($note) . "|$up|$down\n");
+        }
+        fclose($nf);
+    }
+
+    touch($file, $mtime < $ts ? $ts : $mtime);
+    $count++;
+}
+
+if (BUILD_COMPLETE_FILE) {
+    pclose($bz);
+}
+
+exit($count ? 0 : 1);

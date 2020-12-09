@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 334605 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fsockopen">
+ <refnamediv>
+  <refname>fsockopen</refname>
+  <refpurpose>Ouvre un socket de connexion Internet ou Unix</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>fsockopen</methodname>
+   <methodparam><type>string</type><parameter>hostname</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>port</parameter><initializer>-1</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter role="reference">errno</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter role="reference">errstr</parameter></methodparam>
+   <methodparam choice="opt"><type>float</type><parameter>timeout</parameter><initializer>ini_get("default_socket_timeout")</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Initialise une connexion par socket à la ressource spécifiée par
+   <parameter>hostname</parameter>.
+  </para>
+  <para>
+   PHP supporte les cibles dans les domaines Internet et Unix comme décrit dans
+   <xref linkend="transports"/>. Une liste des types de transports peut également
+   être trouvée en utilisant la fonction <function>stream_get_transports</function>.
+  </para>
+  <para>
+   Le socket sera ouvert par défaut en mode bloquant. Vous pouvez
+   changer de mode en utilisant : <function>stream_set_blocking</function>.
+  </para>
+  <para>
+   La fonction <function>stream_socket_client</function> est similaire
+   mais fournit plus d'options, incluant la connexion non-bloquante
+   et la possibilité de fournir un contexte de flux.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>hostname</parameter></term>
+     <listitem>
+      <para>
+       Si le support OpenSSL <link linkend="openssl.installation">est
+       installé</link>, vous pouvez préfixer <parameter>hostname</parameter>
+       avec <literal>ssl://</literal> ou <literal>tls://</literal> pour utiliser
+       une connexion cliente SSL ou TLS sur TCP/IP pour vous connectez à l'hôte
+       distant.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>port</parameter></term>
+     <listitem>
+      <para>
+       Le numéro du port. Ce paramètre peut être omis et ignoré
+       en utilisant la valeur <literal>-1</literal> pour les transports
+       qui n'utilisent pas les ports, comme <literal>unix://</literal>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>errno</parameter></term>
+     <listitem>
+      <para>
+       Si fourni, contient le numéro de l'erreur système qui survient
+       lors de l'appel système à <literal>connect()</literal>.
+      </para>
+      <para>
+       Si la valeur retournée par <parameter>errno</parameter> est
+       <literal>0</literal> et que la fonction retourne &false;, ce peut
+       être une indication laissant penser que l'erreur est survenue
+       avant l'appel à <literal>connect()</literal>. La plupart du temps,
+       cela est du à un problème d'initialisation du socket.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>errstr</parameter></term>
+     <listitem>
+      <para>
+       Le message d'erreur, sous la forme d'une &string;.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>timeout</parameter></term>
+     <listitem>
+      <para>
+       Le délai d'attente maximal, en secondes.
+      </para>
+      <note>
+       <para>
+        Si vous avez besoin de définir un délai limite pour lire/écrire des
+        données à travers ce socket, utilisez la fonction
+        <function>stream_set_timeout</function>, car le paramètre
+        <parameter>timeout</parameter> de la fonction
+        <function>fsockopen</function> est uniquement appliqué lors de la
+        connexion du socket.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <function>fsockopen</function> retourne un pointeur de fichier qui peut
+   être utilisé avec d'autres fonctions fichiers, telles
+   <function>fgets</function>, <function>fgetss</function>,
+   <function>fputs</function>, <function>fclose</function> et
+   <function>feof</function>. Si l'appel échoue, la fonction retourne
+   &false;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Lance une alerte de type <constant>E_WARNING</constant> si le paramètre
+   <parameter>hostname</parameter> n'est pas un domaine valide.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>fsockopen</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$fp = fsockopen("www.example.com", 80, $errno, $errstr, 30);
+if (!$fp) {
+    echo "$errstr ($errno)<br />\n";
+} else {
+    $out = "GET / HTTP/1.1\r\n";
+    $out .= "Host: www.example.com\r\n";
+    $out .= "Connection: Close\r\n\r\n";
+
+    fwrite($fp, $out);
+    while (!feof($fp)) {
+        echo fgets($fp, 128);
+    }
+    fclose($fp);
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Utilisation d'une connexion UDP</title>
+    <para>
+     L'exemple ci-dessous décrit comment lire la date et l'heure grâce à
+     un service UDP "daytime" (port 13), sur votre propre machine.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$fp = fsockopen("udp://127.0.0.1", 13, $errno, $errstr);
+if (!$fp) {
+    echo "ERREUR : $errno - $errstr<br />\n";
+} else {
+    fwrite($fp, "\n");
+    echo fread($fp, 26);
+    fclose($fp);
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Suivant les environnements, le type 'domaine Unix' ou l'option
+    <parameter>timeout</parameter> ne sont pas toujours disponibles.
+   </para>
+  </note>
+  <warning>
+   <para>
+    Les sockets UDP semblent quelques fois avoir été ouverts sans erreur,
+    même si l'hôte distant n'est pas accessible. L'erreur apparaît alors
+    uniquement lorsque vous tentez de lire/écrire sur le socket.
+    La raison de cela est que UDP est un protocole <literal>"connectionless"</literal>,
+    ce qui signifie que le système ne tentera pas d'établir un lien pour le socket
+    tant qu'il ne doit pas recevoir/envoyer de données.
+   </para>
+  </warning>
+  &ipv6.brackets;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pfsockopen</function></member>
+    <member><function>stream_socket_client</function></member>
+    <member><function>stream_set_blocking</function></member>
+    <member><function>stream_set_timeout</function></member>
+    <member><function>fgets</function></member>
+    <member><function>fgetss</function></member>
+    <member><function>fwrite</function></member>
+    <member><function>fclose</function></member>
+    <member><function>feof</function></member>
+    <member><function>socket_connect</function></member>
+    <member>L'<link linkend="ref.curl">extension Curl</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 345954 Maintainer: sammywg Status: ready -->
+
+<refentry xml:id="function.define" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>define</refname>
+  <refpurpose>Definiert eine benannte Konstante</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>define</methodname>
+   <methodparam><type>string</type><parameter>name</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>value</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>case_insensitive</parameter><initializer>&false;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Definiert während der Laufzeit eine benannte Konstante.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>name</parameter></term>
+     <listitem>
+      <para>
+       Der Name der Konstante
+      </para>
+      <note>
+       <para>
+        Es ist möglich Konstanten mit reservierten oder gar ungültigen Namen mittels
+        <function>define</function> zu definieren, deren Wert (nur) mittels
+        <function>constant</function> gelesen werden kann. Allerdings wird dies
+        nicht empfohlen.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>value</parameter></term>
+     <listitem>
+      <para>
+       Der Wert der Konstante.
+       In PHP 5 muss <parameter>value</parameter> ein <type>scalar</type>er Wert
+       (<type>integer</type>, <type>float</type>, <type>string</type>,
+       <type>boolean</type>, oder &null;) sein. In PHP 7 werden ebenfalls
+       <type>array</type> Werte akzeptiert.
+      </para>
+      <warning>
+       <para>
+        Obgleich es möglich ist, Konstanten vom Typ
+        <type>Ressource</type> zu definieren, wird dies nicht empfohlen, da es
+        unvorhersagbares Verhalten des Programms zur Folge haben kann.
+       </para>
+      </warning>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>case_insensitive</parameter></term>
+     <listitem>
+      <para>
+       Falls auf &true; gesetzt, wird bei der Konstante nicht zwischen Groß-
+       und Kleinschreibung unterschieden. In der Voreinstellung wird zwischen
+       Groß- und Kleinschreibung unterschieden, d.h
+       <literal>KONSTANTE</literal> und <literal>Konstante</literal>
+       repräsentieren unterschiedliche Werte.
+      </para>
+      <warning>
+       <simpara>
+        Das Definieren von Konstanten, die nicht zwischen Groß- und Kleinschreibung
+        unterscheiden ist von PHP 7.3.0 an missbilligt.
+       </simpara>
+      </warning>
+      <note>
+       <para>
+        Groß-/Kleinschreibungsunabhängige Konstanten werden kleingeschrieben
+        gespeichert.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        <parameter>case_insensitive</parameter> ist missbilligt, und wird in
+        Version 8.0.0 entfernt.
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+        <type>array</type> Werte sind erlaubt.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Konstanten definieren</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+define("KONSTANTE", "Hallo Welt.");
+echo KONSTANTE; // gibt "Hallo Welt." aus
+echo Konstante; // gibt "Konstante" aus und erzeugt eine Warnung
+
+define("BEGRUESSUNG", "Hallo Du.", true);
+echo BEGRUESSUNG; // gibt "Hallo Du." aus
+echo Begruessung; // gibt "Hallo Du." aus
+
+// Funktioniert ab PHP 7
+define('ANIMALS', array(
+    'Hund',
+    'Katze',
+    'Maus'
+));
+echo ANIMALS[1]; // gibt "Katze" aus
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Konstanten mit reservierten Namen</title>
+    <para>
+     Dieses Beispiel verdeutlich die <emphasis>Möglichkeit</emphasis> eine
+     Konstante mit dem selben Namen wie eine 
+     <link linkend="language.constants.predefined">magische Konstante</link> zu
+     definieren. Da das resultierende Verhalten offensichtlich verwirrend ist,
+     wird es nicht empfohlen, dies in der Praxis zu tun.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(defined('__LINE__'));
+var_dump(define('__LINE__', 'test'));
+var_dump(constant('__LINE__'));
+var_dump(__LINE__);
+?>
+]]>
+    </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+bool(false)
+bool(true)
+string(4) "test"
+int(5)
+]]>
+   </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>defined</function></member>
+    <member><function>constant</function></member>
+    <member>
+     Das Kapitel über <link linkend="language.constants">Konstanten</link>
+    </member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

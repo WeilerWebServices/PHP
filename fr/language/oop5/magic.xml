@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351129 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+ <sect1 xml:id="language.oop5.magic" xmlns="http://docbook.org/ns/docbook">
+  <title>Méthodes magiques</title>
+  <para>
+   Les noms de méthodes
+   <link linkend="object.construct">__construct()</link>,
+   <link linkend="object.destruct">__destruct()</link>,
+   <link linkend="object.call">__call()</link>,
+   <link linkend="object.callstatic">__callStatic()</link>,
+   <link linkend="object.get">__get()</link>,
+   <link linkend="object.set">__set()</link>,
+   <link linkend="object.isset">__isset()</link>,
+   <link linkend="object.unset">__unset()</link>,
+   <link linkend="object.sleep">__sleep()</link>,
+   <link linkend="object.wakeup">__wakeup()</link>,
+   <link linkend="object.serialize">__serialize()</link>,
+   <link linkend="object.unserialize">__unserialize()</link>,
+   <link linkend="object.tostring">__toString()</link>,
+   <link linkend="object.invoke">__invoke()</link>,
+   <link linkend="object.set-state">__set_state()</link>
+   <link linkend="object.clone">__clone()</link> et
+   <link linkend="object.debuginfo">__debugInfo()</link>
+   sont magiques dans les classes PHP. Vous ne pouvez pas utiliser ces noms de méthodes
+   dans vos classes, sauf si vous voulez implémenter 
+   le comportement associé à ces méthodes magiques.
+  </para>
+  
+  <note>
+   <simpara>
+    Toutes les méthodes magiques <emphasis>DOIVENT</emphasis> être déclarées en <literal>public</literal>
+   </simpara>
+  </note>
+
+  <caution>
+   <simpara>
+    PHP réserve tous les noms de fonctions commençant par un double souligné
+    <literal>__</literal> pour les méthodes magiques. Il est recommandé de
+    ne pas utiliser de noms de fonctions commençant par <literal>__</literal>
+    sauf si vous voulez des fonctionnalités magiques documentées.
+   </simpara>
+  </caution>
+ 
+  <sect2 xml:id="language.oop5.magic.sleep">
+   <title>
+    <link linkend="object.sleep">__sleep()</link> et
+    <link linkend="object.wakeup">__wakeup()</link>
+   </title>
+   
+   <methodsynopsis xml:id="object.sleep">
+    <modifier>public</modifier> <type>array</type><methodname>__sleep</methodname>
+    <void/>
+   </methodsynopsis>
+   <methodsynopsis xml:id="object.wakeup">
+    <modifier>public</modifier> <type>void</type><methodname>__wakeup</methodname>
+    <void/>
+   </methodsynopsis>
+   
+   <para>
+    <function>serialize</function> vérifie si la classe a une méthode avec le
+    nom magique <link linkend="object.sleep">__sleep()</link>.
+    Si c'est le cas, cette méthode sera exécutée avant toute linéarisation. Elle peut
+    nettoyer l'objet, et elle est supposée retourner un tableau avec les noms de toutes
+    les variables de l'objet qui doivent être linéarisées.
+    Si la méthode ne retourne rien, alors &null; sera linéarisé, et une alerte de type
+    <constant>E_NOTICE</constant> sera émise.
+   </para>
+   <note>
+    <para>
+     Il n'est pas possible pour <link linkend="object.sleep">__sleep()</link> de retourner
+     des noms de propriétés privées des classes parentes. Le faire
+     résultera en une erreur de niveau <constant>E_NOTICE</constant>.
+     À la place, vous devriez utiliser l'interface <classname>Serializable</classname>.
+    </para>
+   </note>
+   <para>
+    Le but avoué de <link linkend="object.sleep">__sleep()</link> est de valider des données en attente
+    ou d'effectuer des opérations de nettoyage.
+    De plus, cette fonction est utile si vous avez de très gros objets
+    qui n'ont pas besoin d'être sauvegardés en totalité.
+   </para>
+   <para>
+    Réciproquement, la fonction <function>unserialize</function> vérifie
+    la présence d'une méthode dont le nom est le nom magique
+    <link linkend="object.wakeup">__wakeup()</link>. Si elle est présente, cette fonction
+    peut reconstruire toute ressource que l'objet pourrait possèder.
+   </para>
+   <para>
+    Le but avoué de <link linkend="object.wakeup">__wakeup()</link> est de rétablir
+    toute connexion de base de données qui aurait été perdue
+    durant la linéarisation et d'effectuer des tâches de réinitialisation.
+   </para>
+   <example>
+    <title>Utilisation de sleep() et wakeup()</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Connection
+{
+    protected $link;
+    private $dsn, $username, $password;
+    
+    public function __construct($dsn, $username, $password)
+    {
+        $this->dsn = $dsn;
+        $this->username = $username;
+        $this->password = $password;
+        $this->connect();
+    }
+
+    private function connect()
+    {
+        $this->link = new PDO($this->dsn, $this->username, $this->password);
+    }
+
+    public function __sleep()
+    {
+        return array('dsn', 'username', 'password');
+    }
+
+    public function __wakeup()
+    {
+        $this->connect();
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.magic.serialize">
+   <title>
+    <link linkend="object.serialize">__serialize()</link> et
+    <link linkend="object.unserialize">__unserialize()</link>
+   </title>
+
+   <methodsynopsis xml:id="object.serialize">
+    <modifier>public</modifier> <type>array</type><methodname>__serialize</methodname>
+    <void/>
+   </methodsynopsis>
+   <methodsynopsis xml:id="object.unserialize">
+    <modifier>public</modifier> <type>void</type><methodname>__unserialize</methodname>
+    <methodparam><type>array</type><parameter>data</parameter></methodparam>
+   </methodsynopsis>
+
+   <para>
+    <function>serialize</function> vérifie si la classe a une méthode avec le
+    nom magique <link linkend="object.serialize">__serialize()</link>.
+    Si c'est le cas, cette méthode sera exécutée avant toute linéarisation.
+    Elle doit construire et retourner un &array; associatif de paire clé/valeur
+    qui représente la forme linéarisée de l'objet. Si aucun tableau n'est
+    retournée une <classname>TypeError</classname> sera lancée.
+   </para>
+   <note>
+    <para>
+     Si <link linkend="object.serialize">__serialize()</link> et
+     <link linkend="object.sleep">__sleep()</link> sont tout les deux définie
+     dans le même objet, alors seulement <link linkend="object.serialize">__serialize()</link>
+     sera appellé.
+     <link linkend="object.sleep">__sleep()</link> sera ignoré. Si l'objet
+     implémente l'interface <link linkend="class.serializable">Serializable</link>,
+     la méthode <literal>serialize()</literal> de l'interface sera ignorée et
+     <link linkend="object.serialize">__serialize()</link> sera utilisé à la place.
+    </para>
+   </note>
+   <para>
+    L'utilisation prévue de <link linkend="object.serialize">__serialize()</link>
+    est de définir une représentation arbitraire de l'objet pour le linéariser
+    facilement. Les éléments du tableau peuvent correspondre aux propriétés de
+    l'objet mais cei n'est pas requis.
+   </para>
+   <para>
+    inversement, <function>unserialize</function> vérifie la présence d'une
+    fonction avec le nom magique
+    <link linkend="object.unserialize">__unserialize()</link>.
+    Si présent, cette fonction sera passé le tableau restoré qui a été retournée
+    depuis <link linkend="object.serialize">__serialize()</link>. Il peut alors
+    restaurer les propriétes de l'objet depuis ce tableau comme approprié.
+   </para>
+   <note>
+    <para>
+     Si <link linkend="object.unserialize">__unserialize()</link> et
+     <link linkend="object.wakeup">__wakeup()</link> sont tout les deux définie
+     dans le même objet, alors selement <link linkend="object.unserialize">__unserialize()</link>
+     sera appellée.
+     <link linkend="object.wakeup">__wakeup()</link> sera ignorée.
+    </para>
+   </note>
+   <note>
+    <para>
+     Cette fonctionalité est disponible à partir de PHP 7.4.0.
+    </para>
+   </note>
+   <example>
+    <title>Serialize et unserialize</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Connection
+{
+    protected $link;
+    private $dsn, $username, $password;
+
+    public function __construct($dsn, $username, $password)
+    {
+        $this->dsn = $dsn;
+        $this->username = $username;
+        $this->password = $password;
+        $this->connect();
+    }
+
+    private function connect()
+    {
+        $this->link = new PDO($this->dsn, $this->username, $this->password);
+    }
+
+    public function __serialize(): array
+    {
+        return [
+          'dsn' => $this->dsn,
+          'user' => $this->username,
+          'pass' => $this->password,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->dsn = $data['dsn'];
+        $this->username = $data['user'];
+        $this->password = $data['pass'];
+
+        $this->connect();
+    }
+}?>
+]]>
+    </programlisting>
+   </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.magic.tostring">
+   <title><link linkend="object.tostring">__toString()</link></title>
+   <methodsynopsis xml:id="object.tostring">
+    <modifier>public</modifier> <type>string</type><methodname>__toString</methodname>
+    <void/>
+   </methodsynopsis>
+   
+   <para>
+    La méthode <link linkend="object.tostring">__toString()</link> détermine comment l'objet
+    doit réagir lorsqu'il est traité comme une chaîne de caractères.
+    Par exemple, ce que <literal>echo $obj;</literal> affichera. Cette méthode doit
+    retourner une chaîne, sinon une erreur <constant>E_RECOVERABLE_ERROR</constant>
+    sera levée.
+   </para>
+   <warning>
+    <simpara>
+     Il était impossible de lancer une exception depuis la méthode
+     <link linkend="object.tostring">__toString()</link> avant PHP 7.4.0.
+     En faisant ceci une erreur fatale en résultera.
+    </simpara>
+   </warning>
+   <example>
+    <title>Exemple simple</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Déclaration d'une classe simple
+class ClasseTest
+{
+    public $foo;
+
+    public function __construct($foo)
+    {
+        $this->foo = $foo;
+    }
+
+    public function __toString()
+    {
+        return $this->foo;
+    }
+}
+
+$class = new ClasseTest('Bonjour');
+echo $class;
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Bonjour
+]]>
+    </screen>
+   </example>
+   <para>
+    Il est important de noter qu'avant PHP 5.2.0, la méthode
+    <link linkend="object.tostring">__toString()</link> n'était appelée que si elle était
+    directement combinée avec
+    <function>echo</function> ou
+    <function>print</function>.
+    Depuis PHP 5.2.0, elle est appelée dans tous les contextes de chaîne
+    de caractères (par exemple, dans <function>printf</function> avec
+    le modificateur <literal>%s</literal>), mais pas dans les contextes
+    d'autres types (par exemple, avec le modificateur <literal>%d</literal>).
+    Depuis PHP 5.2.0, convertir un objet sans la méthode
+    <link linkend="object.tostring">__toString()</link> en &string; émettra une
+    <constant>E_RECOVERABLE_ERROR</constant>.
+   </para>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.magic.invoke">
+   <title><link linkend="object.invoke">__invoke()</link></title>
+   <methodsynopsis xml:id="object.invoke">
+    <type>mixed</type><methodname>__invoke</methodname>
+    <methodparam rep="repeat"><parameter>values</parameter></methodparam>
+   </methodsynopsis>
+   
+   <para>
+    La méthode <link linkend="object.invoke">__invoke()</link> est appelée lorsqu'un script tente
+    d'appeler un objet comme une fonction.
+   </para>
+   <note>
+    <para>
+     Cette fonctionnalité est disponible depuis PHP 5.3.0.
+    </para>
+   </note>
+   <example>
+    <title>Exemple avec <link linkend="object.invoke">__invoke()</link></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class CallableClass
+{
+    public function __invoke($x)
+    {
+        var_dump($x);
+    }
+}
+$obj = new CallableClass;
+$obj(5);
+var_dump(is_callable($obj));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+int(5)
+bool(true)
+]]>
+    </screen>
+   </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.magic.set-state">
+   <title><link linkend="object.set-state">__set_state()</link></title>
+   <methodsynopsis xml:id="object.set-state">
+    <modifier>static</modifier> <type>object</type><methodname>__set_state</methodname>
+    <methodparam><type>array</type><parameter>properties</parameter></methodparam>
+   </methodsynopsis>
+   
+   <para>
+    Cette méthode <link linkend="language.oop5.static">statique</link> est appelée
+    pour les classes exportées par la fonction <function>var_export</function>
+    depuis PHP 5.1.0.
+   </para>
+   <para>
+    Le seul paramètre de cette méthode est un tableau contenant les propriétés
+    exportées sous la forme <literal>array('propriété' => valeur, ...)</literal>.
+   </para>
+   <example>
+    <title>Utilisation de <link linkend="object.set-state">__set_state()</link> (depuis PHP 5.1.0)</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class A
+{
+    public $var1;
+    public $var2;
+
+    public static function __set_state($an_array) // Depuis PHP 5.1.0
+    {
+        $obj = new A;
+        $obj->var1 = $an_array['var1'];
+        $obj->var2 = $an_array['var2'];
+        return $obj;
+    }
+}
+
+$a = new A;
+$a->var1 = 5;
+$a->var2 = 'foo';
+
+eval('$b = ' . var_export($a, true) . ';'); // $b = A::__set_state(array(
+                                            //    'var1' => 5,
+                                            //    'var2' => 'foo',
+                                            // ));
+var_dump($b);
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(A)#2 (2) {
+  ["var1"]=>
+  int(5)
+  ["var2"]=>
+  string(3) "foo"
+}
+]]>
+    </screen>
+   </example>
+   <note>
+    <simpara>
+     Lors de l'exportation d'un objet, <function>var_export</function> ne 
+     vérifie pas si <link linkend="object.set-state">__set_state()</link> est 
+     implémenté par la classe de l'objet, de sorte que la réimportation de ces 
+     objets échouera, si __set_state() n'est pas implémenté. En particulier, 
+     cela affecte certaines classes internes.
+    </simpara>
+    <simpara>
+     Il est de la responsabilité du programmeur de vérifier que seuls les objets dont la classe implémente __set_state() seront ré-importés.
+    </simpara>
+   </note>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.magic.debuginfo">
+   <title><link linkend="object.debuginfo">__debugInfo()</link></title>
+   <methodsynopsis xml:id="object.debuginfo">
+    <type>array</type><methodname>__debugInfo</methodname>
+    <void/>
+   </methodsynopsis>
+   <para>
+    Cette méthode est appelée par <function>var_dump</function> lors
+    du traitement d'un objet pour récupérer les propriétés qui
+    doivent être affichées. Si la méthode n'est pas définie dans un objet,
+    alors toutes les propriétés publiques, protégées et privées seront
+    affichées.
+   </para>
+   <para>
+    Cette fonctionalité a été ajoutée en PHP 5.6.0.
+   </para>
+   <example>
+    <title>Utilisation de <link linkend="object.debuginfo">__debugInfo()</link></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class C {
+    private $prop;
+
+    public function __construct($val) {
+        $this->prop = $val;
+    }
+
+    public function __debugInfo() {
+        return [
+            'propSquared' => $this->prop ** 2,
+        ];
+    }
+}
+
+var_dump(new C(42));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(C)#1 (1) {
+  ["propSquared"]=>
+  int(1764)
+}
+]]>
+    </screen>
+   </example>
+  </sect2>
+  
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

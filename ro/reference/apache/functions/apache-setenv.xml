@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 343899 Maintainer: simionea Status: ready -->
+<!-- CREDITS: adiju -->
+
+<refentry xml:id="function.apache-setenv" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>apache_setenv</refname>
+  <refpurpose>Stabilește o variabilă de mediu a unui subprocess Apache</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>apache_setenv</methodname>
+   <methodparam><type>string</type><parameter>variable</parameter></methodparam>
+   <methodparam><type>string</type><parameter>value</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>walk_to_top</parameter><initializer>&false;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>apache_setenv</function> stabilește valoarea unei variabile de
+   mediu Apache specificată prin <parameter>variable</parameter>.
+  </para>
+  <note>
+   <para>
+    La stabilirea unei variabile de mediu Apache, variabila
+    <varname>$_SERVER</varname> corespunzătoare nu este schimbată.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>variable</parameter></term>
+     <listitem>
+      <para>
+       Variabila de mediu ce se stabilește.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>value</parameter></term>
+     <listitem>
+      <para>
+       Valoarea nouă a <parameter>variable</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>walk_to_top</parameter></term>
+     <listitem>
+      <para>
+       Determină dacă se va stabili variabila de cel mai înalt nivel,
+       disponibilă la toate nivelele Apache.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+   <title>Stabilirea unei variabile de mediu Apache cu ajutorul
+   <function>apache_setenv</function></title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+apache_setenv("EXAMPLE_VAR", "Example Value");
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    <function>apache_setenv</function> poate fi utilizată împreună cu
+    <function>apache_getenv</function> pe diferite pagini, sau pentru a stabili
+    variabile ce vor fi transmise către Incluziunile de Partea Server-ului
+    (Server Side Includes) (.shtml) care au fost incluse în script-uri PHP.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>apache_getenv</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

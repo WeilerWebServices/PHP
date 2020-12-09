@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding='utf-8' ?>
+<book id="appendix">
+  <title>&Appendix;</title>
+  &appendix.credits;
+  &appendix.doccredits;
+  &appendix.license;
+  &appendix.translicense;
+  &appendix.keysyms;
+  &appendix.glossary;
+ <!-- &keysyms;-->
+
+ <index id="classindex">
+  <title>&ClassIndex;</title>
+  <type>classes</type>
+ </index>
+ <index id="methodindex">
+  <title>&MethodIndex;</title>
+  <type>methods</type>
+ </index>
+ <index id="fieldindex">
+  <title>&PropertyIndex;</title>
+  <type>fields</type>
+ </index>
+ <index id="signalindex">
+  <title>&SignalIndex;</title>
+  <type>signals</type>
+ </index>
+ <index id="enumindex">
+  <title>&EnumIndex;</title>
+  <type>enums</type>
+ </index>
+
+</book>

@@ -1,0 +1,187 @@
+{
+   aspell 1
+   Memcheck:Value8
+   obj:/usr/lib64/libaspell.so.*
+}
+
+{
+   aspell 2
+   Memcheck:Cond
+   obj:/usr/lib64/libaspell.so.*
+}
+
+{
+   oracle XE 1
+   Memcheck:Value8
+   obj:/u01/app/oracle/product/*/xe/lib/libclntsh.so.*
+}
+
+{
+   oracle XE 2
+   Memcheck:Param
+   write(buf)
+   fun:__write_nocancel
+   obj:/u01/app/oracle/product/*/xe/lib/libclntsh.so.*
+}
+
+{
+   oracle XE 3
+   Memcheck:Cond
+   obj:/u01/app/oracle/product/*/xe/lib/libclntsh.so.*
+}
+
+{
+   oracle XE 4
+   Memcheck:Cond
+   obj:/u01/app/oracle/product/*/xe/lib/libnnz11.so
+}
+
+{
+   oracle XE 5
+   Memcheck:Value8
+   obj:/u01/app/oracle/product/*/xe/lib/libnnz11.so
+}
+
+{
+   oracle XE 6
+   Memcheck:Addr8
+   fun:__intel_new_memcpy
+}
+
+{
+   unixODBC 1
+   Memcheck:Cond
+   ...
+   fun:SQLConnect
+}
+
+{
+   unixODBC 2
+   Memcheck:Cond
+   ...
+   fun:SQLExecute
+}
+
+{
+   openssl 1
+   Memcheck:Cond
+   fun:BN_bin2bn
+}
+
+{
+   openssl 2
+   Memcheck:Cond
+   ...
+   obj:/usr/lib64/libcrypto.so.*
+}
+
+
+{
+   openssl 3
+   Memcheck:Cond
+   fun:BN_add_word
+}
+
+{
+   openssl 4
+   Memcheck:Cond
+   fun:BN_sub_word
+}
+
+{
+   openssl 5
+   Memcheck:Value8
+   fun:BN_num_bits_word
+}
+
+{
+   openssl 6
+   Memcheck:Value8
+   fun:BN_num_bits
+}
+
+{
+   openssl 7
+   Memcheck:Value8
+   fun:BN_lshift
+}
+
+{
+   openssl 8
+   Memcheck:Cond
+   fun:memset
+   fun:BN_lshift
+}
+
+{
+   openssl 9
+   Memcheck:Value8
+   fun:BN_div
+}
+
+{
+   openssl 10
+   Memcheck:Value8
+   fun:BN_ucmp
+}
+
+{
+   openssl 11
+   Memcheck:Value8
+   fun:bn_sub_words
+}
+
+{
+   openssl 12
+   Memcheck:Value8
+   fun:BN_rshift
+}
+
+{
+   openssl 13
+   Memcheck:Value8
+   fun:BN_usub
+}
+
+{
+   openssl 14
+   Memcheck:Value8
+   fun:bn_add_words
+}
+
+{
+   openssl 15
+   Memcheck:Value8
+   fun:BN_uadd
+}
+
+{
+   openssl 16
+   Memcheck:Value8
+   fun:bn_mul_mont
+}
+
+{
+   openssl 17
+   Memcheck:Value8
+   obj:/usr/lib64/libcrypto.so.*
+}
+
+
+{
+   openssl 18
+   Memcheck:Param
+   write(buf)
+   ...
+   fun:fflush
+   obj:/usr/lib64/libcrypto.so.*
+}
+
+{
+   openssl 19
+   Memcheck:Param
+   write(buf)
+   ...
+   fun:fclose@@GLIBC_2.2.5
+   obj:/usr/lib64/libcrypto.so.*
+}

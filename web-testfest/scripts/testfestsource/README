@@ -1,0 +1,57 @@
+
+Server names currently in use
+=============================
+
+http://testfest.php.net/displayresults.php
+http://results.testfest.php.net/displayresults.php
+
+1) There is a PHP script to extract and build PHP once a day.
+/home/zoe/testfestsource/src/testfestdaily.php
+
+
+2) Script to update SVN, copy the phpt files out to run directoris, run them against 52, 53 and 6.
+/home/zoe/testfestsource/src/testfesthourly.php
+
+Runs once an hour, 20 mins past. 
+
+3) shell script to publish the results
+/home/zoe/testfestsource/src/publishresults.sh
+
+Published once an hour at 40 minutes past.
+
+4) Three files in /var/www/html
+displayresults.php, viewcontents.php, filelist.php
+
+5) The results are published in /var/www/server-doc-root/publishresults 
+
+Steps in deploying the scripts on a new *ix server, assume xxx is your UID
+
+0.   Create a tar file of everything under the testfest directory.
+1.   Copy the tar of all the source into /home/xxx on teh server you want to deploy on
+2.   Create /home/testfestreports/phpBuildDir (allow writes to it)
+        sudo chown -R xxx testfestreports
+3.   Run /home/zoe/testfestsource/src/testfestdaily.php to download and build PHP
+        Check the config options in src/testsetup/unix/tmUnixGetPhp.php, you may need to install stuff
+4.   Create /home/testfestreports/cvsCheckoutDir
+5.   In cvsCheckoutDir,
+        cvs -d :pserver:cvsread@cvs.php.net:/repository login
+        password: phpfi
+        cvs -d :pserver:cvsread@cvs.php.net:/repository checkout -r PHP_5_3 php5
+6.   Create /home/testfestreports/testRunDir
+        create sub directories php5.2, php5.3, php6.0
+        create a source tree in each using make_test_directories.sh
+7.   Run phptestfesthourly.php. This will create the final directory (/home/testfestreports/svnCheckoutDir) and fetch a copy of the test cases.
+8.   Create new Vhost (see /etc/apache), the one on sp1 is called results.testfest.php.net
+9.   Make its doc root somewhere under /var/www (ex /var/www/results.testfest.php.net/public_html)
+10.  Modify publishresults.sh to point to the right dir under doc root
+11.  cd /var/www/results.testfest.php.net/public_html/; sudo mkdir publishresults
+12.  copy displayresults.php /var/www/results.testfest.php.net/public_html, and viewfilecontents and filelist.
+13   copy the PhpTestFestRegistration.css and tick.gif across too
+14.  Check/fix some paths in displayresults.php and viewfilecontents 
+15.  Setup three cron jobs. As user xxx:
+         run hourlyrun once every hour
+	 run dailybuild once every day
+     As root:
+         run hourlypublish (20 minutes after hourly run)
+16.  Copy get.php into public.html directory (this is so that the curl tests run. Modify the CURL responder in hourly php script too)
+

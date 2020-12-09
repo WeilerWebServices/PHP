@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 336899 Maintainer: coder Status: ready -->
+<!-- $Revision$ -->
+<!-- CREDITS: sobak -->
+<refentry xml:id="function.bzopen" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>bzopen</refname>
+  <refpurpose>Otwiera skompresowany plik bzip2</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>bzopen</methodname>
+   <methodparam><type>mixed</type><parameter>plik</parameter></methodparam>
+   <methodparam><type>string</type><parameter>tryb</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>bzopen</function> otwiera plik bzip2 (.bz2) do odczytu lub zapisu.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>plik</parameter></term>
+     <listitem>
+      <para>
+       Nazwa otwieranego pliku lub istniejący zasób strumienia.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>Tryb</parameter></term>
+     <listitem>
+      <para>
+       Obsługiwane są tryby 'r' (odczyt) i 'w' (zapis).
+       Wszystko inne spowoduje, że <function>bzopen</function> zwróci &false;.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Jeśli otworzenie się nie powiedzie <function>bzopen</function> zwróci &false;, w przeciwnym wypadku
+   zostanie zwrócony uchwyt do nowootwartego pliku.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>bzopen</function> przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$file = "/tmp/foo.bz2";
+$bz = bzopen($file, "r") or die("Nie mogę otworzyć do odczytu pliku: $file");
+
+bzclose($bz);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>bzclose</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

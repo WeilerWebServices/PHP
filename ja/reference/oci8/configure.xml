@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 334758 Maintainer: satoruyoshida Status: ready -->
+<!-- CREDITS: hirokawa, shimooka -->
+<section xml:id="oci8.installation">
+ &reftitle.install;
+
+
+<section xml:id="oci8.configure" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>OCI8 とともに PHP を構成</title>
+ <para>
+  OCI8 を構成する前に前述の <link linkend="oci8.requirements">要件</link> 節に
+  目を通してください。 
+ </para>
+ <para>
+  OCI8 エクステンションを有効にするには、オプション
+  <option role="configure">--with-oci8</option>
+  とともに PHP を構成します。
+ </para>
+ <para>
+  Web サーバーを開始する前に、一般的に OCI8 はいくつかの Oracle 環境変数（下記参照）を
+  必要とします。それらはライブラリの場所を指定したり、構成ファイルを指示したり、
+  Oracle ライブラリで使用する文字セットのような基本的ないくつかのプロパティを設定します。
+  あらゆる PHP プロセスが開始される <emphasis>前に</emphasis>それらの変数を設定しなければいけません。
+ </para>
+ <para>
+  PHP を構成したのと同じか、またはより最新の Oracle ライブラリのメジャー・バージョンとともに PHP バイナリをリンクしなければいけません。
+  例えば Oracle 11.2 ライブラリで OCI8 をビルドするなら、
+  PHP も Oracle 11.2 ライブラリとともにデプロイして実行すべきです。
+  PHP のアプリケーションは、それ以外のバージョンの Oracle データベースにも接続できます。
+  Oracle のクライアントとサーバーの間には、異なるバージョン間での互換性があるからです。
+ </para>
+</section>
+<section>
+ <title>OCI8 を共有エクステンションとしてインストール</title>
+ <para>
+  構成 <literal>shared</literal> オプションでは、 PHP に動的にロードできるように
+  OCI8 を共有ライブラリとしてビルドします。
+  共有エクステンションをビルドすることにより、 PHP のほかの部分に影響を与えることなく、
+  OCI8 を簡単に更新出来ます。
+ </para>
+ <para>
+  下記の構成オプションの一つを使って OCI8 を構成します
+ </para>
+ <para>
+  <itemizedlist>
+   <listitem>
+    <para>
+     無料の <link xmlns="http://docbook.org/ns/docbook"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xlink:href="&url.oracle.instant.client;">Oracle Instant
+     Client</link> ライブラリを使用している場合、こうします
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+./configure --with-oci8=shared,instantclient,/path/to/instant/client/lib
+]]>
+      </screen>
+     </informalexample>
+    </para>
+    <para>
+     Instant Client を ZIP ファイルからインストールした場合、例えば
+     <literal>ln -s libclntsh.so.12.1 libclntsh.so</literal>
+     のようにライブラリのシンボリックリンクを作成したことを確認してください。
+    </para>
+    <para>
+     RPM ベースの Oracle Instant Client インストールを使った場合、
+     構成の行はこのようになります。
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+./configure --with-oci8=shared,instantclient,/usr/lib/oracle/<version>/client/lib
+]]>
+      </screen>
+     </informalexample>
+    </para>
+    <para>
+     例えば、 <option role="configure">--with-oci8=shared,instantclient,/usr/lib/oracle/12.1/client/lib</option>.
+    </para>
+    <para>
+     Oracle Instant Client は PHP バージョン 4.3.11 と 5.0.4
+     で最初にサポートされ、 PHP を構成するために当初は
+     <option role="configure">--with-oci8-instant-client</option>
+     オプションが使用されていたことに注意してください。
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     Oracle データベース、または Oracle Client のフルインストールを使用している場合、こうします
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+./configure --with-oci8=shared,$ORACLE_HOME
+]]>
+      </screen>
+     </informalexample>
+    </para>
+    <para>
+     Web サーバーのユーザー
+     (<literal>nobody</literal>, <literal>www</literal>) が、
+     <literal>$ORACLE_HOME</literal> ディレクトリ配下のライブラリ、初期化ファイル、
+     （使用されていれば） <filename>tnsnames.ora</filename> を利用する権利を
+     所持していることを確認してください。
+     Oracle 10<emphasis>g</emphasis>R2 では、ディレクトリ利用権を与えるために
+     <filename>$ORACLE_HOME/install/changePerm.sh</filename>
+     ユーティリティを実行する必要があるでしょう。
+    </para>
+   </listitem>
+  </itemizedlist>
+ </para>
+ <para>
+  構成後、通常の PHP ビルド処理を続行します。例えば、 <emphasis>make install</emphasis> 。
+  OCI8 共有エクステンション <filename>oci8.so</filename> ライブラリが作成されます。
+  &php.ini; ファイルの <link linkend="ini.extension-dir">extension_dir</link> オプションで
+  示される、 PHP エクステンションディレクトリに手動で移動する必要があるでしょう。
+ </para>
+ <para>
+  OCI8 のインストールを完了するために、 &php.ini; を編集して行を追加します。
+ </para>
+ <para>
+  <informalexample>
+   <screen>
+<![CDATA[
+extension=oci8.so
+]]>
+   </screen>
+  </informalexample>
+ </para>
+</section>
+<section>
+ <title>OCI8 を静的にコンパイルされたエクステンションとしてインストール</title>
+ <para>
+  PHP の configure 時に、下記の構成オプションの一つを使って OCI8 を含めます
+ </para>
+ <para>
+  <itemizedlist>
+   <listitem>
+    <para>
+     Oracle Instant Client を使用している場合、こうします
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+./configure --with-oci8=instantclient,/path/to/instant/client/lib
+]]>
+      </screen>
+     </informalexample>
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     Oracle データベース、または Oracle Client のフルインストールを使用している場合、こうします
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+./configure --with-oci8=$ORACLE_HOME
+]]>
+      </screen>
+     </informalexample>
+    </para>
+   </listitem>
+  </itemizedlist>
+ </para>
+ <para>
+  構成後、通常の PHP ビルド処理を続行します。例えば、 <emphasis>make install</emphasis> 。
+  コンパイル成功後、 &php.ini; ファイルに <filename>oci8.so</filename> を追加する必要はありません。
+  追加のビルドステップは不要です。
+ </para>
+</section>
+<section>
+ <title>PECL から OCI8 をインストール</title>
+ <para xmlns:xlink="http://www.w3.org/1999/xlink">
+  既存の PHP インストール内容に、<link xlink:href="&url.pecl.package;oci8">PECL</link>
+  を使って OCI8 エクステンションを自動または手動で追加できます。
+ </para>
+ <para>
+  自動インストールでは、これらのステップを続けます。
+ </para>
+ <para>
+  <itemizedlist>
+   <listitem>
+    <para>
+     もしあなたがファイアウォールの内側にいるなら、 PEAR のプロキシを設定します。例えば、
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+pear config-set http_proxy http://my-proxy.example.com:80/
+]]>
+      </screen>
+     </informalexample>
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     実行します
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+pecl install oci8
+]]>
+      </screen>
+     </informalexample>
+    </para>
+    <para>
+     プロンプトが表示されたら、 <literal>$ORACLE_HOME</literal> の値か、または
+     <literal>instantclient,/path/to/instant/client/lib</literal> を入力します。
+    </para>
+    <para>
+      注意: <literal>$ORACLE_HOME</literal> 変数は展開されないので入力しないでください。
+      代わりに、 Oracle ホーム・ディレクトリの実際のパスを入力します。
+    </para>
+   </listitem>
+  </itemizedlist>
+ </para>
+ <para>
+  <literal>pecl</literal> コマンドが使えない場合の手動インストールでは、 PECL の OCI8 パッケージをダウンロードします。
+  例えば、 <filename>oci8-1.4.10.tgz</filename>。
+ </para>
+ <para>
+  <itemizedlist>
+   <listitem>
+    <para>
+     パッケージを解凍します。
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+tar -zxf oci8-1.4.10.tgz
+cd oci8-1.4.10
+]]>
+      </screen>
+     </informalexample>
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     パッケージを準備します。
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+phpize
+]]>
+      </screen>
+     </informalexample>
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     パッケージを構成します。
+     <literal>$ORACLE_HOME</literal> か、または Instant Client を使います。
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+./configure -with-oci8=shared,$ORACLE_HOME
+]]>
+      </screen>
+     </informalexample>
+    </para>
+    <para>
+     または
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+./configure -with-oci8=shared,instantclient,/path/to/instant/client/lib
+]]>
+      </screen>
+     </informalexample>
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     パッケージをインストールします。
+    </para>
+    <para>
+     <informalexample>
+      <screen>
+<![CDATA[
+make install
+]]>
+      </screen>
+     </informalexample>
+    </para>
+   </listitem>
+  </itemizedlist>
+ </para>
+ <para>
+  自動または手動インストール後に
+  &php.ini; ファイルを編集して、行を追加します。
+ </para>
+ <para>
+  <informalexample>
+   <screen>
+<![CDATA[
+extension=oci8.so
+]]>
+   </screen>
+  </informalexample>
+ </para>
+ <para>
+  &php.ini; の <link linkend="ini.extension-dir">extension_dir</link>
+  ディレクティブを <filename>oci8.so</filename> がインストールされたディレクトリに
+  設定したことを確認してください。
+ </para>
+</section>
+<section>
+ <title>Windows で OCI8 をインストール</title>
+ <para>
+  Windows では、 Oracle 10<emphasis>g</emphasis>R2 クライアント・ライブラリを使用する際は、
+  &php.ini; の <literal>extension=php_oci8.dll</literal> 行のコメントをはずします。
+  Oracle 11<emphasis>g</emphasis>R2 以降のクライアント・ライブラリを使用する際は、
+  <literal>extension=php_oci8_11g.dll</literal>
+  あるいは <literal>extension=php_oci8.dll</literal> のコメントをはずします。
+  Oracle 12<emphasis>c</emphasis> のクライアントライブラリを使用する際は、
+  <literal>extension=php_oci8_12c.dll</literal> または
+  <literal>extension=php_oci8_11g.dll</literal> または
+  <literal>extension=php_oci8.dll</literal> を使います。
+  一度に有効にできるのは、これらのうちのどれかひとつだけです。
+  新しいバージョンの DLL のほうが、多くの機能を含んでいるでしょう。
+  PHP のバージョンによっては、これらの DLL がすべて含まれているとは限りません。
+  <link linkend="ini.extension-dir">extension_dir</link> を
+  PHP エクステンション DLL を含むディレクトリに設定したことを確認してください。
+ </para>
+ <para>
+  もし Instant Client を使用する場合、システムの <envar>PATH</envar>
+  環境変数を Oracle ライブラリ・ディレクトリに設定します。
+ </para>
+</section>
+<section>
+ <title>Oracle 環境を設定</title>
+ <para>
+  このエクステンションを使用する前に、 Web デーモンのユーザーのために Oracle の環境変数が
+  適切に設定されたか確認してください。
+  もし Web サーバーがブート時に自動起動される場合は、ブート時の環境も正しく設定されていることを
+  確認してください。
+ </para>
+ <note>
+  <para>
+   PHP スクリプトで <function>putenv</function> を使って Oracle の環境変数を
+   設定しないでください。それは、スクリプトが実行される前に Oracle のライブラリがロードされて
+   初期化されるかもしれないからです。
+   <function>putenv</function> で変数を設定すると、コンフリクト、クラッシュ、
+   または予測出来ない動作の原因となるかもしれません。
+   ある関数は動作し、他の関数は捉えがたいエラーを示すかもしれません。
+   Web サーバー開始<emphasis>前</emphasis>に変数を設定するべきです。
+  </para>
+ </note>
+ <para>
+  Red Hat Linux と変種では、 <filename>/etc/sysconfig/httpd</filename>
+  の最後で変数を export してください。 Apache 2 を伴う他のシステムでは
+  Apache <filename>bin</filename> ディレクトリーで <filename>envvars</filename>
+  スクリプトを使用するかもしれません。 ３番目のオプション、 <filename>httpd.conf</filename>
+  の Apache <literal>SetEnv</literal> ディレクティブは、一部のシステムでは
+  動作するかもしれませんが、他のシステムでは不適切であることが知られています。
+ </para>
+ <para>
+  環境変数が正しく設定されたかチェックするには、 <function>phpinfo</function> を使って
+  <emphasis>Environment</emphasis> セクション (<emphasis>Apache Environment</emphasis>
+  ではありません) に期待される変数が含まれるかどうかチェックしてください。
+ </para>
+ <para>
+  必要かもしれない変数が下記の表に含まれます。
+  どんな変数が使えるのかについての詳細は Oracle ドキュメントを参照してください。
+  <table>
+   <title>一般的な Oracle 環境変数</title>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>名前</entry>
+      <entry>目的</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>ORACLE_HOME</entry>
+      <entry>フルの Oracle データベース・ソフトウェアのディレクトリを含みます。
+      Oracle Instant Client を使用する際は、これを設定しないでください。
+      設定することは余計なことで、インストール時に問題を引き起こすかもしれませんので。
+      </entry>
+     </row>
+     <row>
+      <entry>ORACLE_SID</entry>
+      <entry>ローカルマシン上の、接続されるデータベース名を含みます。
+      Oracle Instant Client を使用するか、または <function>oci_connect</function>
+      に常に接続パラメータを渡す場合は、この設定は不要です。
+      </entry>
+     </row>
+     <row>
+      <entry>LD_LIBRARY_PATH</entry>
+      <entry>これ
+      (または、 <literal>DYLD_LIBRARY_PATH</literal> や <literal>LIBPATH</literal>
+      や <literal>SHLIB_PATH</literal> のような、そのプラットフォーム相当のもの)
+      を Oracle ライブラリの場所、例えば
+      <filename>$ORACLE_HOME/lib</filename> または <filename>/usr/lib/oracle/11.1/client/lib</filename>
+      に設定します。
+      <filename>ldconfig</filename> または <literal>LD_PRELOAD</literal> のようなもので
+      異なる検索メカニズムでライブラリの場所を指定される場合、この変数は不要です。
+      </entry>
+     </row>
+     <row>
+      <entry>NLS_LANG</entry>
+      <entry>これは Oracle ライブラリで使用される文字セットや
+      国際化情報を設定するためのプライマリ変数です。</entry>
+     </row>
+     <row>
+      <entry>ORA_SDTZ</entry>
+      <entry>Oracle セッションのタイムゾーンを設定します。</entry>
+     </row>
+     <row>
+      <entry>TNS_ADMIN</entry>
+      <entry><filename>tnsnames.ora</filename> や <filename>sqlnet.ora</filename>
+      のような Oracle ネット・サービス構成ファイルが保持されるディレクトリを含みます。
+      もし <function>oci_connect</function> 接続文字列が、
+      <literal>localhost/XE</literal> のような Easy Connect という名前の構文を使っていれば不要です。
+      もしネットワーク構成ファイルが
+       <filename>$ORACLE_HOME/network/admin</filename> や <filename>/etc</filename>
+       のような既定の場所のひとつにあれば不要です。
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+   頻度は高くありませんが、
+   <literal>TWO_TASK</literal> 、 <literal>ORA_TZFILE</literal> 、及び
+   <literal>NLS*</literal> や <literal>ORA_NLS_*</literal> 変数のような
+   様々な Oracle 国際化設定値を含む Oracle 環境変数が使用されます。
+ </para>
+</section>
+<section>
+ <title>トラブルシューティング</title>
+ <para>
+  OCI8 をインストールする際に最も一般的な問題は、 Oracle 環境が
+  正しく設定されないことです。通常、これは <function>oci_connect</function>
+  や <function>oci_pconnect</function> 使用上の問題として現れます。
+  このエラーは <emphasis>Call to undefined function oci_connect()</emphasis>
+  のような PHP エラーや、 ORA-12705 のような Oracle エラー、さらには
+  Apache のクラッシュになるかもしれません。
+  この問題を解決するために、起動時のエラーについて Apache のログファイルをチェックして、
+  上記のセクションをご覧下さい。
+ </para>
+ <para>
+  ORA-12154 または ORA-12514 のようなネットワークエラーは
+  Oracle のネットワーク・ネーミングまたは構成の問題を示唆する反面、
+  根本の原因は、 PHP 環境が誤って設定されたことや、 Oracle ライブラリが
+  <filename>tnsnames.ora</filename> 構成ファイルの場所を指定できないためかもしれません。
+ </para>
+ <para>
+  Windows では、一つのマシン上に Oracle の複数のバージョンを持つと、
+  PHP が Oracle の正しいバージョンだけを使用することを確認するために注意を払わない限り、
+  すぐにライブラリのクラッシュを引き起こします。
+ </para>
+ <para>
+  特に Windows 上では、どのライブラリが検索されてロードされるか調べるユーティリティは、
+  欠けていたりクラッシュしているライブラリの問題の解決に役立ちます。
+ </para>
+ <note>
+  <title>Web サーバーが開始しないか、または起動時にクラッシュする場合</title>
+  <para>
+   Apache が pthread ライブラリとリンクされていることをチェックします。
+  </para>
+  <para>
+   <informalexample>
+    <screen>
+<![CDATA[
+# ldd /www/apache/bin/httpd
+  libpthread.so.0 => /lib/libpthread.so.0 (0x4001c000)
+  libm.so.6 => /lib/libm.so.6 (0x4002f000)
+  libcrypt.so.1 => /lib/libcrypt.so.1 (0x4004c000)
+  libdl.so.2 => /lib/libdl.so.2 (0x4007a000)
+  libc.so.6 => /lib/libc.so.6 (0x4007e000)
+  /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x40000000)
+]]>
+    </screen>
+   </informalexample>
+  </para>
+  <para>
+   libpthread が一覧に表示されなければ、 Apache を再インストールします。
+  </para>
+  <para>
+   <informalexample>
+    <screen>
+<![CDATA[
+# cd /usr/src/apache_1.3.xx
+# make clean
+# LIBS=-lpthread ./config.status
+# make
+# make install
+]]>
+    </screen>
+   </informalexample>
+  </para>
+  <para>
+   UnixWare のような一部のシステムでは、それは
+   libpthread の代わりに libthread であることに注意してください。
+   PHP 及び Apache を EXTRA_LIBS=-lthread とともに構成しなければいけません。
+  </para>
+ </note>
+</section>
+
+
+</section> <!-- oci8.installation -->
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

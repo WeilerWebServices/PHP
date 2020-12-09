@@ -1,0 +1,1105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.11" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+ <name>mysql_xdevapi</name>
+ <channel>pecl.php.net</channel>
+ <summary>MySQL X DevAPI for PHP</summary>
+
+ <description>The X DevAPI is the new common API for MySQL Connectors built on the X Protocol introduced in MySQL 5.7.12.
+
+The X DevAPI wraps powerful concepts in a simple API.
+* A new high-level session concept enables you to write code that can transparently scale from single MySQL Server to a multiple server environment.
+* Read operations are simple and easy to understand.
+
+The X DevAPI introduces a new, modern and easy-to-learn way to work with your data.
+* Documents are stored in Collections and have their dedicated CRUD operation set.
+* Work with your existing domain objects or generate code based on structure definitions for strictly typed languages.
+* Focus is put on working with data via CRUD operations. See Section 3.1, “CRUD Operations Overview”.
+* Modern practices and syntax styles are used to get away from traditional SQL-String-Building. See Chapter 10, Building Expressions.
+</description>
+ <lead>
+  <name>Dariusz Slusarczyk</name>
+  <user>marines</user>
+  <email>marines@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Filip Janiszewski</name>
+  <user>fjanisze</user>
+  <email>fjanisze@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Johannes Schlüter</name>
+  <user>johannes</user>
+  <email>johannes@php.net</email>
+  <active>yes</active>
+ </lead>
+ <developer>
+  <name>Andrey Hristov</name>
+  <user>andrey</user>
+  <email>andrey@php.net</email>
+  <active>no</active>
+ </developer>
+ <lead>
+  <name>Hery Ramilison</name>
+  <user>mysqlre</user>
+  <email>mysqlre@php.net</email>
+  <active>yes</active>
+ </lead>
+	<date>2020-08-20</date>
+	<time>20:00:00</time>
+	<version>
+		<release>8.0.22</release>
+		<api>1.0.0</api>
+	</version>
+	<stability>
+		<release>stable</release>
+		<api>stable</api>
+	</stability>
+	<license uri="http://www.php.net/license">PHP</license>
+	<notes>
+		WL#14012: XProtocol -- support for configurable compression algorithms
+		orabug #31364076: mysqlndx switch from C++14 to C++17, and all related
+		orabug #31414039: mysqlndx apply std::string_view, remove MYSQLND_CSTRING
+		orabug #30084547: improve zval wrapper
+		orabug #31678047: prepared statements tests fail with the newest server
+		orabug #31958145: some secure connection / TLS tests fail on el8-x86-64bit
+	</notes>
+ <contents>
+  <dir name="/">
+   <file name="CREDITS" role="doc" />
+   <file name="LICENSE" role="doc" />
+   <file name="Makefile.frag" role="src" />
+   <file name="Makefile.frag.w32" role="src" />
+   <file name="README" role="doc" />
+   <file name="config.m4" role="src" />
+   <file name="config.w32" role="src" />
+   <file name="examples.php" role="test" />
+   <file name="json_api.h" role="src" />
+   <file name="mysql_xdevapi.def" role="src" />
+   <file name="mysqlnd_api.h" role="src" />
+   <file name="mysqlx_base_result.cc" role="src" />
+   <file name="mysqlx_base_result.h" role="src" />
+   <file name="mysqlx_class_properties.cc" role="src" />
+   <file name="mysqlx_class_properties.h" role="src" />
+   <file name="mysqlx_client.cc" role="src" />
+   <file name="mysqlx_client.h" role="src" />
+   <file name="mysqlx_collection.cc" role="src" />
+   <file name="mysqlx_collection.h" role="src" />
+   <file name="mysqlx_collection__add.cc" role="src" />
+   <file name="mysqlx_collection__add.h" role="src" />
+   <file name="mysqlx_collection__find.cc" role="src" />
+   <file name="mysqlx_collection__find.h" role="src" />
+   <file name="mysqlx_collection__modify.cc" role="src" />
+   <file name="mysqlx_collection__modify.h" role="src" />
+   <file name="mysqlx_collection__remove.cc" role="src" />
+   <file name="mysqlx_collection__remove.h" role="src" />
+   <file name="mysqlx_collection_index.cc" role="src" />
+   <file name="mysqlx_collection_index.h" role="src" />
+   <file name="mysqlx_column_result.cc" role="src" />
+   <file name="mysqlx_column_result.h" role="src" />
+   <file name="mysqlx_crud_operation_bindable.cc" role="src" />
+   <file name="mysqlx_crud_operation_bindable.h" role="src" />
+   <file name="mysqlx_crud_operation_limitable.cc" role="src" />
+   <file name="mysqlx_crud_operation_limitable.h" role="src" />
+   <file name="mysqlx_crud_operation_skippable.cc" role="src" />
+   <file name="mysqlx_crud_operation_skippable.h" role="src" />
+   <file name="mysqlx_crud_operation_sortable.cc" role="src" />
+   <file name="mysqlx_crud_operation_sortable.h" role="src" />
+   <file name="mysqlx_database_object.cc" role="src" />
+   <file name="mysqlx_database_object.h" role="src" />
+   <file name="mysqlx_doc_result.cc" role="src" />
+   <file name="mysqlx_doc_result.h" role="src" />
+   <file name="mysqlx_doc_result_iterator.cc" role="src" />
+   <file name="mysqlx_doc_result_iterator.h" role="src" />
+   <file name="mysqlx_enum_n_def.h" role="src" />
+   <file name="mysqlx_exception.cc" role="src" />
+   <file name="mysqlx_exception.h" role="src" />
+   <file name="mysqlx_executable.cc" role="src" />
+   <file name="mysqlx_executable.h" role="src" />
+   <file name="mysqlx_execution_status.cc" role="src" />
+   <file name="mysqlx_execution_status.h" role="src" />
+   <file name="mysqlx_expression.cc" role="src" />
+   <file name="mysqlx_expression.h" role="src" />
+   <file name="mysqlx_object.cc" role="src" />
+   <file name="mysqlx_object.h" role="src" />
+   <file name="mysqlx_result.cc" role="src" />
+   <file name="mysqlx_result.h" role="src" />
+   <file name="mysqlx_result_iterator.cc" role="src" />
+   <file name="mysqlx_result_iterator.h" role="src" />
+   <file name="mysqlx_row_result.cc" role="src" />
+   <file name="mysqlx_row_result.h" role="src" />
+   <file name="mysqlx_row_result_iterator.cc" role="src" />
+   <file name="mysqlx_row_result_iterator.h" role="src" />
+   <file name="mysqlx_schema.cc" role="src" />
+   <file name="mysqlx_schema.h" role="src" />
+   <file name="mysqlx_schema_object.cc" role="src" />
+   <file name="mysqlx_schema_object.h" role="src" />
+   <file name="mysqlx_session.cc" role="src" />
+   <file name="mysqlx_session.h" role="src" />
+   <file name="mysqlx_sql_statement.cc" role="src" />
+   <file name="mysqlx_sql_statement.h" role="src" />
+   <file name="mysqlx_sql_statement_result.cc" role="src" />
+   <file name="mysqlx_sql_statement_result.h" role="src" />
+   <file name="mysqlx_sql_statement_result_iterator.cc" role="src" />
+   <file name="mysqlx_sql_statement_result_iterator.h" role="src" />
+   <file name="mysqlx_table.cc" role="src" />
+   <file name="mysqlx_table.h" role="src" />
+   <file name="mysqlx_table__delete.cc" role="src" />
+   <file name="mysqlx_table__delete.h" role="src" />
+   <file name="mysqlx_table__insert.cc" role="src" />
+   <file name="mysqlx_table__insert.h" role="src" />
+   <file name="mysqlx_table__select.cc" role="src" />
+   <file name="mysqlx_table__select.h" role="src" />
+   <file name="mysqlx_table__update.cc" role="src" />
+   <file name="mysqlx_table__update.h" role="src" />
+   <file name="mysqlx_warning.cc" role="src" />
+   <file name="mysqlx_warning.h" role="src" />
+   <file name="php_api.h" role="src" />
+   <file name="php_mysql_xdevapi.h" role="src" />
+   <file name="php_mysqlx.cc" role="src" />
+   <file name="php_mysqlx.h" role="src" />
+   <file name="php_mysqlx_ex.cc" role="src" />
+   <file name="php_mysqlx_ex.h" role="src" />
+   <file name="product_data.txt" role="doc" />
+   <file name="protobuf_api.h" role="src" />
+   <dir name="tests">
+    <file name="000.phpt" role="test" />
+    <file name="add_with_empty_arg_is_noop.phpt" role="test" />
+    <file name="array_or_object_contains_operator.phpt" role="test" />
+    <file name="basic_collection_operations.phpt" role="test" />
+    <file name="basic_execute_sql.phpt" role="test" />
+    <file name="basic_transactions.phpt" role="test" />
+    <file name="client_side_failover.phpt" role="test" />
+    <file name="coll_multiple_affected_items_count.phpt" role="test" />
+    <file name="collection.phpt" role="test" />
+    <file name="collection_fields.phpt" role="test" />
+    <file name="collection_find.phpt" role="test" />
+    <file name="collection_find_no_only_full_group_by.phpt" role="test" />
+    <file name="collection_group_by.phpt" role="test" />
+    <file name="collection_limit_offset.phpt" role="test" />
+    <file name="collection_modify_array_delete.phpt" role="test" />
+    <file name="collection_modify_set_replace.phpt" role="test" />
+    <file name="collection_modify_sortreplacemerge.phpt" role="test" />
+    <file name="collection_modifysetunset.phpt" role="test" />
+    <file name="collection_remove.phpt" role="test" />
+    <file name="complex_query.phpt" role="test" />
+    <file name="connect.inc" role="test" />
+    <file name="connection_test_uri_string.phpt" role="test" />
+    <file name="createdrop_schema.phpt" role="test" />
+    <file name="date_time_types.phpt" role="test" />
+    <file name="drop_item.phpt" role="test" />
+    <file name="exists_in_database.phpt" role="test" />
+    <file name="field_metadata.phpt" role="test" />
+    <file name="field_metadata_empty_rowset.phpt" role="test" />
+    <file name="flexible_number_of_arguments.phpt" role="test" />
+    <file name="generated_doc_ids.phpt" role="test" />
+    <file name="get_auto_increment_value.phpt" role="test" />
+    <file name="get_collection_as_table.phpt" role="test" />
+    <file name="get_name.phpt" role="test" />
+    <file name="get_tableget_tables.phpt" role="test" />
+    <file name="iterators.phpt" role="test" />
+    <file name="mergepatch.phpt" role="test" />
+    <file name="modify_array_append_insert.phpt" role="test" />
+    <file name="multiple_results.phpt" role="test" />
+    <file name="savepoint.phpt" role="test" />
+    <file name="schema.phpt" role="test" />
+    <file name="select_fetch.phpt" role="test" />
+    <file name="session_attributes.phpt" role="test" />
+    <file name="session_minor_tc.phpt" role="test" />
+    <file name="simple_expression.phpt" role="test" />
+    <file name="simple_ssl.phpt" role="test" />
+    <file name="sql_simple.phpt" role="test" />
+    <file name="table.phpt" role="test" />
+    <file name="table_delete_limit_order_by.phpt" role="test" />
+    <file name="table_delete_where.phpt" role="test" />
+    <file name="table_group_by.phpt" role="test" />
+    <file name="table_limit_offset.phpt" role="test" />
+    <file name="unix_domain_socket.phpt" role="test" />
+    <file name="update.phpt" role="test" />
+    <file name="warnings.phpt" role="test" />
+    <file name="worker_utils.inc" role="test" />
+    <dir name="auth">
+     <file name="auth_utils.inc" role="test" />
+     <file name="incorrect_ssl_query.phpt" role="test" />
+     <file name="secure_native.phpt" role="test" />
+     <file name="secure_sha256_mem.phpt" role="test" />
+     <file name="sha256_mem.phpt" role="test" />
+     <file name="unsecure_native.phpt" role="test" />
+     <file name="unsecure_sha256_mem.phpt" role="test" />
+     <file name="warnings_secure_caching_sha2.phpt" role="test" />
+     <file name="warnings_secure_native.phpt" role="test" />
+     <file name="warnings_unsecure_caching_sha2.phpt" role="test" />
+     <file name="warnings_unsecure_native.phpt" role="test" />
+     <dir name="timeout">
+      <file name="default_timeout.phpt" role="test" />
+      <file name="disabled_timeout.phpt" role="test" />
+      <file name="elapsed_timeout.phpt" role="test" />
+      <file name="incorrect_timeout.phpt" role="test" />
+      <file name="successful_no_timeout.phpt" role="test" />
+      <file name="timeout_utils.inc" role="test" />
+     </dir>
+     <dir name="tls">
+      <file name="ciphers.phpt" role="test" />
+      <file name="ciphersuites.phpt" role="test" />
+      <file name="ciphersuites_tlsv13.phpt" role="test" />
+      <file name="incorrect_ciphers.phpt" role="test" />
+      <file name="incorrect_ciphersuites.phpt" role="test" />
+      <file name="incorrect_ciphersuites_tlsv13.phpt" role="test" />
+      <file name="incorrect_tls_versions.phpt" role="test" />
+      <file name="tls_utils.inc" role="test" />
+      <file name="tls_versions.phpt" role="test" />
+      <file name="tls_versions_tlsv13.phpt" role="test" />
+     </dir>
+    </dir>
+    <dir name="client">
+     <file name="client_disabled.phpt" role="test" />
+     <file name="client_utils.inc" role="test" />
+     <file name="close_client.phpt" role="test" />
+     <file name="close_client_open_session.phpt" role="test" />
+     <file name="close_open.phpt" role="test" />
+     <file name="common_vs_simple.phpt" role="test" />
+     <file name="default_options.phpt" role="test" />
+     <file name="default_options_as_null.phpt" role="test" />
+     <file name="default_options_with_enabled.phpt" role="test" />
+     <file name="default_options_with_max_idle_time.phpt" role="test" />
+     <file name="default_options_with_max_size.phpt" role="test" />
+     <file name="default_options_with_queue_timeout.phpt" role="test" />
+     <file name="incorrect_options.phpt" role="test" />
+     <file name="incorrect_options_case_sensitive.phpt" role="test" />
+     <file name="incorrect_uri.phpt" role="test" />
+     <file name="new_session_reset.phpt" role="test" />
+     <file name="session_multiple_close.phpt" role="test" />
+     <file name="simple.phpt" role="test" />
+     <file name="simple_close.phpt" role="test" />
+     <file name="simple_close_client.phpt" role="test" />
+     <file name="simple_prune_expired.phpt" role="test" />
+     <file name="simple_vs_common.phpt" role="test" />
+     <file name="waiting_timeout.phpt" role="test" />
+     <file name="waiting_timeout_close_open.phpt" role="test" />
+    </dir>
+    <dir name="compression">
+     <file name="algorithm_alias.phpt" role="test" />
+     <file name="algorithm_empty.phpt" role="test" />
+     <file name="algorithm_incorrect.phpt" role="test" />
+     <file name="algorithm_name.phpt" role="test" />
+     <file name="algorithm_name_alias.phpt" role="test" />
+     <file name="algorithm_unknown.phpt" role="test" />
+     <file name="compression_utils.inc" role="test" />
+     <file name="mode.phpt" role="test" />
+    </dir>
+    <dir name="crud_json">
+     <file name="crud_json_utils.inc" role="test" />
+     <file name="modify_array_append.phpt" role="test" />
+     <file name="modify_array_insert.phpt" role="test" />
+     <file name="modify_patch.phpt" role="test" />
+     <file name="modify_replace.phpt" role="test" />
+     <file name="modify_set.phpt" role="test" />
+     <file name="modify_unset.phpt" role="test" />
+    </dir>
+    <dir name="index">
+     <file name="array_dates.phpt" role="test" />
+     <file name="array_integers.phpt" role="test" />
+     <file name="array_strings.phpt" role="test" />
+     <file name="common.phpt" role="test" />
+     <file name="create.phpt" role="test" />
+     <file name="drop.phpt" role="test" />
+     <file name="extra.phpt" role="test" />
+     <file name="fail.phpt" role="test" />
+     <file name="index_utils.inc" role="test" />
+     <file name="multi.phpt" role="test" />
+    </dir>
+    <dir name="orabugs">
+     <file name="orabug_30093227.phpt" role="test" />
+     <file name="orabug_30226250.phpt" role="test" />
+    </dir>
+    <dir name="prepared_statement">
+     <file name="ps_collection_find.phpt" role="test" />
+     <file name="ps_collection_modify.phpt" role="test" />
+     <file name="ps_collection_remove.phpt" role="test" />
+     <file name="ps_table_delete.phpt" role="test" />
+     <file name="ps_table_select.phpt" role="test" />
+     <file name="ps_table_update.phpt" role="test" />
+     <file name="ps_utils.inc" role="test" />
+    </dir>
+    <dir name="query">
+     <file name="collection_overlaps_int.phpt" role="test" />
+     <file name="collection_overlaps_int_list.phpt" role="test" />
+     <file name="collection_overlaps_string.phpt" role="test" />
+     <file name="collection_overlaps_string_list.phpt" role="test" />
+     <file name="query_utils.inc" role="test" />
+     <file name="table_overlaps_int.phpt" role="test" />
+     <file name="table_overlaps_json_int_list.phpt" role="test" />
+     <file name="table_overlaps_json_string_list.phpt" role="test" />
+    </dir>
+    <dir name="row_locking">
+     <file name="collection_misc.phpt" role="test" />
+     <file name="collection_parallel_exclusive_exclusive.phpt" role="test" />
+     <file name="collection_parallel_exclusive_exclusive_worker.php" role="test" />
+     <file name="collection_parallel_exclusive_shared.phpt" role="test" />
+     <file name="collection_parallel_exclusive_shared_worker.php" role="test" />
+     <file name="collection_parallel_shared_exclusive.phpt" role="test" />
+     <file name="collection_parallel_shared_exclusive_worker.php" role="test" />
+     <file name="collection_sequential.phpt" role="test" />
+     <file name="row_locking_utils.inc" role="test" />
+     <file name="table_misc.phpt" role="test" />
+     <file name="table_parallel_exclusive_exclusive.phpt" role="test" />
+     <file name="table_parallel_exclusive_exclusive_worker.php" role="test" />
+     <file name="table_parallel_exclusive_shared.phpt" role="test" />
+     <file name="table_parallel_exclusive_shared_worker.php" role="test" />
+     <file name="table_parallel_shared_exclusive.phpt" role="test" />
+     <file name="table_parallel_shared_exclusive_worker.php" role="test" />
+     <file name="table_sequential.phpt" role="test" />
+     <file name="table_sequential_native_sql.phpt" role="test" />
+     <dir name="waiting_options_collection">
+      <file name="coll_default_exclusive_exclusive.phpt" role="test" />
+      <file name="coll_default_exclusive_exclusive_worker.php" role="test" />
+      <file name="coll_default_exclusive_none.phpt" role="test" />
+      <file name="coll_default_exclusive_none_worker.php" role="test" />
+      <file name="coll_default_exclusive_shared.phpt" role="test" />
+      <file name="coll_default_exclusive_shared_worker.php" role="test" />
+      <file name="coll_default_shared_exclusive.phpt" role="test" />
+      <file name="coll_default_shared_exclusive_worker.php" role="test" />
+      <file name="coll_default_shared_none.phpt" role="test" />
+      <file name="coll_default_shared_none_worker.php" role="test" />
+      <file name="coll_default_shared_shared.phpt" role="test" />
+      <file name="coll_default_shared_shared_worker.php" role="test" />
+      <file name="coll_nowait_exclusive_exclusive.phpt" role="test" />
+      <file name="coll_nowait_exclusive_exclusive_worker.php" role="test" />
+      <file name="coll_nowait_exclusive_shared.phpt" role="test" />
+      <file name="coll_nowait_exclusive_shared_worker.php" role="test" />
+      <file name="coll_nowait_shared_exclusive.phpt" role="test" />
+      <file name="coll_nowait_shared_exclusive_worker.php" role="test" />
+      <file name="coll_nowait_shared_shared.phpt" role="test" />
+      <file name="coll_nowait_shared_shared_worker.php" role="test" />
+      <file name="coll_skip_locked_exclusive_exclusive.phpt" role="test" />
+      <file name="coll_skip_locked_exclusive_exclusive_worker.php" role="test" />
+      <file name="coll_skip_locked_exclusive_shared.phpt" role="test" />
+      <file name="coll_skip_locked_exclusive_shared_worker.php" role="test" />
+      <file name="coll_skip_locked_shared_exclusive.phpt" role="test" />
+      <file name="coll_skip_locked_shared_exclusive_worker.php" role="test" />
+      <file name="coll_skip_locked_shared_shared.phpt" role="test" />
+      <file name="coll_skip_locked_shared_shared_worker.php" role="test" />
+      <file name="coll_without_exclusive_exclusive.phpt" role="test" />
+      <file name="coll_without_exclusive_exclusive_worker.php" role="test" />
+      <file name="coll_without_exclusive_none.phpt" role="test" />
+      <file name="coll_without_exclusive_none_worker.php" role="test" />
+      <file name="coll_without_exclusive_shared.phpt" role="test" />
+      <file name="coll_without_exclusive_shared_worker.php" role="test" />
+      <file name="coll_without_shared_exclusive.phpt" role="test" />
+      <file name="coll_without_shared_exclusive_worker.php" role="test" />
+      <file name="coll_without_shared_none.phpt" role="test" />
+      <file name="coll_without_shared_none_worker.php" role="test" />
+      <file name="coll_without_shared_shared.phpt" role="test" />
+      <file name="coll_without_shared_shared_worker.php" role="test" />
+     </dir>
+     <dir name="waiting_options_table">
+      <file name="tab_default_exclusive_exclusive.phpt" role="test" />
+      <file name="tab_default_exclusive_exclusive_worker.php" role="test" />
+      <file name="tab_default_exclusive_none.phpt" role="test" />
+      <file name="tab_default_exclusive_none_worker.php" role="test" />
+      <file name="tab_default_exclusive_shared.phpt" role="test" />
+      <file name="tab_default_exclusive_shared_worker.php" role="test" />
+      <file name="tab_default_shared_exclusive.phpt" role="test" />
+      <file name="tab_default_shared_exclusive_worker.php" role="test" />
+      <file name="tab_default_shared_none.phpt" role="test" />
+      <file name="tab_default_shared_none_worker.php" role="test" />
+      <file name="tab_default_shared_shared.phpt" role="test" />
+      <file name="tab_default_shared_shared_worker.php" role="test" />
+      <file name="tab_nowait_exclusive_exclusive.phpt" role="test" />
+      <file name="tab_nowait_exclusive_exclusive_worker.php" role="test" />
+      <file name="tab_nowait_exclusive_shared.phpt" role="test" />
+      <file name="tab_nowait_exclusive_shared_worker.php" role="test" />
+      <file name="tab_nowait_shared_exclusive.phpt" role="test" />
+      <file name="tab_nowait_shared_exclusive_worker.php" role="test" />
+      <file name="tab_nowait_shared_shared.phpt" role="test" />
+      <file name="tab_nowait_shared_shared_worker.php" role="test" />
+      <file name="tab_skip_locked_exclusive_exclusive.phpt" role="test" />
+      <file name="tab_skip_locked_exclusive_exclusive_worker.php" role="test" />
+      <file name="tab_skip_locked_exclusive_shared.phpt" role="test" />
+      <file name="tab_skip_locked_exclusive_shared_worker.php" role="test" />
+      <file name="tab_skip_locked_shared_exclusive.phpt" role="test" />
+      <file name="tab_skip_locked_shared_exclusive_worker.php" role="test" />
+      <file name="tab_skip_locked_shared_shared.phpt" role="test" />
+      <file name="tab_skip_locked_shared_shared_worker.php" role="test" />
+      <file name="tab_without_exclusive_exclusive.phpt" role="test" />
+      <file name="tab_without_exclusive_exclusive_worker.php" role="test" />
+      <file name="tab_without_exclusive_none.phpt" role="test" />
+      <file name="tab_without_exclusive_none_worker.php" role="test" />
+      <file name="tab_without_exclusive_shared.phpt" role="test" />
+      <file name="tab_without_exclusive_shared_worker.php" role="test" />
+      <file name="tab_without_shared_exclusive.phpt" role="test" />
+      <file name="tab_without_shared_exclusive_worker.php" role="test" />
+      <file name="tab_without_shared_none.phpt" role="test" />
+      <file name="tab_without_shared_none_worker.php" role="test" />
+      <file name="tab_without_shared_shared.phpt" role="test" />
+      <file name="tab_without_shared_shared_worker.php" role="test" />
+     </dir>
+    </dir>
+    <dir name="schema">
+     <file name="common_default_schema.phpt" role="test" />
+     <file name="empty_default_schema.phpt" role="test" />
+     <file name="get_default_schema.phpt" role="test" />
+     <file name="get_empty_default_schema.phpt" role="test" />
+     <file name="incorrect_default_schema.phpt" role="test" />
+     <file name="schema_utils.inc" role="test" />
+    </dir>
+    <dir name="schema_validation">
+     <file name="create_common.phpt" role="test" />
+     <file name="create_no_schema.phpt" role="test" />
+     <file name="create_simple.phpt" role="test" />
+     <file name="modify_off.phpt" role="test" />
+     <file name="modify_schema.phpt" role="test" />
+     <file name="modify_strict.phpt" role="test" />
+     <file name="parse_error.phpt" role="test" />
+    </dir>
+    <dir name="session">
+     <file name="from_collection.phpt" role="test" />
+     <file name="from_schema.phpt" role="test" />
+     <file name="from_table.phpt" role="test" />
+     <file name="multiple_close.phpt" role="test" />
+     <file name="session_utils.inc" role="test" />
+     <file name="simple_session_open.phpt" role="test" />
+     <file name="simple_session_open_close.phpt" role="test" />
+     <file name="simple_session_open_verify_close.phpt" role="test" />
+    </dir>
+    <dir name="single_doc_ops">
+     <file name="add_or_replace_one.phpt" role="test" />
+     <file name="get_one.phpt" role="test" />
+     <file name="remove_one.phpt" role="test" />
+     <file name="replace_one.phpt" role="test" />
+     <file name="single_doc_utils.inc" role="test" />
+    </dir>
+    <dir name="ssl">
+     <file name="ca.pem" role="test" />
+     <file name="client-cert.pem" role="test" />
+     <file name="client-key.pem" role="test" />
+     <file name="client-req.pem" role="test" />
+     <file name="server-cert.pem" role="test" />
+     <file name="server-key.pem" role="test" />
+     <file name="server-req.pem" role="test" />
+    </dir>
+   </dir>
+   <dir name="util">
+    <file name="allocator.cc" role="src" />
+    <file name="allocator.h" role="src" />
+    <file name="compiler_utils.h" role="src" />
+    <file name="exceptions.cc" role="src" />
+    <file name="exceptions.h" role="src" />
+    <file name="hash_table.cc" role="src" />
+    <file name="hash_table.h" role="src" />
+    <file name="json_utils.cc" role="src" />
+    <file name="json_utils.h" role="src" />
+    <file name="object.cc" role="src" />
+    <file name="object.h" role="src" />
+    <file name="pb_utils.cc" role="src" />
+    <file name="pb_utils.h" role="src" />
+    <file name="string_utils.cc" role="src" />
+    <file name="string_utils.h" role="src" />
+    <file name="strings.cc" role="src" />
+    <file name="strings.h" role="src" />
+    <file name="types.h" role="src" />
+    <file name="url_utils.cc" role="src" />
+    <file name="url_utils.h" role="src" />
+    <file name="value.cc" role="src" />
+    <file name="value.h" role="src" />
+    <file name="value.inl" role="src" />
+    <file name="zend_utils.cc" role="src" />
+    <file name="zend_utils.h" role="src" />
+   </dir>
+   <dir name="xmysqlnd">
+    <file name="xmysqlnd.h" role="src" />
+    <file name="xmysqlnd_any2expr.cc" role="src" />
+    <file name="xmysqlnd_any2expr.h" role="src" />
+    <file name="xmysqlnd_collection.cc" role="src" />
+    <file name="xmysqlnd_collection.h" role="src" />
+    <file name="xmysqlnd_compression.cc" role="src" />
+    <file name="xmysqlnd_compression.h" role="src" />
+    <file name="xmysqlnd_compression_setup.cc" role="src" />
+    <file name="xmysqlnd_compression_setup.h" role="src" />
+    <file name="xmysqlnd_compression_types.cc" role="src" />
+    <file name="xmysqlnd_compression_types.h" role="src" />
+    <file name="xmysqlnd_compressor.cc" role="src" />
+    <file name="xmysqlnd_compressor.h" role="src" />
+    <file name="xmysqlnd_compressor_lz4.cc" role="src" />
+    <file name="xmysqlnd_compressor_lz4.h" role="src" />
+    <file name="xmysqlnd_compressor_zlib.cc" role="src" />
+    <file name="xmysqlnd_compressor_zlib.h" role="src" />
+    <file name="xmysqlnd_compressor_zstd.cc" role="src" />
+    <file name="xmysqlnd_compressor_zstd.h" role="src" />
+    <file name="xmysqlnd_crud_collection_commands.cc" role="src" />
+    <file name="xmysqlnd_crud_collection_commands.h" role="src" />
+    <file name="xmysqlnd_crud_commands.h" role="src" />
+    <file name="xmysqlnd_crud_table_commands.cc" role="src" />
+    <file name="xmysqlnd_crud_table_commands.h" role="src" />
+    <file name="xmysqlnd_driver.cc" role="src" />
+    <file name="xmysqlnd_driver.h" role="src" />
+    <file name="xmysqlnd_enum_n_def.h" role="src" />
+    <file name="xmysqlnd_environment.cc" role="src" />
+    <file name="xmysqlnd_environment.h" role="src" />
+    <file name="xmysqlnd_extension_plugin.cc" role="src" />
+    <file name="xmysqlnd_extension_plugin.h" role="src" />
+    <file name="xmysqlnd_index_collection_commands.cc" role="src" />
+    <file name="xmysqlnd_index_collection_commands.h" role="src" />
+    <file name="xmysqlnd_object_factory.cc" role="src" />
+    <file name="xmysqlnd_object_factory.h" role="src" />
+    <file name="xmysqlnd_priv.h" role="src" />
+    <file name="xmysqlnd_protocol_dumper.cc" role="src" />
+    <file name="xmysqlnd_protocol_dumper.h" role="src" />
+    <file name="xmysqlnd_protocol_frame_codec.cc" role="src" />
+    <file name="xmysqlnd_protocol_frame_codec.h" role="src" />
+    <file name="xmysqlnd_rowset.cc" role="src" />
+    <file name="xmysqlnd_rowset.h" role="src" />
+    <file name="xmysqlnd_rowset_buffered.cc" role="src" />
+    <file name="xmysqlnd_rowset_buffered.h" role="src" />
+    <file name="xmysqlnd_rowset_fwd.cc" role="src" />
+    <file name="xmysqlnd_rowset_fwd.h" role="src" />
+    <file name="xmysqlnd_schema.cc" role="src" />
+    <file name="xmysqlnd_schema.h" role="src" />
+    <file name="xmysqlnd_session.cc" role="src" />
+    <file name="xmysqlnd_session.h" role="src" />
+    <file name="xmysqlnd_statistics.cc" role="src" />
+    <file name="xmysqlnd_stmt.cc" role="src" />
+    <file name="xmysqlnd_stmt.h" role="src" />
+    <file name="xmysqlnd_stmt_execution_state.cc" role="src" />
+    <file name="xmysqlnd_stmt_execution_state.h" role="src" />
+    <file name="xmysqlnd_stmt_result.cc" role="src" />
+    <file name="xmysqlnd_stmt_result.h" role="src" />
+    <file name="xmysqlnd_stmt_result_meta.cc" role="src" />
+    <file name="xmysqlnd_stmt_result_meta.h" role="src" />
+    <file name="xmysqlnd_structs.h" role="src" />
+    <file name="xmysqlnd_table.cc" role="src" />
+    <file name="xmysqlnd_table.h" role="src" />
+    <file name="xmysqlnd_utils.cc" role="src" />
+    <file name="xmysqlnd_utils.h" role="src" />
+    <file name="xmysqlnd_warning_list.cc" role="src" />
+    <file name="xmysqlnd_warning_list.h" role="src" />
+    <file name="xmysqlnd_wireprotocol.cc" role="src" />
+    <file name="xmysqlnd_wireprotocol.h" role="src" />
+    <file name="xmysqlnd_wireprotocol_types.cc" role="src" />
+    <file name="xmysqlnd_wireprotocol_types.h" role="src" />
+    <file name="xmysqlnd_zval2any.cc" role="src" />
+    <file name="xmysqlnd_zval2any.h" role="src" />
+    <dir name="cdkbase">
+     <dir name="core">
+      <file name="codec.cc" role="src" />
+     </dir>
+     <dir name="extra">
+      <dir name="rapidjson">
+       <dir name="include">
+        <dir name="rapidjson">
+         <file name="allocators.h" role="src" />
+         <file name="document.h" role="src" />
+         <file name="encodedstream.h" role="src" />
+         <file name="encodings.h" role="src" />
+         <file name="filereadstream.h" role="src" />
+         <file name="filewritestream.h" role="src" />
+         <file name="fwd.h" role="src" />
+         <file name="istreamwrapper.h" role="src" />
+         <file name="memorybuffer.h" role="src" />
+         <file name="memorystream.h" role="src" />
+         <file name="ostreamwrapper.h" role="src" />
+         <file name="pointer.h" role="src" />
+         <file name="prettywriter.h" role="src" />
+         <file name="rapidjson.h" role="src" />
+         <file name="reader.h" role="src" />
+         <file name="schema.h" role="src" />
+         <file name="stream.h" role="src" />
+         <file name="stringbuffer.h" role="src" />
+         <file name="writer.h" role="src" />
+         <dir name="error">
+          <file name="en.h" role="src" />
+          <file name="error.h" role="src" />
+         </dir>
+         <dir name="internal">
+          <file name="biginteger.h" role="src" />
+          <file name="diyfp.h" role="src" />
+          <file name="dtoa.h" role="src" />
+          <file name="ieee754.h" role="src" />
+          <file name="itoa.h" role="src" />
+          <file name="meta.h" role="src" />
+          <file name="pow10.h" role="src" />
+          <file name="regex.h" role="src" />
+          <file name="stack.h" role="src" />
+          <file name="strfunc.h" role="src" />
+          <file name="strtod.h" role="src" />
+          <file name="swap.h" role="src" />
+         </dir>
+         <dir name="msinttypes">
+          <file name="inttypes.h" role="src" />
+          <file name="stdint.h" role="src" />
+         </dir>
+        </dir>
+       </dir>
+      </dir>
+     </dir>
+     <dir name="foundation">
+      <file name="error.cc" role="src" />
+      <file name="stream.cc" role="src" />
+     </dir>
+     <dir name="include">
+      <dir name="mysql">
+       <file name="cdk.h" role="src" />
+       <dir name="cdk">
+        <file name="charsets.h" role="src" />
+        <file name="codec.h" role="src" />
+        <file name="common.h" role="src" />
+        <file name="config.h" role="src" />
+        <file name="converters.h" role="src" />
+        <file name="cursor.h" role="src" />
+        <file name="data_source.h" role="src" />
+        <file name="foundation.h" role="src" />
+        <file name="mysqlx.h" role="src" />
+        <file name="reply.h" role="src" />
+        <file name="session.h" role="src" />
+        <dir name="api">
+         <file name="cursor.h" role="src" />
+         <file name="document.h" role="src" />
+         <file name="expression.h" role="src" />
+         <file name="mdata.h" role="src" />
+         <file name="obj_ref.h" role="src" />
+         <file name="processors.h" role="src" />
+         <file name="query.h" role="src" />
+         <file name="reply.h" role="src" />
+         <file name="session.h" role="src" />
+         <file name="transaction.h" role="src" />
+        </dir>
+        <dir name="foundation">
+         <file name="async.h" role="src" />
+         <file name="cdk_time.h" role="src" />
+         <file name="codec.h" role="src" />
+         <file name="common.h" role="src" />
+         <file name="connection_openssl.h" role="src" />
+         <file name="connection_tcpip.h" role="src" />
+         <file name="diagnostics.h" role="src" />
+         <file name="error.h" role="src" />
+         <file name="error_category.h" role="src" />
+         <file name="opaque_impl.h" role="src" />
+         <file name="opaque_impl.i" role="src" />
+         <file name="socket.h" role="src" />
+         <file name="static_assert.h" role="src" />
+         <file name="std_error_conditions.h" role="src" />
+         <file name="stream.h" role="src" />
+         <file name="string.h" role="src" />
+         <file name="types.h" role="src" />
+         <file name="variant.h" role="src" />
+        </dir>
+        <dir name="mysqlx">
+         <file name="common.h" role="src" />
+         <file name="result.h" role="src" />
+         <file name="session.h" role="src" />
+        </dir>
+        <dir name="protocol">
+         <file name="mysqlx.h" role="src" />
+         <dir name="mysqlx">
+          <file name="collations.h" role="src" />
+          <file name="expr.h" role="src" />
+          <file name="traits.h" role="src" />
+         </dir>
+        </dir>
+       </dir>
+      </dir>
+     </dir>
+     <dir name="mysqlx">
+      <file name="converters.h" role="src" />
+      <file name="delayed_op.h" role="src" />
+     </dir>
+     <dir name="parser">
+      <file name="char_iterator.h" role="src" />
+      <file name="expr_parser.cc" role="src" />
+      <file name="expr_parser.h" role="src" />
+      <file name="json_parser.cc" role="src" />
+      <file name="json_parser.h" role="src" />
+      <file name="parser.h" role="src" />
+      <file name="tokenizer.cc" role="src" />
+      <file name="tokenizer.h" role="src" />
+     </dir>
+     <dir name="protocol">
+      <dir name="mysqlx">
+       <file name="builders.h" role="src" />
+      </dir>
+     </dir>
+    </dir>
+    <dir name="crud_parsers">
+     <file name="compilerutils.h" role="src" />
+     <file name="expression_parser.cc" role="src" />
+     <file name="expression_parser.h" role="src" />
+     <file name="legacy_tokenizer.cc" role="src" />
+     <file name="legacy_tokenizer.h" role="src" />
+     <file name="memory_new.h" role="src" />
+     <file name="mysqlx_crud_parser.cc" role="src" />
+     <file name="mysqlx_crud_parser.h" role="src" />
+    </dir>
+    <dir name="proto_def">
+     <file name="mysqlx.proto" role="src" />
+     <file name="mysqlx_connection.proto" role="src" />
+     <file name="mysqlx_crud.proto" role="src" />
+     <file name="mysqlx_cursor.proto" role="src" />
+     <file name="mysqlx_datatypes.proto" role="src" />
+     <file name="mysqlx_expect.proto" role="src" />
+     <file name="mysqlx_expr.proto" role="src" />
+     <file name="mysqlx_notice.proto" role="src" />
+     <file name="mysqlx_prepare.proto" role="src" />
+     <file name="mysqlx_resultset.proto" role="src" />
+     <file name="mysqlx_session.proto" role="src" />
+     <file name="mysqlx_sql.proto" role="src" />
+    </dir>
+    <dir name="proto_gen">
+     <file name=".keep" role="src" />
+    </dir>
+   </dir>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>7.1.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <providesextension>mysql_xdevapi</providesextension>
+ <extsrcrelease>
+  <configureoption default="autodetect" name="with-boost" prompt="Point out boost library install dir" />
+  <configureoption default="autodetect" name="with-protobuf" prompt="Point out protobuf library install dir" />
+ </extsrcrelease>
+ <changelog>
+	<release>
+		<date>2020-06-26</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.21</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			WL#13014 DevAPI: Add schema validation to create collection
+			orabug #30134490: apply helpers from util/object.h
+			orabug #31084747: single doc tests failing in php-7.4
+			changes in config.m4|w32 to improve resolving 3rdParty libs
+		</notes>
+	</release>
+	<release>
+		<date>2020-04-10</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.20</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			WL#13001 DevAPI: Connection compression
+			orabug #30864458: some methods should not be reported as deprecated anymore
+		</notes>
+	</release>
+	<release>
+		<date>2020-01-10</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.19</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			WL#13541: Fix admin command namespace usage
+			WL#13398: DNS SRV support
+		</notes>
+	</release>
+	<release>
+		<date>2019-10-14</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.18</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			WL#12732: DevAPI: Specify TLS ciphers to be used by a client or session
+			orabug #29421446: fixes for secure connections
+			orabug #30226250: some of Collection.Modify ops don't support JSON documents properly
+			orabug #30093227: mysql_xdevapi\CollectionFind::fields() path fails when ends in number
+			orabug #30226232: incorrect behaviour of chained CRUD ops in webserver mode
+			orabug #30258670: CollectionModify.arrayInsert vs bind: cannot use bindings for arrayInsert
+			orabug #30088118: clean up XSession leavings
+			orabug #30088150: remove messages
+			orabug #30084547: improve zval wrapper
+			orabug #29998874: fix tests to pass with default auth_plugin=caching_sha2_password
+			orabug #30096952: add support for building in static mode
+			orabug #30084593: get rid of vim "decorators"
+			fixes for building with PHP-7.4+
+		</notes>
+	</release>
+	<release>
+		<date>2019-06-12</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.17</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			WL#12190-DevAPI: indexing array fields
+			WL#12683-DevAPI: Add overlaps and not_overlaps as operator
+			WL#13012: Deprecate methods
+			WL#11852: erase temporary protobuf files at 'make clean' step
+			orabug #28605926: unclear _id related messages with 5.7
+			adapt sources to build with PHP-7.4
+		</notes>
+	</release>
+	<release>
+		<date>2019-03-07</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.16</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			WL#9879: Prepared statement support
+			WL#11983: Support session-connect-attributes
+			WL#12396: Support new session reset functionality
+			orabug #28802543: classes: Driver, ExecutionStatus, Expression, and Statement
+			orabug #28803208: the DocResult prototype appear wrong
+			orabug #28803039: the fields() method seems odd
+			orabug #28805757: how exactly are set() and replace() different?
+		</notes>
+	</release>
+	<release>
+		<date>2019-01-29</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.15</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			This release contains no functional changes and is published to align
+			version number with the MySQL Server 8.0.15 release.
+		</notes>
+	</release>
+	<release>
+		<date>2018-12-13</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.14</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			WL#12593: DevAPI: Handling of Default Schema
+			WL#12457: Be prepared for initial notice on connection
+			WL#12291: automagically resolve path to preferred version of boost on pb2
+			orabug #28803092 the offset() method requires limit()
+			orabug #28802524 always use sql()->execute() instead of executeSql()
+			orabug #27441854 fetchAll should return an empty array when the result is empty, not (bool)false
+			orabug #28804413 containers methods
+			orabug #28802453 TableDelete: offset does not seem useful
+			orabug #29011588 execute more than once for crud ops with bind causes crash at releasing
+			orabug #28605347 CollectionFind::offset() without limit() error is unclear
+			orabug #28803201 FieldMetadata and ColumnResult are returning different information about columns
+			orabug #28804447 remove client functions
+			orabug #28802551 Collection::createIndex() create an index on multiple fields
+			orabug #28804461 ensure groupBy() functionality
+			orabug #28838435 PHPT tests - make checking results more precise
+		</notes>
+	</release>
+	<release>
+		<date>2018-10-05</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.13</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			WL#11956: Implement connection pooling for xprotocol
+			WL#12189: Implement connect timeout
+			WL#12428: Adding support for chained adds
+			WL#12435: Returning the proper values
+			WL#12280: connection error handling - throw an exception
+			WL#11851: enable treat warning as error
+			WL#11853: check available boost version
+			WL#12276: Expose metadata about source and binaries in unified way
+		</notes>
+	</release>
+	<release>
+		<date>2018-06-26</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.12</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			WL#11957: DevAPI, Core v1 Alignment
+			WL#11955: Increase coverage
+			refactorings: WL#11960, WL#11945,  WL#11949, WL#11947, WL#11854
+		</notes>
+	</release>
+	<release>
+		<date>2018-04-12</date>
+		<time>20:00:00</time>
+		<version>
+			<release>8.0.11</release>
+			<api>1.0.0</api>
+		</version>
+		<stability>
+			<release>stable</release>
+			<api>stable</api>
+		</stability>
+		<license uri="http://www.php.net/license">PHP</license>
+		<notes>
+			WL#11591-DevAPI: Add SHA256_MEMORY support
+			WL#11390-DevAPI: New document _id generation support
+			WL#11242-Support locking modes: NOWAIT and SKIP LOCKED
+			refactoring: reference counting, clear warnings
+		</notes>
+	</release>
+   <release>
+	<date>2018-01-17</date>
+	<time>20:00:00</time>
+	<version>
+		<release>8.0.4</release>
+		<api>1.0.0</api>
+	</version>
+	<stability>
+		<release>alpha</release>
+		<api>alpha</api>
+	</stability>
+	<license uri="http://www.php.net/license">PHP</license>
+	<notes>
+		WL#9898-Driver: Extended Authentication support (incl. SHA256)
+		WL#10089-DevAPI: Cleanup Drop APIs
+		WL#9876-DevAPI: Collection.createIndex
+		WL#11301-Remove CreateTable and CreateView
+		WL#10725-DevAPI: Modify/MergePatch
+		WL#10868-DevAPI: transaction save-points
+		WL#11340-Remove configuration API
+	</notes>
+   </release>
+   <release>
+	<date>2017-09-28</date>
+	<time>20:00:00</time>
+	<version>
+		<release>8.0.3</release>
+		<api>1.0.0</api>
+	</version>
+	<stability>
+		<release>alpha</release>
+		<api>alpha</api>
+	</stability>
+	<license uri="http://www.php.net/license">PHP</license>
+	<notes>
+		WL-10875: DevAPI: Array or Object "contains" operator
+		WL-10640 / 10876: DevAPI: getOne, removeOne, replaceOne, addOrReplaceOne
+		WL-10641/10877 DevAPI: Row locking for Crud.Find / Table.Select
+		server 8.x support, fixes for phpize build
+	</notes>
+   </release>
+   <release>
+     <date>2017-06-22</date>
+     <time>12:00:00</time>
+     <version>
+      <release>8.0.2</release>
+      <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>alpha</release>
+       <api>alpha</api>
+     </stability>
+     <license uri="http://www.php.net/license">PHP</license>
+     <notes>
+      WL10393/10097 DevAPI: Table.createTable
+      MY-235: Configuration handling interface
+      WL-10402  Ensure all connectors are secure by default
+      WL10627 / 10728 Forbid modify() and remove() with no condition
+      WL-10089/10392 DevAPI: Cleanup Drop APIs
+      WL-10390: DevAPI, Document UUID generation
+      WL-10506: Bugs and Clarifications
+     </notes>
+   </release>
+   <release>
+     <date>2017-03-13</date>
+     <time>23:42:05</time>
+     <version>
+      <release>1.0.1</release>
+      <api>1.0.1</api>
+     </version>
+     <stability>
+       <release>alpha</release>
+       <api>alpha</api>
+     </stability>
+     <license uri="http://www.php.net/license">PHP</license>
+     <notes>
+      - Added support for View DDL
+      - Added support for X DevAPI unified connection string
+      - Added support for Unix Domain Sockets
+      - Added table.isView()
+      - Added Core TLS/SSL options
+      - Internal refacotoring
+      - Fixed a few bugs
+     </notes>
+   </release>
+   <release>
+     <date>2016-12-08</date>
+     <time>12:00:00</time>
+     <version>
+       <release>1.0.0</release>
+       <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>alpha</release>
+       <api>alpha</api>
+     </stability>
+     <license uri="http://www.php.net/license">PHP</license>
+     <notes>
+       Initial release
+     </notes>
+   </release>
+ </changelog>
+</package>

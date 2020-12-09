@@ -1,0 +1,135 @@
+<!-- encoding="utf-8" -->
+<!-- $Revision$ -->
+<!ENTITY PHPGTK2Docs            "PHP-GTK 2 Manual">
+
+<!ENTITY PHPGTK2Tutorials       "PHP-GTK 2 Tutorials">
+<!ENTITY PHPGTK2Preface         "Preface">
+<!ENTITY PHPGTK2ManualReference "PHP-GTK 2 Reference">
+<!ENTITY Appendix               "Appendix">
+
+<!ENTITY Credits                "PHP-GTK 2 Credits">
+<!ENTITY DocCredits             "PHP-GTK 2 Documentation Credits">
+
+<!ENTITY Classtree              "Class Hierarchy">
+
+<!ENTITY AtkClasses             "ATK Classes">
+<!ENTITY AtkClassesDesc         "<para>Classes Provided by the ATK Library</para>">
+<!ENTITY GdkClasses             "GDK Classes">
+<!ENTITY GdkClassesDesc         "<para>Classes Provided by the GDK Library</para>">
+<!ENTITY GtkClasses             "GTK Classes">
+<!ENTITY GtkClassesDesc         "<para>Classes Provided by the GTK Library</para>">
+<!ENTITY PangoClasses           "Pango Classes">
+<!ENTITY PangoClassesDesc       "<para>Classes Provided by the Pango Library</para>">
+<!ENTITY GladeClasses           "Glade Classes">
+<!ENTITY GladeClassesDesc       "<para>Classes Provided by the Glade Extension</para>">
+<!ENTITY ExtraClasses           "GtkExtra Classes">
+<!ENTITY ExtraClassesDesc       "<para>Classes Provided by the Extra Extension</para>">
+<!ENTITY HtmlClasses            "GtkHTML Classes">
+<!ENTITY HtmlClassesDesc        "<para>Classes Provided by the HTML extension</para>">
+<!ENTITY SexyClasses            "libSexy Classes">
+<!ENTITY SexyClassesDesc        "<para>Classes Provided by the libSexy extension</para>">
+<!ENTITY MozEmbedClasses        "MozEmbed Classes">
+<!ENTITY MozEmbedClassesDesc    "<para>Classes Provided by the MozEmbed Extension</para>">
+<!ENTITY ScintillaClasses       "Scintilla Classes">
+<!ENTITY ScintillaClassesDesc   "<para>Classes Provided by the Scintilla Extensions</para>">
+<!ENTITY SourceviewClasses      "Sourceview Classes">
+<!ENTITY SourceviewClassesDesc  "<para>Classes Provided by the Sourceview Extension</para>">
+<!ENTITY SpellClasses           "GtkSpell Classes">
+<!ENTITY SpellClassesDesc       "<para>Classes Provided by the Spell Extension</para>">
+
+<!ENTITY AtkEnums               "ATK Enums">
+<!ENTITY AtkEnumsDesc           "Enumerated values can be any one of the values listed.
+  Flags can be a combination of any of the values listed.  Both enums and flags have a
+  numeric value and a key which is human-readable.">
+
+<!ENTITY GtkEnums               "GTK Enums">
+<!ENTITY GtkEnumsDesc           "Enumerated values can be any one of the values listed.
+  Flags can be a combination of any of the values listed.  Both enums and flags have a
+  numeric value and a key which is human-readable.">
+
+<!ENTITY GObjectEnums               "GObject Enums">
+<!ENTITY GObjectEnumsDesc           "Enumerated values can be any one of the values listed.
+  Flags can be a combination of any of the values listed.  Both enums and flags have a
+  numeric value and a key which is human-readable.">
+
+<!ENTITY GdkEnums               "GDK Enums">
+<!ENTITY GdkEnumsDesc           "Enumerated values can be any one of the values listed.
+  Flags can be a combination of any of the values listed.  Both enums and flags have a
+  numeric value and a key which is human-readable.">
+
+<!ENTITY PangoEnums             "Pango Enums">
+<!ENTITY PangoEnumsDesc         "Enumerated values can be any one of the values listed.
+  Flags can be a combination of any of the values listed.  Both enums and flags have a
+  numeric value and a key which is human-readable.">
+
+<!ENTITY ClassIndex             "Index: Classes">
+<!ENTITY MethodIndex            "Index: Functions and Methods">
+<!ENTITY PropertyIndex          "Index: Fields and Properties">
+<!ENTITY SignalIndex            "Index: Signals">
+<!ENTITY EnumIndex              "Index: Enum and Flag Values">
+
+<!-- Specialized Widget -->
+<!ENTITY specialized.widget     "This widget is considered too specialized/little-used for GTK+,
+  and will in the future be moved to some other package. If your application needs this widget,
+  feel free to use it, as the widget does work and is useful in some applications; it's just
+  not of general interest.">
+
+<!-- Deprecated items -->
+<!ENTITY deprecated             "DEPRECATED">
+<!ENTITY deprecated.method      "WARNING! This method has been deprecated in PHP-GTK 2
+  and should NOT be used in newly written code.">
+<!ENTITY deprecated.class       "WARNING! This class has been deprecated in PHP-GTK 2
+  and should NOT be used in newly written code.">
+<!--
+<!ENTITY deprecated.class       "This class is deprecated and should not be used in
+  newly written code. Please see <link linkend='tutorials.changes.deprecated'> deprecated
+  widgets page</link> for the class that should be used in its place.">
+-->
+<!ENTITY deprecated.property    "WARNING! This property has been deprecated in PHP-GTK 2
+  and should NOT be used in newly written code.">
+
+<!ENTITY widget.toospecialized    "This widget is considered too specialized/little-used
+ for GTK+, and will in the future be moved to some other package. If your application needs
+ this widget, feel free to use it, as the widget does work and is useful in some applications;
+ it's just not of general interest. However, we are not accepting new features for the widget,
+ and it will eventually move out of the GTK+ distribution.">
+
+<!ENTITY seealso "See also:">
+<!ENTITY static  "This method must be called statically.">
+<!--
+<!ENTITY PHPGTK2ManualUserguide "PHP-GTK 2 Userguide">
+<!ENTITY Introduction           "Introduction to PHP-GTK">
+<!ENTITY introblurb             "This section of the manual introduces the ideas and
+  technologies behind PHP-GTK.">
+<!ENTITY GettingStarted         "Getting Started">
+<!ENTITY startblurb             "This part of the manual explains the installation process.">
+<!ENTITY BuildingBlocks         "Basic Elements">
+<!ENTITY blocksblurb            "This part of the manual introduces the core elements
+  in PHP-GTK and illustrates their basic usage.">
+
+<!ENTITY GtkExtraClasses        "GtkExtra Classes">
+<!ENTITY GtkExtraClassesDesc    "<para>GtkExtra is a set of widgets intended to fill
+  the gaps in the original GTK+ classes. It can be found at
+  <ulink url='http://gtkextra.sourceforge.net'>gtkextra.sourceforge.net</ulink></para>">
+
+<!ENTITY GtkExtraEnums          "GtkExtra Enums">
+<!ENTITY GtkExtraEnumsDesc      "Enumerated values for the GtkExtra classes">
+
+<!ENTITY LibGladeClasses        "Glade Classes">
+<!ENTITY LibGladeClassesDesc    "<para>The Glade Class</para>">
+
+<!ENTITY ScintillaClasses       "Scintilla Classes">
+<!ENTITY ScintillaClassesDesc   "<para>The Scintilla Class</para>">
+-->
+
+<!ENTITY KeysymTitle            "Symbolic names for keys in PHP-GTK 2">
+
+<!-- dummy entry - other languages need to fill this in. Template for them:
+<!ENTITY frontpage.translators '<authorgroup id="translators">
+  <author>
+   <firstname>Fred</firstname><surname>Bloggs</surname>
+  </author>
+</authorgroup>'>
+-->
+
+<!ENTITY frontpage.translators  "">

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 336519 Maintainer: wiesemann Status: ready -->
+
+ <chapter xml:id="faq.html" xmlns="http://docbook.org/ns/docbook">
+  <title>PHP und HTML</title>
+  <titleabbrev>PHP und HTML</titleabbrev>
+
+  <para>
+   PHP und HTML interagieren stark: PHP kann HTML generieren und HTML kann Informationen
+   an PHP weitergeben. Bevor Sie diese FAQ lesen, sollten Sie verstanden haben, wie
+   Sie auf <link linkend="language.variables.external">Variablen aus externen
+   Quellen</link> zugreifen können. Die Manual-Seite zu diesem Thema enthält viele Beispiele,
+   die das Verständnis erleichtern.
+  </para>
+
+  <qandaset>
+   <qandaentry xml:id="faq.html.encoding">
+    <question>
+     <para>
+      Wie muss ich kodieren/dekodieren, wenn ich einen Wert über ein
+      Formular/einen URL weitergeben möchte?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Es gibt mehrere Stufen, für die Encoding wichtig ist. Angenommen, Sie
+      haben einen <type>String</type> <varname>$data</varname>, der den String,
+      den Sie in nicht-kodierter Weise weitergeben möchten, enthält. Dann
+      sind dies die relevanten Stufen:
+      <itemizedlist>
+       <listitem>
+        <para>
+         HTML-Interpretation: Wenn Sie einen zufälligen String angeben wollen,
+         <emphasis>müssen</emphasis> Sie ihn in die doppelte Anführungszeichen
+         einschließen und <function>htmlspecialchars</function> auf den gesamten
+         Wert anwenden.
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         URL: Ein URL besteht aus mehreren Teilen. Wenn Sie wollen, dass Ihre
+         Daten als ein Element interpretiert werden, dann <emphasis>müssen</emphasis>
+         Sie Ihre Daten mit <function>urlencode</function> kodieren.
+        </para>
+       </listitem>
+      </itemizedlist>
+     </para>
+     <para>
+      <example>
+       <title>Ein verstecktes HTML-Formularelement</title>
+        <programlisting role="php">
+<![CDATA[
+<?php
+    echo '<input type="hidden" value="' . htmlspecialchars($data) . '" />'."\n";
+?>
+]]>
+        </programlisting>
+      </example>
+      <note>
+       <simpara>
+        Es wäre falsch, <function>urlencode</function> auf <varname>$data</varname>
+        anzuwenden, da es die Aufgabe des Browsers ist, die Daten zu kodieren.
+        Alle populären Browser machen dies auch korrekt. Beachten Sie, dass dies
+        unabhängig von der verwendeten Methode (also z.B. GET oder POST) geschieht.
+        Feststellen werden Sie dies aber nur bei GET-Anfragen, da POST-Anfragen
+        meist versteckt geschehen.
+       </simpara>
+      </note>
+      <example>
+       <title>Daten, die vom Benutzer bearbeitet werden sollen</title>
+        <programlisting role="php">
+<![CDATA[
+<?php
+    echo "<textarea name='mydata'>\n";
+    echo htmlspecialchars($data)."\n";
+    echo "</textarea>";
+?>
+]]>
+        </programlisting>
+      </example>
+      <note>
+       <simpara>
+        Die Daten werden wie Browser wie gewünscht ausgegeben, da der Browser
+        die HTML-escapten Symbole interpretiert.
+       </simpara>
+       <simpara>
+        Nach dem Abschicken, egal ob via GET oder POST, werden die Daten für den
+        Transfer kodiert (mit <function>urlencode</function>) und von PHP
+        direkt wieder dekodiert (mit <function>urldecode</function>). Sie müssen
+        also für die Kodierung und Dekodierung nicht selbst sorgen, die Browser und PHP
+        erledigen dies automatisch für Sie.
+       </simpara>
+      </note>
+      <example>
+       <title>In einem URL</title>
+        <programlisting role="php">
+<![CDATA[
+<?php
+    echo '<a href="' . htmlspecialchars("/nextpage.php?stage=23&data=" .
+        urlencode($data)) . '">'."\n";
+?>
+]]>
+        </programlisting>
+      </example>
+      <note>
+       <simpara>
+        Hier wird eine HTML-GET-Anfrage gefakt, deswegen müssen Sie die Daten manuell
+        mit <function>urlencode</function> kodieren.
+       </simpara>
+      </note>
+      <note>
+       <simpara>
+        Sie müssen <function>htmlspecialchars</function> auf den gesamten URL anwenden,
+        da der URL als Wert eines HTML-Attributs auftritt. In diesem Fall wird der Browser
+        zuerst etwas wie "un-<function>htmlspecialchars</function>" auf den Wert anwenden
+        und dann erst den URL weitergeben. PHP wird den URL korrekt verstehen, da Sie die
+        Daten mit <function>urlencode</function> kodiert haben.
+       </simpara>
+       <simpara>
+        Sie werden feststellen, dass das <literal>&amp;</literal> im URL durch
+        <literal>&amp;amp;</literal> ersetzt wird. Auch wenn die meisten Browser
+        richtig arbeiten, falls Sie diese Ersetzung vergessen sollten, sollten Sie sich
+        trotzdem nicht darauf verlassen. Das bedeutet, dass Sie - auch wenn Ihr URL nicht
+        dynamisch ist - trotzdem <function>htmlspecialchars</function> auf den
+        URL anwenden <emphasis>müssen</emphasis>.
+       </simpara>
+      </note>
+     </para>
+     <!-- TODO: a note about addgpcslashes? -->
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.html.form-image">
+    <question>
+     <para>
+      Ich versuche ein &lt;input type="image"&gt;-Tag zu benutzen, aber die Variablen
+      <varname>$foo.x</varname> and <varname>$foo.y</varname> sind nicht verfügbar.
+      Auch <varname>$_GET['foo.x']</varname> existiert nicht. Wo finde ich diese?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Wenn ein Formular abgeschickt werden soll, ist es möglich, ein Bild statt des
+      Standard-Submit-Buttons zu verwenden, indem Sie ein Tag wie das folgende verwenden:
+      <programlisting role="html">
+<![CDATA[
+<input type="image" src="image.gif" name="foo" />
+]]>
+      </programlisting>
+      Wenn der Benutzer irgendwo auf das Bild klickt, wird das zugehörige Formular
+      zusammen mit zwei zusätzlichen Variablen übertragen: <varname>foo.x</varname>
+      und <varname>foo.y</varname>.
+     </para>
+     <para>
+      Da <varname>foo.x</varname> und <varname>foo.y</varname> in PHP ungültige
+      Variablennamen erzeugen würden, werden Sie automatisch in
+      <varname>$foo_x</varname> und <varname>$foo_y</varname> konvertiert. Die
+      Punkte werden also durch Unterstriche ersetzt. Sie können auf diese
+      Variablen also genauso wie im Abschnitt <link
+      linkend="language.variables.external">Variablen aus externen Quellen</link>
+      zugreifen, z.B. <varname>$_GET['foo_x']</varname>.
+      <note>
+       <para>
+         Leerzeichen in Namen von Formularelementen werden in Unterstriche konvertiert.
+       </para>
+      </note>
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.html.arrays">
+    <question>
+     <para>Wie kann ich Array aus einem HTML-Formular erstellen?</para>
+    </question>
+    <answer>
+     <para>
+      Um die Formularwerte als <link linkend="language.types.array">Array</link> im
+      PHP-Skript zur Verfügung zu haben, müssen Sie die &lt;input&gt;, &lt;select&gt;
+      or &lt;textarea&gt;-Felder wie folgt benennen:
+      <programlisting role="html">
+<![CDATA[
+<input name="MeinArray[]" />
+<input name="MeinArray[]" />
+<input name="MeinArray[]" />
+<input name="MeinArray[]" />
+]]>
+      </programlisting>
+      Beachten Sie die eckigen Klammern hinter dem Variablen-Namen, denn dadurch wird
+      das Array erst erzeugt. Sie können Felder in verschiedenen Arrays gruppieren,
+      wenn Sie verschiedenen Feldern die gleichen Namen geben:
+      <programlisting role="html">
+<![CDATA[
+<input name="MeinArray[]" />
+<input name="MeinArray[]" />
+<input name="MeinAnderesArray[]" />
+<input name="MeinAnderesArray[]" />
+]]>
+      </programlisting>
+      Daraus werden zwei Arrays, MeinArray und MeinAnderesArray erstellt. Es ist 
+      auch möglich, spezielle Schlüssel anzugeben:
+      <programlisting role="html">
+<![CDATA[
+<input name="AnderesArray[]" />
+<input name="AnderesArray[]" />
+<input name="AnderesArray[email]" />
+<input name="AnderesArray[telefon]" />
+]]>
+      </programlisting>
+      Das Array AnderesArray enthält daraufhin die Schlüssel 0, 1, email und
+      telefon.
+      </para>
+      <para>
+       <note>
+        <para>
+         Die Angabe von Array-Schlüsseln ist in HTML optional. Wenn Sie keinen
+         Schlüssel angeben, wird das Array in der Formular-Reihenfolge gefüllt.
+         Im ersten Beispiel enthält also die Schlüssel 0, 1, 2 und 3.
+        </para>
+       </note>
+      </para>
+      <para>
+      Siehe auch: <link linkend="ref.array">Array-Funktionen</link> und
+      <link linkend="language.variables.external">Variablen aus externen Quellen</link>.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.html.select-multiple">
+    <question>
+     <para>
+      Wie bekomme ich alle Werte aus einem "select multiple"-HTML-Tag?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Mit einem "select multiple"-Tag können Benutzer mehrere Werte aus einer
+      Liste auswählen. Diese Werte werden dann an den "action handler" des Formulars
+      (z.B. ein PHP-Skript) übergeben. Problematisch ist dabei, dass alle mit demselben
+      Namen übergeben werden, z.B.:
+      <programlisting role="html">
+<![CDATA[
+<select name="var" multiple="yes">
+]]>
+      </programlisting>
+      Jede ausgewählte Option wird übergeben als:
+      <programlisting>
+var=option1
+var=option2
+var=option3
+      </programlisting>
+      Jede Option wird den Inhalt der vorherigen
+      <varname>$var</varname>-Variablen überschreiben. Die Lösung ist, die
+      spezielle PHP-Lösung hierfür zu verwenden. Sie sollten das Tag wie
+      folgt umschreiben:
+      <programlisting role="html">
+<![CDATA[
+<select name="var[]" multiple>
+]]>
+      </programlisting>
+      PHP weiß dann, dass <varname>$var</varname> als Array behandelt
+      werden soll. Jede ausgewählte Wert wird dem Array hinzugefügt.
+      Das erste Element wird zu <varname>$var[0]</varname>, das nächste zu
+      <varname>$var[1]</varname> etc. Die <function>count</function>-Funktion
+      kann benutzt werden, um herauszufinden, wie viele Optionen ausgewählt
+      wurden. Mit der <function>sort</function>-Funktion können Sie bei
+      Bedarf das Array sortieren.
+     </para>
+     <para>
+      Beachten Sie, dass, falls Sie JavaScript benutzen, die eckigen Klammern
+      <literal>[]</literal> im Feldnamen Probleme machen können, wenn Sie
+      versuchen, über den Namen auf das Feld zu verweisen. Benutzen Sie
+      stattdessen die numerische ID des Formularfelds oder schließen Sie
+      den Variablennamen in einfache Anführungszeichen ein und benutzen Sie
+      dies als den Index, z.B.:
+      <programlisting>
+variable = document.forms[0].elements['var[]'];
+      </programlisting>
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.html.javascript-variable">
+    <question>
+     <para>
+      Wie kann ich eine Variable von JavaScript an PHP übergeben?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Da JavaScript (normalerweise) nur auf dem Client läuft, während
+      PHP (normalerweise) auf Servern läuft, und da HTTP ein "status-loses"
+      Protokoll ist, können zwischen den beiden Sprachen keine Variablen
+      direkt ausgetauscht werden.
+     </para>
+     <para>
+      Allerdings ist es trotzdem möglich, Variablen zwischen den beiden
+      zu übergeben. Eine Möglichkeit ist, den JavaScript-Code mit PHP
+      zu generieren. Außerdem muss die angezeigte Seite sich regelmäßig
+      selbst aktualisieren und dabei bestimmte Variablen an das PHP-Skript
+      übergeben. Das folgende Beispiel zeigt wie Sie dies tun können --
+      es ermöglicht PHP, die Bildschirmauflösung (Höhe und Breite) zu
+      ermitteln, was normalerweise nur Client-seitig möglich ist.
+     </para>
+     <para>
+      <example>
+       <title>JavaScript mit PHP generieren</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+if (isset($_GET['width']) AND isset($_GET['height'])) {
+  // Ausgabe der beiden Größenangaben
+  echo "Die Bildschirmbreite ist: ". $_GET['width'] ."<br />\n";
+  echo "Die Bildschirmhöhe ist: ". $_GET['height'] ."<br />\n";
+} else {
+  // Übergabe der Größenangaben
+  // (der ursprüngliche 'QUERY_STRING' wird beibehalten;
+  //  POST-Variablen müssen anders behandelt werden)
+
+  echo "<script language='javascript'>\n";
+  echo "  location.href=\"${_SERVER['SCRIPT_NAME']}?${_SERVER['QUERY_STRING']}"
+            . "&width=\" + screen.width + \"&height=\" + screen.height;\n";
+  echo "</script>\n";
+  exit();
+}
+?>
+]]>
+       </programlisting>
+      </example>
+     </para>
+    </answer>
+   </qandaentry>
+
+  </qandaset>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

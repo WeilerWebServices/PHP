@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.12 $ -->
+<classentry id="gtk.gtkadjustment">
+ <classmeta>
+  <classtitle>GtkAdjustment</classtitle>
+  <classparent>GtkObject</classparent>
+  <shortdesc>
+   A GtkObject representing an adjustable bounded value
+  </shortdesc>
+  <desc>
+   <para>
+    The GtkAdjustment object represents a value which has an associated lower
+    and upper bound, together with step and page increments, and a page size.
+    It is used within several GTK+ widgets, including
+    <classname>GtkSpinButton</classname>, <classname>GtkViewport</classname>,
+    and <classname>GtkRange</classname> (which is a base class for
+    <classname>GtkHScrollbar</classname>, <classname>GtkVScrollbar</classname>,
+    <classname>GtkHScale</classname>, and <classname>GtkVScale</classname>).
+   </para>
+   <para>
+    The GtkAdjustment object does not update the value itself. Instead it is
+    left up to the owner of the GtkAdjustment to control the value.
+   </para>
+   <para>
+    The owner of the GtkAdjustment typically calls the
+    <function class="GtkAdjustment">value_changed</function> and
+    <function class="GtkAdjustment">changed</function> functions after
+    changing the value and its bounds. This results in the emission of the
+    <signalname class="GtkAdjustment">value-changed</signalname> or
+    <signalname class="GtkAdjustment">changed</signalname> signal respectively.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkadjustment.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkAdjustment</function></funcdef>
+    <paramdef>double <parameter>value</parameter></paramdef>
+    <paramdef>double <parameter>lower</parameter></paramdef>
+    <paramdef>double <parameter>upper</parameter></paramdef>
+    <paramdef>double <parameter>step_increment</parameter></paramdef>
+    <paramdef>double <parameter>page_increment</parameter></paramdef>
+    <paramdef>double <parameter>page_size</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new GtkAdjustment.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Creates a new adjusment object with the given parameters
+    </simpara>
+   </desc>
+  </constructor>
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkadjustment.method.changed">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>changed</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emits a "changed" signal.
+   </shortdesc>
+   <desc>
+    <para>
+     Emits a <signalname class="GtkAdjustment">changed</signalname> signal
+     from the <classname>GtkAdjustment</classname>. This is typically called
+     by the owner of the <classname>GtkAdjustment</classname> after it has
+     changed any of the fields other than the <fieldname>value</fieldname>.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkadjustment.method.clamp_page">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>clamp_page</function></funcdef>
+     <paramdef>double <parameter>lower</parameter></paramdef>
+     <paramdef>double <parameter>upper</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Ensure that the value is in a certain range.
+   </shortdesc>
+   <desc>
+    <para>
+     Updates the <classname>GtkAdjustment</classname> value to ensure that the
+     range between <parameter>lower</parameter> and
+     <parameter>upper</parameter> is in the current page (i.e. between
+     <fieldname class="GtkAdjustment">value</fieldname> and
+     <fieldname class="GtkAdjustment">value</fieldname> +
+     <fieldname class="GtkAdjustment">page_size</fieldname>). If the range
+     is larger than the page size, then only the start of it will be in the
+     current page. A <signalname class="GtkAdjustment">changed</signalname>
+     signal will be emitted if the value is changed.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkadjustment.method.get_value">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>double <function>get_value</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the current value of the adjustment.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the current value of the adjustment.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkAdjustment">set_value</function>,
+     <fieldname class="GtkAdjustment">value</fieldname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkadjustment.method.set_value">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_value</function></funcdef>
+     <paramdef>double <parameter>value</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the value.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the <classname>GtkAdjustment</classname> <fieldname>value</fieldname>.
+     The value is
+     <link linkend="gtk.gtkadjustment.method.clamp_page">clamped</link> to lie
+     between $adjustment-&gt;<fieldname class="GtkAdjustment">lower</fieldname>
+     and $adjustment-&gt;<fieldname class="GtkAdjustment">upper</fieldname>.
+    </para>
+
+    <para>
+     Note that for adjustments which are used in a
+     <classname>GtkScrollbar</classname>, the effective range of allowed
+     values goes from adjustment-&gt;<fieldname>lower</fieldname> to
+     ($adjustment-&gt;<fieldname class="GtkAdjustment">upper</fieldname> -
+     $adjustment-&gt;<fieldname class="GtkAdjustment">page_size</fieldname>).
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkAdjustment">get_value</function>,
+     <fieldname class="GtkAdjustment">value</fieldname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkadjustment.method.value_changed">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>value_changed</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emits a <signalname class="GtkAdjustment">value-changed</signalname>
+    signal.
+   </shortdesc>
+   <desc>
+    Emits a <signalname class="GtkAdjustment">value-changed</signalname>
+    signal from the <classname>GtkAdjustment</classname>. This is typically
+    called by the owner of the GtkAdjustment after it has changed the
+    <fieldname class="GtkAdjustment">value</fieldname> field.
+   </desc>
+  </method>
+
+ </methods>
+
+ <fields>
+
+  <field id="gtk.gtkadjustment.field.lower" type="ro">
+   <fieldname>lower</fieldname>
+   <fieldtype>double</fieldtype>
+   <shortdesc>
+    The minimum value of the adjustment.
+   </shortdesc>
+   <desc>
+    <simpara>
+     The minimum value of the adjustment.
+    </simpara>
+    <para>
+     Default value: <literal>0</literal>.
+    </para>
+   </desc>
+  </field>
+
+  <field id="gtk.gtkadjustment.field.page_increment" type="ro">
+   <fieldname>page_increment</fieldname>
+   <fieldtype>double</fieldtype>
+   <shortdesc>
+    The page increment of the adjustment.
+   </shortdesc>
+   <desc>
+    <simpara>
+     The page increment of the adjustment.
+    </simpara>
+    <para>
+     Default value: <literal>0</literal>.
+    </para>
+   </desc>
+  </field>
+
+  <field id="gtk.gtkadjustment.field.page_size" type="ro">
+   <fieldname>page_size</fieldname>
+   <fieldtype>double</fieldtype>
+   <shortdesc>
+    The page size of the adjustment.
+   </shortdesc>
+   <desc>
+    <para>
+     The page size of the adjustment. Note that the page size is
+     irrelevant and should be set to zero if the adjustment is used for a
+     simple scalar value, e.g. in a <classname>GtkSpinButton</classname>.
+    </para>
+    <para>
+     Default value: <literal>0</literal>.
+    </para>
+   </desc>
+  </field>
+
+  <field id="gtk.gtkadjustment.field.step_increment" type="ro">
+   <fieldname>step_increment</fieldname>
+   <fieldtype>double</fieldtype>
+   <shortdesc>
+    The step increment of the adjustment.
+   </shortdesc>
+   <desc>
+    <simpara>
+     The step increment of the adjustment.
+    </simpara>
+    <para>
+     Default value: <literal>0</literal>.
+    </para>
+   </desc>
+  </field>
+
+  <field id="gtk.gtkadjustment.field.upper" type="ro">
+   <fieldname>upper</fieldname>
+   <fieldtype>double</fieldtype>
+   <shortdesc>
+    The maximum value of the adjustment.
+   </shortdesc>
+   <desc>
+    <para>
+     The maximum value of the adjustment. Note that values will be restricted
+     by <literal>upper - page_size</literal> if the
+     <fieldname class="GtkAdjustment">page_size</fieldname> value is non-zero.
+    </para>
+    <para>
+     Default value: <literal>0</literal>.
+    </para>
+   </desc>
+  </field>
+
+  <field id="gtk.gtkadjustment.field.value" type="ro">
+   <fieldname>value</fieldname>
+   <fieldtype>double</fieldtype>
+   <shortdesc>
+    The value of the adjustment.
+   </shortdesc>
+   <desc>
+    <simpara>
+     The value of the adjustment.
+    </simpara>
+    <para>
+     Default value: <literal>0</literal>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkAdjustment">get_value</function>, 
+     <function class="GtkAdjustment">set_value</function>
+    </para>
+
+   </desc>
+  </field>
+
+ </fields>
+
+ <signals>
+
+  <signal id="gtk.gtkadjustment.signal.changed">
+   <signalname>changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>adjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    One or more fields have changed.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when one or more of the <classname>GtkAdjustment</classname>
+     fields have been changed, other than the
+     <fieldname class="GtkAdjustment">value</fieldname> field.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkadjustment.signal.value-changed">
+   <signalname>value-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>adjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The value field has been changed.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the <fieldname class="GtkAdjustment">value</fieldname> field
+     has been changed.
+    </para>
+   </desc>
+  </signal>
+ </signals>
+
+</classentry>

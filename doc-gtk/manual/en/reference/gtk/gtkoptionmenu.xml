@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.9 $ -->
+<classentry id="gtk.gtkoptionmenu">
+ <classmeta>
+  <classtitle>GtkOptionMenu</classtitle>
+  <classparent>GtkButton</classparent>
+  <shortdesc>
+   DEPRECATED. A widget used to choose from a list of valid choices.
+  </shortdesc>
+  <desc>
+   <note>
+    &deprecated.method;
+    Use <classname>GtkComboBox</classname> instead.
+   </note>
+  </desc>
+ </classmeta>
+
+
+ <constructors>
+  <constructor id="gtk.gtkoptionmenu.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkOptionMenu</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated; Creates a new option menu.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method; Use <classname>GtkComboBox</classname> instead.
+    </para>
+    <para>
+     Creates a new option menu.
+    </para>
+   </desc>
+  </constructor>
+ </constructors>
+
+
+ <methods>
+  <method id="gtk.gtkoptionmenu.method.get_history">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_history</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated; Retrieves the index of the currently selected menu item.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+    <para>
+     Retrieves the index of the currently selected menu item.
+     The menu items are numbered from top to bottom, starting with 0.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkOptionMenu">set_history</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkoptionmenu.method.get_menu">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkWidget</classname> <function>get_menu</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated; Returns the GtkMenu associated with the option menu.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+    <para>
+     Returns the <classname>GtkMenu</classname> associated with the GtkOptionMenu.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkOptionMenu">remove_menu</function>, 
+     <function class="GtkOptionMenu">set_menu</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkoptionmenu.method.remove_menu">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>remove_menu</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated; Removes the menu from the option menu.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+    <para>
+     Removes the menu from the option menu.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkOptionMenu">get_menu</function>, 
+     <function class="GtkOptionMenu">set_menu</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkoptionmenu.method.set_history">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_history</function></funcdef>
+     <paramdef>int <parameter>index</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated; 
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+    <para>
+     Selects the menu item specified by index making it the
+     newly selected value for the option menu.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkOptionMenu">get_history</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkoptionmenu.method.set_menu">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_menu</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>menu</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated; 
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method; Set the menu that is popped up.
+    </para>
+    <para>
+     Provides the GtkMenu that is popped up to allow the user to choose
+     a new value.
+     You should provide a simple menu avoiding the use of tearoff menu
+     items, submenus, and accelerators.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkOptionMenu">get_menu</function>, 
+     <function class="GtkOptionMenu">remove_menu</function>
+    </para>
+   </desc>
+  </method>
+ </methods>
+
+
+ <signals>
+  <signal id="gtk.gtkoptionmenu.signal.changed">
+   <signalname>changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkOptionMenu</classname> <parameter>optionmenu</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when another menu item is selected.
+   </shortdesc>
+   <desc>
+    Emitted when another menu item is selected.
+   </desc>
+  </signal>
+ </signals>
+
+</classentry>

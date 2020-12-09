@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 1.9 Maintainer: fernandoc Status: ready -->
+<classentry id="gtk.gtkfontbutton">
+ <classmeta>
+  <classtitle>GtkFontButton</classtitle>
+  <classparent>GtkButton</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkfontbutton.png"/> 
+  <shortdesc>
+   Um botão que lança um dialogo de seleção de fonte.
+  </shortdesc>
+  <desc>
+   <para>
+    Este botão é muito parecido com
+    <classname>GtkColorButton</classname> ou 
+    <classname>GtkFileChooserButton</classname>. As duas funções deste botão 
+    são exibir a fonte atualmente selecionada, e lançar um dialogo
+    de seleção de fonte quando clicado.
+   </para>
+   <para>
+    Quando clicado o <classname>GtkFontButton</classname>, irá lançar um
+    <classname>GtkFontSelectionDialog</classname>. Você pode definir
+    várias das propriedades do dialogo usando os seus métodos. O botão é mais
+    adequado em um dialogo de preferências, aonde você precisa que o usuário selecione um fonte.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkfontbutton.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkFontButton</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Cria um novo GtkFontButton.
+   </shortdesc>
+   <desc>
+    <para>
+     Use o construtor para gerar um novo botão de fonte que irá lançar um
+     <classname>GtkFontSelectionDialog</classname> ao ser clicado.
+    </para>
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkfontbutton.constructor.new_with_font">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkFontButton::new_with_font</function></funcdef>
+    <paramdef>string <parameter>fontname</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Cria um novo GtkFontButton com uma fonte pré-definida selecionada.
+   </shortdesc>
+   <desc>
+    <para>
+     Use este método se você quer que o botão de fontes exiba uma fonte pré-definida
+     já selecionada. Passe o nome da fonte que você quer selecionada
+     como parâmetro para este método.
+    </para>
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkfontbutton.method.get_font_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_font_name</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Obtém o nome da fonte selecionada.
+   </shortdesc>
+   <desc>
+    <para>
+     Use este método para obter o nome da fonte que esta selecionada pelo
+     usuário. Note que se o usuário não tiver usado o botão, o método
+     irá retornar a fonte padrão que
+     <classname>GtkFontButton</classname> mostrou inicialmente.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">set_font_name</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.get_show_size">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_show_size</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna quando o tamanho da fonte é exibido no rótulo.
+   </shortdesc>
+   <desc>
+    <para>
+     Use este método para determinar quando o tamanho da fonte é exibido
+     no rótulo de <classname>GtkFontButton</classname>. O método irá retornar
+     <literal>true</literal> se exibir,
+     <literal>false</literal> se não.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">set_show_size</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.get_show_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_show_style</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna quando o estilo de fonte é exibido no rótulo.
+   </shortdesc>
+   <desc>
+    <para>
+     Use este método para determinar quando o estilo da fonte é exibido
+     no rótulo do <classname>GtkFontButton</classname>. O método irá 
+     retornar <literal>true</literal> se estilos como negrito, itálico;
+     serão exibidos, <literal>false</literal> se não.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">set_show_style</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.get_title">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_title</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Obtém o título do dialogo de seleção de fonte resultante.
+   </shortdesc>
+   <desc>
+    <para>
+     Use este método quando você quer obter o título que é exibido
+     no dialogo de seleção de fonte que resulta quando o
+     <classname>GtkFontButton</classname> é clicado.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">set_title</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.get_use_font">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_use_font</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna quando a fonte selecionada é usada pelo botão.
+   </shortdesc>
+   <desc>
+    <para>
+     Use este método quando você quer determinar quando o
+     <classname>GtkFontButton</classname> usa a fonte selecionada no
+     dialogo de seleção de fonte. Isso significa que o rótulo do botão de fonte em si
+     será exibido na fonte selecionada. A função irá retornar
+     <literal>true</literal> se sim, <literal>false</literal>
+     se não
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">set_use_font</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.get_use_size">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_use_size</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna quando o tamanho da fonte selecionada é usado pelo botão.
+   </shortdesc>
+   <desc>
+    <para>
+     Use este método para determinar quando o tamanho da fonte selecionada
+     no dialogo de seleção de fonte será usado pelo
+     <classname>GtkFontButton</classname>. Isto significa que o rótulo
+     do botão de fonte em sí será exibido no tamanho de fonte selecionado.
+     A função irá retornar <literal>true</literal> se sim, 
+     <literal>false</literal> se não.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">set_use_size</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.set_font_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>set_font_name</function></funcdef>
+     <paramdef>string <parameter>fontname</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define a fonte usada pelo botão.
+   </shortdesc>
+   <desc>
+    <para>
+     Esta função irá definir o nome da fonte usada por
+     <classname>GtkFontButton</classname>. Isto é, portanto, a fonte exibida
+     no rótulo do botão. Passe o nome da fonte como 
+     parâmetro para este método.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">get_font_name</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.set_show_size">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_show_size</function></funcdef>
+     <paramdef>bool <parameter>show_size</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define quando o tamanho da fonte será usado no botão.
+   </shortdesc>
+   <desc>
+    <para>
+     Use este método para definir quando o tamanho da fonte selecionada pelo
+     dialogo de seleção de fonte será exibido no rótulo do 
+     <classname>GtkFontButton</classname>. Passe <literal>true</literal> 
+     como parâmetro se você quer que sim, <literal>false</literal> se não.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">get_show_size</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.set_show_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_show_style</function></funcdef>
+     <paramdef>bool <parameter>show_style</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define quando o estilo da fonte será exibido no botão. 
+   </shortdesc>
+   <desc>
+    <para>
+     Use este método para definir quando o estilo de fonte selecionado
+     pelo dialogo de sleção de fonte, como negrito e itálico, serão exibidos no
+     <classname>GtkFontButton</classname>. Passe <literal>true</literal> 
+     como um parâmetro se você quer que sim, <literal>false</literal> se não.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">get_show_style</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.set_title">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_title</function></funcdef>
+     <paramdef>string <parameter>title</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define o titulo do dialogo de seleção de fonte resultante.
+   </shortdesc>
+   <desc>
+    <para>
+     Use este função para definir o titulo que será exibido no dialogo de
+     seleção de fonte que irá aparecer quando o
+     <classname>GtkFontButton</classname> é clicado. Você deve passar o titulo
+     a ser exibido como parâmetro para o metodo. Note que, se você
+     não utilizar este método, o titulo irá aparecer como "Pick a Font".
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">get_title</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.set_use_font">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_use_font</function></funcdef>
+     <paramdef>bool <parameter>use_font</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define quando o botão irá usar a fonte selecionada.
+   </shortdesc>
+   <desc>
+    <para>
+     Se você quer que o rótulo do botão de fonte em sí seja exibido na fonte
+     que esta selecionada, então passe <literal>true</literal> como
+     parãmetro para a a função; <literal>false</literal> se não.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">get_use_font</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontbutton.method.set_use_size">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_use_size</function></funcdef>
+     <paramdef>bool <parameter>use_size</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define quando o botão de fonte irá usar o tamanho de fonte selecionado.
+   </shortdesc>
+   <desc>
+    <para>
+     Se você quer que o rótulo do botão de fonte seja exibido no tamanho
+     de fonte selecionado no dialogo de seleção de fonte, então passe
+     <literal>true</literal> como parâmetro para essa função;
+     <literal>false</literal> se não.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontButton">get_use_size</function>
+    </para>
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkfontbutton.signal.font-set">
+   <signalname>font-set</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkFontButton <parameter>fontbutton</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitido quando o usuário seleciona uma fonte.    
+   </shortdesc>
+   <desc>
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

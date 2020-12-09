@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 343014 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.openssl-csr-sign">
+ <refnamediv>
+  <refname>openssl_csr_sign</refname>
+  <refpurpose>CSRに他の証明書（あるいは自分自身）で署名して証明書を作成する</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>openssl_csr_sign</methodname>
+   <methodparam><type>mixed</type><parameter>csr</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>cacert</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>priv_key</parameter></methodparam>
+   <methodparam><type>int</type><parameter>days</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>configargs</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>serial</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>openssl_csr_sign</function> は、
+   指定した CSR を用いて x509 証明書リソースを作成します。
+  </para>
+  &note.openssl.cnf;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>csr</parameter></term>
+     <listitem>
+      <para>
+       事前に <function>openssl_csr_new</function> で作成した CSR。
+       <filename>file://path/to/csr</filename> のように指定された PEM エンコードされた CSR へのパス、
+       あるいは <function>openssl_csr_export</function> で生成した文字列も使用可能です。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>cacert</parameter></term>
+     <listitem>
+      <para>
+       作成された証明書は <parameter>cacert</parameter> で署名されます。
+       <parameter>cacert</parameter> が &null; の場合は、自己署名の証明書となります。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>priv_key</parameter></term>
+     <listitem>
+      <para>
+       <parameter>priv_key</parameter> は
+       <parameter>cacert</parameter> に対応する秘密鍵です。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>days</parameter></term>
+     <listitem>
+      <para>
+       <parameter>days</parameter> は、作成された証明書の有効期限を日数で指定します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>configargs</parameter></term>
+     <listitem>
+      <para>
+       <parameter>configargs</parameter> で証明書の詳細設定が可能です。
+       <parameter>configargs</parameter> についての詳細な情報は
+       <function>openssl_csr_new</function> を参照ください。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>serial</parameter></term>
+     <listitem>
+      <para>
+       発行される証明書のシリアル番号を、オプションで指定します。
+       省略した場合のデフォルトは 0 です。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   成功した場合に x509 証明書リソース、失敗した場合に &false; を返します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>openssl_csr_sign</function> の例 -
+     CSR に署名する（あなた自身の CA を作成する）</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// このスクリプトでは、前のページのテキストエリアから受け取った
+// CSR を利用すると仮定します。
+$csrdata = $_POST["CSR"];
+
+// ここでは自己認証局の証明書を用いて署名要求に署名します。
+// どんな証明書でも署名は可能ですが、署名に用いる証明書が
+// 新たに署名される証明書を取り扱うであろうソフトウェアや
+// ユーザーらに信頼されていない限り、その手続きは無意味です。
+
+// 自己認証局証明書とその秘密鍵が必要です。
+$cacert = "file://path/to/ca.crt";
+$privkey = array("file://path/to/ca.key", "your_ca_key_passphrase");
+
+$usercert = openssl_csr_sign($csrdata, $cacert, $privkey, 365, array('digest_alg'=>'sha256') );
+
+// ユーザーがローカル設定（SSL サーバー用の証明書
+// ファイルなど）にコピー＆ペーストできるように
+// 作成された証明書をそのまま表示します。
+openssl_x509_export($usercert, $certout);
+echo $certout;
+
+// 発生したエラーをすべて表示します。
+while (($e = openssl_error_string()) !== false) {
+    echo $e . "\n";
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

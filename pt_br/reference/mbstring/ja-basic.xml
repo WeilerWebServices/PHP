@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 318573 Maintainer: adiel Status: ready -->
+<chapter xml:id="mbstring.ja-basic" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Noções Básicas de Codificações Multibyte Japonesas</title>
+ <para>
+  Os caracteres japoneses só podem ser representados por codificações multibyte,
+  e vários padrões de codificação são usados dependendo da plataforma e
+  da finalidade do texto. Para piorar, esses padrões de codificação
+  diferem um pouco um do outro. Para criar uma aplicação
+  web que possa ser usada em um ambiente japonês, um
+  desenvolvedor deve manter essas complexidades em mente para garantir que as
+  codificações de caracteres apropriadas sejam usadas.
+ </para>
+ <para>
+  <itemizedlist>
+   <listitem>
+    <simpara>O armazenamento para um caractere pode ter até seis bytes</simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     A maioria dos caracteres multibyte japoneses aparece com o dobro da largura dos
+     caracteres de byte único. Esses caracteres são chamados
+     &quot;zen-kaku&quot; em japonês, que significa
+     &quot;largura total&quot;. Outros caracteres, mais estreitos, são chamados
+     &quot;han-kaku&quot;, que significa &quot;meia largura&quot;. As
+     propriedades gráficas dos caracteres, no entanto, dependem
+     dos tipos das fontes usadas para exibi-los.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Algumas codificações de caracteres usam sequências com shift (escape) definidas
+     na ISO-2022 para alternar o mapa de código da área de código específica
+     (<literal>00h</literal> a <literal>7fh</literal>).
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     A ISO-2022-JP deve ser usada no SMTP/NNTP e os cabeçalhos e entidades
+     devem ser redefinidos de acordo com as exigências da RFC. Embora esses não sejam
+     requisitos, isso ainda é uma boa idéia pois vários agentes de usuários
+     populares não podem reconhecer nenhum outro método de codificação.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     As páginas web criadas para serviços de telefonia móvel como
+     <link xlink:href="&url.imode;">i-mode</link>
+     ou <link xlink:href="&url.ezweb;">EZweb</link>
+     devem usar Shift_JIS.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+      A partir do PHP 5.4.0, os caracteres de pictograma
+      usados em serviços de telefonia móvel como
+      <link xlink:href="&url.imode;">i-mode</link>
+      ou <link xlink:href="&url.ezweb;">EZweb</link>
+      são suportados.
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </para>
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

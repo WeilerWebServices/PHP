@@ -1,0 +1,29 @@
+<?php
+/* 
+	This checks for unapproved events, and emails php-webmaster@ if they exist. 
+	It should be checked weekly (via cron). 
+*/
+require dirname(dirname(__FILE__)).'/include/functions.inc';
+
+db_connect();
+
+$query = 'SELECT COUNT(*) FROM phpcal WHERE NOT approved';
+$count = db_get_one($query);
+
+if ($count > 0) {
+
+	$subject = "Pending unapproved events notice";
+	$message = "
+Greetings PHP Webmasters;
+
+There are roughly [$count] unapproved events awaiting moderation.  Please check the queue:
+
+	https://master.php.net/manage/event.php?unapproved=1
+
+Thanks!";
+
+	$headers = "From: php-webmaster@lists.php.net";
+
+	mail('php-webmaster@lists.php.net', $subject, $message, $headers, "-fnoreply@php.net");
+
+}

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.11" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+ <name>tdb</name>
+ <channel>pecl.php.net</channel>
+ <summary>Trivial DB bindings</summary>
+ <description>
+  This extension provides bindings for Trivial DB.
+ </description>
+ <lead>
+  <name>Antony Dovgal</name>
+  <user>tony2001</user>
+  <email>tony2001@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2008-04-18</date>
+ <time>12:00:00</time>
+ <version>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP</license>
+ <notes>
+  - Fixed PECL bug #13684 (tdb fails to configure on FreeBSD)
+  - Improved configure checks in order to detect wrong TDB version.
+ </notes>
+ <contents>
+  <dir name="/">
+   <dir name="tests">
+	<file name="tdb_append_001.phpt" role="test" />
+	<file name="tdb_chainlock_001.phpt" role="test" />
+	<file name="tdb_chainlock_002.phpt" role="test" />
+	<file name="tdb_chainlock_003.phpt" role="test" />
+	<file name="tdb_chainunlock_001.phpt" role="test" />
+	<file name="tdb_chainunlock_002.phpt" role="test" />
+	<file name="tdb_close_001.phpt" role="test" />
+	<file name="tdb_delete_001.phpt" role="test" />
+	<file name="tdb_error_001.phpt" role="test" />
+	<file name="tdb_exists_001.phpt" role="test" />
+	<file name="tdb_fetch_001.phpt" role="test" />
+	<file name="tdb_first_key_001.phpt" role="test" />
+	<file name="tdb_get_flags_001.phpt" role="test" />
+	<file name="tdb_get_seqnum_001.phpt" role="test" />
+	<file name="tdb_get_seqnum_002.phpt" role="test" />
+	<file name="tdb_insert_001.phpt" role="test" />
+	<file name="tdb_lock_001.phpt" role="test" />
+	<file name="tdb_lock_002.phpt" role="test" />
+	<file name="tdb_lock_003.phpt" role="test" />
+	<file name="tdb_next_key_001.phpt" role="test" />
+	<file name="tdb_open_001.phpt" role="test" />
+	<file name="tdb_open_002.phpt" role="test" />
+	<file name="tdb_open_003.phpt" role="test" />
+	<file name="tdb_replace_001.phpt" role="test" />
+	<file name="tdb_set_max_dead_001.phpt" role="test" />
+	<file name="tdb_store_001.phpt" role="test" />
+	<file name="tdb_transactions_001.phpt" role="test" />
+	<file name="tdb_transactions_002.phpt" role="test" />
+	<file name="tdb_transactions_003.phpt" role="test" />
+	<file name="tdb_transactions_004.phpt" role="test" />
+	<file name="tdb_transactions_005.phpt" role="test" />
+	<file name="tdb_unlock_001.phpt" role="test" />
+	<file name="tdb_unlock_002.phpt" role="test" />
+	<file name="tdb_update_001.phpt" role="test" />
+   </dir> <!-- //tests -->
+   <file name="CREDITS" role="doc" />
+   <file name="README" role="doc" />
+   <file name="config.m4" role="src" />
+   <file name="tdb.c" role="src" />
+   <file name="php_tdb.h" role="src" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.0.0</min>
+    <max>6.0.0</max>
+    <exclude>6.0.0</exclude>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <providesextension>tdb</providesextension>
+ <extsrcrelease>
+  <configureoption default="autodetect" name="with-tdb" prompt="Please provide the path to Trivial DB installation" />
+ </extsrcrelease>
+ <changelog>
+  <date>2007-08-06</date>
+  <time>19:00:00</time>
+  <version>
+   <release>0.1.0</release>
+   <api>0.1.0</api>
+  </version>
+  <stability>
+   <release>beta</release>
+   <api>beta</api>
+  </stability>
+  <license uri="http://www.php.net/license">PHP</license>
+  <notes>
+   - Initial release.
+  </notes>
+ </changelog>
+</package>

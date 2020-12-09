@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 297645 Maintainer: sezer Status: ready -->
+<!-- splitted from ./index.xml, last change in rev 1.66 -->
+  <chapter xml:id="security.apache" xmlns="http://docbook.org/ns/docbook">
+   <title>Apache'ye modül olarak kurulum</title>
+   <simpara>
+    <acronym>PHP</acronym> bir Apache modülü olarak kullanıldığında Apache kullanıcısının (Apache
+    yapılandırma dosyasında user yönergesine bakın) yetkilerini miras alır. Bu
+    kullanıcı genellikle  'nobody' kullanıcısı olur fakat bunun güvenlikle ve
+    kimlik doğrulama ile ilgili olumsuz etkileri olabilir. Örneğin <acronym>PHP</acronym>'yi bir
+    veritabanına erişmek için kullanıyorsanız ve bu veritabanına yerleşik
+    olarak erişim izniniz yoksa "nobody" kullanıcısına bu veritabanına erişim
+    izni vermek zorunda kalırsınız. Bu, kötücül bir betiğin bir kullanıcı ismi
+    ve parola belirtmeksizin veritabanına erişebilmesi ve değişiklik
+    yapabilmesi anlamına gelir. Bir ağ örümceğinin veritabanı yönetici
+    sayfasına rast gelmesi ve tüm veritabanınızı yok etmesi çok mümkündür. Bu
+    gibi durumlardan Apache kimlik doğrulaması ile korunabileceğiniz gibi
+    LDAP, .htaccess dosyaları, vs. kullanarak kendi erişim modelinizi
+    tasarlayabilir ve bu kodu <acronym>PHP</acronym> betiklerinize dahil edebilirsiniz.
+   </simpara>
+   <simpara>
+    Güvenliğin sağlanması, <acronym>PHP</acronym>'nin tamamen etkisiz hale getirilmesi, dosya
+    yazma, veritabanı erişiminin kısıtlanması demek değildir. Bunlar sağlanırsa
+    güvenli bir işlem ortamı oluşmuş olabilir ancak <acronym>PHP</acronym> özellikleri kaybolmuş
+    olur.
+   </simpara>
+   <simpara>
+    Sık yapılan bir güvenlik hatası Apache'yi root kullanıcısının aidiyetinde
+    çalıştırmak veya Apache'nin yeteneklerini başka yollarla arttırmaktır.
+   </simpara>
+   <simpara>
+    Apache kullanıcısının yetkilerini root seviyesine yükseltmek, oldukça
+    tehlikeli olup sistemin tamamını tehlikeye atmak demektir. Dolayısıyla,
+    güvenlik profesyoneli olmayanların sudo veya chroot yapmayı ya da
+    Apache'yi root olarak başka bir şekilde çalıştırmayı düşünmemesi gerekir.
+   </simpara>
+   <simpara>
+    <acronym>PHP</acronym> bazı basit çözümler içermektedir. Örneğin, <link
+    linkend="ini.open-basedir">open_basedir</link> kullanarak <acronym>PHP</acronym> tarafından
+    kullanımına izin verilen dizinlere erişimi denetleyebilir ve
+    kısıtlayabilirsiniz. Ayrıca, sadece Apache'nin erişimine açık bölgeler
+    tanımlayabilir, kullanıcılara ve sisteme ait dosyalara erişimi
+    kısıtlayabilirsiniz.
+   </simpara>
+  </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 346542 Maintainer: jbnahan Status: ready -->
+<!-- Reviewed: no -->
+
+<sect1 xml:id="migration72.other-changes" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Autres changements</title>
+
+ <sect2 xml:id="migration72.other-changes.utf8_-functions-to-ext-standard">
+  <title>Déplacement de <function>utf8_encode</function> et <function>utf8_decode</function></title>
+
+  <para>
+   Les fonctions <function>utf8_encode</function> et 
+   <function>utf8_decode</function> ont maintenant été déplacées vers 
+   l'extension standard en tant que fonctions de chaîne, alors qu'avant 
+   l'extension <link linkend="book.xml">XML</link>  était requise pour 
+   qu'elles soient disponible.
+  </para>
+ </sect2>
+ <sect2 xml:id="migration72.other-changes.mail">
+  <title>Changement pour <function>mail</function> et <function>mb_sendmail</function></title>
+
+  <para>
+   Le parametre $additional_headers de <function>mail</function> et
+   <function>mb_sendmail</function>
+   accepte maintenant un <type>array</type> à la place d'un <type>string</type>
+  </para>
+ </sect2>
+ 
+ <sect2 xml:id="migration72.other-changes.lmdb-support">
+  <title>Prise en charge de LMDB</title>
+
+  <para>
+   L'extension <link linkend="book.dba">DBA</link> prend maintenant en charge LMDB.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.other-changes.build-system">
+  <title>Modifications apportées au système build de PHP</title>
+
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     Unix: Autoconf 2.64 ou plus est maintenant nécessaire pour construire PHP.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Unix: L'argument de configuration <literal>--with-pdo-oci</literal> n'a plus 
+     besoin de la version de Oracle Instant Client.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Unix: L'argument de configuration <literal>--enable-gd-native-ttf</literal> a été supprimé. Il n'a pas été utilisé depuis PHP 5.5.0.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Windows: L'argument de configuration <literal>--with-config-profile</literal> 
+     a été ajouté. Cela peut être utilisé pour enregistrer des configurations 
+     spécifiques, un peu comme le fichier magique <filename>config.nice.bat</filename>.
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </sect2>
+
+ <sect2 xml:id="migration72.other-changes.image">
+  <title>Changement dans <link linkend="book.image">GD</link></title>
+
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     <function>imageantialias</function> est également disponible si construit 
+     avec libgd du système.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>imagegd</function> stocke des images TrueColor comme de vraies 
+     images TrueColor. Autrefois, ils ont été convertis en palette.
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </sect2>
+
+ <sect2 xml:id="migration72.other-changes.mcrypt">
+  <title>Déplacement de <link linkend="book.mcrypt">MCrypt</link> vers PECL</title>
+
+  <para>
+   L'extension <link linkend="book.mcrypt">MCrypt</link> est mainenant été 
+   déplacé du noyau vers PECL. Étant donné que la bibliothèque mcrypt n'a pas 
+   vu de mises à jour depuis 2007, son utilisation est fortement découragé. 
+   Au lieu de cela, soit <link linkend="book.openssl">OpenSSL</link> ou 
+   l'extension <link linkend="book.sodium">Sodium</link> doit être utilisé.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration72.other-changes.session-module-name">
+  <title><function>session_module_name</function></title>
+
+  <para>
+   Le passage de <literal> "user"</literal> à 
+   <function>session_module_name</function> déclenche maintenant une erreur de 
+   niveau <constant>E_RECOVERABLE_ERROR</constant>. Auparavant, cela a été 
+   ignoré silencieusement.
+  </para>
+ </sect2>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

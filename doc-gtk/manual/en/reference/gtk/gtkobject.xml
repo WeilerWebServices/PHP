@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.10 $ -->
+<classentry id="gtk.gtkobject">
+ <classmeta>
+  <classtitle>GtkObject</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   A base class for all classes in the Gtk family.
+  </shortdesc>
+  <desc>
+   <para>
+    <classname>GtkObject</classname> is a base class for all classes in the
+    Gtk family. It is an abstract class which cannot be instantiated directly.
+   </para>
+  </desc>
+ </classmeta>
+
+ <methods>
+
+  <method id="gtk.gtkobject.method.destroy">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>destroy</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Destroys the object.
+   </shortdesc>
+   <desc>
+    <para>
+     Destroys the object. When an object is destroyed, it is unset and will no
+     longer respond to any signal handlers created for it. When a top level
+     widget is destroyed, its children are also destroyed.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkobject.method.flags">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>flags</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the current object flags as an integer.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns a bitmask of the current flags for the object.
+    </para>
+    <para>
+     This method is not often used in production code.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkobject.method.set_flags">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_flags</function></funcdef>
+     <paramdef>int <parameter>flags</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets flags for the object using a bitwise AND operation.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the flags for the object using a bitwise AND operation. Setting the
+     flags does not change the properties of the object. Therefore calling
+     this method has little impact on an object and may only serve to cause
+     confusion.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkObject">unset_flags</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkobject.method.sink">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>sink</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Decrements the reference counter for the object.
+   </shortdesc>
+   <desc>
+    This method decrements the reference counter for the object. If the
+    reference counter hits zero, the object is destroyed. This method is
+    usually called internally by PHP-GTK. It is unlikely that you will ever
+    need to call this method explicitly in code.
+   </desc>
+  </method>
+
+  <method id="gtk.gtkobject.method.unset_flags">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unset_flags</function></funcdef>
+     <paramdef>int <parameter>flags</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Unsets the flags for the object using a bitwise NAND operation.
+   </shortdesc>
+   <desc>
+    <para>
+     Unsets the flags for the object using a bitwise NAND operation. Unsetting
+     the flags for an object does not change the properties of the object.
+     Therefore calling this method has little impact on an object and may only
+     serve to cause confusion.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkObject">set_flags</function>
+    </para>
+
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkobject.signal.destroy">
+   <signalname>destroy</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkObject <parameter>object</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when an object is destroyed.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when an object is destroyed. An object may be destroyed by
+     calling the <function class="GtkObject">destroy</function> method or by
+     destroying its top level parent.
+    </para>
+    <para>
+     When a user clicks on the <literal>X</literal> in the upper right hand
+     corner of a window, the <signalname class="GtkObject">destroy</signalname> will be emitted and the window
+     will be destroyed along with all of its contents.
+    </para>
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

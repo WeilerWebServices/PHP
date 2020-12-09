@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351135 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.openssl-random-pseudo-bytes">
+ <refnamediv>
+  <refname>openssl_random_pseudo_bytes</refname>
+  <refpurpose>Génère une chaine pseudo-aléatoire d'octets</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>string</type><type>false</type></type><methodname>openssl_random_pseudo_bytes</methodname>
+   <methodparam><type>int</type><parameter>length</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter role="reference">crypto_strong</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Génère une &string; pseudo-aléatoire d'octets, dont la longueur est
+   spécifiée par le paramètre <parameter>length</parameter>.
+  </para>
+  <para>
+   Indique également si l'algorithme fort de cryptologie a été utilisé pour
+   produire ces octets pseudo-aléatoires, en utilisant le paramètre
+   <parameter>crypto_strong</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>length</parameter></term>
+     <listitem>
+      <para>
+       La taille désirée pour la chaine d'octets. Un entier positif est demandé. PHP va tenter de
+       transtyper ce paramètre en un entier non nul pour l'utiliser. 
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>crypto_strong</parameter></term>
+     <listitem>
+      <para>
+       Si fourni, détermine si l'agorithme de cryptologie utilisé
+       était cryptographiquement fort, i.e. sécurisé pour être utilisé avec GPG, les mots
+       de passe, etc... &true; si il l'est, &false; sinon.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne la chaine d'octets générée en cas de succès, &return.falseforfailure;.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple <function>openssl_random_pseudo_bytes</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+for ($i = 1; $i <= 4; $i++) {
+    $bytes = openssl_random_pseudo_bytes($i, $cstrong);
+    $hex   = bin2hex($bytes);
+
+    echo "Longueur : Octets : $i et Hex: " . strlen($hex) . PHP_EOL;
+    var_dump($hex);
+    var_dump($cstrong);
+    echo PHP_EOL;
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Longueur : Octets : 1 et  Hex: 2
+string(2) "42"
+bool(true)
+
+Longueur : Octets : 2 et Hex: 4
+string(4) "dc6e"
+bool(true)
+
+Longueur : Octets : 3 et Hex: 6
+string(6) "288591"
+bool(true)
+
+Longueur : Octets : 4 et Hex: 8
+string(8) "ab86d144"
+bool(true)
+
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><function>random_bytes</function></member>
+   <member><function>bin2hex</function></member>
+   <member><function>crypt</function></member>
+   <member><function>mt_rand</function></member>
+   <member><function>uniqid</function></member>
+  </simplelist>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

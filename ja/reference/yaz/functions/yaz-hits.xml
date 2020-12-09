@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 297028 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi -->
+<refentry xml:id="function.yaz-hits" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>yaz_hits</refname>
+  <refpurpose>直近の検索に関するヒット数を返す</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>yaz_hits</methodname>
+   <methodparam><type>resource</type><parameter>id</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter role="reference">searchresult</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>yaz_hits</function> は、直近の検索に関するヒット数を返します。
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>id</parameter></term>
+     <listitem>
+      <para>
+       <function>yaz_connect</function> が返す接続リソース。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>searchresult</parameter></term>
+     <listitem>
+      <para>
+       詳細な検索結果情報の配列。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   直近の検索に関するヒット数を返します。検索が行われていない場合は
+   0 を返します。
+  </para>
+  <para>
+   検索結果配列がもし指定されていた場合、そこには Z39.50 サーバーが返す情報が
+   含まれます。この情報の形式は、検索結果の応答の一部である
+   SearchResult-1 フォーマットとなります。
+   SearchResult-1 フォーマットは、さまざまなクエリ(サブクエリ)のヒット数に
+   関する情報を取得するために使用可能です。
+   特に、クエリ内の個々の検索語句に関するヒット数を得ることが可能です。
+   最初のサブクエリについての情報が $array[0] に、2 番目のサブクエリについての
+   情報が $array[1] に、というような形式となります。
+  </para>
+  <table>
+   <title>検索結果の項目</title>
+   <tgroup cols="2">
+    <colspec colwidth="1*" colname="element"/>
+    <colspec colwidth="2*" colname="description"/>
+    <thead>
+     <row>
+      <entry>要素</entry>
+      <entry>説明</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry><literal>id</literal></entry>
+      <entry>サブクエリの ID2 (string)</entry>
+     </row>
+     <row>
+      <entry><literal>count</literal></entry>
+      <entry>結果のカウント / ヒット数 (integer)</entry>
+     </row>
+     <row>
+      <entry><literal>subquery.term</literal></entry>
+      <entry>サブクエリの語句 (string)</entry>
+     </row>
+     <row>
+      <entry><literal>interpretation.term</literal></entry>
+      <entry>解釈されたサブクエリの語句 (string)</entry>
+     </row>
+     <row>
+      <entry><literal>recommendation.term</literal></entry>
+      <entry>推奨されるサブクエリの語句 (string)</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>     
+  <note>
+   <para>
+    SearchResult 機能を使用するには、PECL YAZ 1.0.5 以降
+    および YAZ 2.1.9 以降が必要です。
+   </para>
+  </note>
+  <note>
+   <para>
+    SearchResult 機能をサポートしている Z39.50 実装は
+    ほとんどありません。
+   </para>
+  </note>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

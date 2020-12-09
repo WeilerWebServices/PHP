@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 332864 Maintainer: garbus Status: ready -->
+<!-- $Revision$-->
+<!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
+<!-- CREDITS: jarek, sobak -->
+<refentry xml:id='function.pg-convert' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_convert</refname>
+  <refpurpose>
+   Konwertuje tablice asocjacyjne na postać użyteczną w zapytaniu SQL.
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>pg_convert</methodname>
+   <methodparam><type>resource</type><parameter>połączenie</parameter></methodparam>
+   <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
+   <methodparam><type>array</type><parameter>tablica_asocjacyjna</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_convert</function> sprawdza i konwertuje wartości w
+   <parameter>tablica_asocjacyjna</parameter> na postać użyteczną dla
+   zapytania SQL. Warunkiem koniecznym dla <function>pg_convert</function> jest
+   istnienie tabeli <parameter>nazwa_tabeli</parameter>, ktora ma przynajmniej
+   tyle kolumn, ile <parameter>tablica_asocjacyjna</parameter> ma elementów. Nazwy
+   pól w <parameter>nazwa_tabeli</parameter> muszą pasować do indeksów w parametrze
+   <parameter>tablica_asocjacyjna</parameter> i odpowiednie typy danych muszą być
+   zgodne. Zwraca tabelę z przekonwertowanymi wartościami w razie sukcesu, &false;
+   w przeciwnym wypadku.
+  </para>
+  <note>
+   <para>
+    Od PHP 5.6, funkcja akceptuje wartości logiczne. Są one konwertowane do wartości
+    logicznej  PostgreSQ. Reprezentacja wartości logicznych w postaci ciągu znaków również
+    jest wspierana. &null; jest konwertowane do NULL z PostgreSQL.
+   </para>
+   <para>
+    Do PHP 5.6, jeśli istnieją pola typu boolean w <parameter>nazwa_tabeli</parameter>, nie
+    używaj stałej wartości &true; w parametrze <parameter>tablica_asocjacyjna</parameter>. Zostanie on
+    przekonwertowany do łańcucha 'TRUE', który nie jest poprawnym wpisem dla pól typu boolean
+    w PostgreSQL. W zamian użyj jednej z propozycji: t, true, 1, y, yes.
+   </para>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>połączenie</parameter></term>
+     <listitem>
+      <para>
+       Źródło połączenia do bazy PostgreSQL.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_tabeli</parameter></term>
+     <listitem>
+      <para>
+       Nazwa tabeli, w stosunku do której będą konwertowane typy.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>tablica_asocjacyjna</parameter></term>
+     <listitem>
+      <para>
+       Dane do konwersji.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>options</parameter></term>
+     <listitem>
+      <para>
+       Kombinacja dowolnej ilości poniższych stałych: <constant>PGSQL_CONV_IGNORE_DEFAULT</constant>,
+       <constant>PGSQL_CONV_FORCE_NULL</constant> lub
+       <constant>PGSQL_CONV_IGNORE_NOT_NULL</constant>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Typ tablicowy (ang. <type>array</type>) z przekonwertowanymi wartościami, lub &false; w razie błędu.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_convert</function> - przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+  $polaczenie = pg_connect('dbname=foo');
+
+  $tmp = array(
+      'autor' => 'Jan Hakreski',
+      'rok' => 2005,
+      'tytuł' => 'Życie Jana Hakerskiego'
+  );
+
+  $wartosci = pg_convert($polaczenie, 'autorzy', $tmp);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.6.0</entry>
+       <entry>
+        Funkcja nie jest dłużej eksperymentalna. Typy boolean i NULL są wspierane. Do nieznanych
+        lub niewspieranych typów danych są dodawane znaki ucieczki, bez walidacji. <function>pg_convert</function> może
+        być użyta z dowolnym typem danych.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_meta_data</function></member>
+    <member><function>pg_insert</function></member>
+    <member><function>pg_select</function></member>
+    <member><function>pg_update</function></member>
+    <member><function>pg_delete</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

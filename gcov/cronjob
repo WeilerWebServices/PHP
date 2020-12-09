@@ -1,0 +1,24 @@
+PHPROOT=/var/php_gcov
+
+# the file with the pid of this process
+GLOBALPIDFILE="${PHPROOT}/build.pid"
+
+# check if we are alone. if not, quit.
+if [ -f ${GLOBALPIDFILE} ]; then
+        if ( ps -p `cat "$GLOBALPIDFILE"` > /dev/null ); then
+                exit 1
+        fi
+fi
+
+
+# update gcov website
+cd /local/Web/sites/php-gcov-web
+git pull > /dev/null
+
+
+# get oracle XE environment vars
+. /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh
+
+
+cd /local/Web/sites/php-gcov-web/cron
+./cron.sh &> nohup.out

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 340765 Maintainer: jpauli Status: ready -->
+<!-- Reviewed: yes -->
+
+<appendix xml:id="userlandnaming" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Guide de nommage de l'espace utilisateur</title>
+ <para>
+  Ce guide permet de choisir de la meilleure façon possible
+  les noms pour les identifiants dans le code PHP de l'espace utilisateur.
+  Lors du choix des noms pour n'importe quel code qui crée des symboles
+  dans l'espace de noms global, il est important de prendre en compte ce guide
+  afin d'éviter d'éventuels problèmes avec les futures versions de PHP et
+  vos symboles.
+ </para>
+
+ <section xml:id="userlandnaming.globalnamespace">
+  <title>Espace de noms global</title>
+  <para>
+   Ceci est une vue de la construction du code qui ira dans l'espace de noms global :
+  </para>
+
+  <itemizedlist>
+   <listitem><para>fonctions</para></listitem>
+   <listitem><para>classes</para></listitem>
+   <listitem><para>interfaces</para></listitem>
+   <listitem><para>constantes (et non les constantes de classe)</para></listitem>
+   <listitem>
+    <para>variables définies à l'extérieur des fonctions/méthodes</para>
+   </listitem>
+  </itemizedlist>
+ </section>
+
+ <section xml:id="userlandnaming.rules">
+  <title>Règles</title>
+  <para>
+   La liste suivante fournit un aperçu global des règles réservées
+   au projet PHP lors du choix des noms pour les nouveaux identifiants
+   internes. Le guide définitif est l'officiel
+   <link xlink:href="&url.userlandnaming.cs;">CODING STANDARDS</link> :
+  </para>
+
+  <itemizedlist>
+   <listitem>
+    <para>
+     PHP possède l'espace de noms de haut niveau mais tente de trouver
+     des noms descriptifs cohérents.
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     Les noms des fonctions utilisent un underscore entre les mots, tandis que
+     les noms des classes utilisent les notations <literal>CamelCase</literal>
+     et <literal>PascalCase</literal>.
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     PHP préfixe tous les symboles globaux d'une extension avec le nom
+     de l'extension. (Dans le passé, il y avait quelques exceptions à cette règle)
+     Exemples :
+    </para>
+
+    <itemizedlist>
+     <listitem><para><function>curl_close</function></para></listitem>
+     <listitem><para><function>mysql_query</function></para></listitem>
+     <listitem><para>PREG_SPLIT_DELIM_CAPTURE</para></listitem>
+     <listitem><para>new DOMDocument()</para></listitem>
+     <listitem>
+      <para>
+       <function>strpos</function> (exemple d'une erreur du passé)
+      </para>
+     </listitem>
+     <listitem><para>new SplFileObject()</para></listitem>
+    </itemizedlist>
+   </listitem>
+   <listitem>
+    <para>
+     Les itérateurs et les exceptions sont cependant simplement suffixés
+     par respectivement, "<literal>Iterator</literal>" et "<literal>Exception</literal>."
+     Exemples :
+    </para>
+    <itemizedlist>
+     <listitem><para><classname>ArrayIterator</classname></para></listitem>
+     <listitem><para><classname>LogicException</classname></para></listitem>
+    </itemizedlist>
+   </listitem>
+   <listitem>
+    <para>
+     PHP réserve tous les symboles commençant par un <literal>__</literal>
+     comme étant magique. Il est recommandé de ne pas créer de symboles
+     commençant par un <literal>__</literal> en PHP sauf si
+     vous voulez utiliser les fonctionnalités magiques documentées.
+     Exemple :
+    </para>
+    <itemizedlist>
+     <listitem><para><link linkend="object.get">__get()</link></para></listitem>
+     <listitem><para><function>__autoload</function></para></listitem>
+    </itemizedlist>
+   </listitem>
+  </itemizedlist>
+ </section>
+
+ <section xml:id="userlandnaming.tips">
+  <title>Astuces</title>
+  <para>
+   Si vous voulez écrire du code portable, il est recommandé de ne pas placer 
+   de nombreuses variables, fonctions ou classes dans l'espace de noms global. 
+   Cela empêchera les conflits de nommage avec le code tiers ainsi que des 
+   ajouts possibles au langage.
+  </para>
+<para>
+   Une façon commune de prévenir les conflits de noms de fonctions et de 
+ classes est de les ajouter à leur propre 
+ <link linkend="language.namespaces">namespace</link>.
+  </para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+namespace MyProject;
+
+function my_function() {
+    return true;
+}
+
+\MyProject\my_function();
+]]>
+   </programlisting>
+  </informalexample>
+  <para>
+   Cela a encore besoin de vous pour garder une trace des espaces de noms 
+   déjà utilisés, mais une fois que vous avez décidé sur un espace de noms que 
+   vous allez utiliser, vous pouvez ajouter toutes les fonctions et les 
+   classes à elle sans avoir à penser à nouveau les conflits.
+  </para>
+  <para>
+   Il est considéré comme la meilleure pratique pour limiter le nombre de 
+   variables ajoutées à la portée globale afin d'éviter les conflits de nommage 
+   avec le code tiers.
+  </para>
+  <note>
+   <title>Portée des variables</title>
+   <para>
+    En raison des <link linkend="language.variables.scope">règles de portée</link> 
+    de PHP, les variables définies à l'intérieur des fonctions et des méthodes 
+    ne sont pas dans la portée globale et, en tant que telles, ne peuvent pas 
+    entrer en conflit avec d'autres variables définies dans la portée globale.
+   </para>
+  </note>
+ </section>
+
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

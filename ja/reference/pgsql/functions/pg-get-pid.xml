@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 329325 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi -->
+<refentry xml:id="function.pg-get-pid" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_get_pid</refname>
+  <refpurpose>バックエンドのプロセス ID を得る</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>pg_get_pid</methodname>
+   <methodparam><type>resource</type><parameter>connection</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_get_pid</function> は、バックエンド(データベースサーバ
+   のプロセス)のプロセス ID を取得します。プロセス ID は、
+   <literal>NOTIFY</literal> メッセージが他のプロセスから送信されている
+   かどうかを調べるために有用です。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>connection</parameter></term>
+     <listitem>
+      <para>
+       PostgreSQL データベースの接続リソース。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   バックエンドのデータベースのプロセス ID 。
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>PostgreSQL バックエンドの PID</title>
+    <programlisting role="php">
+<![CDATA[
+<?php 
+$conn = pg_pconnect("dbname=publisher");
+if (!$conn) {
+  echo "An error occurred.\n";
+  exit;
+}
+
+// バックエンドのプロセスIDを取得。このプロセスIDをpg_get_notify()で使用
+$pid = pg_get_pid($conn);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_get_notify</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

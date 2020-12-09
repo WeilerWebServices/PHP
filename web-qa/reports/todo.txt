@@ -1,0 +1,16 @@
+Reports per week :
+SELECT VERSION,COUNT(id),  YEAR(DATE),WEEK(DATE) FROM reports
+GROUP BY VERSION,YEAR(DATE),WEEK(DATE)
+
+If we have time : graph to see reports sent by version and by date
+
+use https://svn.php.net/viewvc/web/php/trunk/include/version.inc?view=co
+
+-----------------------------------------
+Improve documentation functions, syntax, etc.
+-----------------------------------------
+
+-------------------
+Vote : should env config in /reports/ be hidden to everyone except logged in php accounts ?
+       2) blacklist robots with meta ?
+-------------------

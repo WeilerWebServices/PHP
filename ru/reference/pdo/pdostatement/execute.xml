@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 350654 Maintainer: tmn Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+<refentry xml:id="pdostatement.execute" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>PDOStatement::execute</refname>
+  <refpurpose>
+   Запускает подготовленный запрос на выполнение
+  </refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>bool</type><methodname>PDOStatement::execute</methodname>
+   <methodparam choice="opt"><type>array</type><parameter>input_parameters</parameter><initializer>&null;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Запускает <link linkend="pdo.prepared-statements">подготовленный запрос</link>. 
+   Если запрос содержит маркеры параметров (псевдопеременные), вы должны либо:
+   <itemizedlist>
+    <listitem>
+     <para>вызвать <function>PDOStatement::bindParam</function> и/или
+    <function>PDOStatement::bindValue</function>, чтобы связать эти маркеры,
+     соответственно, с переменными или значениями. Связанные переменные передают свои 
+     значения как входные данные и получают выходные значения</para>
+    </listitem>
+    <listitem>
+     <para>или передать массив значений только на вход</para>
+    </listitem>
+   </itemizedlist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>input_parameters</parameter></term>
+     <listitem>
+      <para>
+       Массив значений, содержащий столько элементов, сколько параметров
+       заявлено в SQL-запросе. Все значения будут приняты, как имеющие тип
+       <constant>PDO::PARAM_STR</constant>.
+      </para>
+      <para>
+       Нельзя привязать несколько значений к одному параметру; например, нельзя
+       привязать два значения к именованному параметру в выражении IN().
+      </para>
+      <para>
+       Нельзя привязать больше значений, чем заявлено в запросе; если в массиве
+       <parameter>input_parameters</parameter> больше элементов, чем заявлено
+       в SQL-запросе методом <methodname>PDO::prepare</methodname>, выполнение
+       запроса завершится неудачей и будет вызвана ошибка.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <example><title>Выполнение подготовленного запроса с привязкой переменных и значений</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+/* Выполнение подготовленного запроса с привязкой переменных и значений */
+$calories = 150;
+$colour = 'gre';
+$sth = $dbh->prepare('SELECT name, colour, calories
+    FROM fruit
+    WHERE calories < :calories AND colour LIKE :colour');
+$sth->bindParam(':calories', $calories, PDO::PARAM_INT);
+$sth->bindValue(':colour', "%{$colour}%");
+$sth->execute();
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>
+    Выполнение подготовленного запроса с передачей массива входных значений
+    (именованные псевдопеременные)
+   </title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+/* Выполнение подготовленного запроса с передачей массива входных значений */
+$calories = 150;
+$colour = 'red';
+$sth = $dbh->prepare('SELECT name, colour, calories
+    FROM fruit
+    WHERE calories < :calories AND colour = :colour');
+$sth->execute(array(':calories' => $calories, ':colour' => $colour));
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>
+    Выполнение подготовленного запроса с передачей массива входных значений
+    (неименованные псевдопеременные - знаки вопроса (?))
+   </title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+/* Выполнение подготовленного запроса с передачей массива входных значений */
+$calories = 150;
+$colour = 'red';
+$sth = $dbh->prepare('SELECT name, colour, calories
+    FROM fruit
+    WHERE calories < ? AND colour = ?');
+$sth->execute(array($calories, $colour));
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <example>
+   <title>
+    Выполнение подготовленного запроса с привязкой значений к неименованным
+    псевдопеременным (знакам вопроса)
+   </title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+/* Выполнение подготовленного запроса с привязкой PHP переменных */
+$calories = 150;
+$colour = 'red';
+$sth = $dbh->prepare('SELECT name, colour, calories
+    FROM fruit
+    WHERE calories < ? AND colour = ?');
+$sth->bindParam(1, $calories, PDO::PARAM_INT);
+$sth->bindParam(2, $colour, PDO::PARAM_STR, 12);
+$sth->execute();
+?>
+]]>
+   </programlisting>
+  </example>
+  
+   <example>
+    <title>
+     Выполнение подготовленного запроса с использованием
+     массива для выражения IN
+    </title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+/* Выполнение подготовленного запроса с использованием массива для выражения IN */
+$params = array(1, 21, 63, 171);
+/* Создаем строку из знаков вопроса (?) в количестве, равном количеству параметров */
+$place_holders = implode(',', array_fill(0, count($params), '?'));
+
+/*
+    В этом примере подготавливается запрос с достаточным количеством неименованных
+    псевдопеременных (?) для каждого значения из массива $params. Когда запрос будет
+    выполняться, эти знаки вопроса будут заменены на элементы массива. Это не то же
+    самое, что использовать PDOStatement::bindParam(), где привязка осуществляется по
+    ссылке на переменную. PDOStatement::execute() связывает параметры по значению.
+*/
+$sth = $dbh->prepare("SELECT id, name FROM contacts WHERE id IN ($place_holders)");
+$sth->execute($params);
+?>
+]]>
+   </programlisting>
+  </example>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Для некоторых драйверов необходимо
+    <link linkend="pdostatement.closecursor">закрывать курсор</link>,
+    прежде чем выполнять следующий запрос.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>PDO::prepare</function></member>
+    <member><function>PDOStatement::bindParam</function></member>
+    <member><function>PDOStatement::fetch</function></member>
+    <member><function>PDOStatement::fetchAll</function></member>
+    <member><function>PDOStatement::fetchColumn</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 334284 Maintainer: hirokawa Status: ready -->
+<section xml:id="snmp.installation" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.install;
+ <para>
+  PHP 5.3.0, 5.3.1 および 5.3.2 では SNMP をサポートしていません。
+  SNMP のサポートは PHP 5.3.3 で復活しました。
+ </para>
+ <para>
+  Windows 版は、SNMP サポート用ファイルが <filename class="directory">mibs</filename>
+  ディレクトリにあります。このディレクトリを、Windows の環境変数 MIBDIRS に追加しなければいけません。
+  環境変数の値は、<filename class="directory">mibs</filename> ディレクトリへのフルパス
+  (例: <filename class="directory">c:\usr\mibs</filename>) となります。
+ </para>
+
+ <para>
+  PHP 5.4.0 より前のバージョンを使っている方への重要な注意:
+  UCD <acronym>SNMP</acronym> パッケージを使用するには、コンパイル前に
+  <literal>NO_ZEROLENGTH_COMMUNITY</literal> を <literal>1</literal>
+  に定義する必要があります。UCD <acronym>SNMP</acronym> のコンフィグレーションを行った後で
+  <filename>config.h</filename> あるいは <filename>acconfig.h</filename>
+  を編集し、<literal>NO_ZEROLENGTH_COMMUNITY</literal> を探してください。
+  <literal>#define</literal> の行のコメントを外してください。
+  これにより、次のようになるはずです。
+  <programlisting role="c">
+<![CDATA[
+#define NO_ZEROLENGTH_COMMUNITY 1
+]]>
+  </programlisting>
+  それから、<option role="configure">--with-snmp[=DIR]</option> をつけて
+  PHP をコンパイルします。
+ </para>
+ <para>
+  <acronym>SNMP</acronym> コマンドと組み合わせた場合に奇妙なセグメンテーションフォールトが
+  生じる場合は、上の指示に従っていないと思われます。UCD <acronym>SNMP</acronym> を再コンパイル
+  したくない場合は、この不具合に対処するため、PHP を
+  <option role="configure">--enable-ucd-snmp-hack</option>
+  スイッチをつけてコンパイルしてください。
+ </para>
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

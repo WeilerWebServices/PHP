@@ -1,0 +1,34 @@
+Things to work on
+
+- This thing probably needs a name
+
+- Calling all ming hackers - help us with some cool transitions for the navbar
+  and also the various individual slide components if people choose to use
+  the flash version.
+
+- We also need to pretty up the navbar flash widget.  All sorts of slick
+  things could be done in this thing.
+
+- A cooler help page would be nice.
+
+- Someone want to pretty up slidelist.php?
+
+- Perhaps a pop-up widget to change $baseFontSize on the fly?  The base font
+  size that works on one machine may not work at all on another.  So a quick
+  way to change it would be cool.  The nice thing about the system is that
+  everything is relative to the baseFontSize, so there is only one value to
+  change.
+
+- Perhaps a set of suggested fonts for various browsers would be a good idea 
+  as well.
+
+- make all hard-coded settings (like border padding) configurable on a per-presentation
+  basis.	
+
+- Go through each XML tag and make sure the attributes are implemented and 
+  consistent across all display modes.  And at the same time, document each
+  tag in the intro presentation.
+
+- Add ability to find/view the "Most Recent Talks", perhaps as its own topic,
+  likely create a topic named "Most Recent Talks", sort all talks by date, then
+  add 20 or so there.

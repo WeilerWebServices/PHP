@@ -1,0 +1,28 @@
+<?php
+// Create a window to hold the label.
+$window = new GtkWindow();
+// Set up the window to close cleanly.
+$window->connect_simple('destroy', array('Gtk', 'main_quit'));
+
+// Create a label
+$label = new GtkLabel('Bold Label');
+
+// Create a Pango attribute list.
+$list = new PangoAttrList();
+
+// Create a bold Pango weight attribute.
+$attr = new PangoAttrInt(Pango::ATTR_WEIGHT, Pango::WEIGHT_BOLD);
+
+// Add the attribute to the list.
+$list->insert($attr);
+
+// Set the attributes for the label.
+$label->set_attributes($list);
+
+// Add the label to the window.
+$window->add($label);
+
+// Show the window and start the main loop.
+$window->show_all();
+Gtk::main();
+?>

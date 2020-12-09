@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 340961 Maintainer: tmn Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+<refentry xml:id="function.mb-eregi" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>mb_eregi</refname>
+  <refpurpose>
+   Поиск соответствий регулярному выражению с поддержкой многобайтовых символов без учета регистра
+  </refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>mb_eregi</methodname>
+   <methodparam><type>string</type><parameter>pattern</parameter></methodparam>
+   <methodparam><type>string</type><parameter>string</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter role="reference">regs</parameter></methodparam>
+  </methodsynopsis>
+  <simpara>
+   Выполняет поиск соответствий регулярному выражению с поддержкой многобайтных
+   символы, нечувствительный к регистру.
+  </simpara>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>pattern</parameter></term>
+     <listitem>
+      <para>
+       Шаблон, текст регулярного выражения.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>string</parameter></term>
+     <listitem>
+      <para>
+       Строка (<type>string</type>), в которой производится поиск.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>regs</parameter></term>
+     <listitem>
+      <para>
+       Если найдены совпадения для подстроки <parameter>pattern</parameter>,
+       заключенной в скобки, и функция вызвана с заданным третьим аргументом
+       <parameter>regs</parameter>, эти совпадения будут сохранены в массиве
+       <parameter>regs</parameter>. Если подобных совпадений не найдено,
+       <parameter>regs</parameter> установится как пустой массив.
+      </para>
+      <para>
+       <varname>$regs[1]</varname> будет содержать первую (слева) подстроку заключенную
+       в скобки; <varname>$regs[2]</varname> - вторую, и так далее.
+       <varname>$regs[0]</varname> будет содержать копию всей найденной строки.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Возвращает длину найденной строки в байтах если совпадение шаблона
+   <parameter>pattern</parameter> найдено в <parameter>string</parameter>,
+   или &false;, если совпадения не найдены.
+  </para>
+  <para>
+   Если необязательный аргумент <parameter>regs</parameter> не задан, или
+   длина найденой строки равна <literal>0</literal>, эта функция вернет <literal>1</literal>.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog"><!-- {{{ -->
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.1.0</entry>
+      <entry>
+       Функцию <function>mb_eregi</function> устанавливает значение
+       <parameter>regs</parameter> равным пустому массиву, если ничего не найдено.
+       Ранее, в подобном случае, <parameter>regs</parameter> оставался неизменным.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1><!-- }}} -->
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  
+  &note.mbstring.encoding.internal;
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mb_regex_encoding</function></member>
+    <member><function>mb_ereg</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

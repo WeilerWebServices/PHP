@@ -1,0 +1,1228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351415 Maintainer: rjhdby Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+
+<sect1 xml:id="opcache.configuration" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.runtime;
+ &extension.runtime;
+ <para>
+  <table>
+   <title>Опции настройки OPcache</title>
+   <tgroup cols="4">
+    <thead>
+     <row>
+      <entry>&Name;</entry>
+      <entry>&Default;</entry>
+      <entry>&Changeable;</entry>
+      <entry>&Changelog;</entry>
+     </row>
+    </thead>
+    <tbody xml:id="opcache.configuration.list">
+     <row>
+      <entry><link linkend="ini.opcache.enable">opcache.enable</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.enable-cli">opcache.enable_cli</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>В версиях с PHP 7.1.2 по 7.1.6 включительно, значение по умолчанию "1" (включено)</entry>
+     </row>
+     <row>
+      <entry><link
+       linkend="ini.opcache.memory-consumption">opcache.memory_consumption</link></entry>
+      <entry>"128"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.interned-strings-buffer">opcache.interned_strings_buffer</link></entry>
+      <entry>"8"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.max-accelerated-files">opcache.max_accelerated_files</link></entry>
+      <entry>"10000"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.max-wasted-percentage">opcache.max_wasted_percentage</link></entry>
+      <entry>"5"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.use-cwd">opcache.use_cwd</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.validate-timestamps">opcache.validate_timestamps</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.revalidate-freq">opcache.revalidate_freq</link></entry>
+      <entry>"2"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.revalidate-path">opcache.revalidate_path</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.save-comments">opcache.save_comments</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.fast-shutdown">opcache.fast_shutdown</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.enable-file-override">opcache.enable_file_override</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.optimization-level">opcache.optimization_level</link></entry>
+      <entry>"0x7FFEBFFF"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>До PHP 7.3.0 было 0x7FFFBFFF</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.inherited-hack">opcache.inherited_hack</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Удалено в PHP 7.3.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.dups-fix">opcache.dups_fix</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.blacklist-filename">opcache.blacklist_filename</link></entry>
+      <entry>""</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.max-file-size">opcache.max_file_size</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.consistency-checks">opcache.consistency_checks</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.force-restart-timeout">opcache.force_restart_timeout</link></entry>
+      <entry>"180"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.error-log">opcache.error_log</link></entry>
+      <entry>""</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.log-verbosity-level">opcache.log_verbosity_level</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.preferred-memory-model">opcache.preferred_memory_model</link></entry>
+      <entry>""</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.protect-memory">opcache.protect_memory</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.mmap-base">opcache.mmap_base</link></entry>
+      <entry>&null;</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.restrict-api">opcache.restrict_api</link></entry>
+      <entry>""</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.file_update_protection">opcache.file_update_protection</link></entry>
+      <entry>"2"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.huge_code_pages">opcache.huge_code_pages</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.lockfile_path">opcache.lockfile_path</link></entry>
+      <entry>"/tmp"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.opt_debug_level">opcache.opt_debug_level</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 7.1.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.file-cache">opcache.file_cache</link></entry>
+      <entry>NULL</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.file-cache-only">opcache.file_cache_only</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.file-cache-consistency-checks">opcache.file_cache_consistency_checks</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.file-cache-fallback">opcache.file_cache_fallback</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.validate-permission">opcache.validate_permission</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 7.0.14</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.validate-root">opcache.validate_root</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 7.0.14</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.preload">opcache.preload</link></entry>
+      <entry>""</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 7.4.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.preload-user">opcache.preload_user</link></entry>
+      <entry>""</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 7.4.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.cache-id">opcache.cache_id</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Только в Windows. Доступно с PHP 7.4.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit">opcache.jit</link></entry>
+      <entry>"tracing"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-buffer-size">opcache.jit_buffer_size</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-debug">opcache.jit_debug</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-bisect-limit">opcache.jit_bisect_limit</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-prof-threshold">opcache.jit_prof_threshold</link></entry>
+      <entry>"0.005"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-max-root-traces">opcache.jit_max_root_traces</link></entry>
+      <entry>"1024"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-max-side-traces">opcache.jit_max_side_traces</link></entry>
+      <entry>"128"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-max-exit-counters">opcache.jit_max_exit_counters</link></entry>
+      <entry>"8192"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-hot-loop">opcache.jit_hot_loop</link></entry>
+      <entry>"64"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-hot-func">opcache.jit_hot_func</link></entry>
+      <entry>"127"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-hot-return">opcache.jit_hot_return</link></entry>
+      <entry>"8"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-hot-side-exit">opcache.jit_hot_side_exit</link></entry>
+      <entry>"8"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-blacklist-root-trace">opcache.jit_blacklist_root_trace</link></entry>
+      <entry>"16"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-blacklist-side-trace">opcache.jit_blacklist_side_trace</link></entry>
+      <entry>"8"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-max-loop-unrolls">opcache.jit_max_loop_unrolls</link></entry>
+      <entry>"8"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-max-recursive-calls">opcache.jit_max_recursive_calls</link></entry>
+      <entry>"2"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-max-recursive-return">opcache.jit_max_recursive_returns</link></entry>
+      <entry>"2"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.opcache.jit-max-polymorphic-calls">opcache.jit_max_polymorphic_calls</link></entry>
+      <entry>"2"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Доступно с PHP 8.0.0</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+  &ini.php.constants;
+ </para>
+ 
+ &ini.descriptions.title;
+ 
+ <para>
+  <variablelist>
+   <varlistentry xml:id="ini.opcache.enable">
+    <term>
+     <parameter>opcache.enable</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Разрешает кеширование опкодов. Если запрещено, код не будет оптимизироваться
+      и кешироваться. Опцию <literal>opcache.enable</literal> нельзя включить во
+      время исполнения с помощью <function>ini_set</function>, но можно выключить. 
+      Попытка включить ее таким образом приведет к генерации предупреждения.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.enable-cli">
+    <term>
+     <parameter>opcache.enable_cli</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Разрешает кеширование опкодов для CLI-версии PHP.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.memory-consumption">
+    <term>
+     <parameter>opcache.memory_consumption</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Размер разделяемой памяти в мегабайтах для OPcache.
+      Минимально допустимое значение - <literal>"8"</literal>, 
+      которое применяется, если установлено меньшее значение.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.interned-strings-buffer">
+    <term>
+     <parameter>opcache.interned_strings_buffer</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Количество памяти в мегабайтах для хранения интернированных строк.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.max-accelerated-files">
+    <term>
+     <parameter>opcache.max_accelerated_files</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное количество ключей (и, соответственно, скриптов) в хеш-таблице
+      OPcache. Фактическое используемое значение будет первым числом из набора
+      <literal>{ 223, 463, 983, 1979, 3907, 7963, 16229, 32531, 65407, 130987, 262237, 524521, 1048793 }</literal>,
+      которое больше или равно заданному в этом параметре.
+      Минимум 200, максимум 100000.
+      Значения за пределами этого диапазона ограничены до допустимого диапазона.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.max-wasted-percentage">
+    <term>
+     <parameter>opcache.max_wasted_percentage</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное значение потерянной памяти (в процентах) после которого планируется
+      перезапуск, если недостаточно свободной памяти.
+      Максимально допустимое значение: <literal>"50"</literal>, 
+      которое применяется, если установлено большее значение.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.use-cwd">
+    <term>
+     <parameter>opcache.use_cwd</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Если включено, OPcache добавляет текущую рабочую директорию к ключу
+      скрипта, тем самым устраняя возможность коллизий для файлов с одинаковым
+      именем. Отключение этой опции повышает производительность, но может
+      привести к сбоям.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.validate-timestamps">
+    <term>
+     <parameter>opcache.validate_timestamps</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Если включено, OPcache будет проверять актуальность закешированных скриптов каждые
+      <link linkend="ini.opcache.revalidate-freq">opcache.revalidate_freq</link>
+      секунд. Когда запрещено, вы можете перезапустить OPcache вручную с помощью
+      <function>opcache_reset</function>,
+      <function>opcache_invalidate</function> или перезапустив веб-сервер для того, чтобы
+      изменения вступили в силу.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.revalidate-freq">
+    <term>
+     <parameter>opcache.revalidate_freq</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Как часто в секундах проверять временные метки файлов.
+      <literal>0</literal> приведет к тому, что OPcache будет производить эту проверку
+      при каждом запросе.
+     </para>
+     <para>
+      Эта директива игнорируется, если выключена
+      <link linkend="ini.opcache.validate-timestamps">opcache.validate_timestamps</link>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.revalidate-path">
+    <term>
+     <parameter>opcache.revalidate_path</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Если выключено, существующие закешированные файлы, использующие один и тот же
+      <link linkend="ini.include-path">include_path</link>, будут повторно использоваться.
+      Таким образом, если файл с тем же именем находится в другом месте в include_path, он 
+      не будет найден.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.save-comments">
+    <term>
+     <parameter>opcache.save_comments</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Если выключено, все комментарии будут отброшены из кеша опкодов для
+      минимизации размера кода. Отключение этой опции может привести к тому, что
+      некоторые фреймворки, полагающиеся на аннотации в комментариях, перестанут
+      работать,  включая Doctrine, Zend Framework 2 и PHPUnit.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.fast-shutdown">
+    <term>
+     <parameter>opcache.fast_shutdown</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Если включено, то будет использована быстрая последовательность перезагрузки, 
+      при которой не происходит очистки всех выделенных блоков памяти. Вместо этого для 
+      освобождения всего набора переменных используется стандартный менеджер 
+      памяти Zend Engine.
+     </para>
+     <para>
+      Эта директива была удалена в PHP 7.2.0. Вариант быстрой
+      последовательности перезагрузки был интегрирован в PHP и автоматически
+      будет использоваться, если это возможно.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.enable-file-override">
+    <term>
+     <parameter>opcache.enable_file_override</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Если включено, то кеш опкодов будет проверять, закеширован ли уже файл при 
+      вызове функций <function>file_exists</function>,
+      <function>is_file</function> и <function>is_readable</function>. Это может
+      повысить производительность для приложений, проверяющих присутствие и
+      доступность для чтения скриптом PHP, но несет риск возврата устаревших
+      данных, если запрещена опция
+      <link linkend="ini.opcache.validate-timestamps">opcache.validate_timestamps</link>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.optimization-level">
+    <term>
+     <parameter>opcache.optimization_level</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Битовая маска, контролирующая, какие шаги оптимизации выполняются.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.inherited-hack">
+    <term>
+     <parameter>opcache.inherited_hack</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>     
+     <para>
+      Эта директива игнорируется.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.dups-fix">
+    <term>
+     <parameter>opcache.dups_fix</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Этот хак требуется только для обхода ошибок "Cannot redeclare class".
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.blacklist-filename">
+    <term>
+     <parameter>opcache.blacklist_filename</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Местоположение черного списка OPcache. Файл черного списка содержит
+      имена файлов, которые не нужно ускорять, по одной записи на строку.
+      Допустимы шаблоны поиска и префиксы. Строки, начинающиеся с точки с запятой
+      игнорируются
+     </para>
+     <para>
+      Пример простого черного списка:
+     </para>
+     <informalexample>
+      <programlisting>
+<![CDATA[
+; Указываем конкретный файл.
+/var/www/broken.php
+; Префикс, обозначающий все файлы, начинающиеся с x.
+/var/www/x
+; Шаблон поиска.
+/var/www/*-broken.php
+]]>
+      </programlisting>
+     </informalexample>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.max-file-size">
+    <term>
+     <parameter>opcache.max_file_size</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальный размер файла для кеширования в байтах.
+      Если задать <literal>0</literal>, то кешироваться будут все файлы.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.consistency-checks">
+    <term>
+     <parameter>opcache.consistency_checks</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Если не ноль, OPcache будет сверять контрольную сумму кеша каждые N запросов,
+      где N - заданное в этой директиве значение. Рекомендуется включать только
+      при отладке, так как сильно влияет на производительность.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.force-restart-timeout">
+    <term>
+     <parameter>opcache.force_restart_timeout</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Количество секунд ожидания освобождения кеша, после которого будет 
+      принудительно произведен запланированный перезапуск. Если это время
+      превышено, OPcache считает, что происходит что-то неправильное и убивает
+      процесс, блокирующий кеш.
+     </para>
+     <para>
+      Если параметр
+      <link linkend="ini.opcache.log-verbosity-level">opcache.log_verbosity_level</link>
+      задать равным 2 или больше, то, при возникновении подобной ситуации,
+      в лог ошибок будет записано предупреждение.
+     </para>
+     <para>
+      Директива не поддерживается в Windows.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.error-log">
+    <term>
+     <parameter>opcache.error_log</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Лог ошибок OPcache. Пустая строка считается как <literal>stderr</literal>, и ошибки
+      будут выведены в стандартный поток ошибок (в большинстве случаев это лог
+      ошибок веб-сервера).
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.log-verbosity-level">
+    <term>
+     <parameter>opcache.log_verbosity_level</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Уровень подробности лога ошибок. По умолчанию будут записываться только
+      фатальные ошибки (уровень 0) и ошибки (уровень 1). 
+      Также значения могут быть следующими: предупреждения (уровень 2), информационные
+      сообщения (уровень 3) и сообщения отладки (уровень 4).
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.preferred-memory-model">
+    <term>
+     <parameter>opcache.preferred_memory_model</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Предпочитаемая модель памяти для OPcache. Если оставить пустым, то
+      OPcache самостоятельно выберет наиболее подходящую модель, которая
+      будет вести себя корректно практически в любых случаях.
+     </para>
+     <para>
+      Возможные значения включают <literal>mmap</literal>, <literal>shm</literal>,
+      <literal>posix</literal> и <literal>win32</literal>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.protect-memory">
+    <term>
+     <parameter>opcache.protect_memory</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Защищает разделяемую память от неожиданной записи во время запуска скриптов.
+      Полезно только для внутренней отладки.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.mmap-base">
+    <term>
+     <parameter>opcache.mmap_base</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Базовое значение для сегмента разделяемой памяти в Windows. Все процессы
+      PHP должны отображать разделяемую память в одинаковое адресное пространство.
+      Данная опция помогает починить ошибки типа
+      "Unable to reattach to base address".
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.restrict-api">
+    <term>
+     <parameter>opcache.restrict_api</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Позволяет вызывать функции API OPcache только скриптам, чей путь начинается с
+      указанной строки. Значение по умолчанию "" означает отсутствие ограничений.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.file_update_protection">
+    <term>
+     <parameter>opcache.file_update_protection</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Предотвращает кеширование файлов младше указанного количества секунд.
+      Это помогает предотвратить кеширование не до конца обновленных файлов.
+      В случае, если у вас все обновления файлов атомарны, можно повысить
+      производительность, задав этот параметр равным "0".
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.huge_code_pages">
+    <term>
+     <parameter>opcache.huge_code_pages</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Включает или отключает копирование кода PHP (текстового сегмента) в HUGE PAGES.
+      Это может повысить производительность, но требует соответствующих системных
+      настроек.
+      Доступно в Linux начиная с PHP 7.0.0 и FreeBSD начиная с PHP 7.4.0.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.lockfile_path">
+    <term>
+     <parameter>opcache.lockfile_path</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Абсолютный путь к хранилищу общих файлов блокировок (только *nix)
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.opt_debug_level">
+    <term>
+     <parameter>opcache.opt_debug_level</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Производит вывод опкодов для отладки разных этапов оптимизации.
+      0x10000 приведет к выводу опкодов как только они сгенерированы компилятором, до
+      применения какой-либо оптимизации.
+      0x20000 приведет к выводу опкодов после оптимизации.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.file-cache">
+    <term>
+     <parameter>opcache.file_cache</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Разрешает и задает директорию кеша второго уровня. Это должно
+      повысить производительность в случае, если память SHM заполнена, 
+      сервер перезапущен или SHM сброшена. Значение по умолчанию "" 
+      запрещает кеширование на файловой системе.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.file-cache-only">
+    <term>
+     <parameter>opcache.file_cache_only</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Включает или выключает кеширование опкодов в разделяемой памяти.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.file-cache-consistency-checks">
+    <term>
+     <parameter>opcache.file_cache_consistency_checks</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Включает или выключает проверку контрольной суммы при загрузке скрипта
+      из файлового кеша.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.file-cache-fallback">
+    <term>
+     <parameter>opcache.file_cache_fallback</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Применяет opcache.file_cache_only=1 для некоторых процессов, которые
+      завершились ошибкой при переподключении к разделяемой памяти
+      (только для Windows). Требуется явно разрешенное кеширование на файловую систему.
+     </para>
+     <caution>
+      <simpara>
+       Отключение этой опции конфигурации может помешать запуску процессов, и поэтому не рекомендуется.
+      </simpara>
+     </caution>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.validate-permission">
+    <term>
+     <parameter>opcache.validate_permission</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Проверяет права доступа к кешированному файлу для текущего пользователя.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.validate-root">
+    <term>
+     <parameter>opcache.validate_root</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      Предотвращает коллизии имен в chroot-окружении. Должно быть включено
+      для всех случаев использования chroot-окружений для предотвращения доступа
+      к файлам за пределами chroot.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.preload">
+    <term>
+     <parameter>opcache.preload</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Задает скрипт PHP, который будет скомпилирован и запущен при старте сервера и
+      сможет предзагрузить другие файлы, либо с помощью <function>include</function>, либо
+      используя функцию <function>opcache_compile_file</function>. Все сущности (например
+      функции и классы), определенные в этих файлах, автоматически будут доступны до момента
+      выключения сервера.
+     </para>
+     <note>
+      <para>
+       Предварительная загрузка не поддерживается в Windows.
+      </para>
+     </note>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.preload-user">
+    <term>
+     <parameter>opcache.preload_user</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Предварительная загрузка кода с правами root запрещена по соображениям безопасности. Эта директива 
+      облегчает запуск предварительной загрузки от имени другого пользователя.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.cache-id">
+    <term>
+     <parameter>opcache.cache_id</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      В Windows все процессы, выполняющие один и тот же <acronym>PHP</acronym> <acronym>SAPI</acronym> 
+      под одной и той же учетной записью пользователя с одинаковым идентификатором кеша, совместно используют один экземпляр OPcache.
+      Значение идентификатора кеша может быть свободно выбрано.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit">
+    <term>
+     <parameter>opcache.jit</parameter>
+     <type class="union"><type>string</type><type>int</type></type>
+    </term>
+    <listitem>
+     <para>
+      Для обычного использования параметр принимает одно из четырех строковых значений:
+     </para>
+     <simplelist>
+      <member><literal>disable</literal>: Полностью отключен, не может быть включен во время выполнения.</member>
+      <member><literal>off</literal>: Отключено, но может быть включено во время выполнения.</member>
+      <member>
+       <literal>tracing</literal>/<literal>on</literal>: Используйте трассировку JIT.
+       Включено по умолчанию и рекомендуется для большинства пользователей.
+      </member>
+      <member><literal>function</literal>: Используйте функцию JIT.</member>
+     </simplelist>
+     <para>
+      Для расширенного использования параметр принимает 4-значное целое число <literal>CRTO</literal>, где цифры означают:
+      <variablelist>
+       <varlistentry>
+        <term><literal>O</literal> (уровень оптимизации)</term>
+        <listitem>
+         <simplelist>
+          <member><literal>0</literal>: Без JIT.</member>
+          <member><literal>1</literal>: Минимальный JIT (вызов стандартных обработчиков виртуальных машин).</member>
+          <member><literal>2</literal>: Встроенные обработчики виртуальных машин.</member>
+          <member><literal>3</literal>: Использовать вывод типа.</member>
+          <member><literal>4</literal>: Использовать график вызовов.</member>
+          <member><literal>5</literal>: Оптимизировать весь скрипт.</member>
+         </simplelist>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><literal>T</literal> (триггер)</term>
+        <listitem>
+         <simplelist>
+          <member><literal>0</literal>: Компиляция всех функций при загрузке скрипта.</member>
+          <member><literal>1</literal>: Компиляция функций при первом выполнении.</member>
+          <member>
+           <literal>2</literal>: Профилирование функций при первом запросе и затем компилирование самых популярных функций.
+          </member>
+          <member><literal>3</literal>: Профилирование на лету и компиляция горячих функций.</member>
+          <member><literal>4</literal>: В настоящее время не используется.</member>
+          <member>
+           <literal>5</literal>: Использование трассировки JIT. Профилирование на лету и компиляция трассировки для горячих сегментов кода.
+          </member>
+         </simplelist>
+        </listitem> 
+       </varlistentry>
+       <varlistentry>
+        <term><literal>R</literal> (распределение регистров)</term>
+        <listitem>
+         <simplelist>
+          <member><literal>0</literal>: Не выполнять распределение регистров.</member>
+          <member><literal>1</literal>: Выполнять выделение локального блочного регистра.</member>
+          <member><literal>2</literal>: Выполнять выделение глобального регистра.</member>
+         </simplelist>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><literal>C</literal> (Флаги оптимизации для процессора)</term>
+        <listitem>
+         <simplelist>
+          <member><literal>0</literal>: Отключить оптимизацию для ЦП.</member>
+          <member><literal>1</literal>: Включите использование AVX, если ЦП поддерживает его.</member>
+         </simplelist>
+        </listitem>
+       </varlistentry>
+      </variablelist>
+      Режим <literal>"tracing"</literal> соответствует <code>CRTO = 1254</code>,
+      Режим <literal>"function"</literal> соответствует <code>CRTO = 1205</code>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-buffer-size">
+    <term>
+     <parameter>opcache.jit_buffer_size</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Объем разделяемой памяти, резервируемый для скомпилированного JIT-кода. Нулевое значение отключает JIT.
+     </para>
+     &ini.shorthandbytes;
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-debug">
+    <term>
+     <parameter>opcache.jit_debug</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Битовая маска, определяющая, какой вывод отладки JIT следует включить.
+      Возможные значения смотрите в <filename>zend_jit.h</filename>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-bisect-limit">
+    <term>
+     <parameter>opcache.jit_bisect_limit</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Опция отладки, отключающая JIT-компиляцию после компиляции определенного количества функций.
+      Может быть полезно для разделения источника неправильной компиляции JIT.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-prof-threshold">
+    <term>
+     <parameter>opcache.jit_prof_threshold</parameter>
+     <type>float</type>
+    </term>
+    <listitem>
+     <para>
+      При использовании режима триггера "профилирование функций при первом запросе" этот порог определяет, считается ли 
+      функция горячей. Количество вызовов функции, разделенное на количество вызовов 
+      всех функций, должно быть выше порогового значения. Например, порог 0,005 означает, 
+      что функции, составляющие более 0,5% всех вызовов, будут скомпилированы JIT.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-max-root-traces">
+    <term>
+     <parameter>opcache.jit_max_root_traces</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное количество корневых стеков вызова.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-max-side-traces">
+    <term>
+     <parameter>opcache.jit_max_side_traces</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное количество боковых стеков вызова, которые может иметь корневой стек.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-max-exit-counters">
+    <term>
+     <parameter>opcache.jit_max_exit_counters</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное количество счетчиков выхода бокового стека вызова. Это ограничивает общее количество боковых стеков, 
+      которые могут быть во всех корневых стеках.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-hot-loop">
+    <term>
+     <parameter>opcache.jit_hot_loop</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Через сколько итераций цикл считается горячим.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-hot-func">
+    <term>
+     <parameter>opcache.jit_hot_func</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Через сколько вызовов функция считается горячей.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-hot-return">
+    <term>
+     <parameter>opcache.jit_hot_return</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Через сколько возвратов возврат считается горячим.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-hot-side-exit">
+    <term>
+     <parameter>opcache.jit_hot_side_exit</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Через сколько выходов боковой стек считается горячим.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-blacklist-root-trace">
+    <term>
+     <parameter>opcache.jit_blacklist_root_trace</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное количество попыток компиляции корневой трассировки, прежде чем она будет занесена в черный список.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-blacklist-side-trace">
+    <term>
+     <parameter>opcache.jit_blacklist_side_trace</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное количество попыток компиляции боковой трассировки до того, как она будет занесена в черный список.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-max-loop-unrolls">
+    <term>
+     <parameter>opcache.jit_max_loops_unroll</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное количество попыток развернуть цикл в боковой трассировке, пытаясь достичь корневой трассировки и закрыть внешний цикл.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-max-recursive-calls">
+    <term>
+     <parameter>opcache.jit_max_recursive_calls</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное количество развернутых рекурсивных циклов вызова.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-max-recursive-return">
+    <term>
+     <parameter>opcache.jit_max_recursive_returns</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное количество развернутых рекурсивных циклов возврата.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.opcache.jit-max-polymorphic-calls">
+    <term>
+     <parameter>opcache.jit_max_polymorphic_calls</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Максимальное количество попыток встроенных полиморфных (динамических или методических) вызовов.
+      Вызовы выше этого лимита обрабатываются как мегаморфические и не встраиваются.
+     </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </para>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

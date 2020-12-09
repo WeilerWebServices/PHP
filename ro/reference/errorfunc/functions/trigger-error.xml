@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 331617 Maintainer: simionea Status: ready -->
+<!-- CREDITS: adiju -->
+
+<refentry xml:id="function.trigger-error" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>trigger_error</refname>
+  <refpurpose>Generează un mesaj de eroare/avertizare/notificare la nivelul utilizatorului</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>trigger_error</methodname>
+   <methodparam><type>string</type><parameter>error_msg</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>error_type</parameter><initializer>E_USER_NOTICE</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Utilizată pentru a declanșa o condiție de eroare la nivel de utilizator, ea
+   poate fi utilizată în combinație cu handler-ul de erori încorporat, sau cu
+   o funcție definită de utilizator care a fost stabilită ca un nou handler al
+   erorii (<function>set_error_handler</function>).
+  </para>
+  <para>
+   Această funcție este utilă atunci când aveți nevoie să generați un răspuns
+   anumit la apariția unei excepții în timpul rulării.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>error_msg</parameter></term>
+     <listitem>
+      <para>
+       Mesajul desemnat pentru aceată eroare. Lungimea este limitată la 1024
+       octeți. Toate caracterele peste lungimea de 1024 octeți vor fi trunchiate.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>error_type</parameter></term>
+     <listitem>
+      <para>
+       Tipul erorii desemnat pentru această eroare. Aceasta funcționează numai
+       cu familia de constante E_USER, și va avea valoarea implicită
+       <constant>E_USER_NOTICE</constant>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Această funcție întoarce &false; dacă <parameter>error_type</parameter> este
+   specificat, &true; în caz contrar.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemplu <function>trigger_error</function></title>
+    <para>
+     Accesați <function>set_error_handler</function> pentru un exemplu mai
+     detaliat.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+if ($divisor == 0) {
+    trigger_error("Diviziune la zero", E_USER_ERROR);
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+     Entitățile HTML din <parameter>error_msg</parameter> nu sunt "evadate".
+     Utilizați <function>htmlentities</function> asupra mesajului dacă eroarea
+     trebuie afișată într-un navigator.
+   </para>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>error_reporting</function></member>
+    <member><function>set_error_handler</function></member>
+    <member><function>restore_error_handler</function></member>
+    <member><link linkend="errorfunc.constants">Constantele nivelelor de eroare</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 1.14 Maintainer: fernandoc Status: ready -->
+<classentry id="gtk.gtkscrolledwindow">
+ <classmeta>
+  <classtitle>GtkScrolledWindow</classtitle>
+  <classparent>GtkBin</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkscrolledwindow.png"/>
+  <shortdesc>
+   Um container que mostra todo ou parte do seu conteúdo
+   em uma janela com rolagem.
+  </shortdesc>
+  <desc>
+   <para>
+    <classname>GtkScrolledWindow</classname> é uma subclasse de <classname>GtkBin</classname>:
+    é im container que aceita um único filho.
+    GtkScrolledWindow adiciona barras de rolagem no widget filho e opcionalmente
+    desenha uma borda elevada em torno do widget filho.
+   </para>
+   <para>
+    A janela com rolagem pode funcionar de duas maneiras. Alguns widgets tem capacidade de
+    rolagem nativa, estes widget tem "slots" para objetos
+    <classname>GtkAdjustment</classname>. Widgets com suporte nativo a rolagem
+    incluem <classname>GtkTreeView</classname>,
+    <classname>GtkTextView</classname>, e <classname>GtkLayout</classname>.
+   </para>
+   <para>
+    Para widgets que não tem suporte nativo de rolagem, o widget
+    <classname>GtkViewport</classname> funciona como uma classe de adaptação,
+    implementando capacidade de rolagem para os widgets que tem falta da sua própria
+    capacidade de rolagem. Use <classname>GtkViewport</classname> para rolar widgets
+    filhos como <classname>GtkTable</classname>,
+    <classname>GtkBox</classname>, e assim por diante.
+   </para>
+   <para>
+    Se um widget tem capacidade de rolagem nativa, ele pode ser adicionado ao
+    <classname>GtkScrolledWindow</classname> com
+    <function class="GtkContainer">add</function>. Se um widget não tem,
+    voce deve primeiro adicionar o widget a um <classname>GtkViewport</classname>,
+    então adicionar o <classname>GtkViewport</classname> para a janela de rolagem.
+    A função de conveniencia
+    <function class="GtkScrolledWindow">add_with_viewport</function> faz
+    exatamente isso, assim você pode ignorar a presença do viewport.
+   </para>
+   <para>
+    A posição das barras de rolagem é controlada por dois scroll adjustments.
+    See <classname>GtkAdjustment</classname> para os campos em um adjustment
+     - para <classname>GtkScrollbar</classname>, usado por
+     <classname>GtkScrolledWindow</classname>, o campo
+     <fieldname class="GtkAdjustment">value</fieldname> representa a posição da 
+     barra de rolagem, a qual deve estar entre o campo
+     <fieldname class="GtkAdjustment">lower</fieldname> e o campo
+     "<fieldname class="GtkAdjustment">upper</fieldname> -
+      <fieldname class="GtkAdjustment">page_size</fieldname>".
+     O campo <fieldname class="GtkAdjustment">page_size</fieldname>
+     representa o tamanho da area visível de rolagem. Os campos
+     <fieldname class="GtkAdjustment">step_increment</fieldname> e
+     <fieldname class="GtkAdjustment">page_increment</fieldname> são 
+     usados quando o usuário pede para rolar para baixo (usando as pequenas setas de rolagem)
+     ou uma pagina para baixo (usando por exemplo a tecla PageDown).
+    </para>
+    <para>
+     Se um GtkScrolledWindow não funcionar da maneira que você gosta, ou
+     não tem o posicionamento exato, é possível definir sua própria
+     rolagem com um <classname>GtkScrollbar</classname> e por exemplo um
+     <classname>GtkTable</classname>.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkscrolledwindow.constructor">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>GtkScrolledWindow</function></funcdef>
+     <paramdef>
+      <classname>GtkAdjustment</classname>
+      <parameter><optional>hadjustment = null</optional></parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GtkAdjustment</classname>
+      <parameter><optional>vadjustment = null</optional></parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Cria uma nova janela de rolagem.
+   </shortdesc>
+   <desc>
+    <para>
+     Cria uma nova janela de rolagem. Os dois argumentos são os
+     adjustments da janela; estes serão compartilhados com as barras de rolagem e
+     com o widget filho para manter as barras em sincronia com o filho.
+    </para>
+    <para>
+     Normalmente você irá passar <literal>null</literal> para os adjustments,
+     o que vai fazer a janela de rolagem cria-los para você.
+    </para>
+    <example>
+     <title>Rolando uma lista de botões</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkscrolledwindow/constructor.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+    <para>
+     Irá se parecer com isto:
+     <graphic fileref="&directory.images;/reference/gtk/gtkscrolledwindow.png"/>
+    </para>
+   </desc>
+  </constructor>
+ </constructors>
+
+ <methods>
+  <method id="gtk.gtkscrolledwindow.method.add_with_viewport">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_with_viewport</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Adiciona um filho sem capacidades de rolagem nativa.
+   </shortdesc>
+   <desc>
+    <para>
+     Usado para adicionar filho sem capacidades de rolagem nativa.
+     Esta é simplesmente uma função de conveniência, e é equivalente a adicionar
+     o filho sem rolagem a um viewport, e então adicionar o viewport a
+     janela de rolagem. Se o filho tem rolagem nativa, use
+     <function class="GtkContainer">add</function> ao invés desta função.
+    </para>
+    <para>
+     O viewport rola o filho movendo seu
+     <classname>GdkWindow</classname>, e faz que o tamanho da janela filho
+     seja o mesmo tamanho do seu <classname>GdkWindow</classname>. Isto será
+     muito errado para a maioria do widgets que suportam rolagem nativa; por exemplo,
+     se você adicionar um widget como um <classname>GtkTreeView</classname> com um
+     viewport, todo o widget irá rolar, incluindo os cabeçalhos das colunas.
+     Assim, widgets com capacidade de rolagem nativa não devem ser usados
+     com o <classname>GtkViewport</classname>.
+    </para>
+<!-- how does one get a GtkWidgetClass?
+    <para>
+     A widget supports scrolling natively if the set_scroll_adjustments_signal
+     field in GtkWidgetClass is non-zero, i.e. has been filled in with a valid
+     signal identifier.
+    </para>
+-->
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscrolledwindow.method.get_hadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkAdjustment</classname> <function>get_hadjustment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna o adjustment horizontal.
+   </shortdesc>
+   <desc>
+    <para>
+     Retorna o adjustment horizontal, usado para conectar a barra de rolagem horizontal
+     a funcionalidade de rolagem horizontal do widget filho.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">set_hadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscrolledwindow.method.get_placement">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GtkCornerType</enumname> <function>get_placement</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna a colocação do widget filho.
+   </shortdesc>
+   <desc>
+    <para>
+     Retorna a colocação do widget filho em relação as barras de rolagem.
+     Veja o método de definição para uma visualização.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">set_placement</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscrolledwindow.method.get_policy">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_policy</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna os valores da politica de rolagem.
+   </shortdesc>
+   <desc>
+    <para>
+     Obtém a politica atual das barras de rolagem horizontal e
+     vertical. O primeiro elemento da array é
+     <enumname>GtkPolicyType</enumname> da horizontal, o segundo é
+     da politica vertical.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">set_policy</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscrolledwindow.method.get_shadow_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GtkShadowType</enumname> <function>get_shadow_type</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna o tipo de sombra.
+   </shortdesc>
+   <desc>
+    <para>
+     Retorna o tipo de sombra da janela de rolagem.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">set_shadow_type</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscrolledwindow.method.get_vadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkAdjustment</classname> <function>get_vadjustment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna o adjustment vertical.
+   </shortdesc>
+   <desc>
+    <para>
+     Retorna o adjustment vertical, usado para conectar a barra de rolagem
+     vertical com a funcionalidade de rolagem vertical do filho.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">set_vadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscrolledwindow.method.set_hadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_hadjustment</function></funcdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>hadjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define o adjustment para a barra de rolagem horizontal.
+   </shortdesc>
+   <desc>
+    <para>
+     Define o adjustment para a barra de rolagem horizontal.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">get_hadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscrolledwindow.method.set_placement">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_placement</function></funcdef>
+     <paramdef><enumname>GtkCornerType</enumname> <parameter>window_placement</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define a localização do filho em relação as barras de rolagem.
+   </shortdesc>
+   <desc>
+    <para>
+     Determina a localização do widget filho em relação as barras de rolagem.
+    </para>
+    <para>
+     O padrão é
+     <optionname enum="GtkCornerType">Gtk::CORNER_TOP_LEFT</optionname>,
+     significando que o filho esta acima na esquerda, com as barras de rolagem
+     abaixo e na direita. Outros valores em <enumname>GtkCornerType</enumname>
+     são <optionname enum="GtkCornerType">Gtk::CORNER_TOP_RIGHT</optionname>,
+     <optionname enum="GtkCornerType">Gtk::CORNER_BOTTOM_LEFT</optionname>,
+     e <optionname enum="GtkCornerType">Gtk::CORNER_BOTTOM_RIGHT</optionname>.
+    </para>
+    <para>
+     <graphic fileref="&directory.images;/reference/gtk/gtkscrolledwindow/placement.png"/>
+    </para>
+    <example>
+     <title>Tipos de posicionamento</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkscrolledwindow/placement_types.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">get_placement</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscrolledwindow.method.set_policy">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_policy</function></funcdef>
+     <paramdef><enumname>GtkPolicyType</enumname> <parameter>hscrollbar_policy</parameter></paramdef>
+     <paramdef><enumname>GtkPolicyType</enumname> <parameter>vscrollbar_policy</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define a politica das barras de rolagem para ambas as barras.
+   </shortdesc>
+   <desc>
+    <para>
+     Define a politica de rolagem para as barras horizontal e vertical.
+    </para>
+    <para>
+     A politica determina quando a barra de rolagem deve aparecer, é
+     um valor da enumeração <enumname>GtkPolicyType</enumname>.
+     Se <optionname enum="GtkPolicyType">Gtk::POLICY_ALWAYS</optionname>,
+     a barra de rolagem esta sempre presente; se
+     <optionname enum="GtkPolicyType">Gtk::POLICY_NEVER</optionname>, a barra de
+     rolagem nunca esta presente; se <optionname enum="GtkPolicyType">Gtk::POLICY_AUTOMATIC</optionname>, 
+     a barra de rolagem esta presente somente se necessária(apenas se
+     o conteúdo a ser exibido for maior do que o
+     tamanho da area de exibição).
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">get_policy</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscrolledwindow.method.set_shadow_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_shadow_type</function></funcdef>
+     <paramdef><enumname>GtkShadowType</enumname> <parameter>type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define a sombra desenhada no entorno da janela de rolagem.
+   </shortdesc>
+   <desc>
+    <para>
+     Muda o tipo de sombra desenhada em torno do
+     conteúdo da janela de rolagem.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">get_shadow_type</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkscrolledwindow.method.set_vadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_vadjustment</function></funcdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>hadjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define o adjustment para a barra de rolagem vertical.
+   </shortdesc>
+   <desc>
+    <para>
+     Define o adjustment para a barra de rolagem vertical.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">get_vadjustment</function>
+    </para>
+   </desc>
+  </method>
+ </methods>
+
+
+ <properties>
+  <prop id="gtk.gtkscrolledwindow.property.hadjustment" type="rw">
+   <propname>hadjustment</propname>
+   <proptype><classname>GtkAdjustment</classname></proptype>
+   <shortdesc>
+    Adjustment horizontal.
+   </shortdesc>
+   <desc>
+    <para>
+     O <classname>GtkAdjustment</classname> para a posição horizontal.
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkscrolledwindow.property.hscrollbar-policy" type="rw">
+   <propname>hscrollbar-policy</propname>
+   <proptype><enumname>GtkPolicyType</enumname></proptype>
+   <shortdesc>
+    Quando a barra horizontal é exibida.
+   </shortdesc>
+   <desc>
+    <para>
+     Quando a barra horizontal é exibida.
+    </para>
+    <para>
+     Padrão: <optionname enum="GtkPolicyType">Gtk::POLICY_ALWAYS</optionname>
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">get_policy</function>,
+     <function class="GtkScrolledWindow">set_policy</function>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkscrolledwindow.property.shadow-type" type="rw">
+   <propname>shadow-type</propname>
+   <proptype><enumname>GtkShadowType</enumname></proptype>
+   <shortdesc>
+    Style of bevel around the contents.
+   </shortdesc>
+   <desc>
+    <para>
+     Style of bevel around the contents.
+    </para>
+    <para>
+     Default: <optionname enum="GtkShadowType">Gtk::SHADOW_NONE</optionname>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkscrolledwindow.property.vadjustment" type="rw">
+   <propname>vadjustment</propname>
+   <proptype/>
+   <shortdesc>
+    Adjustment vertical.
+   </shortdesc>
+   <desc>
+    <para>
+     O <classname>GtkAdjustment</classname> para a posição vertical.
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkscrolledwindow.property.vscrollbar-policy" type="rw">
+   <propname>vscrollbar-policy</propname>
+   <proptype/>
+   <shortdesc>
+    Quando a barra vertical é exibida.
+   </shortdesc>
+   <desc>
+    <para>
+     Quando a barra vertical é exibida.
+    </para>
+    <para>
+     Padrão: <optionname enum="GtkPolicyType">Gtk::POLICY_ALWAYS</optionname>
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkScrolledWindow">get_policy</function>,
+     <function class="GtkScrolledWindow">set_policy</function>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkscrolledwindow.property.window-placement" type="rw">
+   <propname>window-placement</propname>
+   <proptype/>
+   <shortdesc>
+    Posição do filho em relação as barras de rolagem.
+   </shortdesc>
+   <desc>
+    <para>
+     Aonde o conteúdo esta localizado em relação as barras de rolagem.
+    </para>
+    <para>
+     Padrão: <optionname enum="GtkCornerType">Gtk::CORNER_TOP_LEFT</optionname>
+    </para>
+   </desc>
+  </prop>
+ </properties>
+
+
+ <styleproperties>
+  <prop id="gtk.gtkscrolledwindow.property.scrollbar-spacing" type="ro">
+   <propname>scrollbar-spacing</propname>
+   <proptype>int</proptype>
+   <shortdesc>
+    Número de pixels entre as barras de rolagem e a janela de rolagem.
+   </shortdesc>
+   <desc>
+    <para>
+     Número de pixels entre as barras de rolagem e a janela de rolagem.
+    </para>
+    <para>
+     Padrão: <literal>3</literal>
+    </para>
+   </desc>
+  </prop>
+ </styleproperties>
+
+
+ <signals>
+  <signal id="gtk.gtkscrolledwindow.signal.move-focus-out">
+   <signalname>move-focus-out</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkScrolledWindow</classname> <parameter>scrolledwindow</parameter></paramdef>
+     <paramdef><enumname>GtkDirectionType</enumname> <parameter>direction</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    O foco é movido para fora da janela de rolagem.
+   </shortdesc>
+   <desc>
+    <para>
+     Este sinal é emitido quando o usuário move o foco para fora
+     da janela de rolagem pressionando <literal>Control+Tab</literal> ou
+     <literal>Shift+Control+Tab</literal>.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkscrolledwindow.signal.scroll-child">
+   <signalname>scroll-child</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkScrolledWindow</classname> <parameter>scrolledwindow</parameter></paramdef>
+     <paramdef><enumname>GtkScrollType</enumname> <parameter>scrolltype</parameter></paramdef>
+     <paramdef>bool <parameter>horizontal</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    O widget fillho é rolado por uma ação do teclado.
+   </shortdesc>
+   <desc>
+    <para>
+     O sinal <literal>scroll-child</literal> é emitido quando o widget filho
+     esta sendo rolado por uma ação do teclado. As teclas de atalho padrão
+     com o tipo de rolagem e argumentos são:
+    </para>
+    <para>
+     <table>
+      <tgroup cols="2">
+       <tbody>
+        <row>
+         <entry><literal>Control+Left Arrow</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_STEP_BACKWARD</optionname> (horizontal)</entry>
+        </row>
+        <row>
+         <entry><literal>Control+Right Arrow</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_STEP_FORWARD</optionname> (horizontal)</entry>
+        </row>
+        <row>
+         <entry><literal>Control+Up Arrow</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_STEP_BACKWARD</optionname> (vertical)</entry>
+        </row>
+        <row>
+         <entry><literal>Control+Down Arrow</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_STEP_FORWARD</optionname> (vertical)</entry>
+        </row>
+        <row>
+         <entry><literal>Control+Page Up</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_PAGE_BACKWARD</optionname> (horizontal)</entry>
+        </row>
+        <row>
+         <entry><literal>Control+Page Down</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_PAGE_FORWARD</optionname> (horizontal)</entry>
+        </row>
+        <row>
+         <entry><literal>Page Up</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_PAGE_BACKWARD</optionname> (vertical)</entry>
+        </row>
+        <row>
+         <entry><literal>Page Down</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_PAGE_FORWARD</optionname> (vertical)</entry>
+        </row>
+        <row>
+         <entry><literal>Control+Home</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_START</optionname> (horizontal)</entry>
+        </row>
+        <row>
+         <entry><literal>Control+End</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_END</optionname> (horizontal)</entry>
+        </row>
+        <row>
+         <entry><literal>Home</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_START</optionname> (vertical)</entry>
+        </row>
+        <row>
+         <entry><literal>End</literal></entry>
+         <entry><optionname enum="GtkScrollType">Gtk::SCROLL_END</optionname> (vertical)</entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </table>
+    </para>
+   </desc>
+  </signal>
+ </signals>
+
+</classentry>

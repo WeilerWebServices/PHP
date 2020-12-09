@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.6 $ -->
+<classentry id="gtk.gtkvscale">
+ <classmeta>
+  <classtitle>GtkVScale</classtitle>
+  <classparent>GtkScale</classparent>
+  <shortdesc>
+    Vertical slider widget for selecting a value from a range.
+  </shortdesc>
+  <desc>
+   <para>
+    A <classname>GtkVScale</classname> is a vertical scrollbar-like widget
+    that is able to display its adjustment value as text.
+   </para>
+   <para>
+    There are some configuration issues with this widget when it is used in
+    such a way; please refer to <classname>GtkScale</classname> for further
+    information.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkvscale.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkVScale</function></funcdef>
+    <paramdef><classname>GtkAdjustment</classname> <parameter><optional>adjustment = null</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a vertical slider.
+   </shortdesc>
+   <desc>
+    <para>
+     A <classname>GtkVScale</classname> that can be given its own
+     <classname>GtkAdjustment</classname> settings has no configuration
+     issues whatever.
+    </para>
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkvscale.constructor.new_with_range">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkVScale::new_with_range</function></funcdef>
+    <paramdef>double <parameter>min</parameter></paramdef>
+    <paramdef>double <parameter>max</parameter></paramdef>
+    <paramdef>double <parameter>step</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a vertical slider with specified range.
+   </shortdesc>
+   <desc>
+    Creates a vertical slider with specified range.
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </constructor>
+
+ </constructors>
+
+</classentry>

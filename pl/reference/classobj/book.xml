@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 330340 Maintainer: joeaccord Status: ready -->
+<!-- CREDITS: dombal -->
+
+<book xml:id="book.classobj" xmlns="http://docbook.org/ns/docbook">
+ <?phpdoc extension-membership="core" ?>
+ <title>Informacje o klasach i obiektach</title>
+ <titleabbrev>Klasy/Obiekty</titleabbrev>
+
+ <preface xml:id="intro.classobj">
+  &reftitle.intro;
+  <para>
+   Te funkcje pozwalają uzyskać informacje o klasach i ich
+   egzemplarzach, obiektach. Możesz uzyskać informację o nazwie
+   klasy do jakiej należy obiekt, a także jej właściwości
+   i metody. Używając tych funkcji możesz dowiedzieć się nie
+   tylko do jakiej klasy należy obiekt, ale także ustalić jego
+   przodków (np. jaką klasę rozszerza klasa tego obiektu).
+  </para>
+  <para>
+   Zobacz sekcję poświęconą <link linkend="language.types.object">obiektom</link>,
+   aby dowiedzieć się w jaki sposób klasy i obiekty zostały zaimplementowane w PHP.
+  </para>
+ </preface>
+
+ &reference.classobj.setup;
+ &reference.classobj.constants;
+ &reference.classobj.examples;
+ &reference.classobj.reference;
+
+</book>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

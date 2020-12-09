@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision: 1.4 $ -->
+<classentry id="atk.atkutil">
+ <classmeta>
+  <classtitle>AtkUtil</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   A utility class which supports the adding and removal of event listeners.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+</classentry>

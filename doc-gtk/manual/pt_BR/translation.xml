@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE translation SYSTEM "../../dbxml/translation.dtd">
+
+<translation>
+   <!-- Devemos colocar aqui uma descrição do grupo -->
+   <intro>
+    
+   </intro>
+
+   <translators>
+    <!-- Com conta de cvs -->
+    <person name="Fernando Correa da Conceição" email="fernandoc at php.net" nick="fernandoc" cvs="yes"/>
+    <person name="Diego do Nascimento Feitosa" email="dnfeitosa at php.net" nick="dnfeitosa" cvs="yes"/>
+    <!-- Sem conta de cvs -->
+    <person name="Felipe Morcelli" email="felipemorcelli at gmail.com" nick="morcelli" cvs="no"/>
+   </translators>
+
+   <work-in-progress>
+    <!-- 
+        name->nome do arquivo(s)
+        person->nome de usuario do cvs, ou um apelido equivalente
+        date->a data que começou, formato aaaa.mm.dd
+    -->
+    <file name="GtkScrolledWindow, GtkStatusIcon, GtkTable, GtkText*" person="fernandoc" type="translation" date="2007.11.25"/>
+    <file name="gtklist*, gtkmenu*, gtkradio*" person="dnfeitosa" type="translation" date="2006.11.15"/>
+    <file name="gtktoolbar, gtktooltips, gtktoolbutton, gtktable, gtktoolitem" person="morcelli" type="translation" date="2007.11.20">
+   </work-in-progress>
+
+<!--
+	Also,
+	http://br.groups.yahoo.com/group/traducao-php/
+	
+	Note, how to convert from ISO8859-1 to utf8:
+	iconv -f iso8859-1 -t utf8 -o gtkcurve.xml1 gtkcurve.xml
+	
+	
+-->
+
+</translation>

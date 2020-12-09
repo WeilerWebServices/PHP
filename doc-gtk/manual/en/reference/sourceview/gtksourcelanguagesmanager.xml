@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.3 $ -->
+<classentry id="sourceview.gtksourcelanguagesmanager">
+ <classmeta>
+  <classtitle>GtkSourceLanguagesManager</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   Interface to manage available and custom source code language descriptions.
+  </shortdesc>
+  <desc>
+   
+  </desc>
+ </classmeta>
+
+
+ <methods>
+  <method id="sourceview.gtksourcelanguagesmanager.method.get_available_languages">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_available_languages</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="sourceview.gtksourcelanguagesmanager.method.get_language_from_mime_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_language_from_mime_type</function></funcdef>
+     <paramdef><parameter>mime_type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtksourcelanguagesmanager.method.get_available_languages">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_available_languages</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtksourcelanguagesmanager.method.get_lang_files_dirs">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_lang_files_dirs</function></funcdef>
+     <paramdef><parameter><optional>convert</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtksourcelanguagesmanager.method.get_language_from_mime_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_language_from_mime_type</function></funcdef>
+     <paramdef><parameter>mime_type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+</methods>
+</classentry>

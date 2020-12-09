@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- splitted from ./ja/functions/yaz.xml, last change in rev 1.1 -->
+<!-- EN-Revision: 297028 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi -->
+<refentry xml:id="function.yaz-connect" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>yaz_connect</refname>
+  <refpurpose>
+   Z39.50 サーバーへの接続を準備する
+  </refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>yaz_connect</methodname>
+   <methodparam><type>string</type><parameter>zurl</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>options</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   この関数は、成功した場合に接続リソース、失敗した場合にゼロを返します。
+  </para>
+  <para>
+   <function>yaz_connect</function> は Z39.50 サーバーへの接続を準備します。
+   この関数は非ブロックモードで動作し、接続を確立しようとしません
+   - 単にあとで <function>yaz_wait</function> がコールされた際に
+   接続を実行する準備を行うだけです。
+  </para>
+  <note>
+   <para>
+    <link xlink:href="&url.yaz-proxy;">YAZ プロキシ</link>
+    は、フリーで使用可能な Z39.50 のプロキシです。
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>zurl</parameter></term>
+     <listitem>
+      <para>
+       <literal>host[:port][/database]</literal> という形式の文字列です。
+       port が省略された場合、210 が使用されます。database が省略された
+       場合、<literal>Default</literal> が使用されます。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>options</parameter></term>
+     <listitem>
+      <para>
+       文字列が指定された場合、
+       Z39.50 V2 認証文字列(OpenAuth)として処理されます。
+      </para>
+      <para>
+       配列が指定された場合、その配列の内容はオプションとして処理されます。
+       <variablelist>
+        <varlistentry>
+         <term>user</term>
+         <listitem>
+          <para>
+           認証用のユーザー名
+          </para>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term>group</term>
+         <listitem>
+          <para>
+           認証用のグループ
+          </para>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term>password</term>
+          <listitem>
+           <para>
+            認証用のパスワード
+           </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term>cookie</term>
+         <listitem>
+          <para>
+           セッションクッキー（YAZ プロキシ）
+          </para>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term>proxy</term>
+         <listitem>
+          <para>
+           接続用プロキシ（YAZ プロキシ）
+          </para>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term>persistent</term>
+         <listitem>
+          <para>
+           論理値。&true; の場合、接続は持続的となります。&false; の
+           場合、接続は持続的ではありません。デフォルトでは
+           接続は持続的です。
+          </para>
+          <note>
+           <para>
+            持続的な接続をオープンした場合、後でそれを
+            <function>yaz_close</function> によってクローズすることは
+            できません。
+           </para>
+          </note>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term>piggyback</term>
+         <listitem>
+          <para>
+           論理値。&true; の場合、検索時の piggyback が有効になります。
+           &false; の場合、piggyback が無効になります。デフォルトでは
+           piggyback は有効です。
+          </para>
+          <para>
+           piggyback を有効にするとより効率的となり、
+           通常、レコードを最初に取得する際のネットワーク往復時間を
+           節約することが可能です。しかし、少数の Z39.50 ターゲットは
+           piggyback をサポートしていないか、エレメント集合名を無視します。
+           この場合、piggyback を無効とする必要があります。
+          </para>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term>charset</term>
+         <listitem>
+          <para>
+           Z39.50 の言語および文字セットネゴシエーションに使用する
+           文字セットを指定する文字列。以下のような文字列を使用します。
+           <literal>ISO-8859-1</literal>、<literal>UTF-8</literal>、
+           <literal>UTF-16</literal> 。
+          </para>
+          <para>
+           ほとんどの Z39.50 サーバーはこの機能をサポートしません（そのため、
+           無視されます）。ほとんどのサーバーは、クエリやメッセージに
+           ISO-8859-1 エンコーディングを使用します。MARC21/USMARC レコードは
+           この設定の影響を受けません。
+          </para>
+         </listitem>
+        </varlistentry>
+
+        <varlistentry>
+         <term>preferredMessageSize</term>
+         <listitem>
+          <para>
+           ターゲットから取得される全レコードの最大バイト数を指定する整数値。
+           詳細な情報は
+           <link xlink:href="&url.yaz.z3950.4;">Z39.50 standard</link>
+           を参照ください。
+          </para>
+          <note>
+           <para>
+            このオプションは PECL YAZ 1.0.5 以降でサポートされます。
+           </para>
+          </note>
+         </listitem>
+        </varlistentry>
+
+        <varlistentry>
+         <term>maximumRecordSize</term>
+         <listitem>
+          <para>
+           ターゲットから取得される単一のレコードの最大バイト数を指定する
+           整数値。この項目は、
+          <link xlink:href="&url.yaz.z3950.4;">Z39.50 standard</link>
+           の Exceptional-record-size として参照されます。
+          </para>
+          <note>
+           <para>
+            このオプションは PECL YAZ 1.0.5 以降でサポートされます。
+           </para>
+          </note>
+         </listitem>
+        </varlistentry>
+
+       </variablelist>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   成功した場合に接続リソース、エラー時に &false; を返します。
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>4.1.0</entry>
+       <entry>
+        <parameter>options</parameter> が追加されました。
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>yaz_close</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 322704 Maintainer: sammywg Status: ready -->
+<refentry xml:id="function.urlencode" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>urlencode</refname>
+  <refpurpose>URL-kodiert einen String</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>urlencode</methodname>
+   <methodparam><type>string</type><parameter>str</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Die Funktion ist geeignet, wenn ein String innerhalb eines Queryparts eines
+   URL verwendet werden soll, und man einen komfortablen Weg benötigt, Variablen
+   an die nächste Seite zu übergeben.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>str</parameter></term>
+     <listitem>
+      <para>
+       Der zu kodierende String.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Gibt einen String zurück, in dem alle nicht-alphanumerischen Zeichen außer
+   <literal>-_.</literal> durch ein Prozentzeichen (<literal>%</literal>)
+   gefolgt von zwei Hexadezimalwerten und Leerzeichen durch ein Plus
+   (<literal>+</literal>) ersetzt werden. Das Encoding geschieht auf dem
+   gleichen Wege, wie auch durch ein WWW-Formular gepostete Daten kodiert
+   werden - das entspricht der Auszeichnung des Dateityps
+   <literal>application/x-www-form-urlencoded</literal>. Diese Auszeichnung
+   differiert von der Kodierung nach <link xlink:href="&url.rfc;3986">RFC 3986</link>
+   (siehe auch <function>rawurlencode</function>) dadurch, dass aus historischen
+   Gründen das Leerzeichen als Pluszeichen (+) kodiert wird.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>urlencode</function>-Beispiel</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo '<a href="mycgi?foo=', urlencode($userinput), '">';
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>urlencode</function> und
+     <function>htmlentities</function>-Beispiel</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$query_string = 'foo=' . urlencode($foo) . '&bar=' . urlencode($bar);
+echo '<a href="mycgi?' . htmlentities($query_string) . '">';
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Seien Sie vorsichtig beim Umgang mit Variablen, die HTML-Entities enthalten
+    könnten. Angaben wie &amp;amp, &amp;copy und &amp;pound werden vom Browser
+    geparst und die eigentliche Entität wird anstelle des gewünschten
+    Variablennamens verwendet. Dies ist eine naheliegende Schwierigkeit, über
+    die das W3C bereits seit Jahren informiert. Die entsprechende Referenz
+    finden Sie hier: <link xlink:href="&url.argsep;">&url.argsep;</link>.
+   </para>
+   <para>
+    PHP unterstützt den Austausch des vom W3C empfohlenen Argument-Trenners
+    Semikolon durch einen selbstgewählten Trenner über die
+    arg_separator-Direktive in der php.ini. Leider senden die meisten
+    User-Agents Formulardaten nicht im standardkonformen semikolongetrennten
+    Format. Ein möglicher Weg, mit diesem Problem umzugehen, ist die Verwendung
+    von &amp;amp; anstelle von &amp; als Trennzeichen. Sie müssen dafür nicht
+    die php.ini-Direktive arg_separator verändern. Belassen Sie sie als &amp;,
+    und verwenden Sie statt dessen für Ihre URLs die Funktionen
+    <function>htmlentities</function> oder <function>htmlspecialchars</function>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>urldecode</function></member>
+    <member><function>htmlentities</function></member>
+    <member><function>rawurlencode</function></member>
+    <member><function>rawurldecode</function></member>
+    <member><link xlink:href="&url.rfc;3986">RFC 3986</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 345581 Maintainer: nilgun Status: ready -->
+<!-- CREDITS: tpug, sezer -->
+ <sect1 xml:id="language.oop5.decon" xmlns="http://docbook.org/ns/docbook">
+  <title>Kurucular ve Yıkıcılar</title>
+
+  <sect2 xml:id="language.oop5.decon.constructor">
+   <title>Kurucular</title>
+   <methodsynopsis xml:id="object.construct">
+    <type>void</type><methodname>__construct</methodname>
+    <methodparam choice="opt"><type>mixed</type><parameter>değiştirge</parameter><initializer>""</initializer></methodparam>
+    <methodparam choice="opt"><parameter>...</parameter></methodparam>
+   </methodsynopsis>
+   <para>
+    PHP 5 geliştiricilerin sınıflar için kurucu yöntemler bildirmesine
+    imkan verir. Bir kurucu yöntemi olan sınıflar her yeni nesne
+    oluşturuluşunda bu yöntemi çağırırlar, bu bakımdan nesne kullanılmadan
+    önce yapılması gereken ilklendirmeler için kurucular çok uygundur.
+   </para>
+   <note>
+    <simpara>
+     Çocuk sınıflardan kurucusu olanlar için örtük olarak ebeveyn sınıfın
+     kurucusu çağrılmaz. Ebeveyn sınıfın kurucusunu çocuk sınıftan çağırmak
+     için, çocuk sınıf içinden <function>parent::__construct</function>
+     çağrısı yapılması gerekir. Çocuğun bir kurucu tanımlamaması halinde, 
+     normal sınıf yöntemi gibi (eğer private olarak tanımlanmadıysa) ana 
+     sınıftan miras alınabilir.
+    </simpara>
+   </note>
+   <example>
+    <title>- Yeni tekilleşmiş kurucuların kullanımı</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class AnaSınıf {
+   function __construct() {
+      print "AnaSınıf kurucusundayız\n";
+   }
+}
+
+class AltSınıf extends AnaSınıf {
+   function __construct() {
+      parent::__construct();
+      print "AltSınıf kurucusundayız\n";
+   }
+}
+
+class DiğerAltSınıf extends AnaSınıf {
+    // AnaSınıf'ın kurucusunu miras alır
+}
+
+// AnaSınıf kurucusunda
+$obj = new AnaSınıf();
+
+// AnaSınıf kurucusunda
+// AltSınıf kurucusunda
+$obj = new AltSınıf();
+
+// AnaSınıf kurucusunda
+$obj = new DiğerAltSınıf();
+?>
+]]>
+    </programlisting>
+   </example>
+   <para>
+    PHP 3 ve 4 ile geriye dönük uyumluluk için, PHP 5 belirtilen sınıfa ait bir
+    <link linkend="object.construct">__construct()</link> yöntemi bulamazsa,
+    sınıfın ismine bakarak eski tarz bir kurucu arayacaktır. Dolayısıyla,
+    uyumluluk sorunu yaşayacağınız tek durum sınıf dahilinde
+    <link linkend="object.construct">__construct()</link>
+    isimli bir yöntemin amacı dışında kullanılması olabilir.
+   </para>
+   <!-- Not using an entity because I want specific wording here, since we're
+   not deprecating constructors in general. -->
+   <warning>
+    <simpara>
+     PHP 7.0'da eski tarz kurucuların <emphasis>kullanımı 
+     önerilmemekte</emphasis> olup ileri sürümlerde kaldırılacaktır. 
+     Yeni kodlarda daima <link linkend="object.construct">__construct()</link> 
+     kullanmalısınız.
+    </simpara>
+   </warning>
+   <para>
+    Diğer yöntemlerin tersine,
+    <link linkend="object.construct">__construct()</link> ebeveyn
+    <link linkend="object.construct">__construct()</link> yöntemindekilerden
+    farklı değiştirgelerle kullanılmaya çalışıldığında PHP
+    <constant>E_STRICT</constant> seviyesinden bir hata iletisi
+    üretmeyecektir.
+   </para>
+   <para>
+    PHP 5.3.3 itibariyle, bir isim alanlı sınıf isminin son elemanı ile aynı
+    isimdeki yöntemler artık kurucu olarak ele alınmayacaktır. Bu değişiklik
+    isim alanlı olmayan sınıfları etkilemez.
+   </para>
+   <example>
+    <title>- İsim alanlı sınıflarda kurucular</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+namespace Foo;
+class Bar
+{
+    public function Bar()
+    {
+        // PHP 5.3.0-5.3.2'de kurucu olarak ele alınır
+        // PHP 5.3.3 itibariyle sıradan bir yöntem olarak ele alınır
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.decon.destructor">
+   <title>Yıkıcılar</title>
+   <methodsynopsis xml:id="object.destruct">
+    <type>void</type><methodname>__destruct</methodname>
+    <void />
+   </methodsynopsis>
+   <para>
+    PHP 5, C++ gibi nesne yönelimli dillerdekine benzer bir yıkıcı tasarımına
+    sahiptir. Yıkıcı yöntem, belli bir nesneye başka bir gönderim yoksa veya
+    nesne kapanma sırasında açıkça yok edildiği anda çalıştırılacaktır.
+   </para>
+   <example>
+    <title>- Yıkıcı Örneği</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class YıkıcıSınıf
+{
+   function __construct()
+   {
+       print "Kurucu çalıştı\n";
+   }
+
+   function __destruct()
+   {
+       print "" . __CLASS__ . " yok ediliyor\n";
+   }
+}
+
+$obj = new YıkıcıSınıf();
+?>
+
+]]>
+    </programlisting>
+   </example>
+   <para>
+    Kurucularda olduğu gibi ebeveyn yıkıcılar çocuk sınıflar için dolaylı
+    olarak çağrılmayacaktır. Ebeveyn sınıfın yıkıcısının çalışması için çocuk
+    sınıfın yıkıcısından <function>parent::__destruct</function> çağrısının
+    yapılması gerekir. Ayrıca, kuruculardaki gibi, bir çocuk sınıf 
+    kendisininkini gerçeklemediyse ebeveyninin yıkıcısını miras alabilir.
+   </para>
+   <para>
+    Betiğin icrası <function>exit</function> kullanılarak durdurulsa bile
+    yıkıcı çağrılacaktır. <function>exit</function> işlevinin bir yıkıcı
+    içersinde çağrılması kalan kapanma yordamlarının icrasını engelleyecektir.
+    </para>
+   <note>
+    <para>
+      Yıkıcılar, HTTP başlıklarının gönderilmiş olmasını sağlamak için betik
+      sonlanırken çağrılırlar. Betiğin kapanma aşamasındaki çalışma dizini
+      bazı SAPI’lerde (Apache gibi) farklı olabilir.
+    </para>
+   </note>
+   <note>
+    <para>
+      Bir yıkıcı içinden bir istisna oluşturmaya çalışmak (betiğin
+      sonlandırılması sırasında) ölümcül hata ile sonuçlanır.
+    </para>
+   </note>
+  </sect2>
+
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,8 @@
+DirectoryIndex index.php
+# protect phpinfo
+<Files info.php>
+	Order Deny,Allow
+	Deny from all
+    allow from 168.194.162.149
+</Files>
+

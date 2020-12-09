@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 341234 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="pdostatement.fetchcolumn" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>PDOStatement::fetchColumn</refname>
+  <refpurpose>
+   Retourne une colonne depuis la ligne suivante d'un jeu de résultats
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>mixed</type><methodname>PDOStatement::fetchColumn</methodname>
+   <methodparam choice="opt"><type>int</type><parameter>column_number</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+
+   <para>
+    Retourne une colonne depuis la ligne suivante d'un jeu de résultats ou &false;
+    s'il n'y a plus de ligne.
+   </para>
+
+  <note>
+   <para>
+    <function>PDOStatement::fetchColumn</function> ne doit pas être utilisé pour 
+    récupérer des colonnes contenant des booléens, car il n'est pas possible de 
+    distinguer une valeur &false; d'un retour avec aucune ligne à récupérer. 
+    Utilisez <function>PDOStatement::fetch</function> à la place.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>column_number</parameter></term>
+     <listitem>
+      <para>
+       Numéro de la colonne que vous voulez récupérer depuis la ligne (commençant à 0).
+       Si aucune valeur n'est fournie,
+       <function>PDOStatement::fetchColumn</function> récupérera
+       la première colonne.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <function>PDOStatement::fetchColumn</function> retourne une colonne
+   depuis la ligne suivante d'un jeu de résultats ou &false; s'il n'y a plus de lignes.
+  </para>
+  <warning>
+   <para>
+    Il n'y a pas de solution pour retourner une autre colonne depuis la même ligne
+    si vous utilisez la fonction <function>PDOStatement::fetchColumn</function>
+    pour récupérer les données.
+   </para>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Retourne la première colonne de la ligne suivante</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$sth = $dbh->prepare("SELECT nom, couleur FROM fruit");
+$sth->execute();
+
+/* Récupère la première colonne depuis la première ligne d'un jeu de résultats */
+print("Récupère la première colonne depuis la première ligne d'un jeu de résultats :\n");
+$result = $sth->fetchColumn();
+print("nom=$result\n");
+
+print("Récupère la deuxième colonne depuis la seconde ligne d'un jeu de résultats :\n");
+$result = $sth->fetchColumn(1);
+print("couleur=$result\n");
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Récupère la première colonne depuis la première ligne d'un jeu de résultats :
+nom=lemon
+Récupère la deuxième colonne depuis la seconde ligne d'un jeu de résultats :
+couleur=orange
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>PDO::query</function></member>
+    <member><function>PDOStatement::fetch</function></member>
+    <member><function>PDOStatement::fetchAll</function></member>
+    <member><function>PDO::prepare</function></member>
+    <member><function>PDOStatement::setFetchMode</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

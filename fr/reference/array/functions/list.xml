@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351129 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+<!-- CREDITS: DavidA. -->
+
+<refentry xml:id="function.list" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>list</refname>
+  <refpurpose>Assigne des variables comme si elles étaient un tableau</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>list</methodname>
+   <methodparam><type>mixed</type><parameter>var</parameter></methodparam>
+   <methodparam rep="repeat" choice="opt"><type>mixed</type><parameter>vars</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Tout comme <function>array</function>, <function>list</function> n'est pas une
+   véritable fonction, mais un élément de langage, qui permet de rassembler
+   les variables <parameter>varname</parameter>, <parameter>...</parameter>
+   sous forme de tableau, pour les assigner en une seule ligne.
+  </para>
+  <note>
+   <para>
+    Avant PHP 7.1.0, <function>list</function> fonctionne uniquement sur un tableau 
+    d'indice numérique et suppose que l'indice numérique commence à 0.
+   </para>
+  </note>
+  <warning>
+   <para>
+    Avec PHP 5, <function>list</function> assigne les valeurs commençant avec le paramètre le plus à droite. Avec PHP 7, <function>list</function> commence avec le paramètre le plus à gauche.
+   </para>
+   <para>
+   Si vous utilisez des variables simples, vous n'avez pas à vous en préoccuper.
+    Mais, si vous utilisez des tableaux avec des indices, vous vous attendrez 
+    généralement à ce que l'ordre des indices du tableau soit les mêmes que 
+    ceux écrit dans <function>list</function>, de la gauche,
+    vers la droite, ce qui n'est pas le cas dans PHP 5, qui
+    faisait l'assignation dans l'ordre inverse.
+   </para>
+   <para>
+    D'une manière générale, il est conseillé de ne pas se fier
+    à un ordre spécifique d'exécution, car cela pourrait changer à 
+    l'avenir.
+   </para>
+  </warning>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>var</parameter></term>
+     <listitem>
+      <para>
+       Une variable.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>vars</parameter></term>
+     <listitem>
+      <para>
+       Variables supplémentaires.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne le tableau assigné.
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        Le support pour l'assignement par référence dans la déstructuration
+        de tableau a été ajouté.
+       </entry>
+      </row>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Il est maintenant possible de spécifier les clés dans la 
+        <function>list</function>. Cela permet de déstructurer des tableaux 
+        avec des clés non-entières ou non séquentielles.
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+         L'ordre dans lequel l'opération d'assignation est exécutée a changé.
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+         Les expressions de <function>list</function> ne peuvent plus être 
+         complètement vide.
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+         Les chaînes de caractères ne peuvent plus être défaites.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>list</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$info = array('coffee', 'brown', 'caffeine');
+
+// Liste toutes les variables
+list($drink, $color, $power) = $info;
+echo "$drink is $color and $power makes it special.\n";
+
+// Liste certaines variables
+list($drink, , $power) = $info;
+echo "$drink has $power.\n";
+
+// Ou bien, n'utilisons que le troisième
+list( , , $power) = $info;
+echo "I need $power!\n";
+
+// list() ne fonctionne pas avec les chaînes de caractères
+list($bar) = "abcde";
+var_dump($bar); // NULL
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Exemple d'utilisation de <function>list</function></title>
+    <programlisting role="php">
+<![CDATA[
+<table>
+ <tr>
+  <th>Employee name</th>
+  <th>Salary</th>
+ </tr>
+
+<?php
+$result = $pdo->query("SELECT id, name, salary FROM employees");
+while (list($id, $name, $salary) = $result->fetch(PDO::FETCH_NUM)) {
+    echo " <tr>\n" .
+          "  <td><a href=\"info.php?id=$id\">$name</a></td>\n" .
+          "  <td>$salary</td>\n" .
+          " </tr>\n";
+}
+
+?>
+
+</table>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Utilisation d'un sous-<function>list</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+list($a, list($b, $c)) = array(1, array(2, 3));
+
+var_dump($a, $b, $c);
+
+?>
+]]>
+    </programlisting>
+    <screen>
+<![CDATA[
+int(1)
+int(2)
+int(3)
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Utilisation de <function>list</function> en tenant compte de l'ordre</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$info = array('coffee', 'brown', 'caffeine');
+
+list($a[0], $a[1], $a[2]) = $info;
+
+var_dump($a);
+
+?>
+]]>
+    </programlisting>
+    <para>
+     Cet exemple donne le résultat suivant (notez l'ordre d'affichage des
+     éléments, en comparaison avec l'ordre dans lequel ils ont été écrits dans
+     la syntaxe de <function>list</function>) :
+    </para>
+    &example.outputs.7;
+    <screen>
+<![CDATA[
+array(3) {
+  [0]=>
+  string(6) "coffee"
+  [1]=>
+  string(5) "brown"
+  [2]=>
+  string(8) "caffeine"
+}
+]]>
+    </screen>
+    &example.outputs.5;
+    <screen>
+<![CDATA[
+array(3) {
+  [2]=>
+  string(8) "caffeine"
+  [1]=>
+  string(5) "brown"
+  [0]=>
+  string(6) "coffee"
+}
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>list</function> et l'ordre de définition des index</title>
+    <simpara>
+     L'ordre dans lequel les indices d'un tableau sont traités par
+     <function>list</function> sont définis est non pertinent.
+    </simpara>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$foo = array(2 => 'a', 'foo' => 'b', 0 => 'c');
+$foo[1] = 'd';
+list($x, $y, $z) = $foo;
+var_dump($foo, $x, $y, $z);
+]]>
+    </programlisting>
+    <para>
+     Etant donné la sortie suivante (notez l'ordre des éléments comparés
+     et dans quel ordre ils ont été écrits dans la syntaxe 
+     de la <function>list</function>) :
+    </para>
+    <screen>
+<![CDATA[
+array(4) {
+  [2]=>
+  string(1) "a"
+  ["foo"]=>
+  string(1) "b"
+  [0]=>
+  string(1) "c"
+  [1]=>
+  string(1) "d"
+}
+string(1) "c"
+string(1) "d"
+string(1) "a"
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>list</function> avec des clés</title>
+    <simpara>
+     Depuis PHP 7.1.0 <function>list</function> peut maintenant contenir également 
+     des clés explicites, qui peuvent être donnés comme des expressions arbitraires. 
+     Le mixage des clés &integer; et &string; est autorisé; Toutefois, les éléments 
+     avec et sans clés ne peuvent pas être mélangés.
+    </simpara>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$data = [
+    ["id" => 1, "name" => 'Tom'],
+    ["id" => 2, "name" => 'Fred'],
+];
+foreach ($data as ["id" => $id, "name" => $name]) {
+    echo "id: $id, name: $name\n";
+}
+echo PHP_EOL;
+list(1 => $second, 3 => $fourth) = [1, 2, 3, 4];
+echo "$second, $fourth\n";
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+id: 1, name: Tom
+id: 2, name: Fred
+
+2, 4
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>each</function></member>
+    <member><function>array</function></member>
+    <member><function>extract</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

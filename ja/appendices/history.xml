@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 334762 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: mumumu -->
+<appendix xml:id="history" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>PHP の歴史と関連するプロジェクト</title>
+ <para>
+  PHP は、90年代半ばに登場してから大きな進歩を遂げました。
+  当初はひっそりと始まったものが、今やウェブの世界で最も強力な言語のひとつになったのです。
+  PHP の進化は、ギークにとってのおとぎ話のようなものでしょう。
+  ただ忘れてはならないのは、ここまでの成長は決してたやすいものではなかったということです。
+  これまでの PHP の道のりに興味がある人は、このページを読み進めてください。
+  過去のインターネットの歴史に触れてみたい人は、古いバージョンの PHP を
+  <link xlink:href="&url.php.museum;">PHP Museum</link>
+  から取得できます。
+ </para>
+ 
+ <sect1 xml:id="history.php">
+  <title>PHPの歴史</title>
+  
+  <sect2 xml:id="history.phpfi">
+   <title>PHP Tools、FI、Construction Kit、そして PHP/FI</title>
+   <para>
+    現在 PHP として知られているものは、かつて
+    PHP/FI と呼ばれていたソフトウェアの後継です。
+    1994 年に Rasmus Lerdorf が生み出したいちばん最初の PHP
+    はシンプルな CGI バイナリ群で、C 言語で書かれていました。
+    元々は彼がオンラインで公開している経歴書のアクセス履歴を調べるために使われていましたが、
+    彼はそのスクリプト群を「Personal Home Page Tools」と名付けました。「PHP Tools」
+    と略されることが多かったようです。時を経て、さまざまな機能追加の要望が出てきたところで、
+    Rasmus は PHP Tools を書き直しました。より大規模でリッチな実装にしたのです。
+    このニューモデルはデータベースも扱えるようになり、
+    一種のフレームワークとして使えるようになったのです。
+    ユーザーは、これを使って掲示板のようなシンプルな動的ウェブアプリケーションを作れるようになりました。
+    1995 年 6 月、Rasmus は PHP Tools のソースコードを
+    <link xlink:href="&url.php.release1.0.0;">公開</link>
+    しました。開発者は、それを自分の好きなように使えるようになったのです。
+    ユーザーが自分でバグ修正や機能改善をすることも許可されていましたし、
+    むしろそれを推奨していました。
+   </para>
+   <para>
+    同じ年の 9 月、Rasmus は PHP をさらに発展させ、短期間ですが
+    PHP の看板を外しました。新しいツールの名前は
+    FI ("Forms Interpreter" の略) となり、
+    この実装には現在の PHP の基本機能のいくつかが含まれていました。
+    Perl 風の変数、そしてフォーム変数の自動取得、HTML に埋め込める構文などです。
+    構文は Perl と似ていましたが、より制限されたシンプルなもので、
+    どこか一貫性に欠けるものでした。
+    実際、コードを HTML ファイルに埋め込むには HTML のコメントを使う必要がありました。
+    このやり方を誰もが気に入ったというわけではありませんでしたが、
+    FI はその後も成長を続け、CGI ツールとしての立場を固めていきました。
+    とは言え、未だに言語というにはほど遠い状態です。
+    しかし、翌月の 1995 年 10 月から状況は変わり始めました。
+    Rasmus が、コードを完全に書き直した版をリリースしたのです。
+    再び PHP の名前がつき、こんどは「Personal Home Page Construction Kit」
+    とう名前になりました。これは、当時としてはかなり進んだスクリプトインターフェイスを持っていました。
+    その言語は意図的に C の構文に似せて作られ、C や Perl
+    などを知っている人たちが移行しやすいようにしてありました。
+    この時点ではまだ UNIX や POSIX 準拠のシステムにしか対応していませんでしたが、
+    Windows NT 上での実装も検討されていました。
+   </para>
+   <para>
+    コードはさらに一から書き直され、1996 年の 4 月には過去のリリースの名前を組み合わせた
+    PHP/FI という名前で公開されました。この第二世代の実装で、
+    PHP は単なるツール群からプログラミング言語へと進化を遂げたのです。
+    DBM や mSQL そして Postgres95 などのデータベース、
+    クッキー、ユーザー定義関数などのサポートが組み込まれました。
+    その年の 6 月に、PHP/FI のバージョンは 2.0 になりました。
+    興味深いことに、PHP 2.0 の完全なバージョンとして出されたものはこれだけでした。
+    最終的にベータ状態を卒業したのは 1997 年 11 月のことでしたが、
+    そのころには裏にあるパースエンジンは完全に書き直されていました。
+   </para>
+   <para>
+    開発期間は短かったものの、PHP/FI は初期のウェブ開発業界での勢力を拡大し続けました。
+    1997 年から 1998 年にかけて、PHP/FI は世界中の数千人のマニアに使われていました。
+    1998 年 5 月の Netcraft の調査によると、およそ 60,000 のドメインがヘッダに
+    "PHP" の文字を含めていたそうです。これは、そのサーバーに実際に PHP/FI
+    がインストールされていたことを意味します。この数字は、当時のインターネット上の全ドメインの
+    およそ 1% にあたるものでした。
+    これらの実績にもかかわらず、PHP/FI に円熟期が来ることはとても望めませんでした。
+    ちょっとした貢献をしてくれる人は何人かいたものの、
+    基本的には個人で開発している状態が続いていたのです。
+   </para>
+   <para>
+    <example>
+     <title>PHP/FI のコード例</title>
+     <programlisting role="html">
+<![CDATA[
+<!--include /text/header.html-->
+
+<!--getenv HTTP_USER_AGENT-->
+<!--ifsubstr $exec_result Mozilla-->
+  Hey, you are using Netscape!<p>
+<!--endif-->
+
+<!--sql database select * from table where user='$username'-->
+<!--ifless $numentries 1-->
+  Sorry, that record does not exist<p>
+<!--endif exit-->
+  Welcome <!--$user-->!<p>
+  You have <!--$index:0--> credits left in your account.<p>
+
+<!--include /text/footer.html-->
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+
+  <sect2 xml:id="history.php3">
+   <title>PHP 3</title>
+   <para>
+    PHP 3.0 は、現存する PHP に近い状態になった最初のバージョンです。
+    PHP/FI 2.0 ではまだ力不足で、自分たちが大学のプロジェクトで作っている
+    eコマースアプリケーションを構築するには機能が足りないと気づいたのは
+    イスラエルのテルアビブにいた Andi Gutmans と
+    Zeev Suraski でした。彼らは 1997 年に、
+    PHP/FI の裏にあるパーサーを新たに書き直そうとし始めました。
+    Rasmus をオンラインで捕まえた彼らは、PHP
+    の現在の実装や自分たちがそれをどう作り直そうとしているのかについて議論しました。
+    現在のエンジンを改善させ、既存の PHP/FI のユーザーも守るために、
+    Andi と Rasmus、そして Zeev は協力して新たなプログラミング言語を作ることにしました。
+    この全く新しい言語は新しい名前でリリースされました。PHP/FI 2.0
+    の名前が持っていた「個人向け」というイメージをなくすためにです。
+    新しい名前は、シンプルに「PHP」。「PHP: Hypertext Preprocessor」
+    の頭文字をとったものです。
+   </para>
+   <para>
+    PHP 3.0 の最も強力な点は、その拡張性でした。
+    さまざまなデータベースやプロトコル、そして API
+    を扱うための成熟したインターフェイスをユーザー向けに用意しただけでなく、
+    その言語自身も拡張しやすいものにしました。
+    そのおかげで、多くの開発者がさまざまなモジュールを開発するようになりました。
+    間違いなく、これこそが PHP 3.0 が大成功を収めた鍵でしょう。
+    PHP 3.0 で登場したその他の主要機能には、
+    オブジェクト指向プログラミングのサポートやより強力で一貫性のある言語構文などがあります。
+   </para>
+   <para>
+    1998 年 6 月、世界中から新たな開発者が多く参入した
+    PHP Development Team は、PHP/FI 2.0 の正式な後継として PHP 3.0 をアナウンスしました。
+    アクティブな開発が続いていた PHP/FI 2.0 は前年の 11 月に開発が止まっていましたが、
+    ここで始めて公式に終了宣言が出たのです。約 9 か月の公開テストを経て
+    PHP 3.0 が公式にリリースされたときには、既に世界中の 70,000
+    以上のドメインに PHP がインストールされていました。さらに、その環境は POSIX 準拠の OS にとどまりませんでした。
+    比較的少数ではあるものの、PHP がインストールされているとされるドメインの中には
+    Windows 95 や 98 そして NT、あるいは Macintosh でサーバーが動いているところもあったのです。
+    最盛期には、インターネット上のウェブサーバーのほぼ 10% に PHP 3.0
+    がインストールされていました。
+   </para>
+  </sect2>
+
+  <sect2 xml:id="history.php4">
+   <title>PHP 4</title>
+   <para>
+    PHP 3.0が公式にリリースされて間もない1998年の冬、Andi Gutmans
+    とZeev SuraskiはPHPの核となる部分を書き直し始めました。この
+    目的は、複雑なアプリケーションにおけるパフォーマンスの改善と
+    PHPコードのモジュールとしての独立性を高めることでした。
+    そういったアプリケーションはPHP 3.0の新機能や第三者による
+    多くのデータベースやAPIのサポートを使用することで開発可能
+    でしたが、PHP 3.0はそういった複雑なアプリケーションを効率的に
+    扱うようにはデザインされていませんでした。
+   </para>
+   <para>
+    'Zend Engine'と呼ばれる新しいエンジン(開発者であるZeevとAndi
+    の名前の組み合わせ)は、彼らの目的を十分に果たすものでした。
+    そしてそれは1999年中ごろに初めて紹介されました。このエンジンを
+    使用し、いくつかの広範囲にわたる新機能を追加したPHP 4.0は
+    前のバージョンのおよそ2年後となる2000年5月にリリースされました。
+    PHP 4.0はパフォーマンスが大幅に改善されたのに加え、
+    さらに多くのウェブサーバーのサポート、HTTPセッション、
+    出力のバッファリング、ユーザーの入力のさらに安全な取得方法の
+    提供、いくつかの新しい言語構造の提供といった特徴があります。
+   </para>
+  </sect2>
+ 
+   <sect2 xml:id="history.php5">
+    <title>PHP 5</title>
+    <para>
+     PHP 5は長期にわたる開発とプレリリースを経て2004年7月に公開されました。
+     改良の目玉は、コアである <literal>Zend Engine 2.0</literal>
+     で新しいオブジェクトモデルがサポートされたことで、
+     その他にも多くの新しい機能が追加されています。
+    </para>
+   <para>
+    PHP の開発チームは数十名の開発者で構成されています。
+    それ以外にも、何十名もの人たちが関連プロジェクトやサポートなどにかかわっています。
+    たとえば PEAR や PECL、そしてドキュメンテーション、
+    さらにはネットワーク基盤の管理などです。
+    PHP のネットワーク基盤は 100 を軽く上回るウェブサーバーで構成されており、
+    世界の七大陸のうちの六つにまたがっています。
+    ここ数年の統計情報に基づいて見積もると、
+    PHP は今や世界中の何千万から何億ものドメインに導入されていると言っても過言ではありません。
+   </para>
+   </sect2>
+  </sect1>
+
+ <sect1 xml:id="history.php.related">
+  <title>PHP関連のプロジェクトの歴史</title>
+  
+  <!--  Stig and Egon can do this I hope :)
+
+  <sect2 xml:id="history.phpdoc">
+   <title>PHP Documentation Project</title>
+   <para>
+   </para>
+  </sect2>
+  -->
+
+  <sect2 xml:id="history.pear">
+   <title>PEAR</title>
+    <para>
+     <link xlink:href="&url.php.pear;">PEAR</link>、
+     <literal>PHP Extension and Application Repository</literal> (元は
+     PHP Extension and Add-on Repositoryでした)は、
+     PHPで書かれた基本的なクラスの集まりで、将来的には
+     PHPの拡張モジュールを開発者に配布する中心的な
+     方法になっていくでしょう。
+    </para>
+   <para>
+    PEARは2000年1月にTel Avivで開かれたPHP Developers' Meeting
+    (PDM)で行われた議論の中から生まれたものです。これはStig
+    S. Bakkenによって作成され、彼の初めて娘であるMalin Bakken
+    に捧げられています。
+   </para>
+   <para>
+    2000年はじめの頃から、PEARは多くの開発者が一般的で再利用可能な
+    機能をPHPコミュニティ全体のために実装しました。これにより、
+    PEARは大きな、そして重要なプロジェクトへと成長しました。
+    今日PEARにはデータベースへのアクセス、キャッシュ、数学計算、
+    eCommerce等のバラエティに富んだクラスが含まれるようになって
+    います。
+   </para>
+    <para>
+     PEARに関する詳細については、 <link
+      xlink:href="&url.php.pear.manual;">PEARのマニュアル</link>を
+     参照してください。
+    </para>
+  </sect2>
+
+  <sect2 xml:id="history.phpqa">
+   <title>PHP Quality Assurance Initiative(PHPの品質保証機関)</title>
+   <para>
+     <link xlink:href="&url.php.prerelease;">PHP Quality Assurance 
+      Initiative</link>は、PHPのリリースが製品として様々な環境で
+     動作するべく十分にテストされていないという批判への対応策
+     として2000年の夏に開始されました。品質保証チームは現在のところ、PHPの
+     ソースコードについて十分に理解している開発の中心となって
+     いる人々によって構成されています。こうした開発者はPHPの
+     ローカライズやバグフィクスに多くの時間を費やしています。
+     この他に、開発者の行った修正を個々の環境でテストして
+     フィードバックを提供する多くのメンバーがいます。
+    </para>
+   </sect2>
+
+   <sect2 xml:id="history.phpgtk">
+    <title>PHP-GTK</title>
+    <para>
+     <link xlink:href="&url.php.gtk;">PHP-GTK</link> は、
+     クライアントとして動作するGUIアプリケーションを構築するための
+     PHPソリューションです。PHP-GTKの設計と実装は主として
+     Andrei Zmievskiによります:
+    </para>
+    <blockquote>
+     <para>
+      GUIプログラミングにはずっと興味を持ちつづけていて、あるとき
+      Gtk+というものが、Cでコーディングするにはあまりに面倒なものだ
+      ということを除けば非常にすばらしいものだと言うことを知りました。
+      PyGtkやGTK-Perlの実装を見て、PHPで(必要最小限の部分だけでも)
+      Gtkインターフェイスを作成できないものだろうか、と考え始めたのです。
+      そして2000年の8月にちょっとした時間が出来たので実験を始めました。
+      私が主として参考にしたのはPyGtkの実装でした。というのもPyGtkは
+      ほぼ全ての機能を網羅していて、且つオブジェクト指向のすばらしい
+      インターフェイスを持っていたからです。こうした最初の段階で
+      私はPyGtkの作者であるJmaes Henstridgeの有用なアドバイスを得ることが
+      出来ました。
+     </para>
+    <para>
+     Gtk+関数へのインターフェイスを全て自作するのは問題外だったので
+     コードジェネレータというアイデアに飛びつきました。これはPyGtkと
+     同様の方法です。コードジェネレータとはGtk+のクラス、定数、そして
+     メソッドが記述されている <filename>.defs</filename> ファイルを読み込みPHPへのインターフェイス
+     となるCのコードを生成するPHPのプログラムです。自動的に生成することが
+     出来ない部分に関しては <filename>.overrides</filename> ファイルに手動で追加していきました。
+    </para>
+    <para>
+     2000年の秋の間はあまり時間が取れなかったため、コードジェネレータ
+     やインフラの構築に長い期間がかかってしまいました。しかし
+     PHP-GTKをFrank kromannに見せると、彼は大いに興味を示して
+     コードジェネレータとWin32版の実装を手伝い始めてくれました。
+     最初のプログラムHello Worldを書いて、それが動作したとき
+     私たちはとても興奮しました。このプロジェクトが公開するに
+     足るものになるにはさらに数ヶ月が必要でしたが2001年3月1日に
+     最初のバージョンをリリースすることが出来ました。このニュースは
+     すぐにSlashDotにも載りました。
+    </para>
+    <para>
+     PHP-GTKはさらに拡張していくだろうと考え、私は専用のメーリング
+     リストとCVSリポジトリ、そしてCollin Viebrockの助けを得て
+     ウェブサイト(gtk.php.net)を用意しました。ドキュメンテーションは
+     目下進行中でJames Mooreが手伝ってくれています。
+    </para>
+    <para>
+     PHP-GTKはリリース以来徐々に広がっています。ドキュメンテーション
+     チームもは日々マニュアルを更新していますし、PHP-GTK用の拡張
+     モジュール、そしてPHP-GTKを使った興味深いアプリケーションを
+     作成する人も増えてきています。
+    </para>
+   </blockquote>
+  </sect2>
+ </sect1>
+
+ <sect1 xml:id="history.php.books">
+  <title>PHP関連の本</title>
+  <para>
+   PHPが成長していくに従って、開発プラットフォームとして世界中で
+   有名になっていきました。この流れを確かめる面白い方法のうちの
+   一つは、初期の頃から現在に到るまで頻繁に出版されつづけている
+   PHPに関する本を観察してみることです。
+  </para>
+  <para>
+    私たちの知る限り、PHPを扱った最初の本は1999年の4月にチェコで出版された
+    'PHP - tvorba interaktivních internetových aplikací'
+    (<emphasis>PHP - Creating Interactive Internet Applications</emphasis>)
+    で、Jirka Kosekにより書かれたものです。
+    翌月、Egon Schmid, Christian Cartus, Richard Blumeにより
+    書かれたドイツ語の本が続いて出版されました。
+    PHPについて書かれた英語の本、
+    Leon Atkinsonによる'Core PHP Programming'がそのすぐ後に出版され
+    ました。これらの本は、いずれも PHP 3.0を扱っていました。
+    (訳註:日本語では、PHPをタイトルとする本「PHP徹底攻略」(堀田、石井、廣川)の
+    初版が1999年9月に出版されています。)
+   </para>
+   <para>
+    こうした最初の出版物に続いて、多くの著者、出版社から数多くの
+    本が出版されました。その数は英語で400冊以上、ドイツ語で100冊以上、
+    フランス語やスペイン語で50冊以上にもなります！さらに他の言語、
+    たとえば韓国語、日本語そしてヘブライ語でも本が出版されています。
+   </para>
+   <para>
+    このようにPHPに関する書籍が、異なった著者により執筆され、
+    多くの出版社から出版され、多くの言語で書かれている、という
+    事実はPHPが世界的に成功している強い証拠であると言えるでしょう。
+   </para>
+ </sect1>
+ 
+ <sect1 xml:id="history.php.publications">
+  <title>PHP関連の出版物</title>
+   <para>
+    私たちの知る限り、PHPに関する記事が最初に掲載された雑誌は
+    1998年の春に出版されたthe Czech mutation of Computerworldで、
+   PHP 3.0が扱われていました。本と同様に、これに続いて様々な
+   すばらしい雑誌にPHPに関する記事が掲載されています。
+  </para>
+  <para>
+    PHPに関する記事はDr. Dobbs, Linux Enterprise, Linux Magazine,
+    その他多くの雑誌に掲載されています。ASPベースのアプリケーションを
+    Windows上で動作するPHPに移植する記事が、なんと
+    <productname>Microsoft</productname>の<acronym>MSDN</acronym>に
+    掲載されています！
+  </para>
+ </sect1>
+
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

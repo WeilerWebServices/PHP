@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 347589 Maintainer: samesch Status: ready -->
+
+<book xml:id="book.pcre" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <?phpdoc extension-membership="bundled" ?>
+ <title>Reguläre Ausdrücke (Perl-kompatibel)</title>
+ <titleabbrev>PCRE</titleabbrev>
+
+ <preface xml:id="intro.pcre">
+  &reftitle.intro;
+  <para>
+   Die Syntax für Suchmuster, die in diesen Funktionen verwendet werden, ist
+   Perl sehr ähnlich. Der Ausdruck muss zwischen Begrenzungszeichen, z.B.
+   Schrägstrichen (/), stehen. Als Begrenzungszeichen darf jedes Zeichen
+   verwendet werden, das nicht alphanumerisch ist und das, mit Ausnahme des
+   Backslashs (\) und des Nullzeichens, kein ASCII-Leerzeichen ist. Falls das
+   Begrenzungszeichen im Ausdruck selbst verwendet wird, muss es mit dem
+   Backslash als Escape-Zeichen maskiert werden. Sie können auch
+   dem Perl-Stil entsprechend (), {}, [] und &lt;&gt; als Begrenzung für
+   Suchmuster verwenden. Für eine ausführliche Erklärung siehe <link
+   linkend="reference.pcre.pattern.syntax">Suchmuster-Syntax</link>.
+  </para>
+  <para>
+   An die Schlussbegrenzung können verschiedene Modifikatoren angehängt
+   werden, die das Suchergebnis beeinflussen. Siehe <link
+   linkend="reference.pcre.pattern.modifiers">Modifikatoren für
+   Suchmuster</link>.
+  </para>
+  <para>
+   Bei Verwendung der <link linkend="book.regex">POSIX-erweiterten Reguläre
+   Ausdrücke Funktionen</link> unterstützt PHP auch reguläre Ausdrücke mit
+   POSIX-erweiterter Syntax.
+  </para>
+  <note>
+   <para>
+    Diese Erweiterung unterhält pro Thread einen globalen Cache mit
+    compilierten regulären Ausdrücken (bis zu 4096).
+   </para>
+  </note>
+  <warning>
+   <para>
+    Sie sollten sich über ein paar Einschränkungen von PCRE bewusst sein.
+    Lesen Sie bitte <link xlink:href="&url.pcre.man;">&url.pcre.man;</link>
+    für weitere Informationen.
+   </para>
+  </warning>
+  <!-- FIXME: Check what Perl version implementation corresponds -->
+  <para>
+   Die PCRE-Bibliothek ist ein Satz von Funktionen, der die Suche nach
+   regulären Ausdrücken mit der, von wenigen Unterschieden (siehe unten)
+   abgesehen, gleichen Syntax und Semantik wie Perl 5 realisiert. Die aktuelle
+   Implementierung entspricht Perl 5.005.
+  </para>
+ </preface>
+
+ &reference.pcre.setup;
+ &reference.pcre.constants;
+ &reference.pcre.examples;
+ &reference.pcre.pattern;
+ &reference.pcre.reference;
+
+</book>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

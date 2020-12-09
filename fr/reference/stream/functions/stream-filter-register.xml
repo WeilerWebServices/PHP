@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 324430 Maintainer: jpauli Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="function.stream-filter-register" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>stream_filter_register</refname>
+  <refpurpose>Enregistre un filtre de flux</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>stream_filter_register</methodname>
+   <methodparam><type>string</type><parameter>filtername</parameter></methodparam>
+   <methodparam><type>string</type><parameter>classname</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>stream_filter_register</function> vous permet d'implémenter
+   votre propre filtre de flux, à utiliser avec les fonctions d'accès
+   aux données externes (comme <function>fopen</function>,
+   <function>fread</function>, etc.).
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filtername</parameter></term>
+     <listitem>
+      <para>
+       Le nom du filtre à enregistrer.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>classname</parameter></term>
+     <listitem>
+      <para>
+       Pour créer une classe de filtre, vous devez définir une classe qui
+       étend la classe <classname>php_user_filter</classname>.
+       Lorsque vous réalisez des opérations
+       de lecture et d'écriture dans le flux auquel votre filtre est attaché,
+       PHP passera les données à travers votre filtre (et tous les autres 
+       filtres attachés), de façon à ce que les données soient modifiées 
+       tel que désiré. Vous devez implémenter les méthodes tel que 
+       décrit dans <classname>php_user_filter</classname>, sous peine de
+       comportements indéfinis.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+  <para>
+   <function>stream_filter_register</function> doit toujours retourner &false; si
+   le paramètre <parameter>filtername</parameter> est déjà défini.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example> 
+    <title>Filtre sur les lettres majuscules sur le flux <filename>foo-bar.txt</filename></title>
+    <para>
+     L'exemple ci-dessous implémente un filtre appelé
+     <literal>strtoupper</literal>, sur le flux <filename>foo-bar.txt</filename>,
+     qui passe en majuscule toutes les lettres écrites/lues depuis ce flux.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+/* Définition de la classe */
+class strtoupper_filter extends php_user_filter {
+  function filter($in, $out, &$consumed, $closing) 
+  {
+    while ($bucket = stream_bucket_make_writeable($in)) {
+      $bucket->data = strtoupper($bucket->data);
+      $consumed += $bucket->datalen;
+      stream_bucket_append($out, $bucket);
+    }
+    return PSFS_PASS_ON;
+  }
+} 
+
+/* Enregistrement de notre filtre avec PHP */
+stream_filter_register("strtoupper", "strtoupper_filter")
+    or die("Erreur lors de l'enregistrement du filtre");
+
+$fp = fopen("foo-bar.txt", "w");
+
+/* Attachement du filtre enregistré au flux que l'on vient d'ouvrir */
+stream_filter_append($fp, "strtoupper");
+
+fwrite($fp, "Ligne1\n");
+fwrite($fp, "Mot - 2\n");
+fwrite($fp, "Facile comme 123\n");
+
+fclose($fp);
+
+/* Lecture du contenu
+ */
+readfile("foo-bar.txt");
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+LIGNE1
+MOT - 2
+FACILE COMME 123
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Enregistrement d'une classe de filtre générique pour correspondre
+     avec de multiples noms de filtres</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+/* Définition de la classe*/
+class string_filter extends php_user_filter {
+  var $mode;
+
+  function filter($in, $out, &$consumed, $closing) 
+  {
+    while ($bucket = stream_bucket_make_writeable($in)) {
+      if ($this->mode == 1) {
+        $bucket->data = strtoupper($bucket->data);
+      } elseif ($this->mode == 0) {
+        $bucket->data = strtolower($bucket->data);
+      }
+
+      $consumed += $bucket->datalen;
+      stream_bucket_append($out, $bucket);
+    }
+    return PSFS_PASS_ON;
+  }
+
+  function onCreate() 
+  {
+    if ($this->filtername == 'str.toupper') {
+      $this->mode = 1;
+    } elseif ($this->filtername == 'str.tolower') {
+      $this->mode = 0;
+    } else {
+      /* Quelques autres filtres str.* sont demandés,
+          traitement de l'erreur avec PHP */
+      return false;
+    }
+
+    return true;
+  }
+} 
+
+/* Enregistrement de notre filtre avec PHP */
+stream_filter_register("str.*", "string_filter")
+    or die("Failed to register filter");
+
+$fp = fopen("foo-bar.txt", "w");
+
+/* Attachement du filtre enregistré au flux que l'on vient d'ouvrir
+    Nous pouvons alternativement passer à str.tolower ici */
+stream_filter_append($fp, "str.toupper");
+
+fwrite($fp, "Ligne1\n");
+fwrite($fp, "Mot - 2\n");
+fwrite($fp, "Facile comme 123\n");
+
+fclose($fp);
+
+/* Lecture du contenu
+ */
+readfile("foo-bar.txt");
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+LINE1
+MOT - 2
+FACILE COMME 123
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>stream_wrapper_register</function></member>
+    <member><function>stream_filter_append</function></member>
+    <member><function>stream_filter_prepend</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

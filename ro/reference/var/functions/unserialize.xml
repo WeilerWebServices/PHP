@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 349590 Maintainer: simionea Status: ready -->
+<!-- CREDITS: adiju -->
+
+<refentry xml:id="function.unserialize" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>unserialize</refname>
+  <refpurpose>
+   Creează o valoare PHP dintr-o reprezentare stocată
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>unserialize</methodname>
+   <methodparam><type>string</type><parameter>str</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>options</parameter></methodparam>
+  </methodsynopsis>
+  <simpara>
+   <function>unserialize</function> preia o singură variabilă serializată și o
+   convertește invers într-o valoare PHP.
+  </simpara>
+  <warning>
+   <para>
+    Nu transmiteți date ale utilizatorilor, de care nu sunteți sigur, funcției
+    <function>unserialize</function>, indiferent dacă valoarea parametrului
+    <parameter>options</parameter> este <literal>allowed_classes</literal>.
+    Deserializarea poate rezulta în încărcarea și executarea codului datorită
+    instanțierii și autoîncărcării obiectelor, și un utilizator rău-intenționat
+    poate să exploateze această posibilitate.
+    Utilizați un format securizat, standard de schimb de date, cum ar fi JSON
+    (cu ajutorul <function>json_decode</function> și <function>json_encode</function>)
+    dacă aveți nevoie să transmiteți date serializate utilizatorului.
+   </para>
+   <para>
+    Dacă aveți nevoie să deserializați date serializate stocate extern, considerați
+    utilizarea <function>hash_hmac</function> pentru validarea datelor. Asigurați-vă
+    că datele nu au fost modificate de altcineva.
+   </para>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>str</parameter></term>
+     <listitem>
+      <para>
+       String-ul serializat.
+      </para>
+      <para>
+       Dacă variabila ce se deserializează este un obiect, după ce se
+       reconstituie cu succes, PHP automat va încerca să apeleze una din metodele
+       <link linkend="object.unserialize">__unserialize()</link> sau
+       <link linkend="object.wakeup">__wakeup()</link> (dacă acestea există).
+      </para>
+      <para>
+       <note>
+        <title>directiva unserialize_callback_func</title>
+        <para>
+         Este posibil de a stabili o funcție de apel invers ce se va apela când
+         o clasă nedefinită trebuie instanțiată în timpul deserializării.
+         (pentru a preveni obținerea unui <type>object</type> incomplet
+         "__PHP_Incomplete_Class".) Utilizați &php.ini;,
+         <function>ini_set</function> sau &htaccess; pentru a defini
+         <link linkend="ini.unserialize-callback-func">unserialize_callback_func</link>.
+         De fiecare dată când o clasă nedefinită va trebui instanțiată, această
+         funcție va fi apelată. Pentru a dezactiva această facilitate lăsați
+         această opțiune vidă.
+        </para>
+       </note>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>options</parameter></term>
+     <listitem>
+      <para>
+       Orice opțiuni ce trebuie transmise <function>unserialize</function>, ca
+       tablou asociativ.
+      </para>
+      <table>
+       <title>Opțiuni valide</title>
+       <tgroup cols="3">
+        <thead>
+         <row>
+          <entry>Nume</entry>
+          <entry>Tip</entry>
+          <entry>Descriere</entry>
+         </row>
+        </thead>
+        <tbody>
+         <row>
+          <entry><literal>allowed_classes</literal></entry>
+          <entry><type>mixed</type></entry>
+          <entry>
+           <simpara>
+            Poate fi un <type>array</type> cu denumiri de clase, ce trebuie să
+            fie acceptate, &false; pentru a nu accepta clase sau &true; pentru a
+            accepta toate clasele. Dacă această opțiune e definită și
+            <function>unserialize</function> întâlnește un obiect al unei clase
+            ce nu trebuie acceptată, atunci obiectul va fi instanțiat ca
+            <classname>__PHP_Incomplete_Class</classname>.
+           </simpara>
+           <simpara>
+            Omiterea acestei opțiuni are același efect ca și definirea sa în
+            &true;: PHP va încerca să instanțieze obiecte de orice clasă.
+           </simpara>
+          </entry>
+         </row>
+        </tbody>
+       </tgroup>
+      </table>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Valoarea convertită este întoarsă, și poate fi de tip <type>boolean</type>,
+   <type>integer</type>, <type>float</type>, <type>string</type>,
+   <type>array</type> sau <type>object</type>.
+  </para>
+  <para>
+   În caz că string-ul furnizat nu poate fi deserializat se va întoarce &false;
+   și se va emite o eroare <constant>E_NOTICE</constant>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Elementul <literal>allowed_classes</literal> al parametrului
+        <parameter>options</parameter>) este acum strict tipizat, adică dacă e
+        transmis orice în afară de <type>array</type> sau <type>boolean</type>,
+        <function>unserialize</function> va întoarce &false; și va emite un
+        <constant>E_WARNING</constant>.
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+        Parametrul <parameter>options</parameter> a fost adăugat.
+       </entry>
+      </row>
+      <row>
+       <entry>5.6.0</entry>
+       <entry>
+        Manipularea datelor serialiate prin înlocuirea <literal>C:</literal> cu
+        <literal>O:</literal> pentru a forța instanțierea obiectului fără a apela
+        constructorul acum va eșua.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemplu <function>unserialize</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Aici vom utiliza unserialize() pentru a încărca datele sesiunii în tabloul
+// $session_data din string-ul selectat dintr-o bază de date.
+// Acest exemplu îl complementează pe cel descris în funcția serialize().
+
+$conn = odbc_connect("webdb", "php", "chicken");
+$stmt = odbc_prepare($conn, "SELECT data FROM sessions WHERE id = ?");
+$sqldata = array($_SERVER['PHP_AUTH_USER']);
+if (!odbc_execute($stmt, $sqldata) || !odbc_fetch_into($stmt, $tmp)) {
+    // dacă execute sau fetch eșuează, se inițializează un tablou vid
+    $session_data = array();
+} else {
+    // acum trebuie să avem datele serializate în $tmp[0].
+    $session_data = unserialize($tmp[0]);
+    if (!is_array($session_data)) {
+        // ceva nu este în regulă, inițializează într-un tablou vid
+        $session_data = array();
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Exemplu unserialize_callback_func</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$serialized_object='O:1:"a":1:{s:5:"value";s:3:"100";}';
+
+ini_set('unserialize_callback_func', 'mycallback'); // stabilește funcția de apel invers
+
+function mycallback($classname)
+{
+    // doar includeți un fișier ce conține definiția clasei
+    // veți lăsa ca $classname să-și dea seama care definiție a clasei este necesară
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    &false; este întors atât în cazul unei erori, cât și în cazul deserializării
+    unei valori &false; serializate. Este posibil de a intercepta acest caz
+    special comparând <parameter>str</parameter> cu
+    <literal>serialize(false)</literal> sau interceptând eroarea
+    <constant>E_NOTICE</constant> emisă.
+   </para>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>json_encode</function></member>
+    <member><function>json_decode</function></member>
+    <member><function>hash_hmac</function></member>
+    <member><function>serialize</function></member>
+    <member><link linkend="language.oop5.autoload">Autoîncărcarea claselor</link></member>
+    <member><link linkend="ini.unserialize-callback-func">unserialize_callback_func</link></member>
+    <member><link linkend="object.wakeup">__wakeup()</link></member>
+    <member><link linkend="object.serialize">__serialize()</link></member>
+    <member><link linkend="object.unserialize">__unserialize()</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

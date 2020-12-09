@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: takagi Status: ready -->
+<!-- Credits: mumumu -->
+
+<sect1 xml:id="migration71.incompatible">
+ <title>下位互換性のない変更点</title>
+
+ <sect2 xml:id="migration71.incompatible.too-few-arguments-exception">
+  <title>関数に渡す引数が少ない場合の挙動</title>
+
+  <para>
+   これまでのバージョンでは、ユーザー定義の関数に渡す引数が足りない場合は
+   warning が発生していました。PHP 7.1 以降では、warning ではなく
+   Error 例外が発生するようになります。
+   この変更はユーザー定義の関数に対してだけのもので、
+   内部関数には影響を及ぼしません。
+  </para>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+function test($param){}
+test();
+]]>
+   </programlisting>
+   &example.outputs.similar;
+   <screen>
+<![CDATA[
+Fatal error: Uncaught ArgumentCountError: Too few arguments to function test(), 0 passed in %s on line %d and exactly 1 expected in %s:%d
+]]>
+   </screen>
+  </informalexample>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.forbid-dynamic-calls-to-scope-introspection-functions">
+  <title>スコープを調べる関数の動的呼び出しの禁止</title>
+
+  <para>
+   ある種の関数について、動的な呼び出し
+   (<literal>$func()</literal> や <literal>array_map('extract', ...)</literal> のような形式)
+   が使えなくなりました。対象になるのは、別のスコープを調べたり変更したり、
+   あいまいな挙動になってしまったりするような関数です。
+   この変更の影響を受ける関数は、以下のとおりです。
+  </para>
+
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     <function>assert</function> - 最初の引数に文字列を渡した場合
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>compact</function>
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>extract</function>
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>func_get_args</function>
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>func_get_arg</function>
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>func_num_args</function>
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>get_defined_vars</function>
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>mb_parse_str</function> - 引数が一つだけの場合
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <function>parse_str</function> - 引数が一つだけの場合
+    </simpara>
+   </listitem>
+  </itemizedlist>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+(function () {
+    $func = 'func_num_args';
+    $func();
+})();
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+Warning: Cannot call func_num_args() dynamically in %s on line %d
+]]>
+   </screen>
+  </informalexample>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.invalid-class-names">
+  <title>クラス、インターフェイス、トレイトに使えない名前</title>
+
+  <para>
+   これらのキーワードが、クラスやインターフェイスやトレイトの名前として使えなくなりました。
+  </para>
+
+  <itemizedlist>
+   <listitem>
+    <simpara><type>void</type></simpara>
+   </listitem>
+   <listitem>
+    <simpara><type>iterable</type></simpara>
+   </listitem>
+  </itemizedlist>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.numerical-strings-scientific-notation">
+  <title>数値形式文字列の変換が科学記法に対応</title>
+
+  <para>
+   数値形式の文字列の演算や型変換が、科学記法に対応するようになりました。
+   <literal>(int)</literal> によるキャストや、
+   <function>intval</function> (基数が10の場合)、
+   <function>settype</function>、<function>decbin</function>、
+   <function>decoct</function>、<function>dechex</function> といった関数もその対象です。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.fixes-to-mt_rand-algorithm">
+  <title><function>mt_rand</function> のアルゴリズムの修正</title>
+
+  <para>
+   <function>mt_rand</function> のデフォルトが、修正版のメルセンヌ・ツイスタ
+   アルゴリズムを使うようになりました。<function>mt_srand</function>
+   の結果に依存するコードを書いていた場合は、<function>mt_srand</function>
+   のオプションの第二引数に <constant>MT_RAND_PHP</constant>
+   を指定すると、これまでの挙動 (間違った実装) を維持できます。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.rand-srand-aliases">
+  <title>
+   <function>rand</function> と <function>srand</function> が、
+   それぞれ <function>mt_rand</function> と <function>mt_srand</function> のエイリアスとなる
+  </title>
+
+  <para>
+   <function>rand</function> と <function>srand</function> は、それぞれ
+   <function>mt_rand</function> と <function>mt_srand</function>
+   のエイリアスになりました。つまり、
+   <function>rand</function>、<function>shuffle</function>、
+   <function>str_shuffle</function>、<function>array_rand</function>
+   の出力がこれまでのバージョンとは変わるということです。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.delete-control-character-in-identifiers">
+  <title>ASCII 制御文字 delete は識別子として使えない</title>
+
+  <para>
+   ASCII 制御文字 delete (<literal>0x7F</literal>) は、
+   クォートしない限りは識別子として使えなくなりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.error_log-syslog">
+  <title>
+   <parameter>error_log</parameter> に <literal>syslog</literal> を指定した場合の変更
+  </title>
+
+  <para>
+   INI 項目 <parameter>error_log</parameter> の設定値を
+   <literal>syslog</literal> にした場合に、PHP のエラーレベルが syslog
+   のエラーレベルにマッピングされるようになりました。
+   これまでのバージョンではすべてのエラーが notice レベルで記録されていましたが、
+   この変更によって、今までよりも細やかな区別ができるようになります。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.dont-call-destructors">
+  <title>未完成のオブジェクトのデストラクタは呼び出されない</title>
+
+  <para>
+   オブジェクトのコンストラクタの実行中に例外がスローされた場合に、
+   そのオブジェクトのデストラクタが呼ばれることはなくなりました。
+   以前のバージョンでは、場合によっては
+   (例: そのオブジェクトが例外バックトレースなどで外部から参照される場合)
+   デストラクタが呼ばれることもありました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.call_user_func-with-ref-args">
+  <title>
+   参照渡しの引数の <function>call_user_func</function> での扱い
+  </title>
+
+  <para>
+   引数を参照渡しで受け取る関数を <function>call_user_func</function>
+   から呼んだときに、例外が発生するようになりました。
+   以前のバージョンでは、完全修飾形式の呼び出しであるか否かによってこの場合の挙動が異なっていました。
+  </para>
+  <para>
+   さらにこの場合、<function>call_user_func</function> や
+   <function>call_user_func_array</function> は関数呼び出しを中断しなくなりました。
+   "expected reference" という警告は出すものの、処理自体はそのまま続行します。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.empty-string-index-operator">
+  <title>
+   文字列における空のインデックス演算子はサポートしない
+  </title>
+
+  <para>
+   文字列に空のインデックス演算子を適用する (例: <literal>$str[] = $x</literal>)
+   と、fatal エラーが発生します。これまでのバージョンではエラーにならず、
+   ただ配列に変換されるだけでした。
+  </para>
+ </sect2>
+ <sect2 xml:id="migration71.incompatible.empty-string-modifcation-by-character">
+  <title>空文字列に対して、文字列インデックス経由で値を設定する操作</title>
+  <para>
+   空文字列に対して、一文字単位で変更する操作が、
+   空でない文字列と同じように機能するようになりました。
+   つまり、範囲外のオフセットに対する書き込みがスペースで埋められ、
+   整数型でない値は整数に変換され、最初の文字だけが採用されるというものです。
+   これより前のバージョンでは、黙って空の配列として扱われていました。
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$a = '';
+$a[10] = 'foo';
+var_dump($a);
+?>
+]]>
+    </programlisting>
+    &example.outputs.70;
+    <screen>
+<![CDATA[
+array(1) {
+  [10]=>
+  string(3) "foo"
+}
+]]>
+    </screen>
+    &example.outputs.71;
+    <screen>
+<![CDATA[
+string(11) "          f"
+]]>
+    </screen>
+   </informalexample>
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.removed-ini-directives">
+  <title>削除された INI 項目</title>
+
+  <para>
+   以下の INI 項目は、削除されました。
+  </para>
+
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     <parameter>session.entropy_file</parameter>
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <parameter>session.entropy_length</parameter>
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <parameter>session.hash_function</parameter>
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     <parameter>session.hash_bits_per_character</parameter>
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.array-order">
+  <title>
+   参照による代入で自動的に作られる配列の要素の並び順の変更
+  </title>
+
+  <para>
+   参照による代入で配列の要素が自動的に作られる場合に、その並び順が変更されました。
+  </para>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$array = [];
+$array["a"] =& $array["b"];
+$array["b"] = 1;
+var_dump($array);
+?>
+]]>
+   </programlisting>
+   &example.outputs.70;
+   <screen>
+<![CDATA[
+array(2) {
+  ["a"]=>
+  &int(1)
+  ["b"]=>
+  &int(1)
+}
+]]>
+   </screen>
+   &example.outputs.71;
+   <screen>
+<![CDATA[
+array(2) {
+  ["b"]=>
+  &int(1)
+  ["a"]=>
+  &int(1)
+}
+]]>
+   </screen>
+  </informalexample>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.sort-order">
+  <title>同値な要素の並び順</title>
+  <para>
+   内部的なソートアルゴリズムが改良されたことに伴って、
+   比較したときに等しいとみなされる要素の並び順が以前とは変わるかもしれません。
+  </para>
+  <note>
+   <para>
+    同値な要素の並び順に依存するコードは書かないようにしましょう。
+    その並び順がいつまでも同じであるとは限りません。
+   </para>
+  </note>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.e-recoverable">
+  <title>E_RECOVERABLE エラーのエラーメッセージ</title>
+  <para>
+   E_RECOVERABLE エラーのエラーメッセージが、
+   "Catchable fatal error" から
+   "Recoverable fatal error" に変更されました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.unserialize">
+  <title>unserialize() 関数の $options パラメータ</title>
+  <para>
+   <function>unserialize</function> 関数の $options パラメータの
+   <literal>allowed_classes</literal> 要素が、
+   型を厳密に解釈するようになりました。
+   つまり、<type>array</type> または <type>bool</type>
+   以外のあらゆる値が与えられても、
+   unserialize() は &false; を返し、
+   <constant>E_WARNING</constant> レベルの警告が発生します。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.datetime-microseconds">
+  <title>DateTime クラスのコンストラクタに、マイクロ秒も組み込まれる</title>
+  <para>
+   <classname>DateTime</classname> と <classname>DateTimeImmutable</classname>
+   は、現在時刻、明示的な時刻、
+   または相対時刻を示す文字列
+   (例: <literal>"first day of next month"</literal>)
+   から構築されると、
+   マイクロ秒を適切に含めるようになりました。
+   これは、新しく生成されたふたつのインスタンスが、&true; ではなくて
+   &false; を返しやすくなったということです。
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+new DateTime() == new DateTime();
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.fatal-errors-to-error-exceptions">
+  <title>致命的なエラーが <classname>Error</classname> 例外に変換される</title>
+
+  <para>
+   Date 拡張機能では、
+   <classname>DateTime</classname> または <classname>DatePeriod</classname>
+   クラス ののシリアライズデータが不正だったり、
+   シリアライズ化したデータからタイムゾーンを初期化するのに失敗した場合、
+   致命的なエラーにならず、
+   <methodname>__wakeup</methodname> や <methodname>__set_state</methodname>
+   メソッドから <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   DBA 拡張機能では、
+   (<function>dba_insert</function> のように)
+   データを変更する関数は、キーが正確にふたつの要素を含んでいない場合に
+   キャッチ可能な fatal error ではなく、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   DOM 拡張機能では、
+   不正なスキーマ や RelaxNG検証コンテキスト は
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+
+   同じように、適切な基底クラスを継承しないノードクラスを登録しようとしたり、
+   不正なプロパティを読み出そうとしたり、
+   読み込み専用のプロパティに書き込もうとしたりしても、
+   同様に <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   IMAP 拡張機能では、
+   16385 バイト以上の email アドレスは、
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   Intl 拡張機能では、
+   <classname>Collator</classname> クラスを継承したクラスで、
+   親メソッドを呼ぶ前に親のコンストラクタを呼ぶのに失敗すると、
+   回復可能な fatal error にはならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+
+   同様に、<classname>Transliterator</classname> を clone すると、
+   内部の transliterator の複製に失敗した時に
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   LDAP 拡張機能では、
+   <function>ldap_batch_modify</function> 関数に不明な変更タイプを渡すと、
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   mbstring 拡張機能では、
+   <function>mb_ereg</function> 関数と
+   <function>mb_eregi</function> 関数が、
+   'e' オプションを使い、かつ 不正な PHP の式が渡された場合に
+   <classname>ParseError</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   Mcrypt 拡張機能では、
+   <function>mcrypt_encrypt</function> と
+   <function>mcrypt_decrypt</function> 関数が
+   mcrypt を初期化できなかった場合に
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   mysqli 拡張機能では、
+   不正なプロパティを読み出そうとしたり、
+   読み取り専用のプロパティに書き込もうとしたりすると、
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   Reflection 拡張機能では、
+   リフレクションオブジェクトを取得できなかったり、
+   オブジェクトのプロパティを取得できなかったりすると、
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   Session 拡張機能では、
+   セッションIDに文字列を返さないカスタムのセッションハンドラは、
+   セッションIDを生成しなければならない関数を呼んだ際に
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   SimpleXML 拡張機能では、
+   名前が付いていない、または 重複した属性を作ろうとすると、
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   SPL 拡張機能では、
+   <classname>SplDirectory</classname> オブジェクトを
+   clone しようとすると、
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+
+   同じように、オブジェクトを繰り返している時に
+   <methodname>ArrayIterator::append</methodname> を呼び出すと、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   standard 拡張機能では、
+   <function>assert</function>関数 の
+   最初のパラメーターに string 型の引数が与えられた場合、
+   かつ PHP のコードが不正だった場合に
+   キャッチ可能な致命的なエラーではなく、
+   <classname>ParseError</classname> 例外を投げるようになりました。
+
+   同じように、
+   クラススコープの外側から
+   <function>forward_static_call</function> を呼び出すと、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   Tidy 拡張機能では、
+   <classname>tidyNode</classname> を手動で作ろうとすると、
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   WDDX 拡張機能では、
+   シリアライズする時に循環参照が存在すると、
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   XML-RPC 拡張機能では、
+   シリアライズする時に循環参照が存在すると、
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+
+  <para>
+   Zip 拡張機能では、
+   glob サポートが利用できない場合、
+   <methodname>ZipArchive::addGlob</methodname> メソッドは
+   致命的なエラーにならず、
+   <classname>Error</classname> 例外を投げるようになりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.lexical-names">
+  <title>字句的に束縛される変数は、名前を再利用できない</title>
+
+  <para>
+   <literal>use</literal> 経由で <link linkend="functions.anonymous">クロージャ</link> 
+   に束縛された変数名には、&link.superglobals; や
+   <varname>$this</varname> またはあらゆるパラメータ と同じ名前が使えなくなりました。
+   たとえば、次のような関数定義はすべて致命的なエラーが発生します。
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$f = function () use ($_SERVER) {};
+$f = function () use ($this) {};
+$f = function ($param) use ($param) {};
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.long2ip">
+  <title>long2ip() のパラメータタイプの変更</title>
+  <para>
+   <function>long2ip</function> 関数は、
+   引数に <type>string</type> ではなく <type>int</type> を期待するようになりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.json">
+  <title>JSON のエンコードとデコード</title>
+  <para>
+   <parameter>serialize_precision</parameter> ini 設定が、
+   double 型の値をエンコードするときに、
+   シリアル化の精度を制御するようになりました。
+  </para>
+  <para>
+   空のキーをデコードすると、
+   プロパティ名が <literal>_empty_</literal> ではなく、空のプロパティ名になります。
+   <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(json_decode(json_encode(['' => 1])));
+]]>
+   </programlisting>
+   &example.outputs.similar;
+   <screen>
+<![CDATA[
+object(stdClass)#1 (1) {
+  [""]=>
+  int(1)
+}
+]]>
+   </screen>
+  </informalexample>
+  </para>
+  <para>
+   <function>json_encode</function> 関数に
+   <constant>JSON_UNESCAPED_UNICODE</constant> フラグを渡すと、
+   U+2028 および U+2029 がエスケープされるようになりました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.mbstring">
+  <title>
+   <function>mb_ereg</function> および <function>mb_eregi</function>
+   関数の引数のセマンティクスの変更
+  </title>
+  <para>
+   <function>mb_ereg</function> 関数 と
+   <function>mb_eregi</function> 関数
+   の第3引数 (<parameter>regs</parameter>) は、
+   マッチするものがなかった場合、空の配列が設定されるようになりました。
+   これより前のバージョンでは、このパラメータは変更されませんでした。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.openssl">
+  <title>sslv2 ストリームのサポートの削除</title>
+  <para>
+   sslv2 ストリーム が OpenSSL から削除されました。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration71.incompatible.typed-returns-compile-time">
+  <title>戻り値の型が決まっている関数で "return;" と書いてもコンパイルエラーになる</title>
+  <para>
+   返り値の型を宣言している関数内で、引数がないreturn文を使うと、
+   (返り値の型を <type>void</type> と宣言していない場合)
+   <constant>E_COMPILE_ERROR</constant> が発生するようになりました。
+   これは、そのreturn文に到達しない場合であっても同じです。
+  </para>
+ </sect2>
+
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

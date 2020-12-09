@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351129 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="function.debug-zval-dump" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>debug_zval_dump</refname>
+  <refpurpose>Extrait une représentation sous forme de chaîne d'une valeur interne à Zend
+  pour affichage</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>void</type><methodname>debug_zval_dump</methodname>
+   <methodparam><type>mixed</type><parameter>variable</parameter></methodparam>
+   <methodparam rep="repeat"><type>mixed</type><parameter>variables</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Extrait une représentation sous forme de chaîne
+   d'une valeur interne à Zend pour affichage.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>variable</parameter></term>
+     <listitem>
+      <para>
+       La variable à afficher.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>variables</parameter></term>
+     <listitem>
+      <para>
+       Variables supplémentaire à afficher.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.void;
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>debug_zval_dump</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$var1 = 'Bonjour le monde !';
+$var2 = '';
+
+$var2 =& $var1;
+
+debug_zval_dump(&$var1);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+&string(18) "Bonjour le monde !" refcount(3)
+]]>
+    </screen>
+   </example>
+  </para>
+  <note>
+   <title>Faites attention avec <literal>refcount</literal></title>
+   <para>
+    La valeur <literal>refcount</literal> retournée par cette fonction n'est pas
+    significative dans certaines circonstances. Par exemple, un développeur
+    peut s'attendre avec l'exemple ci-dessus d'avoir un <literal>refcount</literal>
+    de <literal>2</literal>. La troisième référence est créée lors de l'appel à la
+    fonction <function>debug_zval_dump</function>.
+   </para>
+   <para>
+    Ce comportement est encore plus fin lorsqu'une variable n'est pas passée
+    par référence à la fonction <function>debug_zval_dump</function>. Pour illustrer
+    ceci, voici une version modifiée de l'exemple ci-dessus :
+   </para>
+   <para>
+    <example>
+     <title/>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$var1 = 'Bonjour le monde !';
+$var2 = '';
+
+$var2 =& $var1;
+
+debug_zval_dump($var1); // non passée par référence, cette fois-ci
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+string(18) "Bonjour le monde !" refcount(1)
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    Pourquoi <literal>refcount(1)</literal> ? Parce qu'une copie de <literal>$var1</literal> a
+    été faite, lors de l'appel de la fonction.
+   </para>
+   <para>
+    Cette fonction devient encore <emphasis>plus</emphasis> confuse lorsqu'une
+    variable avec un <literal>refcount</literal> de <literal>1</literal> est
+    passée (par copie/valeur) :
+   </para>
+   <para>
+    <example>
+     <title/>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$var1 = 'Bonjour le monde !';
+
+debug_zval_dump($var1);
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+string(18) "Bonjour le monde !" refcount(2)
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    Un <literal>refcount</literal> de <literal>2</literal>, ici, est vraiment
+    inattendu. Tout spécialement si on considère les exemples ci-dessus. Donc, que
+    se passe-t-il ?
+   </para>
+   <para>
+    Lorsqu'une variable a une seule référence (faire <literal>$var1</literal>
+    avant qu'elle ne soit utilisée en tant qu'argument de la fonction
+    <function>debug_zval_dump</function>), le moteur PHP optimise
+    la façon dont elle est passée à la fonction. En interne, PHP traite
+    <literal>$var1</literal> comme une référence (et donc, le <literal>refcount</literal>
+    est incrémenté), et avec le cas où le passage par référence intervient, une copie est alors
+    faite, <emphasis>mais uniquement</emphasis> au moment de l'écriture. Ceci est connu comme "la copie à l'écriture".
+   </para>
+   <para>
+    Donc, si <function>debug_zval_dump</function> intervient pour écrire son unique paramètre
+    (et il ne le fait pas), alors une copie est faite. Jusque-là, le paramètre demeure
+    une référence, faisant que le <literal>refcount</literal> est incrémenté
+    à <literal>2</literal> pour l'appel à la fonction.
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>var_dump</function></member>
+    <member><function>debug_backtrace</function></member>
+    <member><link linkend="language.references">Explication sur les références</link></member>
+    <member><link xlink:href="&url.derick.references;">Explication sur les références (par Derick Rethans)</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

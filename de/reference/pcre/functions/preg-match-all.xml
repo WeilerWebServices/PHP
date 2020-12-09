@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 344771 Maintainer: samesch Status: ready -->
+
+<refentry xml:id="function.preg-match-all" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>preg_match_all</refname>
+  <refpurpose>Führt eine umfassende Suche nach Übereinstimmungen mit regulärem Ausdruck durch</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>preg_match_all</methodname>
+   <methodparam><type>string</type><parameter>pattern</parameter></methodparam>
+   <methodparam><type>string</type><parameter>subject</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter role="reference">matches</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer><constant>PREG_PATTERN_ORDER</constant></initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>offset</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Durchsucht <parameter>subject</parameter> nach allen Übereinstimmungen mit
+   dem in <parameter>pattern</parameter> angegebenen regulären Ausdruck und
+   legt sie in der durch <parameter>flags</parameter> festgelegten Reihenfolge
+   in <parameter>matches</parameter> ab.
+  </para>
+  <para>
+   Nachdem die erste Übereinstimmung gefunden wurde, wird die nachfolgende
+   Suche jeweils am Ende der letzten Übereinstimmung fortgesetzt.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>pattern</parameter></term>
+     <listitem>
+      <para>
+       Der Ausdruck, nach dem gesucht werden soll, als Zeichenkette.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>subject</parameter></term>
+     <listitem>
+      <para>
+       Die zu durchsuchende Zeichenkette.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>matches</parameter></term>
+     <listitem>
+      <para>
+       Ein mehrdimensionales Array mit allen gefundenen Übereinstimmungen, das
+       den <parameter>flags</parameter> entsprechend sortiert ist.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>flags</parameter></term>
+     <listitem>
+      <para>
+       Kann eine Kombination folgender Flags sein (beachten Sie, dass es
+       keinen Sinn hat, <constant>PREG_PATTERN_ORDER</constant> zusammen mit
+       <constant>PREG_SET_ORDER</constant> zu verwenden):
+       <variablelist>
+        <varlistentry>
+         <term><constant>PREG_PATTERN_ORDER</constant></term>
+         <listitem>
+          <para>
+           Ordnet die Ergebnisse so an, dass <varname>$matches[0]</varname>
+           ein Array von Übereinstimmungen mit dem kompletten Suchmuster ist,
+           <varname>$matches[1]</varname> ein Array von Zeichenketten, die auf
+           das erste eingeklammerte Teilsuchmuster passen und so weiter.
+          </para>
+          <para>
+           <informalexample>
+            <programlisting role="php">
+<![CDATA[
+<?php
+preg_match_all("|<[^>]+>(.*)</[^>]+>|U",
+    "<b>Beispiel: </b><div align=left>das ist ein Test</div>",
+    $ausgabe, PREG_PATTERN_ORDER);
+echo $ausgabe[0][0] . ", " . $ausgabe[0][1] . "\n";
+echo $ausgabe[1][0] . ", " . $ausgabe[1][1] . "\n";
+?>
+]]>
+            </programlisting>
+            &example.outputs;
+            <screen role="html">
+<![CDATA[
+<b>Beispiel: </b>, <div align=left>das ist ein Test</div>
+Beispiel: , das ist ein Test
+]]>
+            </screen>
+            <para>
+             Also enthält <varname>$ausgabe[0]</varname> ein Array von
+             Zeichenketten, die auf das komplette Suchmuster passen und
+             <varname>$ausgabe[1]</varname> ein Array von Zeichenketten, die
+             sich zwischen Tags befinden.
+            </para>
+           </informalexample>
+          </para>
+          <para>
+           Enthält das Suchmuster benannte Teilsuchmuster, dann enthält
+           <varname>$matches</varname> zusätzlich Elemente mit dem Namen der
+           Teilsuchmuster als Schlüssel.
+          </para>
+          <para>
+           Enthält das Suchmuster duplizierte benannte Teilsuchmuster, wird nur
+           das letzte Teilsuchmuster in <varname>$matches[NAME]</varname>
+           gespeichert.
+           <informalexample>
+            <programlisting role="php">
+<![CDATA[
+<?php
+preg_match_all(
+    '/(?J)(?<match>foo)|(?<match>bar)/',
+    'foo bar',
+    $matches,
+    PREG_PATTERN_ORDER
+);
+print_r($matches['match']);
+?>
+]]>
+            </programlisting>
+            &example.outputs;
+            <screen>
+<![CDATA[
+Array
+(
+    [0] => 
+    [1] => bar
+)
+]]>
+            </screen>
+           </informalexample>
+          </para>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><constant>PREG_SET_ORDER</constant></term>
+         <listitem>
+          <para>
+           Ordnet die Ergebnisse so an, dass <varname>$matches[0]</varname>
+           ein Array aus dem ersten Satz von Übereinstimmungen ist,
+           <varname>$matches[1]</varname> ein Array aus dem zweiten Satz von
+           Übereinstimmungen und so weiter.
+           <informalexample>
+            <programlisting role="php">
+<![CDATA[
+<?php
+preg_match_all("|<[^>]+>(.*)</[^>]+>|U",
+    "<b>Beispiel: </b><div align=\"left\">das ist ein Test</div>",
+    $ausgabe, PREG_SET_ORDER);
+echo $ausgabe[0][0] . ", " . $ausgabe[0][1] . "\n";
+echo $ausgabe[1][0] . ", " . $ausgabe[1][1] . "\n";
+?>
+]]>
+            </programlisting>
+            &example.outputs;
+            <screen role="html">
+<![CDATA[
+<b>Beispiel: </b>, Beispiel:
+<div align="left">das ist ein Test</div>, das ist ein Test
+]]>
+            </screen>
+           </informalexample>
+          </para>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><constant>PREG_OFFSET_CAPTURE</constant></term>
+         <listitem>
+          <para>
+           Wenn dieses Flag gesetzt ist, wird mit jeder gefundenen
+           Übereinstimmung der dazugehörige Versatz in der Zeichenkette
+           zurückgegeben. Beachten Sie, dass dies den Wert von
+           <parameter>matches</parameter> in ein Array von Arrays ändert, in dem jedes
+           Element ein Array ist, das aus der übereinstimmenden Zeichenkette
+           als Element <literal>0</literal> und deren Stelle in
+           <parameter>subject</parameter> als Element <literal>1</literal>
+           besteht.
+           <informalexample>
+            <programlisting role="php">
+<![CDATA[
+<?php
+preg_match_all('/(foo)(bar)(baz)/', 'foobarbaz', $matches, PREG_OFFSET_CAPTURE);
+print_r($matches);
+?>
+]]>
+            </programlisting>
+            &example.outputs;
+            <screen>
+<![CDATA[
+Array
+(
+    [0] => Array
+        (
+            [0] => Array
+                (
+                    [0] => foobarbaz
+                    [1] => 0
+                )
+
+        )
+
+    [1] => Array
+        (
+            [0] => Array
+                (
+                    [0] => foo
+                    [1] => 0
+                )
+
+        )
+
+    [2] => Array
+        (
+            [0] => Array
+                (
+                    [0] => bar
+                    [1] => 3
+                )
+
+        )
+
+    [3] => Array
+        (
+            [0] => Array
+                (
+                    [0] => baz
+                    [1] => 6
+                )
+
+        )
+
+)
+]]>
+            </screen>
+           </informalexample>
+          </para>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><constant>PREG_UNMATCHED_AS_NULL</constant></term>
+         <listitem>
+          <para>
+           Wird dieses Flag angegeben werden nicht gefundene Teilsuchmuster als
+           &null; geliefert; andernfalls werden sie als eine leere Zeichenkette
+           (<type>string</type>) geliefert.
+          </para>
+         </listitem>
+        </varlistentry>  
+       </variablelist>
+      </para>
+      <para>
+       Falls kein Flag für die Anordnung angegeben wurde, wird
+       <constant>PREG_PATTERN_ORDER</constant> angenommen.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>offset</parameter></term>
+     <listitem>
+      <para>
+       Normalerweise beginnt die Suche am Anfang der Zeichenkette. Der
+       optionale Parameter <parameter>offset</parameter> kann verwendet
+       werden, um eine andere Stelle in Bytes anzugeben, ab der gesucht werden
+       soll.
+      </para>
+      <note>
+       <para>
+        Die Verwendung von <parameter>offset</parameter> entspricht nicht der
+        Übergabe von <code>substr($zeichenkette, $versatz)</code> an
+        Stelle der Zeichenkette an <function>preg_match_all</function>, weil
+        <parameter>pattern</parameter> Angaben wie zum Beispiel
+        <emphasis>^</emphasis>, <emphasis>$</emphasis> oder
+        <emphasis>(?&lt;=x)</emphasis> enthalten kann. Für Beispiele siehe
+        <function>preg_match</function>.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Gibt die Anzahl der Übereinstimmungen mit dem kompletten Suchmuster zurück
+   (die auch Null sein kann) oder &false;, falls ein Fehler auftrat.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        Die Konstante <constant>PREG_UNMATCHED_AS_NULL</constant> wird nun für
+        den Parameter <parameter>$flags</parameter> unterstützt.
+       </entry>
+      </row>
+      <row>
+       <entry>5.4.0</entry>
+       <entry>
+        Der Parameter <parameter>matches</parameter> ist nun optional.
+       </entry>
+      </row>
+      <row>
+       <entry>5.3.6</entry>
+       <entry>
+        Gibt &false; zurück, wenn <parameter>offset</parameter>
+        größer als die Länge von <parameter>subject</parameter> ist.
+       </entry>
+      </row>
+      <row>
+       <entry>5.2.2</entry>
+       <entry>
+        Benannte Teilsuchmuster (named subpatterns) akzeptieren nun die
+        Syntaxen <literal>(?&lt;name&gt;)</literal> und
+        <literal>(?'name')</literal> sowie
+        <literal>(?P&lt;name&gt;)</literal>. Vorherige Versionen akzeptierten
+        nur <literal>(?P&lt;name&gt;)</literal>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Alle Telefonnummern aus einem Text holen.</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+preg_match_all("/\(?  (\d{3})?  \)?  (?(1)  [\-\s] ) \d{3}-\d{4}/x",
+                "Wählen Sie 555-1212 oder 1-800-555-1212", $telefon);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Zusammengehörende HTML-Tags finden (gierig)</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Das \\2 ist ein Beispiel für Rückreferenzierung. Es teilt pcre mit, dass
+// der reguläre Ausdruck auf den für das zweite Klammerpaar gefundenen
+// Ausdruck selbst, also in diesem Fall auf den für ([\w]+) gefundenen
+// Ausdruck passen muss.
+// Der zusätzliche Backslash wird wegen der doppelten Anführungsstriche
+// benötigt.
+$html = "<b>fett gedruckter Text</b><a href=howdy.html>klick mich an</a>";
+
+preg_match_all("/(<([\w]+)[^>]*>)(.*?)(<\/\\2>)/", $html, $treffer, PREG_SET_ORDER);
+
+foreach ($treffer as $wert) {
+  echo "gefunden: " . $wert[0] . "\n";
+  echo "Teil 1: " . $wert[1] . "\n";
+  echo "Teil 2: " . $wert[2] . "\n";
+  echo "Teil 3: " . $wert[3] . "\n";
+  echo "Teil 4: " . $wert[4] . "\n\n";
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen role="html">
+<![CDATA[
+gefunden: <b>fett gedruckter Text</b>
+Teil 1: <b>
+Teil 2: b
+Teil 3: fett gedruckter Text
+Teil 4: </b>
+
+gefunden: <a href=howdy.html>klick mich an</a>
+Teil 1: <a href=howdy.html>
+Teil 2: a
+Teil 3: klick mich an
+Teil 4: </a>
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Benannte Teilsuchmuster (named subpatterns)</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$str = <<<FOO
+a: 1
+b: 2
+c: 3
+FOO;
+
+preg_match_all('/(?P<name>\w+): (?P<zahl>\d+)/', $str, $treffer);
+
+/* Folgendes funktioniert ab PHP 5.2.2 (PCRE 7.0) ebenfalls, für die
+ * Rückwärtskompatibilität wird aber die vorherige Form empfohlen. */
+// preg_match_all('/(?<name>\w+): (?<zahl>\d+)/', $str, $treffer);
+
+print_r($treffer);
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen role="html">
+<![CDATA[
+Array
+(
+    [0] => Array
+        (
+            [0] => a: 1
+            [1] => b: 2
+            [2] => c: 3
+        )
+
+    [name] => Array
+        (
+            [0] => a
+            [1] => b
+            [2] => c
+        )
+
+    [1] => Array
+        (
+            [0] => a
+            [1] => b
+            [2] => c
+        )
+
+    [zahl] => Array
+        (
+            [0] => 1
+            [1] => 2
+            [2] => 3
+        )
+
+    [2] => Array
+        (
+            [0] => 1
+            [1] => 2
+            [2] => 3
+        )
+
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><link linkend="pcre.pattern">PCRE-Suchmuster</link></member>
+    <member><function>preg_quote</function></member>
+    <member><function>preg_match</function></member>
+    <member><function>preg_replace</function></member>
+    <member><function>preg_split</function></member>
+    <member><function>preg_last_error</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

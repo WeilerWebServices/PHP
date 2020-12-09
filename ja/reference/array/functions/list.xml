@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351129 Maintainer: hirokawa Status: ready -->
+<!-- Credits: mumumu -->
+
+<refentry xml:id="function.list" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>list</refname>
+  <refpurpose>配列と同様の形式で、複数の変数への代入を行う</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>list</methodname>
+   <methodparam><type>mixed</type><parameter>var</parameter></methodparam>
+   <methodparam rep="repeat" choice="opt"><type>mixed</type><parameter>vars</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array</function> と同様に、
+   この関数は実際には関数ではなく言語構造です。
+   <function>list</function> は、
+   単一の操作で一連の変数に値を代入するために使われます。
+  </para>
+  <note>
+   <para>
+    PHP 7.1.0 より前のバージョンでは、<function>list</function> は数値添字の配列でのみ動作し、
+    また、添字は 0 から始まることを想定していました。
+   </para>
+  </note>
+  <warning>
+   <para>
+    PHP 5 では、<function>list</function>は、最も右のパラメータから値を代入します。
+    PHP 7 では、<function>list</function>は、最も左のパラメータから値を代入します。
+   </para>
+   <para>
+    プレーンな変数を使用している場合には、このことを気にする必要はありません。
+    しかし、添字配列を使用している場合には、配列の添字の順番が
+    <function>list</function>
+    に書いたものと同じく左から右となることを通常は期待しますが、
+    PHP 5 ではそうはなりません。この配列の添字は逆の順番となります。
+   </para>
+   <para>
+    一般論として、特定の操作順に依存することは避けたほうがいいでしょう。
+    将来的に、その順番が変更される可能性があるからです。
+   </para>
+  </warning>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>var</parameter></term>
+     <listitem>
+      <para>
+       変数。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>vars</parameter></term>
+     <listitem>
+      <para>
+       残りの変数。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   代入した配列を返します。
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        配列へ分割して代入する操作が、リファレンスへの代入をサポートしました。
+       </entry>
+      </row>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        キーを <function>list</function> 関数で指定できるようになりました。
+        これによって、キーが数値でなかったり、連続していなかったりした場合に配列の構造を変えることができるようになります。
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+         代入操作が行われる順番が変わりました
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+         <function>list</function> の式をまったくの空にすることはできなくなりました
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+         文字列は扱えなくなりました
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>list</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$info = array('コーヒー', '茶色', 'カフェイン');
+
+// すべての変数の取得
+list($drink, $color, $power) = $info;
+echo "$drink の色は $color で、$power が含まれています。\n";
+
+// 一部の変数の取得
+list($drink, , $power) = $info;
+echo "$drink には $power が含まれています。\n";
+
+// 三番目のみの取得
+list( , , $power) = $info;
+echo "$power 欲しい!\n";
+
+// list() は文字列では動作しません
+list($bar) = "abcde";
+var_dump($bar); // NULL
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>list</function> の使用法の例</title>
+    <programlisting role="php">
+<![CDATA[
+<table>
+ <tr>
+  <th>社員氏名</th>
+  <th>給与</th>
+ </tr>
+
+<?php
+$result = $pdo->query("SELECT id, name, salary FROM employees");
+while (list($id, $name, $salary) = $result->fetch(PDO::FETCH_NUM)) {
+    echo " <tr>\n" .
+          "  <td><a href=\"info.php?id=$id\">$name</a></td>\n" .
+          "  <td>$salary</td>\n" .
+          " </tr>\n";
+}
+
+?>
+
+</table>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>ネストした <function>list</function> の使用法</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+list($a, list($b, $c)) = array(1, array(2, 3));
+
+var_dump($a, $b, $c);
+
+?>
+]]>
+    </programlisting>
+    <screen>
+<![CDATA[
+int(1)
+int(2)
+int(3)
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>配列の添字を使用した <function>list</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$info = array('coffee', 'brown', 'caffeine');
+
+list($a[0], $a[1], $a[2]) = $info;
+
+var_dump($a);
+
+?>
+]]>
+    </programlisting>
+    <para>
+     次のような出力になります(<function>list</function> の文法に書かれた
+     順番と、要素の順番の違いに注意):
+    </para>
+    &example.outputs.7;
+    <screen>
+<![CDATA[
+array(3) {
+  [0]=>
+  string(6) "coffee"
+  [1]=>
+  string(5) "brown"
+  [2]=>
+  string(8) "caffeine"
+}
+]]>
+    </screen>
+    &example.outputs.5;
+    <screen>
+<![CDATA[
+array(3) {
+  [2]=>
+  string(8) "caffeine"
+  [1]=>
+  string(5) "brown"
+  [0]=>
+  string(6) "coffee"
+}
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>list</function> と添字の定義順</title>
+    <simpara>
+     <function>list</function> が配列の要素をどの順に処理するかは、配列の添字とは無関係です。
+    </simpara>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$foo = array(2 => 'a', 'foo' => 'b', 0 => 'c');
+$foo[1] = 'd';
+list($x, $y, $z) = $foo;
+var_dump($foo, $x, $y, $z);
+]]>
+    </programlisting>
+    <para>
+     結果は次のようになります (<function>list</function> 内で要素をどの順で利用しているかに注目しましょう)。
+    </para>
+    <screen>
+<![CDATA[
+array(4) {
+  [2]=>
+  string(1) "a"
+  ["foo"]=>
+  string(1) "b"
+  [0]=>
+  string(1) "c"
+  [1]=>
+  string(1) "d"
+}
+string(1) "c"
+string(1) "d"
+string(1) "a"
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>list</function> をキーを指定して使う</title>
+    <simpara>
+     PHP 7.1.0 以降では、<function>list</function> に明示的に
+     キーを含めることができるようになりました。
+     任意の式も指定可能です。
+     数値や文字のキーも許されますが、
+     キーがない要素とある要素を混ぜることは許されません
+    </simpara>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$data = [
+    ["id" => 1, "name" => 'Tom'],
+    ["id" => 2, "name" => 'Fred'],
+];
+foreach ($data as ["id" => $id, "name" => $name]) {
+    echo "id: $id, name: $name\n";
+}
+echo PHP_EOL;
+list(1 => $second, 3 => $fourth) = [1, 2, 3, 4];
+echo "$second, $fourth\n";
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+id: 1, name: Tom
+id: 2, name: Fred
+
+2, 4
+]]>
+    </screen>
+   </example>
+  </para>
+
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>each</function></member>
+    <member><function>array</function></member>
+    <member><function>extract</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

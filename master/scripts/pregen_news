@@ -1,0 +1,215 @@
+<?php /* vim: set noet ts=4 sw=4 ft=php: : */
+
+define("XMLNS_ATOM",  "http://www.w3.org/2005/Atom");
+define("XMLNS_XHTML", "http://www.w3.org/1999/xhtml");
+define("XMLNS_PHP",   "http://php.net/ns/news");
+
+function date_sort($a, $b) {
+	return $a["updated"] == $b["updated"] ? 0 : (strtotime($a["updated"]) > strtotime($b["updated"]) ? -1 : 1);
+}
+
+$XML_OPTIONS =  LIBXML_COMPACT | LIBXML_NOBLANKS | LIBXML_NOCDATA | LIBXML_NSCLEAN | LIBXML_XINCLUDE;
+
+function pregen_atom($feed, $feedDest, $newsDest) {
+	$dom = new DOMDocument;
+	$dom->preserveWhiteSpace = false;
+	$dom->formatOutput = true;
+
+	if (!$dom->load($feed, $GLOBALS["XML_OPTIONS"])) {
+		trigger_error("News feed b0rked!", E_USER_WARNING);
+		return;
+	}
+	if (!$dom->xinclude()) {
+		trigger_error("News items b0rked!", E_USER_WARNING);
+		return;
+	}
+
+	$timestamps = [];
+	foreach ($dom->getElementsByTagName("updated") as $node) {
+		$timestamps[] = strtotime($node->nodeValue, $_SERVER["REQUEST_TIME"]);
+	}
+	$updated = max($timestamps);
+	$upnode = $dom->createElement("updated", date(DATE_ATOM, $updated));
+	$dom->documentElement->insertBefore($upnode, $dom->getElementsByTagName("link")->item(0));
+
+	$feed = $dom->saveXML();
+	$entries = format_atom_feed($feed);
+
+	$write = '<?php $NEWS_ENTRIES = ' . var_export($entries, 1) . ';';
+	file_put_contents($newsDest, $write);
+	file_put_contents($feedDest, $feed);
+}
+
+function format_atom_feed($filename) {
+	$r = new XMLReader;
+	$r->XML($filename, "UTF-8");
+
+	$entries = [];
+	while($r->read()) {
+		if ($r->nodeType === XMLReader::ELEMENT && $r->name === "entry") {
+			$entries[] = $current = format_atom_entry($r);
+		}
+	}
+
+	return $entries;
+}
+
+// {{{ Parse the entry into array(element => value)
+function format_atom_entry($r) {
+	$retval = [];
+
+	while($r->read()) {
+		if ($r->nodeType !== XMLReader::ELEMENT) {
+			if ($r->nodeType === XMLReader::END_ELEMENT && $r->name === "entry") {
+				return $retval;
+			}
+			continue;
+		}
+
+		$name = $r->localName;
+		if ($r->namespaceURI === XMLNS_ATOM) {
+			switch($name) {
+			case "title":
+			case "id":
+			case "published":
+			case "updated":
+				$retval[$name] = $r->readString();
+				$retval[$name] = $r->readString();
+				break;
+
+			case "link":
+			case "category":
+				$retval[$name][] = format_attributes($r);
+				break;
+
+			case "content":
+				if ($r->hasAttributes) {
+					switch($r->getAttribute("type")) {
+					case "html":
+					case "xhtml":
+						$str = ltrim($r->readInnerXML());
+
+						// Remove the xmlns attribute
+						$search = ' xmlns="'.XMLNS_XHTML.'"';
+						if (($pos = strpos($str, $search)) !== false && $pos < 10) {
+							$str = substr_replace($str, "", $pos, strlen($search));
+						}
+
+						$retval[$name] = $str;
+						break;
+
+					case "text":
+						$retval[$name] = $r->readString();
+						break;
+					}
+				} else {
+					$retval[$name] = $r->readString();
+				}
+
+				$dom = new DOMDocument();
+				@$dom->loadHTML($retval[$name]);
+
+				$xpath = new DomXPath($dom);
+				$nodes = $xpath->query('//body/div/*');
+
+				if ($nodes !== FALSE) {
+					$content = '<div>';
+
+					$count = 0;
+					foreach ($nodes as $node) {
+						if ($count++ < 2) {
+							$content .= $dom->saveXML($node);
+						}
+					}
+
+					if ($count > 2) {
+						$permanentLink = get_link($retval, "via");
+						$content .= "<p class='fullArticleLink'><a href='$permanentLink' class>&hellip; read full article</a></p>";
+					}
+
+					$content .= '</div>';
+				} else {
+					$content = $retval[$name];
+				}
+				$retval["intro"] = $content;
+				break;
+			}
+		} elseif ($r->namespaceURI === XMLNS_PHP) {
+			switch($name) {
+			case "newsImage":
+				$retval[$name] = format_attributes($r);
+				$retval[$name]["content"] = $r->readString();
+				break;
+
+			case "finalTeaserDate":
+				$retval[$name] = $r->readString();
+				break;
+			}
+		}
+	}
+
+	return $retval;
+} // }}}
+
+// {{{ Return all attrs for current element as an array(attr-name => attr-value)
+function format_attributes($r) {
+	$retval = [];
+
+	if (!$r->hasAttributes) {
+		return $retval;
+	}
+
+	$r->moveToFirstAttribute();
+	do {
+		$retval[$r->localName] = $r->value;
+	} while($r->moveToNextAttribute());
+	$r->moveToElement();
+
+	return $retval;
+} // }}}
+
+function get_link($data, $rel = "alternate") {
+	foreach($data["link"] as $link) {
+		if ($link["rel"] == $rel) {
+			return $link["href"];
+		}
+	}
+	return "";
+}
+
+function legacy_rss($atom, $newsDest, $confDest) {
+	$sxe = new SimpleXMLElement($atom, $GLOBALS["XML_OPTIONS"], true);
+	$CONF = $CONF_ITEMS = $NEWS = $NEWS_ITEMS= "";
+	$links = [];
+
+	foreach($sxe->entry as $entry) {
+		$item = "";
+		$term  = (string)$entry->category["term"];
+		$type = $term != "frontpage" ? "conf" : "news";
+		GenerateRSSItem(
+			$links[$type][]["link"] = $entry->link["href"],
+			(string)$entry->title,
+			ProcessText($entry->content->asXML()),
+			date("Y-m-d", strtotime((string)$entry->updated)),
+			$type == "conf" ? ($term == "conferences" ? "conference" : $term): null,
+			$item
+		);
+		if($type == "conf") {
+			$CONF_ITEMS .= $item;
+		} else {
+			$NEWS_ITEMS .= $item;
+		}
+	}
+	GenerateRSSHeader($links["conf"], $CONF, "http://php.net/conferences/");
+	GenerateRSSHeader($links["news"], $NEWS, "http://php.net/");
+
+	$CONF .= $CONF_ITEMS;
+	$NEWS .= $NEWS_ITEMS;
+
+	GenerateRSSFooter($CONF);
+	GenerateRSSFooter($NEWS);
+
+	file_put_contents($newsDest, $NEWS);
+	file_put_contents($confDest, $CONF);
+}
+

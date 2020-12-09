@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 336468 Maintainer: satoruyoshida Status: ready -->
+
+ <info xmlns="http://docbook.org/ns/docbook" xml:id="bookinfo">
+  &frontpage.authors;
+  <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
+  &frontpage.editors;
+
+  <authorgroup>
+    <othercredit role="translator">
+      <orgname>PHP マニュアル翻訳プロジェクト </orgname>
+    </othercredit>
+  </authorgroup>
+
+  <copyright>
+   <year>1997-<?dbtimestamp format="Y"?></year>
+   <holder>the PHP Documentation Group</holder>
+  </copyright>
+
+  <legalnotice xml:id="copyright" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <info><title>著作権</title></info>
+   <simpara>
+    Copyright © 1997 - <?dbtimestamp format="Y"?> by the PHP Documentation Group.
+    この著作物は、Creative Commons Attribution 3.0 か
+    それ以降で指定された条件と制約に従う限り配布することができます。
+    <link linkend="cc.license">Creative
+    Commons Attribution 3.0 license</link>
+    のコピーは本マニュアルとともに配布されており、
+    ライセンスの最新版は現在のところ、
+    <link xlink:href="&url.cc.by;">&url.cc.by;</link> で入手可能です。
+   </simpara>
+   <simpara>
+    修正の有無に関わらず本文書の全体または一部を再配布または再出版したい場合や、
+    質問がある場合には、
+    <link xlink:href="mailto:&email.php.doc.license;">&email.php.doc.license;</link>
+    宛で著作権者まで連絡をしてください。
+    このアドレスは、一般にアーカイブが公開されているメーリングリストへマップされていることに
+    注意して下さい。
+   </simpara>
+   <simpara>
+    (訳注)本日本語訳の記述内容により生じたいかなる損害についても
+    著作権所有者および翻訳者は責任を負いません。
+   </simpara>
+  </legalnotice>
+
+ </info>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

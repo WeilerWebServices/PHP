@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 334762 Maintainer: sammywg Status: ready -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.strtr" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>strtr</refname>
+  <refpurpose>Tauscht Zeichen aus oder ersetzt Zeichenketten</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>strtr</methodname>
+   <methodparam><type>string</type><parameter>str</parameter></methodparam>
+   <methodparam><type>string</type><parameter>from</parameter></methodparam>
+   <methodparam><type>string</type><parameter>to</parameter></methodparam>
+  </methodsynopsis>
+  <methodsynopsis>
+   <type>string</type><methodname>strtr</methodname>
+   <methodparam><type>string</type><parameter>str</parameter></methodparam>
+   <methodparam><type>array</type><parameter>replace_pairs</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Diese Funktion gibt eine Kopie von <parameter>str</parameter> zurück, in der
+   alle Vorkommen jedes Zeichens von <parameter>from</parameter> in das
+   korrespondierende Zeichen in <parameter>to</parameter> umgewandelt wurden.
+
+   Mit drei Argumenten gibt diese Funktion eine Kopie von
+   <parameter>str</parameter> zurück, in der alle Vorkommen jedes
+   (single-byte) Zeichens von <parameter>from</parameter> in das
+   korrespondierende Zeichen in <parameter>to</parameter> übersetzt wurden;
+   d. h. jedes Vorkommen von <literal>$from[$n]</literal> wurde ersetzt durch
+   <literal>$to[$n]</literal>, wobei <literal>$n</literal> ein gültiger Offset
+   in beiden Argumenten ist.
+  </para>
+  <para>
+   Haben <parameter>from</parameter> und <parameter>to</parameter> eine
+   unterschiedliche Länge, werden die überzähligen Zeichen im jeweils
+   längeren Parameter ignoriert. Die Länge von <parameter>str</parameter> wird
+   die gleiche wie die des Rückgabewertes sein.
+  </para>
+  <para>
+    Wurden zwei Argumente übergeben, sollte das zweite ein
+    <type>array</type> in der Form <literal>array('from' => 'to',
+   ...)</literal> sein. Der Rückgabewert ist ein <type>string</type> in dem
+   alle Vorkommen der Array Schlüssel durch die entsprechenden Werte ersetzt
+   wurden. Die längsten Schlüssel werden zuerst getestet werden.
+    Wurde eine Teilzeichenkette ersetzt, wird ihr neuer Wert nicht nochmals
+   durchsucht.
+  </para>
+  <para>
+    In diesem Fall können die Schlüssel und Werte beliebige Längen haben,
+    vorausgesetzt, es gibt keinen leeren Schlüssel; zusätzlich kann die Länge
+    des Rückgabewertes von der de <parameter>str</parameter> abweichen.
+    Diese Funktion ist jedoch dann am effizientesten, wenn alle Schlüssel die
+    gleiche Größe besitzen.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>str</parameter></term>
+     <listitem>
+      <para>
+       Der <type>String</type>, in dem die Ersetzungen vorgenommen werden sollen.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>from</parameter></term>
+     <listitem>
+      <para>
+       Der <type>String</type>, der gegen <parameter>to</parameter> ausgetauscht
+       werden soll.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>to</parameter></term>
+     <listitem>
+      <para>
+       Der <type>String</type>, der <parameter>from</parameter> ersetzen soll.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>replace_pairs</parameter></term>
+     <listitem>
+      <para>
+       Der <parameter>replace_pairs</parameter>-Parameter kann anstatt der
+       Parameter <parameter>to</parameter> und
+       <parameter>from</parameter> verwendet werden. In diesem Fall muss ein
+       <type>array</type> in der Form <literal>array('von' => 'nach',
+       ...)</literal> übergeben werden.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+    Gibt den übersetzten <type>string</type> zurück.
+  </para>
+  <para>
+   Wenn <parameter>replace_pairs</parameter> einen Schlüssel enthält, der
+   ein leerer <type>string</type> (<literal>""</literal>) ist, wird
+   &false; zurückgegeben. Ist <parameter>str</parameter> kein Skalar, dann wird
+   er nicht in eine Zeichenkette umgewandelt; statt dessen wird eine Warnung
+   erzeugt und &null; zurückgegeben.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>strtr</function>-Beispiel</title>
+    <programlisting role="php">
+<![CDATA[
+//In dieser Form, strtr() übersetzt byte-zu-byte
+//Daher gehen wir hier von einer single-byte Kodierung aus.
+<?php
+$addr = strtr($addr, "äåö", "aao");
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+    Das nächste Beispiel zeigt das Verhalten von <function>strtr</function>,
+    aufgerufen mit nur zwei Argumenten. Beachten Sie den Vorrang der
+    Ersetzungen (<literal>"h"</literal> wird nicht gewählt, da es längere
+    Übereinstimmungen gibt) und dass der ersetzte Text nicht erneut durchsucht
+    wurde.
+  </para>
+  <example>
+   <title><function>strtr</function>-Beispiel mit zwei Argumenten</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$trans = array("h" => "-", "hello" => "hi", "hi" => "hello");
+echo strtr("hi all, I said hello", $trans);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+hello all, I said hi
+]]>
+    </screen>
+  </example>
+  <para>
+    Die zwei Verhaltensweisen unterscheiden sich wesentlich. Mit 3 Argumenten
+    esetzt <function>strtr</function> Bytes; mit zweien kann sie längere
+    Teilzeichenketten ersetzen.
+  </para>
+  <example>
+   <title><function>strtr</function> Vergleich der Verhaltensweisen</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo strtr("baab", "ab", "01"),"\n";
+
+$trans = array("ab" => "01");
+echo strtr("baab", $trans);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+1001
+ba01
+]]>
+    </screen>
+  </example>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>str_replace</function></member>
+    <member><function>preg_replace</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

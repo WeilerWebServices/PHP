@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: shimooka -->
+<appendix xml:id="array.constants" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.constants;
+ &extension.constants.core;
+ <para>
+  <variablelist>
+  <varlistentry xml:id="constant.case-lower">
+    <term>
+     <constant>CASE_LOWER</constant>
+     (<type>int</type>)
+    </term>
+    <listitem>
+    <simpara>
+     <constant>CASE_LOWER</constant>は、
+      <function>array_change_key_case</function>で使用され、
+      配列のキーを小文字に変換するために使用されます。小文字は、
+      <function>array_change_key_case</function>のデフォルトのケースで
+      もあります。
+     </simpara>
+    </listitem>
+   </varlistentry>
+  <varlistentry xml:id="constant.case-upper">
+    <term>
+     <constant>CASE_UPPER</constant>
+     (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      <constant>CASE_UPPER</constant>は、
+      <function>array_change_key_case</function>で使用され、配列のキー
+      を大文字に変換するために使用されます。
+     </simpara>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </para>
+
+ <para>
+  ソース順のフラグ:
+  <variablelist>
+  <varlistentry xml:id="constant.sort-asc">
+    <term>
+     <constant>SORT_ASC</constant>
+     (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      <constant>SORT_ASC</constant>は、
+      <function>array_multisort</function>でソート順を昇順にするために
+      使用されます。
+     </simpara>
+    </listitem>
+   </varlistentry>
+  <varlistentry xml:id="constant.sort-desc">
+    <term>
+     <constant>SORT_DESC</constant>
+     (<type>int</type>)
+     (<link linkend="language.types.integer">integer</link>)
+    </term>
+    <listitem>
+     <simpara>
+     <constant>SORT_DESC</constant>は、
+      <function>array_multisort</function>でソート順を降順にするために
+      使用されます。
+     </simpara>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </para>
+
+ <para> ソート型のフラグ: 種々のソート関数で使用されます
+  <variablelist>
+  <varlistentry xml:id="constant.sort-regular">
+    <term>
+     <constant>SORT_REGULAR</constant>
+     (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      <constant>SORT_REGULAR</constant>は通常の比較するために使用され
+      ます。
+    </simpara>
+    </listitem>
+   </varlistentry>
+  <varlistentry xml:id="constant.sort-numeric">
+    <term>
+     <constant>SORT_NUMERIC</constant>
+     (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      <constant>SORT_NUMERIC</constant>は数値で比較を行うために使用さ
+      れます。
+     </simpara>
+    </listitem>
+   </varlistentry>
+  <varlistentry xml:id="constant.sort-string">
+    <term>
+     <constant>SORT_STRING</constant>
+     (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      <constant>SORT_STRING</constant>は文字列として比較を行うために使
+      用されます。
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sort-locale-string">
+   <term>
+    <constant>SORT_LOCALE_STRING</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+    <constant>SORT_LOCALE_STRING</constant>は現在のロケールに基づいた
+    文字列として比較を行うために使用されます。 PHP 5.0.2で追加
+    されました。
+     </simpara>
+    </listitem>
+   </varlistentry>
+  <varlistentry xml:id="constant.sort-natural">
+   <term>
+    <constant>SORT_NATURAL</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+    <constant>SORT_NATURAL</constant> は、要素の比較を文字列として行い、
+    <function>natsort</function> と同様の「自然順」で比較します。
+    PHP 5.4.0 で追加されました。
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sort-flag-case">
+   <term>
+    <constant>SORT_FLAG_CASE</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+    <constant>SORT_FLAG_CASE</constant> は
+         <constant>SORT_STRING</constant> や
+         <constant>SORT_NATURAL</constant> と (ビット OR で) 組み合わせて使い、
+         文字列のソートで大文字小文字を区別しないようにします。PHP 5.4.0 で追加されました。
+    </simpara>
+   </listitem>
+  </varlistentry>
+  </variablelist>
+ </para>
+
+ <para> フィルターのフラグ
+ <variablelist>
+  <varlistentry xml:id="constant.array-filter-use-key">
+   <term>
+    <constant>ARRAY_FILTER_USE_KEY</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     <constant>ARRAY_FILTER_USE_KEY</constant> は
+     <function>array_filter</function> で使うもので、
+     各キーをコールバック関数の最初の引数として渡すよう指示します。
+     PHP 5.6.0 で追加されました。
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.array-filter-use-both">
+   <term>
+    <constant>ARRAY_FILTER_USE_BOTH</constant> 
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     <constant>ARRAY_FILTER_USE_BOTH</constant> は
+     <function>array_filter</function> で使うもので、
+     値とキーの両方をコールバック関数の引数として渡すよう指示します。
+     PHP 5.6.0 で追加されました。
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+ </para>
+
+ <variablelist>
+  <varlistentry xml:id="constant.count-normal">
+   <term>
+    <constant>COUNT_NORMAL</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.count-recursive">
+   <term>
+    <constant>COUNT_RECURSIVE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.extr-overwrite">
+   <term>
+    <constant>EXTR_OVERWRITE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.extr-skip">
+   <term>
+    <constant>EXTR_SKIP</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.extr-prefix-same">
+   <term>
+    <constant>EXTR_PREFIX_SAME</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.extr-prefix-all">
+   <term>
+    <constant>EXTR_PREFIX_ALL</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.extr-prefix-invalid">
+   <term>
+    <constant>EXTR_PREFIX_INVALID</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.extr-prefix-if-exists">
+   <term>
+    <constant>EXTR_PREFIX_IF_EXISTS</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.extr-if-exists">
+   <term>
+    <constant>EXTR_IF_EXISTS</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.extr-refs">
+   <term>
+    <constant>EXTR_REFS</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

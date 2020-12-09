@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351135 Maintainer: takagi Status: ready -->
+<!-- Credits: mumumu -->
+
+<refentry xml:id="ziparchive.addglob" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>ZipArchive::addGlob</refname>
+  <refpurpose>ディレクトリから、glob パターンを使ってファイルを追加する</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis role="oop">
+   <modifier>public</modifier> <type class="union"><type>array</type><type>false</type></type><methodname>ZipArchive::addGlob</methodname>
+   <methodparam><type>string</type><parameter>pattern</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>options</parameter><initializer>array()</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   ディレクトリから、glob <parameter>pattern</parameter> にマッチするファイルを追加します。
+  </para>
+  &zip.filename.separator;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <variablelist>
+   <varlistentry>
+    <term><parameter>pattern</parameter></term>
+    <listitem>
+     <para>
+      <function>glob</function> パターン。どのファイルを対象にするのかを指定します。
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry>
+    <term><parameter>flags</parameter></term>
+    <listitem>
+     <para>
+      <literal>glob()</literal> のフラグのビットマスク。
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry>
+    <term><parameter>options</parameter></term>
+    <listitem>
+     <para>
+      オプションの連想配列。次のオプションが使えます。
+      <itemizedlist>
+       <listitem>
+        <para>
+         <literal>"add_path"</literal>
+        </para>
+        <para>
+         アーカイブ内のファイルのローカルパスに変換するときにつけるプレフィックス。
+         これが適用されるのは、
+         <literal>"remove_path"</literal> や <literal>"remove_all_path"</literal>
+         で定義された削除処理がすべて終わった後です。
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <literal>"remove_path"</literal>
+        </para>
+        <para>
+         マッチしたファイルをアーカイブに追加する前に削除するプレフィックス。
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <literal>"remove_all_path"</literal>
+        </para>
+        <para>
+         &true; にすると、ファイル名だけを使ってアーカイブのルートに追加します。
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <literal>"flags"</literal>
+        </para>
+        <para>
+         以下のビットマスクの組み合わせ: 
+         <constant>ZipArchive::FL_OVERWRITE</constant>,
+         <constant>ZipArchive::FL_ENC_GUESS</constant>,
+         <constant>ZipArchive::FL_ENC_UTF_8</constant>,
+         <constant>ZipArchive::FL_ENC_CP437</constant>。
+         これらの定数の振る舞いは、<link linkend="zip.constants">定義済みの定数</link> で説明しています。
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <literal>"comp_method"</literal>
+        </para>
+        <para>
+         圧縮メソッド。
+         <constant>ZipArchive::CM_*</constant> のうちのいずれかです。
+         <link linkend="zip.constants">定義済みの定数</link> も参照して下さい。
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <literal>"comp_flags"</literal>
+        </para>
+        <para>
+         圧縮レベル
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <literal>"enc_method"</literal>
+        </para>
+        <para>
+         暗号化メソッド。
+         <constant>ZipArchive::EM_*</constant> のうちのいずれかです。
+         <link linkend="zip.constants">定義済みの定数</link> も参照して下さい。
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <literal>"enc_password"</literal>
+        </para>
+        <para>
+         暗号化に使うパスワード
+        </para>
+       </listitem>
+      </itemizedlist>
+     </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   成功した場合、追加されたファイルの <type>array</type> を返します。
+   &return.falseforfailure;
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.0.0 / 1.18.0</entry>
+       <entry>
+        <parameter>options</parameter> に <literal>"flags"</literal> が追加されました。
+       </entry>
+      </row>
+      <row>
+       <entry>8.0.0 / 1.18.1</entry>
+       <entry>
+        <parameter>options</parameter> に
+        <literal>"comp_method"</literal>, <literal>"comp_flags"</literal>,
+        <literal>"enc_method"</literal>, <literal>"enc_password"</literal> が追加されました。
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <example xml:id="ziparchive.addglob.example.basic">
+   <title><methodname>ZipArchive::addGlob</methodname> の例</title>
+   <para>
+     現在の作業ディレクトリにある、すべての PHP スクリプトとテキストファイルを追加します。
+   </para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$zip = new ZipArchive();
+$ret = $zip->open('application.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+if ($ret !== TRUE) {
+    printf('Failed with code %d', $ret);
+} else {
+    $options = array('add_path' => 'sources/', 'remove_all_path' => TRUE);
+    $zip->addGlob('*.{php,txt}', GLOB_BRACE, $options);
+    $zip->close();
+}
+?>
+]]>
+   </programlisting>
+  </example>
+ </refsect1>
+
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><methodname>ZipArchive::addFile</methodname></member>
+    <member><methodname>ZipArchive::addPattern</methodname></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

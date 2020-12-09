@@ -1,0 +1,113 @@
+.subdomain {
+  display: none;
+}
+nav#resources {
+  background-color: #333;
+  opacity: 0.9;
+  vertical-align: top;
+  color: #fff;
+}
+nav#resources li {
+  display: block;
+}
+nav#resources a {
+  border: 0;
+}
+.useredit,
+#users {
+  border-spacing: 0;
+  width: 100%;
+  padding-right: 80px;
+}
+#users thead tr,
+#users tfoot tr {
+  background-color: #fff;
+}
+.useredit tbody tr:nth-child(odd),
+#users tbody tr:nth-child(odd) {
+  background-color: #bbd;
+}
+.useredit tbody tr:nth-child(even),
+#users tbody tr:nth-child(even) {
+  background-color: #E3E3F1;
+}
+.useredit tfoot tr {
+  background-color: #E3E3F1;
+}
+.useredit tfoot tr:last-child {
+  background-color: #bbd;
+}
+.useredit tfoot tr:last-child td {
+  text-align: right;
+}
+.useredit th,
+.useredit td,
+#users td {
+  padding: 5px;
+  margin: 5px;
+}
+#users th {
+  border-bottom: 2px solid #6678b1;
+}
+#users tbody th:nth-of-type(1),
+#users tbody td:nth-of-type(1){
+  text-align: center;
+}
+#users tbody td:nth-of-type(4) {
+  width: 25%;
+}
+#users tbody th {
+  text-align: left;
+}
+
+
+#users tfoot td:nth-of-type(1),
+#users thead td:nth-of-type(1) {
+  text-align: left;
+  width: 150px;
+}
+#users tfoot td:nth-of-type(2),
+#users thead td:nth-of-type(2) {
+  text-align: center;
+}
+#users tfoot td:nth-of-type(3),
+#users thead td:nth-of-type(3) {
+  text-align: right;
+  width: 150px;
+}
+.useredit th:nth-of-type(1) {
+  text-align: right;
+}
+.useredit td:nth-of-type(1) {
+  text-align: left;
+}
+.useredit th {
+  width: 250px;
+}
+.useredit td,
+.useredit th {
+  vertical-align: top;
+}
+.useredit textarea {
+  width: 90%;
+  height: 300px;
+}
+.browse ul,
+.browse li {
+  display: inline-block;
+  font-size: .9em;
+  margin: 0;
+  padding: 0 0 0 20px;
+}
+#users tbody tr.noaccess {
+  background-color: #ffdddd;
+}
+#users .noaccess td {
+  border-bottom: 1px solid #000;
+}
+
+#mirrors tr {
+  background-color: #ffffff;
+}
+
+/* vim: set expandtab shiftwidth=2 softtabstop=2 tabstop=2 fdm=marker : */

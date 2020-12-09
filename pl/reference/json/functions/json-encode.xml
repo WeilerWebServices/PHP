@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 342210 Maintainer: joeaccord Status: ready -->
+<!-- $Revision$ -->
+<!-- CREDITS: sobak -->
+<refentry xml:id="function.json-encode" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>json_encode</refname>
+  <refpurpose>Zwraca JSON reprezentujący wartość</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>json_encode</methodname>
+   <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>zagnieżdżenie</parameter><initializer>512</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca łańcuch JSON reprezentujący podaną
+   <parameter>wartość</parameter>.
+  </para>
+  <para>
+   Na kodowanie mają wpływ przekazane <parameter>opcje</parameter>,
+   ponadto kodowanie wartości zmiennoprzecinkowych jest zależne od wartości
+   <link linkend="ini.serialize-precision">serialize_precision</link>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>wartość</parameter></term>
+     <listitem>
+      <para>
+       <parameter>wartość</parameter> zostanie zakodowana i może być dowolnego typu,
+       wykluczając <type>zasoby</type>.
+      </para>
+      <para>
+       Wszystkie dane muszą być zakodowane w formacie UTF-8.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>opcje</parameter></term>
+     <listitem>
+      <para>
+       Struktura bitów składająca się z <constant>JSON_HEX_QUOT</constant>,
+       <constant>JSON_HEX_TAG</constant>,
+       <constant>JSON_HEX_AMP</constant>,
+       <constant>JSON_HEX_APOS</constant>,
+       <constant>JSON_NUMERIC_CHECK</constant>,
+       <constant>JSON_PRETTY_PRINT</constant>,
+       <constant>JSON_UNESCAPED_SLASHES</constant>,
+       <constant>JSON_FORCE_OBJECT</constant>,
+       <constant>JSON_PRESERVE_ZERO_FRACTION</constant>,
+       <constant>JSON_UNESCAPED_UNICODE</constant>,
+       <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>. Zachowanie tych
+       stałych zostało opisane na
+       <link linkend="json.constants">stronie stałych JSON</link>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>zagnieżdżenie</parameter></term>
+     <listitem>
+      <para>
+       Określa maksymalne zagnieżdżenie. Musi być większe od zera.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   W przypadku powodzenia zwraca zakodowany <type>string</type> JSON &return.falseforfailure;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+	  <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Przy dekodowaniu wartości zmiennoprzecinkowych używana jest wartość
+        <link linkend="ini.serialize-precision">serialize_precision</link>
+        zamiast <link linkend="ini.precision">precision</link>.
+       </entry>
+      </row>
+      <row>
+       <entry>5.6.6</entry>
+       <entry>
+        Dodano <parameter>opcję</parameter>
+        <constant>JSON_PRESERVE_ZERO_FRACTION</constant>.
+       </entry>
+      </row>
+      <row>
+       <entry>5.5.0</entry>
+       <entry>
+        Dodano parametr <parameter>zagnieżdżenie</parameter>.
+       </entry>
+      </row>
+      <row>
+       <entry>5.5.0</entry>
+       <entry>
+        Dodano opcję <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>.
+       </entry>
+      </row>
+      <row>
+       <entry>5.5.0</entry>
+       <entry>
+        W wypadku niepowodzenia zwracaną wartość zmieniono z tekstu <literal>null</literal>
+        na &false;.
+       </entry>
+      </row>
+      <row>
+       <entry>5.4.0</entry>
+       <entry>
+        Dodano <parameter>opcje</parameter>
+        <constant>JSON_PRETTY_PRINT</constant>,
+        <constant>JSON_UNESCAPED_SLASHES</constant> i
+        <constant>JSON_UNESCAPED_UNICODE</constant>.
+       </entry>
+      </row>
+      <row>
+       <entry>5.3.3</entry>
+       <entry>
+        Dodano opcję <constant>JSON_NUMERIC_CHECK</constant>.
+       </entry>
+      </row>
+      <row>
+       <entry>5.3.0</entry>
+       <entry>
+        Dodano parametr <parameter>opcje</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>json_encode</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
+
+echo json_encode($arr);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+{"a":1,"b":2,"c":3,"d":4,"e":5}
+]]>
+    </screen>
+   </example>
+
+   <example>
+    <title>
+     Przykład <function>json_encode</function> pokazuje zastosowanie parametru: opcje
+    </title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$a = array('<foo>',"'bar'",'"baz"','&blong&', "\xc3\xa9");
+
+echo "Standardowo: ",      json_encode($a), "\n";
+echo "Znaczniki: ",        json_encode($a,JSON_HEX_TAG), "\n";
+echo "Apostrofy: ",        json_encode($a,JSON_HEX_APOS), "\n";
+echo "Cudzysłowy: ",       json_encode($a,JSON_HEX_QUOT), "\n";
+echo "Znaki et (etki): ",  json_encode($a,JSON_HEX_AMP), "\n";
+echo "Unicode: ",          json_encode($a, JSON_UNESCAPED_UNICODE), "\n";
+echo "Wszystkie opcje: ",  json_encode($a,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP), "\n\n";
+
+$b = array();
+
+echo "Pusta tablica zwracana jako tablica: ", json_encode($b), "\n";
+echo "Pusta tablica zwracana jako obiekt: ", json_encode($b, JSON_FORCE_OBJECT), "\n\n";
+
+$c = array(array(1,2,3));
+
+echo "Nieasocjacyjna tablica zwracana jako tablica: ", json_encode($c), "\n";
+echo "Nieasocjacyjna tablica zwracana jako obiekt: ", json_encode($c, JSON_FORCE_OBJECT), "\n\n";
+
+$d = array('foo' => 'bar', 'baz' => 'long');
+
+echo "Asocjacyjna tablica zwracana zawsze jako obiekt: ", json_encode($d), "\n";
+echo "Asocjacyjna tablica zwracana zawsze jako obiekt: ", json_encode($d, JSON_FORCE_OBJECT), "\n\n";
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Standardowo: ["<foo>","'bar'","\"baz\"","&blong&","\u00e9"]
+Znaczniki: ["\u003Cfoo\u003E","'bar'","\"baz\"","&blong&","\u00e9"]
+Apostrofy: ["<foo>","\u0027bar\u0027","\"baz\"","&blong&","\u00e9"]
+Cudzysłowy: ["<foo>","'bar'","\u0022baz\u0022","&blong&","\u00e9"]
+Znaki et (etki): ["<foo>","'bar'","\"baz\"","\u0026blong\u0026","\u00e9"]
+Unicode: ["<foo>","'bar'","\"baz\"","&blong&","é"]
+Wszystkie opcje: ["\u003Cfoo\u003E","\u0027bar\u0027","\u0022baz\u0022","\u0026blong\u0026","é"]
+
+Pusta tablica zwracana jako tablica: []
+Pusta tablica zwracana jako obiekt: {}
+
+Nieasocjacyjna tablica zwracana jako tablica: [[1,2,3]]
+Nieasocjacyjna tablica zwracana jako obiekt: {"0":{"0":1,"1":2,"2":3}}
+
+Asocjacyjna tablica zwracana zawsze jako obiekt: {"foo":"bar","baz":"long"}
+Asocjacyjna tablica zwracana zawsze jako obiekt: {"foo":"bar","baz":"long"}
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Przykład użycia opcji JSON_NUMERIC_CHECK</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo "Łańcuchy znaków reprezentujące liczby są automatycznie zmieniane na liczby".PHP_EOL;
+$numbers = array('+123123', '-123123', '1.2e3', '0.00001');
+var_dump(
+ $numbers,
+ json_encode($numbers, JSON_NUMERIC_CHECK)
+);
+echo "Łańcuchy znaków zawierające niepoprawnie sformatowane liczby".PHP_EOL;
+$strings = array('+a33123456789', 'a123');
+var_dump(
+ $strings,
+ json_encode($strings, JSON_NUMERIC_CHECK)
+);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Łańcuchy znaków reprezentujące liczby są automatycznie zmieniane na liczby
+array(4) {
+  [0]=>
+  string(7) "+123123"
+  [1]=>
+  string(7) "-123123"
+  [2]=>
+  string(5) "1.2e3"
+  [3]=>
+  string(7) "0.00001"
+}
+string(28) "[123123,-123123,1200,1.0e-5]"
+Łańcuchy znaków zawierające niepoprawnie sformatowane liczby
+array(2) {
+  [0]=>
+  string(13) "+a33123456789"
+  [1]=>
+  string(4) "a123"
+}
+string(24) "["+a33123456789","a123"]"
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Tablica sekwencyjna vs. niesekwencyjna</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo "Tablica sekwencyjna".PHP_EOL;
+$sequential = array("foo", "bar", "baz", "blong");
+var_dump(
+ $sequential,
+ json_encode($sequential)
+);
+
+echo PHP_EOL."Tablica niesekwencyjna".PHP_EOL;
+$nonsequential = array(1=>"foo", 2=>"bar", 3=>"baz", 4=>"blong");
+var_dump(
+ $nonsequential,
+ json_encode($nonsequential)
+);
+
+echo PHP_EOL."Tablica sekwencyjna z usuniętym jednym kluczem".PHP_EOL;
+unset($sequential[1]);
+var_dump(
+ $sequential,
+ json_encode($sequential)
+);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Tablica sekwencyjna
+array(4) {
+  [0]=>
+  string(3) "foo"
+  [1]=>
+  string(3) "bar"
+  [2]=>
+  string(3) "baz"
+  [3]=>
+  string(5) "blong"
+}
+string(27) "["foo","bar","baz","blong"]"
+
+Tablica niesekwencyjna
+array(4) {
+  [1]=>
+  string(3) "foo"
+  [2]=>
+  string(3) "bar"
+  [3]=>
+  string(3) "baz"
+  [4]=>
+  string(5) "blong"
+}
+string(43) "{"1":"foo","2":"bar","3":"baz","4":"blong"}"
+
+Tablica sekwencyjna z usuniętym jednym kluczem
+array(3) {
+  [0]=>
+  string(3) "foo"
+  [2]=>
+  string(3) "baz"
+  [3]=>
+  string(5) "blong"
+}
+string(33) "{"0":"foo","2":"baz","3":"blong"}"
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Przykład użycia opcji <constant>JSON_PRESERVE_ZERO_FRACTION</constant></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(json_encode(12.0, JSON_PRESERVE_ZERO_FRACTION));
+var_dump(json_encode(12.0));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+string(4) "12.0"
+string(2) "12"
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    W przypadku wystąpienia błędu kodowania, funkcja <function>json_last_error</function>
+    może być użyta do dokładnego określenia rodzaju błędu.
+   </para>
+  </note>
+  <note>
+   <para>
+    W przypadku kodowania tablicy, której indeksy nie są kolejnymi liczbami
+    począwszy od zera 0, wszystkie klucze zapisywane są jako łańcuchy znaków i określone
+    dokładnie dla każdej pary klucz-wartość.
+   </para>
+  </note>
+  <note>
+   <para>
+    Jak wyjaśnia specyfikacja JSON, <function>json_encode</function> wygeneruje
+    JSON, który jest typem prostym (czyli nie jest obiektem ani
+    tablicą) jeżeli podano typy <type>string</type>, <type>integer</type>,
+    <type>float</type> lub <type>boolean</type> jako wejściową
+    <parameter>wartość</parameter>. Mimo, że większość dekoderów traktuje te wartości
+    jak poprawny JSON, niektóre mogą tego nie robić, ponieważ specyfikacja jest
+    niejednoznaczna w tej kwestii.
+   </para>
+   <para>
+    Podsumowując, zawsze sprawdzaj czy Twój dekoder JSON radzi sobie z wyjściem,
+    które generujesz przez <function>json_encode</function>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><interfacename>JsonSerializable</interfacename></member>
+    <member><function>json_decode</function></member>
+    <member><function>json_last_error</function></member>
+    <member><function>serialize</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351219 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: shimooka,mumumu -->
+<refentry xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://docbook.org/ns/docbook" xml:id="function.chr">
+ <refnamediv>
+  <refname>chr</refname>
+  <refpurpose>数値から、1バイトの文字列を生成する</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>chr</methodname>
+   <methodparam><type>int</type><parameter>bytevalue</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <parameter>bytevalue</parameter>
+   を符号なし数値と解釈することによって指定された文字を含む、
+   1文字からなる文字列を返します。
+  </para>
+  <para>
+   この関数は、ASCII,
+   ISO-8859, Windows 1252 のような シングルバイトエンコーディング 
+   においては、文字セットのマッピングテーブルにある望みの文字の位置を  
+   渡すことで、一文字の文字列を作り出すのに使えます。
+   しかし、この関数は <parameter>string</parameter> のエンコーディングについて知りませんし、
+   特に UTF-8 や UTF-16 のようなマルチバイトエンコーディングについては、
+   この関数に Unicode のコードポイントは渡せないことに注意してください。
+  </para>
+  <para>
+   この関数は<function>ord</function>の逆の動作をします。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>bytevalue</parameter></term>
+     <listitem>
+      <para>
+       0 から 255 までの数値
+      </para>
+      <para>
+       妥当な範囲 (0..255) 外の値を渡した場合は、255 とのビット AND を行います。
+       この処理は、以下のコードと同様のアルゴリズムです。
+       <programlisting role="php">
+<![CDATA[
+while ($bytevalue < 0) {
+    $bytevalue += 256;
+}
+$bytevalue %= 256;
+]]>
+       </programlisting>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   指定されたバイトを含む、一文字からなる文字列を返します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.4.0</entry>
+      <entry>
+       <parameter>bytevalue</parameter> に対して、
+       サポートされていない入力が与えられた場合、
+       黙って<literal>0</literal> にキャストする動作をしなくなりました。
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>chr</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Assumes the string will be used as ASCII or an ASCII-compatible encoding
+
+$str = "この文字列はエスケープで終了します: ";
+$str .= chr(27); /* $str の最後にエスケープ文字を付加する */
+
+/* こちらの方がより便利なことが多い */
+
+$str = sprintf("この文字列はエスケープで終了します: %c", 27);
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>オーバーフローの挙動</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo chr(-159), chr(833), PHP_EOL;
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+aA
+]]>
+    </screen>
+   </example>
+  </para>
+  <para> 
+   <example>
+    <title>個別のバイトから、UTF-8 文字列を組み立てる</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$str = chr(240) . chr(159) . chr(144) . chr(152);
+echo $str;
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+🐘
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>sprintf</function> のフォーマット文字列 <literal>%c</literal></member>
+    <member><function>ord</function></member>
+    <member><link xlink:href="&url.asciitable;">ASCII テーブル</link></member>
+    <member><function>mb_chr</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

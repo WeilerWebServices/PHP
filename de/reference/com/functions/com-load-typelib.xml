@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 346747 Maintainer: sammywg Status: ready -->
+
+<refentry xml:id='function.com-load-typelib' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>com_load_typelib</refname>
+  <refpurpose>Lädt eine Typelib</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>com_load_typelib</methodname>
+   <methodparam><type>string</type><parameter>typelib_name</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>case_sensitive</parameter><initializer>&true;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Lädt eine Type Library und registriert deren Konstanten in der Engine, als
+   wären sie mittels <function>define</function> definiert worden.
+  </para>
+  <para>
+   Beachten Sie, dass es effizienter ist, die <xref
+   linkend="ini.com.typelib-file"/>-Konfigurationseinstellungen zum vorladen
+   und registrieren der Konstanten zu verwenden, allerdings ist dieser Weg nicht
+   so flexibel.
+  </para>
+  <para>
+   Wenn Sie <xref linkend="ini.com.autoregister-typelib"/> eingeschaltet haben,
+   wird PHP versuchen, automatisch die mit einem COM-Objekt assoziierten
+   Konstanten zu registrieren, wenn Sie das Objekt initialisieren. Dies hängt
+   von den Interfaces ab, die das COM-Objekt selbst unterstützt und ist nicht
+   immer möglich.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>typelib_name</parameter></term>
+     <listitem>
+      <para>
+       <parameter>typelib_name</parameter> kann eine der folgenden Angaben sein:
+       <itemizedlist>
+        <listitem>
+         <para>
+          Der Dateiname der <literal>.tlb</literal>-Datei oder des ausführbaren
+          Moduls, das die Type Library enthält.
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          Die GUID der Type Library, gefolgt von der Versionsnummer, z.B.
+          <literal>{00000200-0000-0010-8000-00AA006D2EA4},2,0</literal>.
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          Der Name der Bibliothek, z.B. <literal>Microsoft OLE DB ActiveX Data
+          Objects 1.0 Library</literal>.
+         </para>
+        </listitem>
+       </itemizedlist>
+       PHP wird versuchen, die Type Library in dieser Reihenfolge abzuarbeiten,
+       da der jeweils benötigte Aufwand und die dabei entstehenden "Kosten" mit
+       jedem Punkt stärker steigen. Die Suche nach dem Namen einer Type Library
+       erfolgt mittels physikalischer Iteration durch die Registry, bis ein
+       Treffer gefunden wird.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>case_sensitive</parameter></term>
+     <listitem>
+      <para>
+       Der Parameter <parameter>case_sensitive</parameter> verhält sich genau
+       umgekehrt wie der Parameter <literal>$case_insensitive</literal> der <function>define</function>-Funktion.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

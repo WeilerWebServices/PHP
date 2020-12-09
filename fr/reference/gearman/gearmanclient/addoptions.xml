@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 335960 Maintainer: gui Status: ready -->
+<!-- Reviewed: no -->
+
+<refentry xml:id="gearmanclient.addoptions" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>GearmanClient::addOptions</refname>
+  <refpurpose>Ajoute des options au client</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>bool</type><methodname>GearmanClient::addOptions</methodname>
+   <methodparam><type>int</type><parameter>options</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Ajoute une ou plusieurs options à celles déjà présentes.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>options</parameter></term>
+     <listitem>
+      <para>
+       Les options à ajouter.
+       Une des constantes suivantes ou la combinaison de constantes en utilisant 
+       l'opérateur de manipulation de bit (<quote>|</quote>):
+       <constant>GEARMAN_CLIENT_GENERATE_UNIQUE</constant>,
+       <constant>GEARMAN_CLIENT_NON_BLOCKING</constant>,
+       <constant>GEARMAN_CLIENT_UNBUFFERED_RESULT</constant> ou
+       <constant>GEARMAN_CLIENT_FREE_TASKS</constant>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne toujours &true;.
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 340225 Maintainer: fabioluciano Status: ready --><!-- CREDITS: felipe, thiago, fabioluciano. geekcom -->
+<refentry xml:id="function.array-combine" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>array_combine</refname>
+  <refpurpose>Cria um array usando um array para chaves e outro para valores</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>array_combine</methodname>
+   <methodparam><type>array</type><parameter>keys</parameter></methodparam>
+   <methodparam><type>array</type><parameter>values</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Cria um <type>array</type> usando os valores do array
+   <parameter>keys</parameter> como chaves e os valores do array
+   <parameter>values</parameter> como valores correspondentes.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+
+    <varlistentry>
+     <term><parameter>keys</parameter></term>
+     <listitem>
+      <para>
+       Array a ser usado como chaves. Valores ilegais para chave serão
+       convertidos para <type>string</type>.
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term><parameter>values</parameter></term>
+     <listitem>
+      <para>
+       <type>Array</type> a ser usado como valores
+      </para>
+     </listitem>
+    </varlistentry>
+
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retorna o <type>array</type> combinado, &false; se o número de elementos
+   de cada array não são iguais.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Dispara <constant>E_WARNING</constant> se o número de elementos em
+   <parameter>keys</parameter> e <parameter>values</parameter>
+   não correspondem.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.4.0</entry>
+       <entry>
+        Versões anteriores disparavam <constant>E_WARNING</constant> e
+        retornavam &false; para arrays vazios.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Um simples exemplo usando a função <function>array_combine</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$a = array('verde', 'vermelho', 'amarelo');
+$b = array('abacate', 'maçã', 'banana');
+$c = array_combine($a, $b);
+
+print_r($c);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Array
+(
+    [green]  => abacate
+    [red]    => maçã
+    [yellow] => banana
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>array_merge</function></member>
+    <member><function>array_walk</function></member>
+    <member><function>array_values</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

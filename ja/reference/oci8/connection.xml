@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 338266 Maintainer: satoruyoshida Status: ready -->
+<!-- CREDITS: hirokawa,shimooka,takagi -->
+<chapter xml:id="oci8.connection" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>OCI8 接続のハンドリングおよびプーリング</title>
+ <section>
+  <title>接続関数</title>
+  <para>
+   oci8 拡張モジュールは Oracle に接続するための 3
+   つの異なる関数を提供しています。標準の接続関数は
+   <function>oci_connect</function> です。これは Oracle データベースへの接続を作成し、
+   それ以降のデータベースで使うリソースを返します。
+  </para>
+  <para>
+   Oracle サーバーへの接続は、完了まで要する時間という点から見ると、
+   かなりコストのかかる操作です。<function>oci_pconnect</function> 関数は、
+   異なるスクリプトリクエスト間で接続の再利用が可能な
+   持続的キャッシュを使用します。
+   これは、PHP プロセス (もしくは Apache の子プロセス)
+   毎の接続に関するオーバーヘッドを一度のみ負うということを意味しています。
+  </para>
+  <para>
+   もしアプリケーションが信用された異なる Web ユーザー毎に
+   Oracle に接続する場合、<function>oci_pconnect</function>
+   による持続的キャッシュは、
+   同時ユーザー数の増加と共に有効ではなくなるでしょう。
+   これは、多くのアイドル状態の接続が維持されることが原因で、
+   Oracle サーバー全体のパフォーマンスに不利な影響を与え始めるためです。
+   もしアプリケーションがこの方法で構成されている場合、
+   <link
+    linkend="ini.oci8.max-persistent">oci8.max_persistent</link> や <link
+    linkend="ini.oci8.persistent-timeout">oci8.persistent_timeout</link>
+   (持続的接続のキャッシュサイズや生存期間の制御が可能になります)
+   を使用してアプリケーションをチューニングする、あるいは
+   Oracle Database Resident Connection Pooling を使う (Oracle Database 11g 以降の場合)、もしくは
+   <function>oci_connect</function> を使用することが推奨されます。
+  </para>
+  <para>
+   <function>oci_connect</function> と <function>oci_pconnect</function>
+   の両者とも接続キャッシュを使用します。もし、同一パラメータと共に
+   <function>oci_connect</function> を複数回コールする場合、
+   2 番目以降は既存の接続ハンドルを返します。<function>oci_connect</function>
+   によって使用されるキャッシュは、スクリプト実行終了時、
+   もしくは明示的に接続ハンドルを閉じた時にクリアされます。
+   <function>oci_pconnect</function> も同様の動作をしますが、
+   キャッシュは独立して維持され、リクエスト間で残存します。
+  </para>
+  <para>
+   このキャッシュ機能は忘れてはならないほど重要です。
+   それは、2 つのハンドルがトランザクション的に独立していない
+   (実際には同じ接続なので、どのような種類の独立もありません)
+   ためです。もしアプリケーションが 2
+   つの別々でトランザクション的に独立した接続を必要とする場合、
+   <function>oci_new_connect</function> を使用すべきです。
+  </para>
+  <para>
+   PHP プロセス終了時に <function>oci_pconnect</function> キャッシュは消去され、
+   データベース接続は全て閉じられます。
+   そのため、持続的接続を効果的に使用するには、
+   PHP は Apache のモジュールであるか、または FCGI によって使用されるか、
+   または同様のものでなければいけません。
+   PHP が CGI によって、またはコマンドラインを介して使用される場合、
+   持続的接続には <function>oci_connect</function> 以上に全く利益がありません。
+  </para>
+  <para>
+   <function>oci_new_connect</function> は、他の既存の接続が存在したとしても
+   常に Oracle サーバーへの新規接続を生成します。
+   特にアプリケーションの最も負荷が高い部分など、
+   高トラフィックな Web アプリケーションに対しては
+   <function>oci_new_connect</function> の使用を避けてください。
+  </para>
+ </section>
+ <section>
+  <title>DRCP 接続プーリング</title>
+  <para>
+   PHP 5.3 (PECL OCI8 1.3) 以降では、 Oracle 11g のデータベース常駐接続プーリング
+   (DRCP) をサポートします。 DRCP によりデータベースマシンのメモリをより効率的に使用し、
+   高い拡張性が得られます。 DRCP を使うためにアプリケーションを変更する必要はないか、または
+   最小限です。
+  </para>
+  <para>
+   DRCP は、ごく少数のデータベーススキーマを使用し、データベース接続を短時間オープン状態に
+   保つアプリケーションに適しています。
+   その他のアプリケーションは、 Oracle のデフォルトの <literal>Dedicated</literal>
+   データベースサーバープロセスか、または <literal>Shared</literal> サーバーを使用しなければいけません。
+  </para>
+  <para>
+   DRCP は３つの接続機能全てに有益ですが、 <function>oci_pconnect</function>
+   で接続を作成すると最高の拡張性が得られます。
+  </para>
+  <para>
+   OCI8 で DRCP を利用可能にするには、 PHP で使用する Oracle クライアントライブラリ、
+   及び Oracle データベースのバージョンが共に 11g 以降でなければいけません。
+  </para>
+  <para>
+   DRCP についてのドキュメントはいくつかの Oracle マニュアルに見つかります。
+   例えば、使用法の情報のために、 Oracle ドキュメントで <link
+    xlink:href="&url.oracle.drcp.configure;">データベース常駐接続プーリングの構成</link>
+   をご覧ください。
+   <link xlink:href="&url.oracle.drcp.whitepaper;">DRCP ホワイトペーパー</link>
+   には、 DRCP についての 予備知識となる情報が含まれています。
+  </para>
+  <para>
+   DRCP を使用するには、 OCI8 1.3 以降のエクステンション及び Oracle 11g 以降のライブラリと共に
+   PHP をビルドし、これらのステップを続けます。
+  </para>
+  <para>
+   <itemizedlist>
+    <listitem>
+     <para>
+      データベース内の接続プールを開始するために、
+      特権を持つデータベース管理者として SQL*Plus のようなプログラムを使います。
+     </para>
+     <para>
+      <informalexample>
+       <screen>
+<![CDATA[
+    SQL> execute dbms_connection_pool.start_pool;
+]]>
+       </screen>
+      </informalexample>
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+      DRCP の設定を構成するために、
+      任意で <literal>dbms_connection_pool.alter_param()</literal> を使用します。
+      現行のプール設定は、 <literal>DBA_CPOOL_INFO</literal> ビューで照会できます。
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+      使用する接続文字列を更新します。
+      <literal>MYDB</literal> のようなネットワーク接続名を使って現在接続する PHP アプリケーションでは、
+     </para>
+     <para>
+      <informalexample>
+       <screen>
+<![CDATA[
+    $c = oci_pconnect("myuser", "mypassword", "MYDB");
+]]>
+       </screen>
+      </informalexample>
+     </para>
+     <para>
+      tnsnames.ora ファイルを修正して、 <literal>(SERVER=POOLED)</literal> 節を追加します。
+      例えば、
+     </para>
+     <para>
+      <informalexample>
+       <screen>
+<![CDATA[
+    MYDB = (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp) (HOST=myhost.dom.com)
+           (PORT=1521))(CONNECT_DATA=(SERVICE_NAME=sales)
+           (SERVER=POOLED)))
+]]>
+       </screen>
+      </informalexample>
+     </para>
+     <para>
+      あるいは、 PHP で Easy Connect 構文を修正して、サービス名の後に
+      <literal>:POOLED</literal> を追加します。
+     </para>
+     <para>
+      <informalexample>
+       <screen>
+<![CDATA[
+    $c = oci_pconnect("myuser", "mypassword", "myhost.dom.com:1521/sales:POOLED");
+]]>
+       </screen>
+      </informalexample>
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+      &php.ini; を編集して、接続クラス名を選択してください。
+      この名前は、接続プールの論理的なディビジョンを指示し、
+      個別のアプリケーションごとにプーリングを分離するために使われます。
+      同一のユーザー名と接続クラスをもつ PHP アプリケーションは、
+      プール内の接続を共有できます。これにより、より大きな拡張性が得られます。
+     </para>
+     <para>
+      <informalexample>
+       <screen>
+<![CDATA[
+    oci8.connection_class = "MY_APPLICATION_NAME"
+]]>
+       </screen>
+      </informalexample>
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+      アプリケーションを実行して、 11g 以降のデータベースに接続します。
+     </para>
+    </listitem>
+    </itemizedlist>
+  </para>
+  <note>
+   <para>
+    持続的接続のパフォーマンスを必要とする Oracle 10g を使うアプリケーションでは、
+    Oracle <literal>Shared</literal> サーバー(マルチスレッドサーバーとして既知)を使用することにより、
+    必要なデータベース・メモリー量を減らせます。
+    詳細は Oracle ドキュメントを参照してください。
+   </para>
+  </note>
+ </section>
+ <section>
+  <title>DRCP 推奨事項と既知の制約</title>
+  <para>
+   DRCP 接続に対するパスワードを変更すると、
+   <emphasis>ORA-56609: Usage not supported with DRCP</emphasis> というエラーで失敗します。
+   これは Oracle データベース 11g の制約に典拠が示されています。
+  </para>
+  <para>
+   OCI8 1.3 以降のエクステンションでは、ユーザーが持続的接続を直ちに閉じることができます。
+   これにより、接続リソースの使用量に対して、より良く制御することができます。
+   持続的接続を参照する PHP 変数が無い場合、例えば PHP ユーザー関数の終了後に、
+   持続的接続もすぐに自動的に閉じられます。
+   この時、コミットされなかったトランザクションを全てロールバックします。
+   持続的な接続に対するこれらの変更により、非持続的接続と同様にふるまいます。
+   それは、インターフェイスを単純化し、アプリケーションの一貫性と予知可能性をより大きくします。
+   過去の動作を保つためには、<link
+    linkend="ini.oci8.old-oci-close-semantics">oci8.old_oci_close_semantics</link>
+   を <emphasis>On</emphasis> に設定してください。
+  </para>
+  <para>
+   もし、Oracle データベースのバージョンが 11.1.0.6 なら、DRCP を使うためには、
+   Oracle bug 6474441 に対する Oracle データベース・パッチを適用しなければいけません。
+   そのパッチがないと、
+   <emphasis>ORA-01000: maximum open cursors exceeded</emphasis> や、
+   <emphasis>ORA-01001 invalid cursor</emphasis> 、
+   <emphasis>ORA-01002 fetch out of sequence</emphasis> のようなエラーが発生するかもしれません。
+   このバグは Oracle 11.1.0.7 以降では修正されました。
+  </para>
+   <para>
+   もし、Oracle 11.1.0.6 データベース・パッチが適用できない場合は、
+   代わりに下記の３つのワークアラウンドのいずれかを使用できます。
+  </para>
+  <para>
+   <itemizedlist>
+    <listitem>
+     <simpara>
+      DRCP の代わりに、Oracle の <literal>Dedicated</literal>
+      または <literal>Shared</literal> サーバーを使って接続します。
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      PHP の <link linkend="ini.oci8.statement-cache-size">oci8.statement_cache_size</link>
+      を 0 に設定します。
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      データベース初期化パラメータファイルでイベントを設定します。
+      <emphasis>event="56699 trace name context forever, level 128"</emphasis>
+     </simpara>
+    </listitem>
+   </itemizedlist>
+  </para>
+  <para>
+   Oracle データベース 11.1.0.7 および Oracle データベース 11.1.0.6 の
+   Oracle バグ 6474441 に対するパッチにより、DRCP 接続を使った PHP アプリケーションで
+   セッション生成時にセッションプロパティを設定するために
+   データベースの <literal>LOGON</literal> トリガーを使用できます。
+   そのような設定の例は、NLS言語と日付表示形式です。
+  </para>
+  <para>
+   もし、Oracle 11.1.0.6 データベース・パッチが適用できない場合は、
+   <literal>LOGON</literal> トリガーを使う代わりに、
+   下記のワークアラウンドのいずれかを使用できます。
+  </para>
+  <para>
+   <itemizedlist>
+    <listitem>
+     <simpara>
+      ログオンした後に、PHP アプリケーションのコードを用いて明示的にセッション・プロパティを設定します。
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      DRCP の代わりに、 Oracle <literal>Dedicated</literal> または <literal>Shared</literal> サーバーを使って接続します。
+     </simpara>
+    </listitem>
+   </itemizedlist>
+  </para>
+  <para>
+   Apache や FCGI のプロセスを再起動すると、
+   PHP の持続的接続は自動的に再確立されます。つまり、PHP で
+   <literal>LOGON</literal> トリガーが使えるのはセッション属性を設定している場合のみで、
+   アプリケーションごとのユーザー接続要求には使えないということです。
+   DRCP の場合はなおさらです。
+   プールサイズの自動調整もあるし、DRCP の認証時に
+   <literal>LOGON</literal> トリガーが起動するからでもあります。
+  </para>
+ </section>
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

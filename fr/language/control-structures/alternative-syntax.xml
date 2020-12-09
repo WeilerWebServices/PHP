@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 333913 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<sect1 xml:id="control-structures.alternative-syntax"  xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Syntaxe alternative</title>
+ <?phpdoc print-version-for="control-structures.alternative-syntax"?>
+ <para>
+  PHP propose une autre manière de rassembler des
+  instructions à l'intérieur d'un bloc, pour les
+  fonctions de contrôle <literal>if</literal>,
+  <literal>while</literal>, <literal>for</literal>,
+  <literal>foreach</literal> et <literal>switch</literal>.
+  Dans chaque cas, le principe
+  est de remplacer l'accolade d'ouverture par deux points (:)
+  et l'accolade de fermeture par, respectivement,
+  <literal>endif;</literal>, <literal>endwhile;</literal>,
+  <literal>endfor;</literal>, <literal>endforeach;</literal>, ou
+  <literal>endswitch;</literal>.
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php if ($a == 5): ?>
+A égal 5
+<?php endif; ?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <simpara>
+  Dans l'exemple ci-dessus, le bloc HTML "A égal 5" est inclus
+  à l'intérieur d'un <literal>if</literal> en
+  utilisant cette nouvelle syntaxe. Ce code HTML ne sera
+  affiché que si la variable <varname>$a</varname> est égale à 5.
+ </simpara>
+ <para>
+  Cette autre syntaxe fonctionne aussi avec le <literal>else</literal> et
+  <literal>elseif</literal>. L'exemple suivant montre une structure avec un
+  <literal>if</literal>, un <literal>elseif</literal> et un
+  <literal>else</literal> utilisant cette autre syntaxe :
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+if ($a == 5):
+    echo "a égale 5";
+    echo "...";
+elseif ($a == 6):
+    echo "a égale 6";
+    echo "!!!";
+else:
+    echo "a ne vaut ni 5 ni 6";
+endif;
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <note>
+  <para>
+   Vous ne pouvez pas utiliser différentes syntaxes dans le même bloc de contrôle.
+  </para>
+ </note>
+ <warning>
+  <para>
+   Tout affichage (y compris d'espaces) entre une structure
+   <literal>switch</literal> et le premier <literal>case</literal>
+   va produire une erreur de syntaxe. Par exemple, ceci n'est pas valide :
+  </para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php switch ($foo): ?>
+    <?php case 1: ?>
+    ...
+<?php endswitch ?>
+]]>
+   </programlisting>
+  </informalexample>
+  <para>
+   Alors que ceci est valide, vu que la dernière nouvelle ligne après
+   la structure <literal>switch</literal> est considérée comme faisant
+   partie de la balise de fin <literal>?&gt;</literal> et donc,
+   rien n'est affiché entre <literal>switch</literal> et <literal>case</literal> :
+  </para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php switch ($foo): ?>
+<?php case 1: ?>
+    ...
+<?php endswitch ?>
+]]>
+   </programlisting>
+  </informalexample>
+ </warning>
+ <para>
+  Voir aussi
+  <link linkend="control-structures.while">while</link>,
+  <link linkend="control-structures.for">for</link>, et <link
+  linkend="control-structures.if">if</link> pour d'autres exemples.
+ </para>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

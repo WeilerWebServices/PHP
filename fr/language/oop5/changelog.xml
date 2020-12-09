@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 347744 Maintainer: girgias Status: ready -->
+<!-- Reviewed: no -->
+
+<sect1 xml:id="language.oop5.changelog" xmlns="http://docbook.org/ns/docbook">
+ <title>Modifications en POO (Programmation orientée objet)</title>
+ <para>
+  Les changements du modèle objet de PHP sont recensés ici. Plus d'informations
+  et autres notes peuvent être trouvées dans la documentation sur la POO en PHP.
+ </para>
+ <para>
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.4.0</entry>
+      <entry>
+       Changement : Il est désormais possible de lancer des exceptions au sein
+       de <function>__toString</function>.
+      </entry>
+     </row>
+     <row>
+      <entry>7.4.0</entry>
+      <entry>
+       Ajout : Support limité pour la covariance du type de retour et
+       contravariance pour le type d'argument. Support complet de variance est
+       uniquement disponible si l'autochargement est utilisé. À l'intérieur
+       d'un fichier unique seul les références non-cyclique de type sont
+       possible.
+      </entry>
+     </row>
+     <row>
+      <entry>7.4.0</entry>
+      <entry>
+       Ajout : Il est désormais possible de typer les propriétés de classe.
+      </entry>
+     </row>
+     <row>
+      <entry>7.3.0</entry>
+      <entry>
+       Incompatibilité : Le déballage d'argument de 
+       <classname>Traversable</classname>s avec des clés non-&integer;es n'est
+       plus supporté. Ce comportement n'était pas prévu et par conséquent
+       supprimé.
+      </entry>
+     </row>
+     <row>
+      <entry>7.3.0</entry>
+      <entry>
+       Incompatibilité : Dans les versions précedentes il était possible de
+       séparer les propriétes statiques en assignant une référence.
+       Ceci a été supprimé.
+      </entry>
+     </row>
+     <row>
+      <entry>7.3.0</entry>
+      <entry>
+       Changement : L'opérateur <link linkend="language.operators.type">
+       instanceof</link> autorise désormais des litéraux comme premier
+       opérande, dans ce cas le résultat est toujours &false;.
+      </entry>
+     </row>
+     <row>
+      <entry>7.2.0</entry>
+      <entry>
+       Obsolète : La méthode <function>__autoload</function> a été rendu
+       obsolète en faveur de <function>spl_autoload_register</function>.
+      </entry>
+     </row>
+     <row>
+      <entry>7.2.0</entry>
+      <entry>
+       Changement : Le nom suivant ne peut pas être utilisé pour nommer
+       des classes, interfaces ou traits : <literal>object</literal>.
+      </entry>
+     </row>
+     <row>
+      <entry>7.2.0</entry>
+      <entry>
+       Changement : Une virgule trainnant peut désormais être ajouté à la
+       syntaxe use groupé pour les espaces de noms.
+      </entry>
+     </row>
+     <row>
+      <entry>7.2.0</entry>
+      <entry>
+       Changement : Élargissement du type des paramètres. Le type des
+       paramètres des méthodes réécrite et d'implémentation d'interface
+       peuvent désormais être omit.
+      </entry>
+     </row>
+     <row>
+      <entry>7.2.0</entry>
+      <entry>
+       Changement : Les méthodes abstraites peuvent désormais être réécrite
+       quand une classe abstraite étend une autre classe abstraite.
+      </entry>
+     </row>
+     <row>
+      <entry>7.1.0</entry>
+      <entry>
+       Changement : Les noms suivant ne peuvent pas être utilisé pour nommer
+       des classes, interfaces ou traits : <literal>void</literal> 
+       et <literal>iterable</literal>.
+      </entry>
+     </row>
+     <row>
+      <entry>7.1.0</entry>
+      <entry>
+       Ajout : Il est désormais possible de définir la
+       <link linkend="language.oop5.visiblity-constants">visibilité des
+        constantes de classe</link>.
+      </entry>
+     </row>
+     <row>
+      <entry>7.0.0</entry>
+      <entry>
+       Obsolète : Appel <link linkend="language.oop5.static">statique</link>
+       à des méthodes qui ne sont pas déclarées comme statique.
+      </entry>
+     </row>
+     <row>
+      <entry>7.0.0</entry>
+      <entry>
+       Obsolète : <link linkend="language.oop5.decon">Constructeur</link>
+       style PHP 4. C.à.d. les méthodes qui ont le même nom que la classe
+       dans laquelle elles sont définies.
+      </entry>
+     </row>
+     <row>
+      <entry>7.0.0</entry>
+      <entry>
+       Ajout : Déclaration <emphasis>use</emphasis> groupé : les classes,
+       fonctions et constantes qui sont importer depuis un même espace de nom
+       peuvent désormais être groupé ensemble en une seule déclaration use.
+      </entry>
+     </row>
+     <row>
+      <entry>7.0.0</entry>
+      <entry>
+       Ajout : Support pour les
+       <link linkend="language.oop5.anonymous">classes anonymes</link>
+       a été ajouté grâce à <literal>new class</literal>.
+      </entry>
+     </row>
+     <row>
+      <entry>7.0.0</entry>
+      <entry>
+       Incompatibilité : Itérer sur un &object; non-
+       <classname>Traversable</classname> aura désormais le même comportement
+       qu'itérer sur les &array;x par référence.
+      </entry>
+     </row>
+     <row>
+      <entry>7.0.0</entry>
+      <entry>
+       Changement : La définition de propriétés (compatibles) dans deux
+       <link linkend="language.oop5.traits">traits</link>
+       utilisés ne déclenche plus d'erreur.
+      </entry>
+     </row>
+     <row>
+      <entry>5.6.0</entry>
+      <entry>
+       Ajout : La methode <link linkend="object.debuginfo">__debugInfo()</link>.
+      </entry>
+     </row>
+     <row>
+      <entry>5.5.0</entry>
+      <entry>
+       Ajout : La constante magique <link linkend="language.oop5.basic.class.class">::class</link>.
+      </entry>
+     </row>
+     <row>
+      <entry>5.5.0</entry>
+      <entry>
+       Ajout : <link linkend="language.exceptions">finally</link> pour gérer 
+       les exceptions.
+      </entry>
+     </row>
+     <row>
+      <entry>5.4.0</entry>
+      <entry>
+       Ajout : <link linkend="language.oop5.traits">traits</link>.
+      </entry>
+     </row>
+     <row>
+      <entry>5.4.0</entry>
+      <entry>
+       Changement : Si une classe
+       <link linkend="language.oop5.abstract">abstraite</link> définit
+       une signature pour le <link linkend="language.oop5.decon">constructeur
+       </link>, celle-ci sera désormais appliquée.
+      </entry>
+     </row>
+     <row>
+      <entry>5.3.3</entry>
+      <entry>
+       Changement : Les méthodes ayant le même nom que le dernier élément dans
+       un <link linkend="language.namespaces">espace de noms</link>
+       ne sont plus considérées comme un <link
+       linkend="language.oop5.decon">constructeur</link>. Ce changement
+       n'affecte pas les classes sans espace de nom.
+      </entry>
+     </row>
+      <row>
+      <entry>5.3.0</entry>
+      <entry>
+       Changement : Les classes qui implémentent une interface avec des méthodes
+       ayant des valeurs par défaut définies dans leurs prototypes ne sont plus
+       obligées de respecter les valeurs par défaut définies dans l'interface.
+      </entry>
+     </row>
+     <row>
+      <entry>5.3.0</entry>
+      <entry>
+       Changement : Il est désormais possible de référencer une classe en
+       utilisant une variable (e.g. :
+       <literal>echo $classname::constant;</literal>).
+       La valeur de la variable ne peut être un mot-clé (e.g. :
+       <literal>self</literal>,
+       <literal>parent</literal> ou <literal>static</literal>).
+      </entry>
+     </row>
+     <row>
+      <entry>5.3.0</entry>
+      <entry>
+       Changement : Une erreur de niveau <constant>E_WARNING</constant> est
+       émise si les méthodes magiques de
+       <link linkend="language.oop5.overloading">surcharge</link> sont
+       déclarées comme <link linkend="language.oop5.static">statiques</link>.
+       La visibilité publique est aussi requise.
+      </entry>
+     </row>
+     <row>
+      <entry>5.3.0</entry>
+      <entry>
+       Changement : Antérieur à 5.3.0, les exceptions lancées dans la fonction
+       <function>__autoload</function> ne pouvaient être traitées dans un bloc
+       <link linkend="language.exceptions">catch</link> et résultaient en une
+       erreur fatale. A présent, les exceptions lancées dans la fonction
+       __autoload peuvent être attrapées dans un bloc
+       <link linkend="language.exceptions">catch</link> et traitées.
+       Si une exception personnalisée est lancée, alors sa classe doit être
+       disponible. La fonction __autoload peut être utilisée recursivement pour
+       autocharger la classe d'exception personnalisée.
+      </entry>
+     </row>
+     <row>
+      <entry>5.3.0</entry>
+      <entry>
+       Ajout : La méthode <link linkend="language.oop5.overloading">__callStatic</link>.
+      </entry>
+     </row>
+     <row>
+      <entry>5.3.0</entry>
+      <entry>
+       Ajout : <link linkend="language.types.string.syntax.heredoc">heredoc</link>
+       et <link linkend="language.types.string.syntax.heredoc">nowdoc</link>
+       sont supportées pour définir les <emphasis>constantes</emphasis> de
+       classes et les propriétés.
+       Note : Les valeurs heredoc doivent suivre les mêmes règles que les
+       &string; entouré de guillemet double (e.g. pas de variable au sein).
+      </entry>
+     </row>
+     <row>
+      <entry>5.3.0</entry>
+      <entry>
+       Ajout : <link linkend="language.oop5.late-static-bindings">Résolution
+       Statique Tardive</link>.
+      </entry>
+     </row>
+     <row>
+      <entry>5.3.0</entry>
+      <entry>
+       Ajout : La méthode <link linkend="object.invoke">__invoke()</link>.
+      </entry>
+     </row>
+     <row>
+      <entry>5.2.0</entry>
+      <entry>
+       Changement : La méthode <link linkend="object.tostring">__toString()</link>
+       n'était appelée que lors des appels à <function>echo</function> ou
+       <function>print</function>.
+       Désormais, elle est appellée dans n'importe quel contexte de &string;
+       (e.g. dans <function>printf</function> avec le modificateur
+       <literal>%s</literal>) mais pas dans les autres contextes (e.g. avec
+       le modificateur <literal>%d</literal>).
+       À partir de PHP 5.2.0, convertir un &object; sans méthode
+       <link linkend="object.tostring">__toString</link> en &string;
+       émet une erreur <constant>E_RECOVERABLE_ERROR</constant>.
+      </entry>
+     </row>
+     <row>
+      <entry>5.1.3</entry>
+      <entry>
+       Changement : Dans les versions antérieures de PHP 5, l'utilisation de
+       <literal>var</literal> était considérée comme obsolète et émettait une
+       erreur <constant>E_STRICT</constant>. Ce n'est plus le cas.
+      </entry>
+     </row>
+     <row>
+      <entry>5.1.0</entry>
+      <entry>
+       Changement : La méthode statique
+       <link linkend="object.set-state">__set_state()</link> est désormais
+       appelée pour les classes exportées via <function>var_export</function>.
+      </entry>
+     </row>
+     <row>
+      <entry>5.1.0</entry>
+      <entry>
+       Ajout : Des méthodes <link linkend="object.isset">__isset()</link>
+       et <link linkend="object.unset">__unset()</link>.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </para>
+</sect1>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

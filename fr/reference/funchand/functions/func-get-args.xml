@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351112 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+<refentry xml:id="function.func-get-args" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>func_get_args</refname>
+  <refpurpose>Retourne les arguments d'une fonction sous la forme d'un tableau</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>func_get_args</methodname>
+   <void/>
+  </methodsynopsis>
+  <para>
+   Récupère les arguments d'une fonction sous la forme d'un tableau.
+  </para>
+  <para>
+   <function>func_get_arg</function> peut être utilisé conjointement à
+   <function>func_num_args</function> et <function>func_get_args</function>
+   pour permettre aux fonctions utilisateurs d'accepter un nombre variable d'arguments.
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne un tableau dont chaque élément est une copie du membre correspondant de la liste
+   d'arguments de la fonction.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Générera une alerte si elle est appelée hors d'une fonction.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>func_get_args</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function foo()
+{
+    $numargs = func_num_args();
+    echo "Nombre d'arguments : $numargs \n";
+    if ($numargs >= 2) {
+        echo "Le second argument est : " . func_get_arg(1) . "\n";
+    }
+    $arg_list = func_get_args();
+    for ($i = 0; $i < $numargs; $i++) {
+        echo "L'argument $i est : " . $arg_list[$i] . "\n";
+    }
+}
+
+foo(1, 2, 3);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Nombre d'arguments : 3
+Le second argument est : 2
+L'argument 0 est : 1
+L'argument 1 est : 2
+L'argument 2 est : 3
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Exemples <function>func_get_args</function> avant et après
+    PHP 5.3</title>
+    <programlisting role="php">
+<![CDATA[
+test.php
+<?php
+function foo() {
+    include './fga.inc';
+}
+
+foo('Argument 1', 'Argument 2');
+?>
+
+fga.inc
+<?php
+
+$args = func_get_args();
+var_export($args);
+
+?>
+]]>
+    </programlisting>
+    <para>
+     Sortie avant PHP 5.3:
+    </para>
+    <screen>
+<![CDATA[
+array (
+  0 => 'Argument 1',
+  1 => 'Argument 2',
+)
+]]>
+    </screen>
+    <para>
+     Sortie depuis PHP 5.3
+    </para>
+    <screen>
+<![CDATA[
+Warning: func_get_args():  Called from the global scope - no function
+context in /home/torben/Desktop/code/ml/fga.inc on line 3
+false
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Exemple <function>func_get_args</function> avec des arguments par référence et par valeur</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function byVal($arg) {
+    echo 'Tel que passé     : ', var_export(func_get_args()), PHP_EOL;
+    $arg = 'baz';
+    echo 'Après changement  : ', var_export(func_get_args()), PHP_EOL;
+}
+
+function byRef(&$arg) {
+    echo 'Tel que passé     : ', var_export(func_get_args()), PHP_EOL;
+    $arg = 'baz';
+    echo 'Après changement  : ', var_export(func_get_args()), PHP_EOL;
+}
+
+$arg = 'bar';
+byVal($arg);
+byRef($arg);
+?>
+]]>
+    </programlisting>
+    &example.outputs.7;
+    <screen>
+Tel que passé     : array (
+  0 => 'bar',
+)
+Après changement  : array (
+  0 => 'baz',
+)
+Tel que passé     : array (
+  0 => 'bar',
+)
+Après changement  : array (
+  0 => 'baz',
+)
+    </screen>
+    &example.outputs.5;
+    <screen>
+Tel que passé     : array (
+  0 => 'bar',
+)
+Après changement  : array (
+  0 => 'bar',
+)
+Tel que passé     : array (
+  0 => 'bar',
+)
+Après changement  : array (
+  0 => 'baz',
+)
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.funcnoparam;
+  &note.funcbyref;
+  <note>
+   <simpara>
+    Cette fonction retourne uniquement une copie des arguments passés, et ne compte
+    ne traite pas les arguments par défaut (non passés).
+   </simpara>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member>La syntaxe <link linkend="functions.variable-arg-list"><literal>...</literal> en PHP 5.6+</link></member>
+    <member><function>func_get_arg</function></member>
+    <member><function>func_num_args</function></member>
+    <member><methodname>ReflectionFunctionAbstract::getParameters</methodname></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

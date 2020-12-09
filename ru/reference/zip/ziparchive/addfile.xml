@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 350617 Maintainer: aur Status: ready -->
+<!-- Reviewed: yes Maintainer: sergey -->
+<!-- $Revision$ -->
+<refentry xml:id="ziparchive.addfile" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>ZipArchive::addFile</refname>
+  <refpurpose>Добавляет в ZIP-архив файл по указанному пути</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>bool</type><methodname>ZipArchive::addFile</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>entryname</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>start</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>length</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>ZipArchive::FL_OVERWRITE</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Добавляет в ZIP-архив файл по указанному пути.
+  </para>
+  &zip.filename.separator;
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filename</parameter></term>
+     <listitem>
+      <para>
+       Путь к файлу для добавления.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>entryname</parameter></term>
+     <listitem>
+      <para>
+       Имя файла внутри ZIP-архива. Если указано, то переопределит <parameter>filename</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>start</parameter></term>
+     <listitem>
+      <para>
+       Для частичного копирования начальная позиция.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>length</parameter></term>
+     <listitem>
+      <para>
+       Для частичного копирования - длина копируемого файла, если 0 или -1, используется весь файл (начиная с <parameter>start</parameter>).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>flags</parameter></term>
+     <listitem>
+      <para>
+       Битовая маска, состоящая из
+       <constant>ZipArchive::FL_OVERWRITE</constant>,
+       <constant>ZipArchive::FL_ENC_GUESS</constant>,
+       <constant>ZipArchive::FL_ENC_UTF_8</constant>,
+       <constant>ZipArchive::FL_ENC_CP437</constant>.
+       Поведение констант описано на странице <link linkend="zip.constants">ZIP-константы</link>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.0.0 / 1.18.0</entry>
+       <entry>
+        Добавлен параметр <parameter>flags</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   В данном примере открывается файл ZIP-архива
+   <filename>test.zip</filename> и в него добавляется
+   файл <filename>/path/to/index.txt</filename>
+   под именем <filename>newname.txt</filename>.
+  </para>
+  <example>
+   <title>Открыть и добавить</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$zip = new ZipArchive;
+if ($zip->open('test.zip') === TRUE) {
+    $zip->addFile('/path/to/index.txt', 'newname.txt');
+    $zip->close();
+    echo 'готово';
+} else {
+    echo 'ошибка';
+}
+?>
+]]>
+   </programlisting>
+  </example>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    В процессе добавления файла в архив, PHP заблокирует файл. Разблокировка
+    произойдет только после закрытия объекта <classname>ZipArchive</classname>,
+    путем вызова <methodname>ZipArchive::close</methodname> или уничтожения 
+    объекта <classname>ZipArchive</classname>.
+    Это предотвращает удаление только что добавленного в архив файла до того,
+    как он будет разблокирован.
+   </para>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><methodname>ZipArchive::replaceFile</methodname></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

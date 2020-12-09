@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 347660 Maintainer: zamolxe Status: ready -->
+<!-- CREDITS: simionea -->
+
+  <chapter xml:id="security.database" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <title>Securitatea Bazelor de Date</title>
+
+   <simpara>
+    În zilele noastre, bazele de date sunt componente esențiale ale
+    aplicațiilor web, dând posibilitate acestora de a servi conținut dinamic.
+    Datorită faptului că informații secrete sau cu caracter confidențial se
+    stochează adesea într-o bază de date, va trebui să luați în considerare
+    protejarea bazelor de date.
+   </simpara>
+   <simpara>
+    Pentru a primi sau trimite orice informație, trebuie să vă conectați la
+    baza de date, să trimiteți o interpelare validă, să preluați rezultatele și
+    să închideți conexiunea. Recent, cel mai folosit limbaj query pentru
+    asemenea tip de interacțiune este Structured Query Language (SQL). Vedeți
+    cum un atacator poate <link linkend="security.database.sql-injection">să
+    manipuleze o interpelare SQL</link>.
+   </simpara>
+   <simpara>
+    După cum probabil ați presupus, <acronym>PHP</acronym> nu vă poate proteja
+    bazele de date în sine. Următoarele secțiuni tind să fie o introducere în
+    noțiunile de bază ale accesării și manipulării bazelor de date cu scripturi
+    <acronym>PHP</acronym>.
+   </simpara>
+   <simpara>
+    Păstrați în minte următoarea regulă: securitate maximă. Cu cât creșteți
+    măsurile de protecție asupra bazelor de date, cu atât mai mică este
+    probabilitatea ca un atacator să reușească să sustragă date importante sau
+    să abuzeze de ele. Încercați ca structura și designul bazei de date să fie
+    cât mai eficiente, după care vă puteți pune problemele legate de securitate.
+    </simpara>
+
+   <sect1 xml:id="security.database.design">
+    <title>Designul bazelor de date</title>
+     <simpara>
+      Primul pas este întotdeauna crearea bazei de date, doar dacă nu doriți să
+      utilizați o bază de date creată de altcineva. Când o bază de date este
+      creată, ea este desemnată unui anume utilizator, care a executat comanda
+      de creare. În general, numai proprietarul (sau superuserul) pot face orice
+      cu obiectele din acea bază de date, iar pentru a lăsa și alți utilizatori
+      să o folosească, ei trebuie să aibă privilegii.
+     </simpara>
+     <simpara>
+      Aplicațiile pe care le construiți nu ar trebui să se conecteze niciodată
+      la o bază de date cu privilegii de administrator sau superuser, pentru că
+      acești utilizatori pot executa orice fel de query, de exemplu, modificarea
+      schemei (ștergerea tabelelor) sau ștergerea întregului conținut.
+     </simpara>
+     <simpara>
+      Puteți crea diferiți utilizatori de baze de date pentru fiecare aspect al
+      aplicației, cu drepturi la obiectele bazei strict delimitate. Se pot da
+      numai privilegiile strict necesare, și evitați ca același user să
+      interacționeze cu mai multe baze de date. Aceasta înseamnă că dacă un
+      intrus va căpăta acces la baza de date din numele aplicației
+      dumneavoastră, acesta va putea face doar operațiunile, pe care le poate
+      face aplicația dumneavoastră.
+     </simpara>
+   </sect1>
+
+   <sect1 xml:id="security.database.connection">
+    <title>Conectarea la baza de date</title>
+    <simpara>
+     Puteți să vă conectați la baza de date folosind encripția SSL pentru a
+     spori siguranța datelor, sau puteți folosi ssh pentru a cripta datele
+     dintre clienții din rețea și serverul de baze de date. Dacă este folosită
+     una dintre aceste metode, atunci interceptarea traficului și accesul la
+     informațiile sensibile despre bazele de date ar fi foarte dificilă
+     pentru un atacator.
+    </simpara>
+    <!--simpara>
+     If your database server has native SSL support, consider using <link
+     linkend="ref.openssl">OpenSSL functions</link> in communication between
+     <acronym>PHP</acronym> and database via SSL.
+    </simpara-->
+   </sect1>
+
+   <sect1 xml:id="security.database.storage">
+    <title>Model de stocare criptată</title>
+    <simpara>
+     SSL/SSH protejează traversarea datelor de la client la server, însă SSL/SSH
+     nu protejează datele stocate în baza de date. SSL este un protocol de
+     tranzit.
+    </simpara>
+    <simpara>
+     Odată ce atacatorul capătă acces la baza de date direct (evitând serverul
+     web), informația stocată poate fi expusă sau abuzată, dacă ea nu este
+     protejată de însăși baza de date. Criptarea datelor este o bună masură
+     pentru a diminua acest risc, însă prea puține baze de date oferă acest tip
+     de criptare.
+    </simpara>
+    <simpara>
+     Cea mai ușoară cale de a rezolva problema este de a crea propriul pachet
+     de criptare, și apoi folosirea lui cu scripturile <acronym>PHP</acronym>.
+     <acronym>PHP</acronym> vă poate ajuta în aceasta prin intermediul câtorva
+     extensii, cum ar fi <link linkend="ref.mcrypt">Mcrypt</link> și
+     <link linkend="ref.mhash">Mhash</link>, care acoperă o varietate largă de
+     algoritmi de criptare. Scriptul criptează datele înainte de a fi inserate
+     în baza de date, și le decriptează la extragerea acestora. Verificați
+     documentația de rigoare pentru a studia mai multe despre modalitățile de
+     operare ale criptării.
+    </simpara>
+
+    <sect2 xml:id="security.database.storage.hashing">
+    <title>Hashing</title>
+     <simpara>
+      În cazul datelor cu adevărat ascunse, dacă reprezentarea lor deschisă nu
+      este necesară (de ex. nu vor fi afișate), ar trebui luată în considerare
+      procedura de hashing. Cel mai cunoscut exemplu este stocarea hash-ului
+      criptografic al unei parole în baza de date, în loc de stocarea parolei
+      înseși.
+     </simpara>
+     <simpara>
+      În PHP 5.5 sau ulterior funcțiile de lucru cu <link linkend="ref.password">
+      parole</link> oferă o metodă comodă de a transforma în hash date
+      confidențiale și de a lucra mai departe cu aceste hash-uri.
+      În PHP 5.3.7+ poate fi utilizată și biblioteca
+      <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.password.compat;">
+      password_compat</link>.
+     </simpara>
+     <simpara>
+      <function>password_hash</function> este utilizată pentru a transforma în
+      hash un șir de caractere dat utilizând cel mai puternic algoritm disponibil
+      la moment, și <function>password_verify</function> verifică dacă o parolă
+      dată se potrivește hash-ului stocat în baza de date.
+     </simpara>
+     <example>
+      <title>Transformarea parolei în hash</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+// storing password hash
+$query  = sprintf("INSERT INTO users(name,pwd) VALUES('%s','%s');",
+            pg_escape_string($username),
+            password_hash($password, PASSWORD_DEFAULT));
+$result = pg_query($connection, $query);
+
+// querying if user submitted the right password
+$query = sprintf("SELECT pwd FROM users WHERE name='%s';",
+            pg_escape_string($username));
+$row = pg_fetch_assoc(pg_query($connection, $query));
+
+if ($row && password_verify($password, $row['pwd'])) {
+    echo 'Welcome, ' . htmlspecialchars($username) . '!';
+} else {
+    echo 'Authentication failed for ' . htmlspecialchars($username) . '.';
+}
+
+?>
+]]>
+      </programlisting>
+     </example>
+     <simpara>
+      În versiuni mai vechi ale PHP aceasta poate fi obținut cu ajutorul funcției
+      <function>crypt</function>.
+     </simpara>
+     <example>
+      <title>Transformarea parolei în hash utilizând <function>crypt</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+// storing password hash
+// $random_chars retrieved e.g. using /dev/random
+$query  = sprintf("INSERT INTO users(name,pwd) VALUES('%s','%s');",
+            pg_escape_string($username),
+            pg_escape_string(crypt($password, '$2a$07$' . $random_chars . '$')));
+$result = pg_query($connection, $query);
+
+// querying if user submitted the right password
+$query = sprintf("SELECT pwd FROM users WHERE name='%s';",
+            pg_escape_string($username));
+$row = pg_fetch_assoc(pg_query($connection, $query));
+
+if ($row && crypt($password, $row['pwd']) == $row['pwd']) {
+    echo 'Welcome, ' . htmlspecialchars($username) . '!';
+} else {
+    echo 'Authentication failed for ' . htmlspecialchars($username) . '.';
+}
+
+?>
+]]>
+      </programlisting>
+     </example>
+    </sect2>
+   </sect1>
+
+   <sect1 xml:id="security.database.sql-injection">
+    <title>Injectarea SQL</title>
+    <simpara>
+     Mulți developeri web nu știu cum pot fi manipulate interpelările SQL, și
+     acordă toata încrederea unei asemenea comenzi. Interpelările SQL pot ocoli
+     controalele de acces, în consecință să treacă peste metodele de
+     autentificare și verificările de autorizație, iar câteodată pot chiar
+     să faciliteze accesul la comenzile de sistem.
+    </simpara>
+    <simpara>
+     Injectarea directă a comenzilor SQL este o tehnică în care atacatorul
+     creează sau modifică comenzile SQL pentru a scoate la iveală datele
+     sensibile, sau pentru a suprascrie o anumită valoare, sau chiar pentru a
+     executa comenzi periculoase la nivel de sistem. Acest lucru este înfaptuit
+     de către aplicația care preia inputul utilizatorului, îl combină cu
+     parametrii statici pentru a forma o interpelare SQL. Următoarele exemple
+     sunt bazate pe cazuri reale, cu regret.
+    </simpara>
+    <para>
+     Datorită lipsei validării inputului și conectării la baza de date cu
+     drepturi de superuser, sau a unui user care poate crea la rândul lui alți
+     useri, atacatorul poate crea un superuser în baza de date.
+     <example>
+      <title>
+       Împărțirea rezultatelor în mai multe pagini ... și crearea de superuseri
+       (PostgreSQL)
+      </title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$offset = argv[0]; // atentie, nu se face validarea inputului!
+$query  = "SELECT id, name FROM products ORDER BY name LIMIT 20 OFFSET $offset;";
+$result = pg_query($conn, $query);
+
+?>
+]]>
+      </programlisting>
+     </example>
+      Utilizatorii obișnuiți fac click pe linkurile 'next', 'prev' unde
+      variabila <varname>$offset</varname> este encodată în
+      <acronym>URL</acronym>. Scriptul se așteaptă ca variabila
+      <varname>$offset</varname> să fie un număr zecimal. Cu toate acestea, ce
+      se întâmplă dacă cineva încearcă să intervină, adăugând la
+      <acronym>URL</acronym> următoarele date prelucrate cu funcția
+      <function>urlencode</function>:
+      <informalexample>
+       <programlisting role="sql">
+<![CDATA[
+0;
+insert into pg_shadow(usename,usesysid,usesuper,usecatupd,passwd)
+    select 'crack', usesysid, 't','t','crack'
+    from pg_shadow where usename='postgres';
+--
+]]>
+       </programlisting>
+      </informalexample>
+      Dacă se execută, atunci scriptul va permite modificarea parolei
+      superuser-ului. Observați că <literal>0;</literal> este pentru a oferi un
+      offset corect interpelării originale și pentru a o termina.
+    </para>
+    <note>
+     <para>
+      Este o tehnică obișnuită de a forța parserul SQL să ignore restul
+      interpelării scrise de developer, cu ajutorul <literal>--</literal>, care
+      este simbolul pentru comentariu în SQL.
+     </para>
+    </note>
+    <para>
+     O reală posibilitate de a afla parole este de a manipula rezultatele din
+     paginile de căutare. Singurul lucru de care are nevoie atacatorul este să
+     vadă dacă există variabile în declarațiile SQL care nu sunt protejate
+     corespunzător. Se pot manipula variabilele din formularele care utilizează
+     <literal>WHERE, ORDER BY, LIMIT</literal> sau condițiile
+     <literal>OFFSET</literal> din declarațiile <literal>SELECT</literal>.
+     Dacă baza de date suportă construcții <literal>UNION</literal>, atacatorul
+     poate încerca să lipească o interpelare întreagă la cea originală pentru a
+     lista parolele dintr-un tabel arbitrar. Folosirea parolelor criptate este
+     pe deplin încurajată.
+     <example>
+      <title>
+       Listarea unor articole ... și a unor parole (orice server de baze de date)
+      </title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$query  = "SELECT id, name, inserted, size FROM products
+                  WHERE size = '$size'";
+$result = odbc_exec($conn, $query);
+
+?>
+]]>
+      </programlisting>
+     </example>
+     Partea statică a interpelării poate fi combinată cu înca un
+     <literal>SELECT</literal> care să arate parolele:
+     <informalexample>
+      <programlisting role="sql">
+<![CDATA[
+'
+union select '1', concat(uname||'-'||passwd) as name, '1971-01-01', '0' from usertable;
+--
+]]>
+      </programlisting>
+     </informalexample>
+     Dacă această interpelare (ne-am jucat cu <literal>'</literal> și
+     <literal>--</literal>) ar fi fost atribuită unei variabile utilizate la
+     formarea <varname>$query</varname>, am fi dat de belea.
+    </para>
+    <para>
+     Comanda SQL UPDATE nu este nici ea ocolită de probleme. Aceste interpelări
+     sunt amenințate de atacurile prin tăierea și alipirea unei noi interpelări.
+     În plus, atacatorul se mai poate juca și cu declarația
+     <literal>SET</literal>. În acest caz, atacatorul trebuie să cunoască careva
+     informații despre schemă, de ex. structura tabelului din care dorește să
+     extragă sau să manipuleze informația. Acest lucru poate fi facut prin
+     examinarea denumirilor variabilelor din formulare, sau prin procedeul
+     brute-force. Nu există multe convenții prin care se delimitează câmpurile
+     pentru user sau parolă.
+     <example>
+     <title>
+      De la resetarea unei parole ... până la obținerea mai multor privilegii
+      (orice server de baze de date)
+     </title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$query = "UPDATE usertable SET pwd='$pwd' WHERE uid='$uid';";
+?>
+]]>
+      </programlisting>
+     </example>
+     Însă un utilizator rău voit poate introduce
+     <literal>' or uid like'%admin%</literal> în
+     <varname>$uid</varname> pentru a schimba parola utilizatorului admin, sau
+     pur și simplu setează valoarea <varname>$pwd</varname> în
+     <literal>hehehe', trusted=100, admin='yes</literal> pentru a obține mai
+     multe privilegii. În acest caz interpelarea ar arăta în felul următor:
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+// $uid: ' or uid like '%admin%
+$query = "UPDATE usertable SET pwd='...' WHERE uid='' or uid like '%admin%';";
+
+// $pwd: hehehe', trusted=100, admin='yes
+$query = "UPDATE usertable SET pwd='hehehe', trusted=100, admin='yes' WHERE
+...;";
+
+?>
+]]>
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Un exemplu înspăimântător despre cum pot fi rulate comenzi la nivel de
+     sistem de operare pe unele servere de baze de date.
+     <example>
+     <title>Atacarea sistemului de operare pe care lucrează baza de date (MSSQL Server)</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$query  = "SELECT * FROM products WHERE id LIKE '%$prod%'";
+$result = mssql_query($query);
+
+?>
+]]>
+      </programlisting>
+     </example>
+     Dacă un atacator introduce valoarea
+     <literal>a%' exec master..xp_cmdshell 'net user test testpass /ADD' --</literal>
+     în loc de <varname>$prod</varname>, atunci <varname>$query</varname> va deveni:
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$query  = "SELECT * FROM products
+           WHERE id LIKE '%a%'
+           exec master..xp_cmdshell 'net user test testpass /ADD'--";
+$result = mssql_query($query);
+
+?>
+]]>
+      </programlisting>
+     </informalexample>
+     Serverul MSSQL execută interpelarea SQL incluzând și comanda de adăugare
+     a unui user nou în baza de date cu conturi locale. Dacă această aplicație
+     rula ca <literal>sa</literal> și serviciul MSSQLSERVER rula cu destule
+     privilegii, atacatorul avea acum un cont pe serverul respectiv unde să
+     execute comenzi.
+    </para>
+    <note>
+     <para>
+      Unele dintre exemplele de mai sus sunt legate de anumite servere de baze
+      de date. Acest lucru nu înseamnă că atacuri similare nu pot avea loc
+      asupra altor produse similare lor. Serverul dumneavoastră de baze de date
+      poate fi vulnerabil într-o manieră asemănătoare.
+     </para>
+    </note>
+    <para>
+     <mediaobject>
+      <alt>Un exemplu amuzant legat de probleme cu injectări SQL</alt>
+      <imageobject>
+       <imagedata fileref="en/security/figures/xkcd-bobby-tables.png" format="PNG"/>
+      </imageobject>
+     </mediaobject>
+     Imagine oferită de <link xlink:href="&url.xkcd;327">xkcd</link>
+    </para>
+
+    <sect2 xml:id="security.database.avoiding">
+     <title>Tehnici de evitare</title>
+     <simpara>
+      Cu toate că este evident că un atacator trebuie să posede cel puțin careva
+      cunoștințe în privința arhitecturii bazei de date pentru a desfășura un
+      atac cu succes, obținerea acestei informații este deseori foarte simplă.
+      Spre exemplu, dacă o bază de date face parte dintr-un pachet software cu
+      sursă deschisă, sau disponibilă publicului larg, cu o instalare implicită,
+      această informație este absolut deschisă și disponibilă tuturor. Această
+      informație poate de asemenea să fie divulgată de un cod-sursă închis -
+      chiar dacă este codificat, camuflat sau compilat - și chiar de propriul
+      dumneavoastră cod prin afișarea mesajelor de eroare. Alte metode includ
+      utilizarea numelor răspândite pentru tabele și coloane. Spre exemplu, un
+      formular de login care utilizează un tabel 'users' cu denumirile coloanelor
+      'id', 'username' și 'password'.
+     </simpara>
+     <simpara>
+      Aceste atacuri sunt de obicei bazate pe exploatarea codului scris de
+      developeri fără a lua în calcul securitatea lui. Niciodată nu aveți
+      încredere în nici un fel de input, mai ales când acesta provine din
+      partea clientului, chiar dacă acesta vine dintr-un câmp select, câmp
+      ascuns sau cookie. Primul exemplu arată că o interpelare aparent
+      nevinovată poate cauza un dezastru.
+     </simpara>
+
+     <itemizedlist>
+      <listitem>
+       <simpara>
+        Niciodată nu vă conectați la baza de date ca superuser sau ca orice alt
+        utilizator care poate manipula mai multe baze de date decât cea
+        folosită. Folosiți întotdeauna useri cu privilegii limitate.
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Utilizați interpelări preparate cu variabile atașate. Ele sunt oferite
+        <link linkend="pdo.prepared-statements">de PDO</link>,
+        <link linkend="mysqli.quickstart.prepared-statements">de MySQLi</link>
+        și de alte biblioteci.
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Verificați dacă un input conține tipul de date corect.
+        <acronym>PHP</acronym> are o varietate de funcții de validare, de la
+        cele mai simple, care pot fi găsite în <link linkend="ref.var">Funcții
+        asupra variabilelor</link> și în <link linkend="ref.ctype">Funcții ale
+        tipurilor de caractere</link> (de ex. <function>is_numeric</function>,
+        <function>ctype_digit</function> respectiv) și până la
+        <link linkend="ref.pcre">Expresii regulate compatibile Perl</link>.
+       </simpara>
+      </listitem>
+      <listitem>
+       <para>
+        Dacă aplicația așteaptă un input numeric, încercați să verificați
+        datele cu funcția <function>ctype_digit</function>, sau schimbați tipul
+        variabilei utilizând funcția <function>settype</function>, sau folosiți
+        reprezentația numerică prin <function>sprintf</function>.
+        <example>
+         <title>O metodă mai sigură de formare a interpelării pentru paginare</title>
+         <programlisting role="php">
+<![CDATA[
+<?php
+
+settype($offset, 'integer');
+$query = "SELECT id, name FROM products ORDER BY name LIMIT 20 OFFSET $offset;";
+
+// observați %d (care înseamnă formatul integer) din string-ul de formatare,
+// folosirea %s (string) ar fi fără sens
+$query = sprintf("SELECT id, name FROM products ORDER BY name LIMIT 20 OFFSET %d;",
+                 $offset);
+
+?>
+]]>
+         </programlisting>
+        </example>
+       </para>
+      </listitem>
+      <listitem>
+       <simpara>
+        Dacă nivelul bazei de date nu susține atașarea variabilelor, atunci
+        filtrați fiecare valoare non-numerică furnizată de utilizator transmisă
+        bazei de date cu ajutorul funcției 'string escape' specifică fiecărei
+        baze de date (de ex. <function>mysql_real_escape_string</function>,
+        <function>sqlite_escape_string</function>, etc.). Funcții generice precum
+        <function>addslashes</function> sunt utile doar în medii foarte specifice
+        (de. ex. MySQL cu un set de caractere single-byte cu opțiunea
+        <varname>NO_BACKSLASH_ESCAPES</varname> deconectată), de aceea este mai
+        bine să fie evitate.
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Nu afișați informații specifice bazei de date, în special despre schema
+        acesteia. Vedeți de asemenea <link linkend="security.errors">Raportarea
+        erorilor</link> și <link linkend="ref.errorfunc">Prelucrarea erorilor și
+        funcții de logare</link>.
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Puteți utiliza proceduri stocate și cursoare de date predefinite pentru
+        a abstractiza accesul la date, pentru ca utilizatorii să nu
+        interacționeze direct cu tabelele sau viziunile, dar această soluție
+        poate avea alte consecințe.
+       </simpara>
+      </listitem>
+     </itemizedlist>
+
+     <simpara>
+      În afară de acestea, puteți loga interpelările în interiorul scriptului
+      și în baza de date, dacă aceasta susține acest lucru. Bineînțeles,
+      logarea nu poate preveni atacurile sau încercările de a vătăma baza de
+      date, dar poate fi utilă în depistarea aplicației în care a avut loc
+      incidentul. Log-ul nu este util prin sine, ci prin informația pe care o
+      conține. Mai multă detaliere este de obicei mai bună decât lipsa
+      detaliilor.
+     </simpara>
+    </sect2>
+   </sect1>
+  </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

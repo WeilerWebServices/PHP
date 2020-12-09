@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+ <name>operator</name>
+ <channel>pecl.php.net</channel>
+ <summary>Operator overloading for Objects</summary>
+ <description>Operator overloading for: +, -, *, /, %, **, &lt;&lt;, &gt;&gt;, ., |, &amp;, ^, ~, !, ++, --,
++=, -=, *=, /=, %=, **=, &lt;&lt;=, &gt;&gt;=, .=, |=, &amp;=, ^=, ~=,
+==, !=, ===, !==, &lt;, &lt;=, and &lt;=&gt; operators.
+
+ </description>
+ <lead>
+  <name>Sara Golemon</name>
+  <user>pollita</user>
+  <email>pollita@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2017-03-08</date>
+ <time>20:54:00</time>
+ <version>
+  <release>1.0</release>
+  <api>1.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP</license>
+ <notes>
+* Rewrote for PHP7, dropped PHP5 support
+* Removed pre/post inc/dec support for objects in object properties (this will come back eventually)
+* Added pow, assign-pow, and spaceship operators
+ </notes>
+ <contents>
+  <dir name="/">
+   <dir name="tests">
+    <file name="binary.phpt" role="test" />
+    <file name="binary_assign.phpt" role="test" />
+    <file name="bug56904.phpt" role="test" />
+    <file name="compare.phpt" role="test" />
+    <file name="incdec.phpt" role="test" />
+    <file name="unary.phpt" role="test" />
+   </dir> <!-- //tests -->
+   <file name="config.m4" role="src" />
+   <file name="config.w32" role="src" />
+   <file name="CREDITS" role="doc" />
+   <file name="EXPERIMENTAL" role="doc" />
+   <file name="operator.c" role="src" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <providesextension>operator</providesextension>
+ <extsrcrelease />
+ <changelog>
+  <release>
+   <date>2009-11-05</date>
+   <time>17:54:16</time>
+   <version>
+    <release>0.3</release>
+    <api>0.3</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+* Added support for comparator ops
+
+Note: ZE treats &gt; style comparisons as backwards &lt; comparisons, so what looks like a left-associative greater than becomes a right-associative less-than.
+Because of this, overloading the &gt; and &gt;= operators for left-association requires application of a parser patch.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.2</release>
+    <api>0.2</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2006-01-25</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+* Added support for pre/post inc/dec operators
+* Added support for assignment operators
+* Refactored opline-&gt;result handling
+* Refactored opcode handlers
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.1</release>
+    <api>0.1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2006-01-12</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+Initial Release
+   </notes>
+  </release>
+ </changelog>
+</package>

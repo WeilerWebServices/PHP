@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.12 $ -->
+<classentry id="gtk.gtkliststore">
+ <classmeta>
+  <classtitle>GtkListStore</classtitle>
+  <classparent>GObject</classparent>
+
+  <implements>GtkTreeModel</implements>
+  <implements>GtkTreeDragSource</implements>
+  <implements>GtkTreeDragDest</implements>
+  <implements>GtkTreeSortable</implements>
+
+    <implements>Traversable</implements>
+<shortdesc>
+   Data model for list data.
+  </shortdesc>
+  <desc>
+   <para>
+    The GtkListStore object is a list model for use with a
+    <classname>GtkTreeView</classname> widget. It can be used
+    to store any number of tabular data.
+   </para>
+   <para>
+    On <link linkend="gtk.gtkliststore.constructor">creation</link>,
+    you have to determine how many columns the store
+    will have, and what <link linkend="gobject.enum.gtype">type</link>
+    they shall be able to contain.
+    After that, you will fill the model with data by using
+    the <function class="GtkListStore">set</function>,
+    <function class="GtkListStore">append</function> or
+    <function class="GtkListStore">prepend</function> methods.
+   </para>
+   <para>
+    After you have done that, you can use the list store object
+    as data source for a <classname>GtkTreeView</classname> by
+    using the <function class="GtkTreeView">set_model</function>
+    method.
+   </para>
+  </desc>
+ </classmeta>
+
+
+ <constructors>
+  <constructor id="gtk.gtkliststore.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkListStore</function></funcdef>
+    <paramdef>
+     <enumname>GType</enumname> <parameter>type_column_0</parameter>
+    </paramdef>
+    <paramdef>
+     <enumname>GType</enumname>
+     <parameter><optional>type_column_1</optional></parameter>
+    </paramdef>
+    <paramdef>
+     <enumname>GType</enumname>
+     <parameter><optional>type_column_2</optional></parameter>
+    </paramdef>
+    <paramdef>...</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Create a new list store with a number of columns.
+   </shortdesc>
+   <desc>
+    <para>
+     Create a new list store with a number of columns. For each colum, the 
+     type has to be specified by choosing one of the <enumname>GType</enumname>s.
+    </para>
+    <example>
+     <title>Creating and filling a GtkListStore</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkliststore/constructor.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </constructor>
+ </constructors>
+
+
+ <methods>
+
+  <method id="gtk.gtkliststore.method.append">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>
+      <classname>GtkTreeIter</classname> <function>append</function>
+     </funcdef>
+     <paramdef>array <parameter>items</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Append one row to the end of the list.
+   </shortdesc>
+   <desc>
+    <para>
+     You can use this method if you want to append a complete row
+     of data at the end of the list store. The <parameter>items</parameter>
+     has to be of the same size as the number of columns in the store, and
+     the type of each array entry has to be that of relative model column.
+    </para>
+    <para>
+     The function returns the iterator of the inserted row, which you can
+     use to refer to it after insertion.
+    </para>
+    <example>
+     <title>Append some rows to a list store</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkliststore/append.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+    <para>
+     &seealso;
+     <function class="GtkListStore">prepend</function>,
+     <function class="GtkListStore">insert</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.clear">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>clear</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Remove all rows.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Removes all data (rows) from the list, leaving it empty.
+    </simpara>
+    <para>
+     &seealso;
+     <function class="GtkListStore">remove</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.insert">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>
+      <classname>GtkTreeIter</classname> <function>insert</function>
+     </funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>
+      array <parameter><optional>items</optional></parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Insert a row of data at a certain position.
+   </shortdesc>
+   <desc>
+    <para>
+     Inserts a new row at the given position and returns the iterator
+     for that specific row. After that, you can set the row data via
+     <function class="GtkListStore">set</function> method.
+    </para>
+    <para>
+     You can pass an array with the complete row data as second parameter,
+     which automatically sets the data for you. The size of the array has to
+     match the number of columns in the store, and the type as to be equal
+     to the corresponding column type.
+    </para>
+    <example>
+     <title>Inserting some rows into a list store</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkliststore/insert.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.insert_after">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>insert_after</function></funcdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>iter</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>sibling</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME: Code should be changed
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkListStore">move_after</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.insert_before">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>insert_before</function></funcdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>iter</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>sibling</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME: Code should be changed
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkListStore">move_before</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.iter_is_valid">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>iter_is_valid</function></funcdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>iter</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Checks if the given iterator is valid.
+   </shortdesc>
+   <desc>
+    <para>
+     Checks if the given is still valid (could be invalid because of deletion).
+    </para>
+    <note>
+     <simpara>Warning: This function is slow. Only use it for debugging and/or 
+         testing purposes.</simpara>
+    </note>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.move_after">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>move_after</function></funcdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>iter</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>position</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Moves the given row after a specified one.
+   </shortdesc>
+   <desc>
+    <para>
+     Moves the given <parameter>iter</parameter> just after 
+     <parameter>position</parameter>. If <parameter>position</parameter> is
+     <literal>null</literal>, the row will be moved at the start of the list.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkListStore">move_before</function>,
+     <function class="GtkListStore">insert_after</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.move_before">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>move_before</function></funcdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>iter</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>position</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Moves the given row before a specified one.
+   </shortdesc>
+   <desc>
+    <para>
+     Moves the given <parameter>iter</parameter> just before 
+     <parameter>position</parameter>. If <parameter>position</parameter> is
+     <literal>null</literal>, the row will be moved at the end of the list.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkListStore">move_after</function>,
+     <function class="GtkListStore">insert_before</function>
+    </para>
+    <example>
+     <title>Moving a row before another one</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkliststore/move_before.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.prepend">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>
+      <classname>GtkTreeIter</classname> <function>prepend</function>
+     </funcdef>
+     <paramdef>array <parameter>items</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Add a row at the beginning of the list.
+   </shortdesc>
+   <desc>
+    <para>
+     This method works exactly like <function
+     class="GtkListStore">append</function>, except that the row is inserted at
+     the beginning of the list, not at the end.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkListStore">append</function>,
+     <function class="GtkListStore">insert</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.remove">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>remove</function></funcdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>iter</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Remove a specific row.
+   </shortdesc>
+   <desc>
+    <para>
+     Removes the row specified by the passed iterator.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkListStore">clear</function>
+    </para>
+   </desc>
+  </method>
+
+<!--
+  <method id="gtk.gtkliststore.method.reorder">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>reorder</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+-->
+
+  <method id="gtk.gtkliststore.method.set">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set</function></funcdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>iter</parameter>
+     </paramdef>
+     <paramdef><parameter>column</parameter></paramdef>
+     <paramdef><parameter>value</parameter></paramdef>
+     <paramdef><parameter><optional>column</optional></parameter></paramdef>
+     <paramdef><parameter><optional>value</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Change certains columns of a row.
+   </shortdesc>
+   <desc>
+    <para>
+     Change the data of certain columns of the row given by
+     <parameter>iter</parameter>.
+    </para>
+    <para>
+     The second parameter is the number of the column which data
+     shall be changed, and the third parameter is the actual data.
+     You can change more than one column by adding more column 
+     number/data pairs to the method.
+    </para>
+    <example>
+     <title>Inserting some rows into a list store</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkliststore/set.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </method>
+<!--
+  <method id="gtk.gtkliststore.method.set_column_types">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_types</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.set_valist">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_valist</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkliststore.method.set_value">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_value</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+-->
+  <method id="gtk.gtkliststore.method.swap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>swap</function></funcdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>a</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GtkTreeIter</classname> <parameter>b</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Swaps two rows.
+   </shortdesc>
+   <desc>
+    <para>
+     Swaps rows <parameter>a</parameter> and <parameter>b</parameter> in the 
+     list store. Note that this function only works with unsorted stores.
+    </para>
+    <example>
+     <title>Swapping two rows</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkliststore/swap.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </method>
+ </methods>
+</classentry>

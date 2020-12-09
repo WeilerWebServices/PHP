@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.12 $ -->
+<classentry id="gtk.gtkfilechooserbutton">
+ <classmeta>
+  <classtitle>GtkFileChooserButton</classtitle>
+  <classparent>GtkHBox</classparent>
+  <implements>GtkFileChooser</implements>
+  <classimage fileref="&directory.images;/reference/gtk/gtkfilechooserbutton.png"/>
+  <shortdesc>
+    A button that launches a file chooser dialog.
+  </shortdesc>
+  <desc>
+   <para>
+    The <classname>GtkFileChooserButton</classname> is very similar in
+    functionality to a <classname>GtkColorButton</classname>. It is a
+    special kind of button that allows the user to select a file.
+   </para>
+   <para>
+    The button contains an area that displays the file name of the current
+    file selected and also displays a button that allows the user to launch
+    a file selection dialog. After the dialog is launched, the button is
+    immediately associated to the new file selected by the user.
+   </para>
+   <para>
+    <note>
+     <classname>GtkFileChooserButton</classname> is only for selecting files or
+     folders. It cannot be used for saving files.
+    </note>
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkfilechooserbutton.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkFileChooserButton</function></funcdef>
+    <paramdef>string <parameter>title</parameter></paramdef>
+    <paramdef><enumname>GtkFileChooserAction</enumname> <parameter>action</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>GtkFileChooserButton</classname>
+   </shortdesc>
+   <desc>
+    <para>
+     Use this constructor to create a new file-selecting button widget.
+    </para>
+    <example>
+     <title>Using a GtkFileChooser button.</title>
+      <programlisting role="php">
+       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkfilechooserbutton/constructor.phpw" parse="text">
+        <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+       </xi:include>
+      </programlisting>
+    </example>
+   </desc>
+  </constructor>
+
+ <constructor id="gtk.gtkfilechooserbutton.constructor.new_with_backend">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>GtkFileChooserButton::new_with_backend</function></funcdef>
+     
+     <paramdef><parameter>title</parameter></paramdef>
+     <paramdef><parameter>action</parameter></paramdef>
+     <paramdef><parameter>backend</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkfilechooserbutton.constructor.new_with_dialog">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>GtkFileChooserButton::new_with_dialog</function></funcdef>
+     <paramdef><classname>GtkWidget</classname><parameter>dialog</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </constructor>
+
+  </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkfilechooserbutton.method.get_title">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_title</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the title of the file chooser dialog.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to determine the title of the consequential
+     <classname>GtkFileChooserDialog</classname> that will be presented
+     when the button is clicked.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileChooserButton">set_title</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfilechooserbutton.method.get_width_chars">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_width_chars</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the width of the button.
+   </shortdesc>
+   <desc>
+    <para>
+     This method will return the width (in characters) of the button
+     widget. Obviously, this is determined by the label associated with the
+     button.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileChooserButton">set_width_chars</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfilechooserbutton.method.set_title">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_title</function></funcdef>
+     <paramdef>string <parameter>title</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the title of the file chooser dialog.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the title of the consequential
+     <classname>GtkFileChooserDialog</classname> that will be presented
+     when the button is clicked.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileChooserButton">get_title</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfilechooserbutton.method.set_width_chars">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_width_chars</function></funcdef>
+     <paramdef>int <parameter>n_chars</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the width between the button and its label.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the width that the button will use. Pass the
+     width in number of characters.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileChooserButton">get_width_chars</function>
+    </para>
+   </desc>
+  </method>
+
+ 
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  </methods>
+
+</classentry>

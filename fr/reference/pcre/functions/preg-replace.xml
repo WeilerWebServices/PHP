@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 350645 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="function.preg-replace" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>preg_replace</refname>
+  <refpurpose>Rechercher et remplacer par expression rationnelle standard</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>preg_replace</methodname>
+   <methodparam><type>mixed</type><parameter>pattern</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>replacement</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>subject</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>limit</parameter><initializer>-1</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter role="reference">count</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Analyse <parameter>subject</parameter> pour trouver l'expression
+   rationnelle <parameter>pattern</parameter> et remplace les
+   résultats par <parameter>replacement</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>pattern</parameter></term>
+     <listitem>
+      <para>
+       Le masque à chercher. Il peut être une chaîne ou un tableau de chaînes.
+      </para>
+      <para>
+       Plusieurs <link linkend="reference.pcre.pattern.modifiers">modificateurs PCRE</link>
+       sont également disponibles.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>replacement</parameter></term>
+     <listitem>
+      <para>
+       La chaîne ou un tableau de chaînes pour le remplacement.
+       Si ce paramètre est une chaîne et le paramètre <parameter>pattern</parameter>
+       est un tableau, tous les masques seront remplacés par cette chaîne.
+       Si les paramètres <parameter>pattern</parameter> et 
+       <parameter>replacement</parameter> sont des tableaux, chaque
+       <parameter>pattern</parameter> sera remplacé par son
+       <parameter>replacement</parameter> associé.
+       Si <parameter>replacement</parameter> à moins d'éléments
+       que <parameter>pattern</parameter>, alors une chaîne vide est
+       utilisée pour le reste des valeurs.
+      </para>
+      <para>
+       <parameter>replacement</parameter> peut contenir des références
+       de la forme <literal>\<replaceable>n</replaceable></literal> ou
+       <literal>$<replaceable>n</replaceable></literal>.
+       Cette dernière forme est recommandée. Ces références seront remplacées 
+       par le texte capturé par la <replaceable>n</replaceable>-ième parenthèse 
+       capturante du masque. <replaceable>n</replaceable> peut prendre des 
+       valeurs de 0 à 99, et <literal>\0</literal> ou <literal>$0</literal>, 
+       correspondent au texte de qui satisfait le masque complet. Les parenthèses
+       ouvrantes sont comptées de gauche à droite (en commençant à 1) pour 
+       déterminer le numéro de parenthèse capturante.
+       Il est à noter que dans les &string; litéralles les antislashs doivent
+       peut être être échappé.
+      </para>
+      <para>
+       Lorsque vous travaillez avec un masque de remplacement où une référence arrière 
+       est directement suivie par un nombre (i.e.: placer un nombre littéral immédiatement
+       après une référence arrière), vous ne pouvez pas utiliser la syntaxe classique
+       <literal>\1</literal> pour la référence arrière. <literal>\11</literal>, par exemple,
+       sera confus pour la fonction <function>preg_replace</function> dans le sens où
+       elle ne saura pas si vous désirez la référence arrière <literal>\1</literal> suivi du nombre
+       &one; ou si vous désirez la référence arrière <literal>\11</literal>
+       suivi de "rien". Dans ce cas, la solution est d'utiliser la syntaxe <literal>${1}1</literal>.
+       Cela créera une référence arrière isolée <literal>$1</literal>, suivi du nombre
+       littéral &one;.
+      </para>
+      <para>
+       Lorsque vous utilisez l'option obsolète <literal>e</literal>, cette fonction
+       échappe quelques caractères (<literal>'</literal>, <literal>"</literal>,
+       <literal>\</literal> et NULL) dans la chaîne qui remplace les références arrières.
+       Ce comportement se justifie afin d'assurer qu'aucune erreur de syntaxe
+       ne survient lors de l'utilisation des références arrières avec des guillemets
+       simples et doubles  (e.g. <literal>'strlen(\'$1\')+strlen("$2")'</literal>).
+       Assurez-vous d'être familier avec la <link linkend="language.types.string">syntaxe
+       des chaînes</link> afin de savoir exactement à quoi la chaîne interprétée doit ressembler.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>subject</parameter></term>
+     <listitem>
+      <para>
+       La chaîne ou le tableau contenant des chaînes à chercher et à remplacer.
+      </para>
+      <para>
+       Si <parameter>subject</parameter> est un tableau, alors l'opération
+       sera appliquée à chacun des éléments du tableau, et le tableau sera retourné.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>limit</parameter></term>
+     <listitem>
+      <para>
+       Le nombre maximal de remplacement pour chaque masque dans
+       chaque chaîne <parameter>subject</parameter>. Par défaut, vaut
+       <literal>-1</literal> (aucune limite).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>count</parameter></term>
+     <listitem>
+      <para>
+       Si fournie, cette variable contiendra le nombre de remplacements effectués.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <function>preg_replace</function> retourne un tableau si le paramètre
+   <parameter>subject</parameter> est un tableau, ou une chaîne sinon.
+  </para>
+  <para>
+   Si des correspondances sont trouvées, le nouveau 
+   <parameter>subject</parameter> sera retourné, sinon
+   <parameter>subject</parameter> sera retourné à l'identique, ou &null;
+   si une erreur survient.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   À partir de PHP 5.5.0, une alerte de niveau <constant>E_DEPRECATED</constant>
+   est émise lorsque l'option "\e" est fournie. À partir de PHP 7.0.0 utiliser
+   l'option "\e" est une erreur ; une <constant>E_WARNING</constant> est émise
+   dans ce cas.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Utilisation des références arrières avec des littéraux numériques</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$string = 'April 15, 2003';
+$pattern = '/(\w+) (\d+), (\d+)/i';
+$replacement = '${1}1,$3';
+echo preg_replace($pattern, $replacement, $string);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+April1,2003
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Utilisation de tableaux indexé avec <function>preg_replace</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$string = 'Le renard marron agile saute par dessus le chien paresseux.';
+$patterns = array();
+$patterns[0] = '/agile/';
+$patterns[1] = '/marron/';
+$patterns[2] = '/renard/';
+$replacements = array();
+$replacements[2] = 'grizzly';
+$replacements[1] = 'brun';
+$replacements[0] = 'lent';
+echo preg_replace($patterns, $replacements, $string);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Le lent brun grizzly saute par dessus le chien paresseux.
+]]>
+    </screen>
+    <para>
+     En triant les masques et les remplacements, vous devriez obtenir le résultat escompté.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+ksort($patterns);
+ksort($replacements);
+echo preg_replace($patterns, $replacements, $string);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Le grizzly brun lent saute par dessus le chien paresseux.
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Remplacement de plusieurs valeurs simultanément</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$patterns = array ('/(19|20)(\d{2})-(\d{1,2})-(\d{1,2})/',
+                   '/^\s*{(\w+)}\s*=/');
+$replace = array ('\3/\4/\1\2', '$\1 =');
+echo preg_replace($patterns, $replace, '{startDate} = 1999-5-27');
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+$startDate = 5/27/1999
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Suppression des espaces</title>
+    <para>
+     Cet exemple supprime les espaces en trop dans une chaîne.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$str = 'foo   o';
+$str = preg_replace('/\s\s+/', ' ', $str);
+// Affichera 'foo o'
+echo $str;
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Utilisation du paramètre <parameter>count</parameter></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$count = 0;
+
+echo preg_replace(array('/\d/', '/\s/'), '*', 'xp 4 to', -1 , $count);
+echo $count; //3
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+xp***to
+3
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Lorsque vous utilisez des tableaux avec les paramètres
+    <parameter>pattern</parameter> et
+    <parameter>replacement</parameter>, les clés sont traitées
+    dans l'ordre dans lequel elles apparaissent dans le tableau.
+    Ce <emphasis>n'est pas forcément</emphasis> la même chose que
+    l'ordre des index numériques. Si vous utilisez des index pour
+    identifier quel <parameter>pattern</parameter> doit être
+    remplacé par quel <parameter>replacement</parameter>, il est
+    recommandé de faire un tri <function>ksort</function> sur chaque
+    tableau avant de faire appel à <function>preg_replace</function>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><link linkend="pcre.pattern">Masques PCRE</link></member>
+    <member><function>preg_quote</function></member>
+    <member><function>preg_filter</function></member>
+    <member><function>preg_match</function></member>
+    <member><function>preg_replace_callback</function></member>
+    <member><function>preg_split</function></member>
+    <member><function>preg_last_error</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

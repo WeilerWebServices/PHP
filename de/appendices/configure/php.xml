@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 344857 Maintainer: nobody  Status: ready -->
+
+ <sect3 xml:id="configure.options.php" xmlns="http://docbook.org/ns/docbook">
+  <title>PHP Optionen</title>
+   <variablelist>
+   <varlistentry xml:id="configure.enable-maintainer-mode">
+    <term>
+     <option role="configure">--enable-maintainer-mode</option>
+    </term>
+    <listitem>
+     <para>
+      Aktiviert Makefile-Regeln und Abhängigkeiten, die für den gewöhnlichen
+      Anwender nicht nützlich (und manchmal auch verwirrend) sind.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="configure.with-config-file-path">
+    <term>
+     <option role="configure">--with-config-file-path=PATH</option>
+    </term>
+    <listitem>
+     <para>
+      Setzt den Pfad in dem nach &php.ini; gesucht wird; Vorgabewert ist 
+      <literal>PREFIX/lib</literal>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="configure.enable-safe-mode">
+    <term>
+     <option role="configure">--enable-safe-mode</option>
+    </term>
+    <listitem>
+     <para>
+      Der "safe mode" wird standardmäßig aktiviert.
+     </para>
+     &warn.deprecated.feature-5-3-0.removed-5-4-0;
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="configure.with-exec-dir">
+    <term>
+     <option role="configure">--with-exec-dir[=DIR]</option>
+    </term>
+    <listitem>
+     <para>
+      Im "safe mode" dürfen nur ausführbare Dateien aus dem hier 
+      angegebenen Verzeichnis ausgeführt werden. Vorgabewert ist
+      <literal>/usr/local/php/bin</literal>.
+     </para>
+     &warn.deprecated.feature-5-3-0.removed-5-4-0;
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="configure.enable-magic-quotes">
+    <term>
+     <option role="configure">--enable-magic-quotes</option>
+    </term>
+    <listitem>
+     <para>
+      "Magic quotes" werden standardmäßig aktiviert.
+     </para>
+     &warn.deprecated.feature-5-3-0.removed-5-4-0;
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="configure.disable-short-tags">
+    <term>
+     <option role="configure">--disable-short-tags</option>
+    </term>
+    <listitem>
+     <para>
+      Die Tag-Kurzform &lt;? wird standardmäßig deaktiviert.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="configure.enable-zend-multibyte">
+    <term>
+     <option role="configure">--enable-zend-multibyte</option>
+    </term>
+    <listitem>
+     <para>
+      Aktiviert die Ausführung von Multibyte-Code im Sprach-Parser und -Scanner.
+      Wird PHP mit dieser Option kompiliert, wird ebenfalls die Direktive
+      <link linkend="control-structures.declare.encoding">encoding</link> im
+      <link linkend="control-structures.declare">declare</link>-Konstrukt aktiviert. 
+     </para>
+     &warn.deprecated.feature-5-3-0.removed-5-4-0;
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="configure.with-libdir">
+    <term>
+     <option role="configure">--with-libdir</option>
+    </term>
+    <listitem>
+     <para>
+      Gibt das Verzeichnis an, in dem die für die Kompilierung von PHP erforderlichen
+      Bibliotheken auf einem Unix-Sytem zu finden sind. Für 64-bit Systeme ist es
+      erforderlich, dieses Argument wie folgt auf das <literal>lib64</literal> zu
+      setzen: <literal>--with-libdir=lib64</literal>.
+     </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </sect3>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

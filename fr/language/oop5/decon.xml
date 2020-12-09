@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351129 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+ <sect1 xml:id="language.oop5.decon" xmlns="http://docbook.org/ns/docbook">
+  <title>Constructeurs et destructeurs</title>
+
+  <sect2 xml:id="language.oop5.decon.constructor">
+   <title>Constructeur</title>
+   <methodsynopsis xml:id="object.construct">
+    <type>void</type><methodname>__construct</methodname>
+    <methodparam rep="repeat"><type>mixed</type><parameter>values</parameter><initializer>""</initializer></methodparam>
+   </methodsynopsis>
+   <para>
+    PHP permet aux développeurs de déclarer des constructeurs pour
+    les classes. Les classes qui possèdent une méthode constructeur
+    appellent cette méthode à chaque création d'une nouvelle instance
+    de l'objet, ce qui est intéressant pour toutes les initialisations
+    dont l'objet a besoin avant d'être utilisé.
+   </para>
+   <note>
+    <simpara>
+     Les constructeurs parents ne sont pas appelés implicitement
+     si la classe enfant définit un constructeur. Si vous
+     voulez utiliser un constructeur parent, il sera nécessaire de faire
+     appel à <literal>parent::__construct()</literal> depuis le constructeur enfant.
+     Si l'enfant ne définit pas un constructeur alors il peut être hérité
+     de la classe parent, exactement de la même façon qu'une méthode le serait
+     (si elle n'a pas été déclarée comme privée).
+    </simpara>
+   </note>
+   <example>
+    <title>Exemple d'utilisation des nouveaux constructeurs unifiés</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class BaseClass {
+    function __construct() {
+        print "Dans le constructeur de BaseClass\n";
+    }
+}
+
+class SubClass extends BaseClass {
+    function __construct() {
+        parent::__construct();
+        print "Dans le constructeur de SubClass\n";
+    }
+}
+
+class OtherSubClass extends BaseClass {
+    // Constructeur hérité de BaseClass
+}
+
+// Dans le constructeur de BaseClass
+$obj = new BaseClass();
+
+// Dans le constructeur de BaseClass
+// Dans le constructeur de SubClass
+$obj = new SubClass();
+
+// Dans le constructeur de BaseClass
+$obj = new OtherSubClass();
+?> 
+]]>
+    </programlisting>
+   </example>
+   <para>
+    Pour des raisons de compatibilité ascendante avec PHP 3 et 4, si PHP ne peut pas
+    trouver une fonction <link linkend="object.construct">__construct()</link>
+    pour une classe donnée,
+    il cherchera une fonction constructeur représentée, comme dans
+    l'ancien style, par le nom de la classe.
+    Dans les faits, cela signifie que le seul cas où il pourrait y avoir
+    un problème de compatibilité est celui où votre classe contiendrait une
+    méthode nommée <link linkend="object.construct">__construct()</link> et que vous en ayez un
+    autre usage.
+   </para>
+   <!-- Not using an entity because I want specific wording here, since we're
+   not deprecating constructors in general. -->
+   <warning>
+    <simpara>
+     L'ancien style de constructeur est <emphasis>DECONSEILLE</emphasis> à partir de PHP 7.0
+     et sera supprimé dans une future version. Vous devez toujours utiliser 
+     <link linkend="object.construct">__construct()</link> dans le nouveau code.
+    </simpara>
+   </warning>
+   <para>
+    À la différence des autres méthodes, PHP ne génèrera pas d'erreur de niveau
+    <constant>E_STRICT</constant> lorsque <link linkend="object.construct">__construct()</link> est
+    surchargé avec des paramètres différents du <link linkend="object.construct">__construct()</link> parent.
+   </para>
+   <para>
+    À partir de PHP 5.3.3, les méthodes ayant le même nom que la classe dans laquelle
+    elle se trouve ne sont plus traitées comme des constructeurs, si la classe
+    considérée se situe dans un espace de noms. Ceci n'affecte pas les classes
+    sans espace de noms.
+   </para>
+   <example>
+    <title>Constructeurs dans des classes dans des espaces de noms</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+namespace Foo;
+class Bar {
+    public function Bar() {
+        // Traitée comme un constructeur dans PHP 5.3.0-5.3.2
+        // Traitée comme une méthode normale à partir de PHP 5.3.3
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.decon.destructor">
+   <title>Destructeur</title>
+   <methodsynopsis xml:id="object.destruct">
+    <type>void</type><methodname>__destruct</methodname>
+    <void />
+   </methodsynopsis>
+   <para>
+    PHP 5 introduit un concept de destructeur similaire à celui d'autres langages
+    orientés objet, comme le <literal>C++</literal>. La méthode destructeur est appelée
+    dès qu'il n'y a plus de référence sur un objet donné, ou dans n'importe quel
+    ordre pendant la séquence d'arrêt.
+   </para>
+   <example>
+    <title>Exemple avec un Destructeur</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class MyDestructableClass 
+{
+    function __construct() {
+        print "In constructor\n";
+    }
+
+    function __destruct() {
+        print "Destroying " . __CLASS__ . "\n";
+    }
+}
+
+$obj = new MyDestructableClass();
+
+]]>
+    </programlisting>
+   </example>
+   <para>
+    Tout comme le constructeur, le destructeur parent ne sera pas appelé
+    implicitement par le moteur. Pour exécuter le destructeur parent, vous
+    devez appeler explicitement la fonction
+    <literal>parent::__destruct</literal> dans le corps du destructeur.
+    Tout comme les constructeurs, une classe enfant peut hériter du
+    destructeur du parent s'il n'en implémente pas un lui même.
+   </para>
+   <para>
+    Le destructeur sera appelé même si l'exécution du script est stoppée
+    en utilisant la fonction <function>exit</function>.
+    Appeler la fonction <function>exit</function>
+    dans un destructeur empêchera l'exécution des routines d'arrêt restantes.
+   </para>
+   <note>
+    <para>
+     Les destructeurs appelés durant l'arrêt du script sont dans une situation
+     où les en-têtes HTTP ont déjà été envoyés.
+     Le dossier de travail dans la phase d'arrêt du script
+     peut être différent avec certaines APIs (e.g. Apache).
+    </para>
+   </note>
+   <note>
+    <para>
+     Tenter de lancer une exception depuis un destructeur (appelé à la fin du script)
+     entraine une erreur fatale.
+    </para>
+   </note>
+  </sect2>
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,14 @@
+// $Id$
+// vim:ft=javascript
+
+ ARG_WITH("xmp", "for xmp support", "no");
+
+if (PHP_XMP != "no") {
+	if (CHECK_LIB("libxmp_a.lib;libxmp.lib", "xmp", PHP_XMP) &&
+	CHECK_HEADER_ADD_INCLUDE("xmp.h", "CFLAGS_XMP")) {
+		EXTENSION("xmp", "php_xmp.c");
+	} else {
+		WARNING("xmp not enabled; libraries and headers not found");
+	}
+}
+

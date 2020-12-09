@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 306096 Maintainer: jpauli Status: ready -->
+<!-- Reviewed: yes -->
+
+<sect1 xml:id="install.unix.commandline" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>CGI et configuration en ligne de commande</title>
+ <para>
+   Par défaut, PHP est construit comme programmes à la fois
+   <acronym>CLI</acronym> et <acronym>CGI</acronym>, pouvant être utilisé comme
+   processeur CGI. Si vous utilisez un serveur qui supporte le module PHP,
+   vous devriez en général utiliser cette solution pour des raisons de
+   performances. Cependant, la version CGI permet aux utilisateurs de lancer
+   des pages PHP sous différent id utilisateurs (Unix).
+ </para>
+ &warn.install.cgi;
+
+ <sect2 xml:id="install.unix.commandline.testing">
+  <title>Tests</title>
+  <simpara>
+   Si vous avez compilé PHP comme programme CGI, vous pouvez tester
+   votre produit en tapant : <command>make test</command>. C'est toujours
+   une bonne chose de tester le résultat d'une compilation.
+   Cela vous permet de repérer des problèmes entre PHP et votre
+   plate-forme, plutôt que d'attendre qu'ils surviennent.
+  </simpara>
+ </sect2>
+
+ <sect2 xml:id="install.unix.commandline.using-variables">
+  <title>Utiliser les variables prédéfinies</title>
+  <simpara>
+   Certaines <link linkend="reserved.variables.server">variables d'environnement</link>
+   fournies par les serveurs Web ne sont pas disponibles dans les
+   <link xlink:href="&url.rfc;3875">spécifications CGI/1.1</link> actuelles.
+   Seules les variables suivantes sont définies, et les
+   autres doivent être considérées comme spécifiques aux serveurs
+   Web :
+   <varname>AUTH_TYPE</varname>,
+   <varname>CONTENT_LENGTH</varname>,
+   <varname>CONTENT_TYPE</varname>,
+   <varname>GATEWAY_INTERFACE</varname>,
+   <varname>PATH_INFO</varname>,
+   <varname>PATH_TRANSLATED</varname>,
+   <varname>QUERY_STRING</varname>,
+   <varname>REMOTE_ADDR</varname>,
+   <varname>REMOTE_HOST</varname>,
+   <varname>REMOTE_IDENT</varname>,
+   <varname>REMOTE_USER</varname>,
+   <varname>REQUEST_METHOD</varname>,
+   <varname>SCRIPT_NAME</varname>,
+   <varname>SERVER_NAME</varname>,
+   <varname>SERVER_PORT</varname>,
+   <varname>SERVER_PROTOCOL</varname> et
+   <varname>SERVER_SOFTWARE</varname>.
+  </simpara>
+ </sect2>
+
+</sect1>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

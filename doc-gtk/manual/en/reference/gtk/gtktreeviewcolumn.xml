@@ -1,0 +1,1283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.14 $ -->
+<classentry id="gtk.gtktreeviewcolumn">
+ <classmeta>
+  <classtitle>GtkTreeViewColumn</classtitle>
+  <classparent>GtkObject</classparent>
+  <implements>GtkCellLayout</implements>
+  <shortdesc>
+   A visible column in a GtkTreeView.
+  </shortdesc>
+  <desc>
+   Provides a column in a tree view widget. It uses a
+   <classname>GtkCellRenderer</classname> to display the value of
+   a given column for each row. Columns can be sorted, moved
+   and hidden.
+  </desc>
+ </classmeta>
+
+ <constructors>
+  <constructor id="gtk.gtktreeviewcolumn.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkTreeViewColumn</function></funcdef>
+    <paramdef>string <parameter><optional>title</optional></parameter></paramdef>
+    <paramdef><classname>GtkCellRenderer</classname> <parameter><optional>cell_renderer</optional></parameter></paramdef>
+    <paramdef>string <parameter><optional>attribute</optional></parameter></paramdef>
+    <paramdef>int <parameter><optional>column</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new column object.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new column object that can be added to a
+     <classname>GtkTreeView</classname> with the
+     <function class="GtkTreeView">add_column</function> method.
+    </para>
+    <para>
+     The first parameter defines the title of the column which is shown on top
+     of the widget. The second one, <parameter>cell_renderer</parameter>,
+     is used to draw the actual values in the column of the row.
+    </para>
+    <para>
+     Parameter <parameter>attribute</parameter> selects the attribute of the
+     cell renderer that shall be set.
+    </para>
+    <para>
+     The last parameter, <parameter>column</parameter> defines the number
+     of the <classname>GtkTreeModel</classname> column that is displayed.
+    </para>
+    <para>
+     <itemizedlist>
+      <title>Commonly used attributes</title>
+      <listitem>
+       <literal>text</literal> for <classname>GtkCellRendererText</classname>
+       and <classname>GtkCellRendererCombo</classname>
+      </listitem>
+      <listitem>
+       <literal>pixbuf</literal> for <classname>GtkCellRendererPixbuf</classname>
+      </listitem>
+      <listitem>
+       <literal>active</literal> for <classname>GtkCellRendererToggle</classname>
+      </listitem>
+      <listitem>
+       <literal>value</literal> for <classname>GtkCellRendererProgress</classname>
+      </listitem>
+     </itemizedlist>
+    </para>
+    <example>
+     <title>Creating a GtkTreeViewColumn</title>
+     <programlisting role="php"><![CDATA[
+$renderer = new GtkCellRendererText();
+$column = new GtkTreeViewColumn('Title', $renderer, 'text', 0);
+]]></programlisting>
+    </example>
+   </desc>
+  </constructor>
+ </constructors>
+
+
+ <methods>
+  <method id="gtk.gtktreeviewcolumn.method.cell_get_position">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>cell_get_position</function></funcdef>
+     <paramdef><classname>GtkCellRenderer</classname> <parameter>cell_renderer</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns horizontal position and size of a cell in the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the horizontal position and the size of the given cell
+     in the column. If the cell is not found in the column,
+     <literal>false</literal> is returned.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.cell_get_size">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>cell_get_size</function></funcdef>
+     <paramdef><classname>GtkCellRenderer</classname> <parameter>cell_renderer</parameter></paramdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the size and offset of the cell.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the width and height needed to render the column.
+     This is used primarily by the <classname>GtkTreeView</classname>.
+    </para>
+    <para>
+     The array consists of the following values:
+     <literal><classname>GdkRectangle</classname> cell_area,
+      int x_offset, int y_offset, int width, int height</literal>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.cell_is_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>cell_is_visible</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    If any of the cells in the column is visible.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns <literal>true</literal> if any of the cells packed into the
+     column are visible. For this to be meaningful, you must first initialize
+     the cells with
+     <function class="GtkTreeViewColumn">cell_set_cell_data</function>.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.cell_set_cell_data">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>cell_set_cell_data</function></funcdef>
+     <paramdef><classname>GtkTreeModel</classname> <parameter>tree_model</parameter></paramdef>
+     <paramdef><classname>GtkTreeIter</classname> <parameter>iter</parameter></paramdef>
+     <paramdef>bool <parameter>is_expander</parameter></paramdef>
+     <paramdef>bool <parameter>is_expanded</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets some cell data like model, iter, expander and expanded.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the cell renderer based on the <parameter>tree_model</parameter> and
+     <parameter>iter</parameter>. That is, for every attribute mapping in
+     <parameter>tree_column</parameter>, it will get a value from the set column
+     on the <parameter>iter</parameter>, and use that value to set the
+     attribute on the cell renderer. This is used primarily by the
+     <classname>GtkTreeView</classname>.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.clicked">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>clicked</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emits the "clicked" signal on the column.
+   </shortdesc> 
+   <desc>
+    <para>
+     Emits the "clicked" signal on the column.
+     This function will only work if the column is clickable.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.focus_cell">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>focus_cell</function></funcdef>
+     <paramdef><classname>GtkCellRenderer</classname> <parameter>cell</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the current keyboard focus to be at the given cell.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the current keyboard focus to be at cell, if the column contains
+     2 or more editable and activatable cells.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_alignment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>double <function>get_alignment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the current x alignment of the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the current x alignment of the column.
+     This value can range between <literal>0.0</literal>
+      and <literal>1.0</literal>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_alignment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_cell_renderers">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_cell_renderers</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns an arry of all the cell renderers in the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns an arry of all the cell renderers in the column,
+     in no particular order.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_clickable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_clickable</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns if the user can click on the header for the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns <literal>true</literal> if the user can click on the
+     header for the column.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_clickable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_expand">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_expand</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Return if the column expands to take any available space.
+   </shortdesc>
+   <desc>
+    <para>
+     Return <literal>true</literal> if the column expands to take any
+     available space.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_expand</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_fixed_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_fixed_width</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the fixed width of the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the fixed width of the column. This value is only
+     meaning may not be the actual width of the column
+     on the screen, just what is requested.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_fixed_width</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_max_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_max_width</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the maximum width in pixels.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the maximum width in pixels of the column, or
+     <literal>-1</literal> if no maximum width is set.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_max_width</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_min_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_min_width</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the minimum width in pixels.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the minimum width in pixels of the tree_column,
+     or <literal>-1</literal> if no minimum width is set.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_min_width</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_reorderable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_reorderable</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    If the column can be reordered by the user.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns <literal>true</literal> if the column can be reordered
+     by the user.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_reorderable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_resizable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_resizable</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    If the column can be resized by the user.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns <literal>true</literal> if the column can be resized
+     by the end user.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_resizable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_sizing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GtkTreeViewColumnSizing</enumname> <function>get_sizing</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the current sizing policy.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the current sizing policy.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_sizing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_sort_column_id">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_sort_column_id</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the column id that the model sorts on.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the logical <literal>sort_column_id</literal> that the model sorts
+     on when this column is selected for sorting. Returns <literal>-1</literal>
+     if this column can't be used for sorting.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_sort_column_id</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_sort_indicator">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_sort_indicator</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    If the sort indicator is visible.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns if the sort indicator (arrow) is visible.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_sort_indicator</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_sort_order">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GtkSortType</enumname> <function>get_sort_order</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the sort indicator direction.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the direction of the sort indicator.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_sort_order</function>,
+     <function class="GtkTreeViewColumn">set_sort_indicator</function>,
+     <function class="GtkTreeViewColumn">get_sort_indicator</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_spacing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_spacing</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the number of pixels between cell renderers.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the spacing of the column, which is the number
+     of pixels placed between cell renderers packed into it.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_spacing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_title">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_title</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the title of the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the title of the widget.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_title</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_visible</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    If the column is visible.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns <literal>true</literal> if the column is visible.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_visible</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_widget">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkWidget</classname> <function>get_widget</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the widget in the column header.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the <classname>GtkWidget</classname> in the button on the
+     column header. If a custom widget has <emphasis>not</emphasis> been
+     set then <literal>null</literal> is returned.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">set_widget</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.get_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_width</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the current size in pixels.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the current size of the column in pixels.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_alignment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_alignment</function></funcdef>
+     <paramdef>double <parameter>xalign</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the alignment of the title.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the alignment of the title or custom widget inside the column
+     header. The alignment determines its location inside the button
+     - <literal>0.0</literal> for left, <literal>0.5</literal> for
+     center, <literal>1.0</literal> for right.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_alignment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_clickable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_clickable</function></funcdef>
+     <paramdef>bool <parameter>active</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the header to be active.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the header to be active if active is <literal>true</literal>.
+     When the header is active, then it can take keyboard focus,
+     and can be clicked.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_clickable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_expand">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_expand</function></funcdef>
+     <paramdef>bool <parameter>expand</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the column to take available extra space.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the column to take available extra space. This space is
+     shared equally amongst all columns that have the expand set to
+     <literal>true</literal>. If no column has this option set, then
+     the last column gets all extra space. By default, every column is
+     created with this <literal>false</literal>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_expand</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_fixed_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_fixed_width</function></funcdef>
+     <paramdef>int <parameter>fixed_width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the size of the column in pixels.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the size of the column in pixels. This is meaningful only if
+     the sizing type is
+     <optionname enum="GtkTreeViewColumnSizing">Gtk::TREE_VIEW_COLUMN_FIXED</optionname>.
+     The size of the column is clamped to the min/max width for the column.
+     Please note that the min/max width of the column doesn't actually affect
+     the "fixed_width" property of the widget, just the actual size when
+     displayed.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_fixed_width</function>,
+     <function class="GtkTreeViewColumn">set_sizing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_max_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_max_width</function></funcdef>
+     <paramdef>int <parameter>max_width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the maximum width.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the maximum width of the column. If
+     <parameter>max_width</parameter> is <literal>-1</literal>, then the
+     maximum width is unset. Note, the column can actually be wider than
+     max width if it's the last column in a view. In this case, the column
+     expands to fill any extra space.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_max_width</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_min_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_min_width</function></funcdef>
+     <paramdef>int <parameter>min_width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the minimum width.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the minimum width of the column. If <parameter>min_width</parameter>
+     is <literal>-1</literal>, then the minimum width is unset.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_min_width</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_reorderable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_reorderable</function></funcdef>
+     <paramdef>bool <parameter>reorderable</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set if the column can be moved around.
+   </shortdesc>
+   <desc>
+    <para>
+     If reorderable is <literal>true</literal>, then the column can be
+     reordered by the end user dragging the header.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_reorderable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_resizable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_resizable</function></funcdef>
+     <paramdef>bool <parameter>resizable</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set if the column can be resized.
+   </shortdesc>
+   <desc>
+    <para>
+     If resizable is <literal>true</literal>, then the user can explicitly
+     resize the column by grabbing the outer edge of the column button.
+     If resizable is <literal>true</literal> and sizing mode of the column
+     is
+     <optionname enum="GtkTreeViewColumnSizing">Gtk::TREE_VIEW_COLUMN_AUTOSIZE</optionname>,
+     then the sizing mode is changed to 
+     <optionname enum="GtkTreeViewColumnSizing">Gtk::TREE_VIEW_COLUMN_GROW_ONLY</optionname>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_resizable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_sizing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_sizing</function></funcdef>
+     <paramdef><enumname>GtkTreeViewColumnSizing</enumname> <parameter>type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the growth behavior.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the growth behavior of the column to type.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_sizing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_sort_column_id">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_sort_column_id</function></funcdef>
+     <paramdef>int <parameter>sort_column_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the logical column that this column sorts.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the logical <parameter>sort_column_id</parameter> that this
+     column sorts on when this column is selected for sorting.
+     Doing so makes the column header clickable.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_sort_column_id</function>
+     <function class="GtkTreeViewColumn">set_clickable</function>,
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_sort_indicator">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_sort_indicator</function></funcdef>
+     <paramdef>bool <parameter>setting</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets an arrow in the header indicating the column is sorted.
+   </shortdesc>
+   <desc>
+    <para>
+     Call this function with a setting of <literal>true</literal> to display
+     an arrow in the header button indicating the column is sorted.
+     Call
+     <function class="GtkTreeViewColumn">set_sort_order</function>
+     to change the direction of the arrow.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_sort_indicator</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_sort_order">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_sort_order</function></funcdef>
+     <paramdef><enumname>GtkSortType</enumname> <parameter>order</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Changes the appearance of the sort indicator.
+   </shortdesc>
+   <desc>
+    <para>
+     Changes the appearance of the sort indicator.
+    </para>
+    <para>
+     This does not actually sort the model. Use
+     <function class="GtkTreeViewColumn">set_sort_column_id</function> if you
+     want automatic sorting support. This function is primarily for custom
+     sorting behavior, and should be used in conjunction with
+     <function class="GtkTreeSortable">set_sort_column</function> to do that.
+     For custom models, the mechanism will vary.
+    </para>
+    <para>
+     The sort indicator changes direction to indicate normal sort or
+     reverse sort. Note that you must have the sort indicator enabled
+     to see anything when calling this function; see
+     <function class="GtkTreeViewColumn">set_sort_indicator</function>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_sort_order</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_spacing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_spacing</function></funcdef>
+     <paramdef>int <parameter>spacing</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the number of pixels to place between cell renderers.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the spacing field of the column, which is the number of
+     pixels to place between cell renderers packed into it.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_spacing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_title">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_title</function></funcdef>
+     <paramdef>string <parameter>title</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the title of the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the title of the column. If a custom widget has been set,
+     then this value is ignored.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_title</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_visible</function></funcdef>
+     <paramdef>bool <parameter>visible</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the visibility of the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the visibility of the column.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_visible</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeviewcolumn.method.set_widget">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_widget</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the widget in the header.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the widget in the header to be <parameter>widget</parameter>.
+     If widget is
+     <literal>null</literal>, then the header button is set with a
+     <classname>GtkLabel</classname> set to the title of the column.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeViewColumn">get_widget</function>
+    </para>
+   </desc>
+  </method>
+ 
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  </methods>
+
+
+ <properties>
+  <prop id="gtk.gtktreeviewcolumn.property.alignment" type="rw">
+   <propname>alignment</propname>
+   <proptype>double</proptype>
+   <shortdesc>
+    X Alignment of the column header text or widget.
+   </shortdesc>
+   <desc>
+    <para>
+     X Alignment of the column header text or widget.
+    </para>
+    <para>
+     Default: <literal>0</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.clickable" type="rw">
+   <propname>clickable</propname>
+   <proptype>bool</proptype>
+   <shortdesc>
+    Whether the header can be clicked.
+   </shortdesc>
+   <desc>
+    <para>
+     Whether the header can be clicked.
+    </para>
+    <para>
+     Default: <literal>false</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.expand" type="rw">
+   <propname>expand</propname>
+   <proptype>bool</proptype>
+   <shortdesc>
+    Column gets share of extra width allocated to the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Column gets share of extra width allocated to the widget.
+    </para>
+    <para>
+     Default: <literal>false</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.fixed-width" type="rw">
+   <propname>fixed-width</propname>
+   <proptype>int</proptype>
+   <shortdesc>
+    Current fixed width of the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Current fixed width of the column.
+    </para>
+    <para>
+     Default: <literal>1</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.max-width" type="rw">
+   <propname>max-width</propname>
+   <proptype>int</proptype>
+   <shortdesc>
+    Maximum allowed width of the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Maximum allowed width of the column.
+    </para>
+    <para>
+     Default: <literal>-1</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.min-width" type="rw">
+   <propname>min-width</propname>
+   <proptype>int</proptype>
+   <shortdesc>
+    Minimum allowed width of the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Minimum allowed width of the column.
+    </para>
+    <para>
+     Default: <literal>-1</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.reorderable" type="rw">
+   <propname>reorderable</propname>
+   <proptype>bool</proptype>
+   <shortdesc>
+    Whether the column can be reordered around the headers.
+   </shortdesc>
+   <desc>
+    <para>
+     Whether the column can be reordered around the headers.
+    </para>
+    <para>
+     Default: <literal>false</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.resizable" type="rw">
+   <propname>resizable</propname>
+   <proptype>bool</proptype>
+   <shortdesc>
+    Column is user-resizable.
+   </shortdesc>
+   <desc>
+    <para>
+     Column is user-resizable.
+    </para>
+    <para>
+     Default: <literal>false</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.sizing" type="rw">
+   <propname>sizing</propname>
+   <proptype><enumname>GtkTreeViewColumnSizing</enumname></proptype>
+   <shortdesc>
+    Resize mode of the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Resize mode of the column.
+    </para>
+    <para>
+     Default:
+     <optionname enum="GtkTreeViewColumnSizing">Gtk::TREE_VIEW_COLUMN_GROW_ONLY</optionname>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.sort-indicator" type="rw">
+   <propname>sort-indicator</propname>
+   <proptype>bool</proptype>
+   <shortdesc>
+    Whether to show a sort indicator.
+   </shortdesc>
+   <desc>
+    <para>
+     Whether to show a sort indicator.
+    </para>
+    <para>
+     Default: <literal>false</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.sort-order" type="rw">
+   <propname>sort-order</propname>
+   <proptype><enumname>GtkSortType</enumname></proptype>
+   <shortdesc>
+    Sort direction the sort indicator should indicate.
+   </shortdesc>
+   <desc>
+    <para>
+     Sort direction the sort indicator should indicate.
+    </para>
+    <para>
+     Default: <optionname enum="GtkSortType">Gtk::SORT_ASCENDING</optionname>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.spacing" type="rw">
+   <propname>spacing</propname>
+   <proptype>int</proptype>
+   <shortdesc>
+    Space which is inserted between cells.
+   </shortdesc>
+   <desc>
+    <para>
+     Space which is inserted between cells.
+    </para>
+    <para>
+     Default: <literal>0</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.title" type="rw">
+   <propname>title</propname>
+   <proptype>string</proptype>
+   <shortdesc>
+    Title to appear in column header.
+   </shortdesc>
+   <desc>
+    <para>
+     Title to appear in column header.
+    </para>
+    <para>
+     Default: <literal>""</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.visible" type="rw">
+   <propname>visible</propname>
+   <proptype>bool</proptype>
+   <shortdesc>
+    Whether to display the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Whether to display the column.
+    </para>
+    <para>
+     Default: <literal>true</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.widget" type="rw">
+   <propname>widget</propname>
+   <proptype><classname>GtkWidget</classname></proptype>
+   <shortdesc>
+    Widget to put in column header button instead of column title.
+   </shortdesc>
+   <desc>
+    <para>
+     Widget to put in column header button instead of column title.
+    </para>
+    <para>
+     Default: <literal>null</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtktreeviewcolumn.property.width" type="ro">
+   <propname>width</propname>
+   <proptype>int</proptype>
+   <shortdesc>
+    Current width of the column.
+   </shortdesc>
+   <desc>
+    <para>
+     Current width of the column.
+    </para>
+    <para>
+     Default: <literal/>
+    </para>
+   </desc>
+  </prop>
+ </properties>
+
+
+ <signals>
+  <signal id="gtk.gtktreeviewcolumn.signal.clicked">
+   <signalname>clicked</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkTreeViewColumn</classname> <parameter>treeviewcolumn</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The column header has been clicked.
+   </shortdesc>
+   <desc>
+    <para>
+     The column header has been clicked.
+    </para>
+   </desc>
+  </signal>
+ </signals>
+
+</classentry>

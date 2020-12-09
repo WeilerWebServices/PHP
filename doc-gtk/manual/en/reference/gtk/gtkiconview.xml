@@ -1,0 +1,1090 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.15 $ -->
+<classentry id="gtk.gtkiconview">
+ <classmeta>
+  <classtitle>GtkIconView</classtitle>
+  <classparent>GtkContainer</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkiconview.constructor.png"/>
+  <shortdesc>
+   Displays a list of icons in a grid.
+  </shortdesc>
+  <desc>
+   <para>
+    <classname>GtkIconView</classname> provides an alternative view on a list model: 
+    It displays the model as a grid of icons with labels, the way
+    you will already know it from a file manager.
+   </para>
+   <para>
+    Like <classname>GtkTreeView</classname>, it allows to select one or multiple items (depending 
+    on the selection mode, see <function class="GtkIconView">set_selection_mode</function>).
+    In addition to selection with the arrow keys, <classname>GtkIconView</classname>
+    supports rubberband selection, which is controlled by dragging the pointer.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkiconview.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkIconView</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>GtkIconView</classname> instance.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new <classname>GtkIconView</classname> instance. To make it 
+     actually display something, you need to add a data model (e.g. a 
+     <classname>GtkListStore</classname>) and some scroll bars.
+    </para>
+    <example>
+     <title><classname>GtkIconView</classname> filled with stock icons</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkiconview/constructor.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkiconview.method.get_column_spacing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_column_spacing</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the space between single columns in pixels.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the space between columns in pixels. The number of columns can
+     be set via <function class="GtkIconView">set_columns</function>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_column_spacing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_columns">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_columns</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The number of columns in the view.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the number of columns in the view.
+    </para>
+    <para>
+     0 means that the column number is determined automatically, based on the 
+     available space and the maximum width of a single column. Any other number
+     greater than zero is the real used number of columns - independent of
+     the available space. If there is not enough space for all the columns,
+     the view is scrolled.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_columns</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_item_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_item_width</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The width of a single item.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the space which a single item can occupy in width.
+     Counting begins at the left side of the icon.
+    </para>
+    <para>
+     The item width defaults to <literal>-1</literal>, meaning that the icon
+     view will determine the best suitable width.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_item_width</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_margin">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_margin</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The empty border around view.
+   </shortdesc>
+   <desc>
+    <para>
+     The margin of an icon view is an invisible border around the view.
+     Imagine an invisible box in which all items with their icons are
+     packed, and this box inside the icon view widget box. The margin
+     determines the space between the icon view widget box and this box.
+    </para>
+    <para>
+     If you are familiar with CSS: The margin is the same as the equally
+     named box property.
+    </para>
+    <para>
+     The default margin is <literal>6</literal>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_margin</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_markup_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_markup_column</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Column of the model in which markup is stored.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the column number of the list's model containing markup 
+     information to be displayed. The markup column must be of type 
+     string. If this property and the <fieldname>text-column</fieldname>
+     property are both set to column numbers, it overrides the text column.
+     If both are set to <literal>-1</literal>, no text is displayed.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_markup_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_model">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>
+      <classname>GtkTreeStore</classname> <function>get_model</function>
+     </funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The list's data model.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the list's data model in which the actual data are stored.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_model</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_orientation">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>
+      <enumname>GtkOrientation</enumname> <function>get_orientation</function>
+     </funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the orientation of the icon labels.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the orientation of the icon's label: 
+     <optionname enum="GtkOrientation">Gtk::ORIENTATION_HORIZONTAL</optionname>
+     means that the label is left of the icon, and 
+     <optionname enum="GtkOrientation">Gtk::ORIENTATION_VERTICAL</optionname>
+     shows the text below the icon.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_orientation</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_path_at_pos">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_path_at_pos</function></funcdef>
+     <paramdef>int <parameter>x</parameter></paramdef>
+     <paramdef>int <parameter>y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the path to the item at the given position.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the path to the item <parameter>x</parameter> pixels from the left
+     and <parameter>y</parameter> pixels from the top of the widget. If no item
+     is found at the given position, <literal>null</literal> will be returned.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_item_at_pos</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_pixbuf_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_pixbuf_column</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Model column number containing the pixbufs.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the number of the model column containing the pixbufs which are displayed.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_pixbuf_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_row_spacing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_row_spacing</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Space in pixels between rows.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the space in pixels between single rows.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_row_spacing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_selected_items">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_selected_items</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns an array of paths for the selected items.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns an arrary of paths for the selected items. Each element of the 
+     returned array corresponds to the path of one of the selected items. The
+     return value will be an array even if the selection mode is 
+     <optionname enum="GtkSelectionMode">Gtk::SELECTION_MULTIPLE</optionname>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_selection_mode</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_selection_mode">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GtkSelectionMode</enumname> <function>get_selection_mode</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Item selection mode.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the selection mode which determines how many items may be selected
+     at a time, and how selection works.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_selection_mode</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_spacing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_spacing</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Space in pixels between icon and label.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the space between icon and label. (Horizontal or vertical
+     depending on the <fieldname>orientation</fieldname>.)
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_spacing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.get_text_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_text_column</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Model column number containing the text for the labels.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the number of the model column which contains the
+     text to be displayed beside the icon.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">set_text_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.item_activated">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>item_activated</function></funcdef>
+     <paramdef>GtkTreePath <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Activates an item.
+   </shortdesc>
+   <desc>
+    <para>
+     Activates the item at the given path. Note that <emphasis>activate</emphasis>
+     does not mean <emphasis>select</emphasis>. Activation is something like an
+     internal, invisible selection.
+     <!-- FIXME: What is activation in reality? -->
+    </para>
+    <para>
+     Causes the <signalname class="GtkIconView">item-activated</signalname> signal
+     to be emitted.
+    </para>
+    <para>
+     See <function class="GtkIconView">select_path</function> if you want
+     to select an item.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.path_is_selected">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>path_is_selected</function></funcdef>
+     <paramdef><!-- FIXME: where is GtkTreePath described? -->GtkTreePath <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Checks if an item is selected.
+   </shortdesc>
+   <desc>
+    <para>
+     Checks if an item with a certain path is selected.
+    </para>
+    <para>
+     A tree path is a string of numbers and colons, e.g. 
+     <literal>0:1:0</literal> which would point to the first child
+     of the second child of the first item in a tree.
+     As we won't have trees here, a simple 
+     <informalexample>
+      <programlisting role="php">
+       <![CDATA[$iconview->path_is_selected(15);]]>
+      </programlisting>
+     </informalexample>
+     is enough to check if the fifteenth item is selected.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.select_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>select_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Selects all items.
+   </shortdesc>
+   <desc>
+    <para>
+     Selects all items in the view. Works only if the widget is
+     in the multiple <fieldname>selection-mode</fieldname>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">unselect_all</function>,
+     <function class="GtkIconView">select_path</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.select_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>select_path</function></funcdef>
+     <paramdef><!-- FIXME: link to the path explanation -->GtkTreePath <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Select an item in the view.
+   </shortdesc>
+   <desc>
+    <para>
+     Selects the item given in <literal>path</literal>. For example,
+     <informalexample>
+      <programlisting role="php">
+       <![CDATA[$iconview->select_path(23);]]>
+      </programlisting>
+     </informalexample>
+     would select the 23rd item in the list.
+    </para>
+    <note>
+     <simpara>
+      Counting begins at 0.
+     </simpara>
+    </note>
+    <para>
+     &seealso;
+     <function class="GtkIconView">unselect_path</function>,
+     <function class="GtkIconView">select_all</function>
+    </para>
+   </desc>
+  </method>
+<!--
+  <method id="gtk.gtkiconview.method.selected_foreach">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>selected_foreach</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DOES NOT EXIST!
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+-->
+  <method id="gtk.gtkiconview.method.set_column_spacing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_spacing</function></funcdef>
+     <paramdef>int <parameter>column_spacing</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the spacing between columns.
+   </shortdesc>
+   <desc>
+    <para>
+     Set the space in pixels between columns - space between the right edge 
+     of column <literal>n</literal> and the left edge of 
+     column <literal>n+1</literal>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_column_spacing</function>,
+     <function class="GtkIconView">set_row_spacing</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_columns">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_columns</function></funcdef>
+     <paramdef>int <parameter>columns</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the number of columns in the list.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the numnber of columns in the list. If the column number
+     is set to 0, it is determined automatically according to the width
+     of the widget itself and the column widths.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_columns</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_item_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_item_width</function></funcdef>
+     <paramdef>int <parameter>item_width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Width of an item.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the width of an item. The width of an item is the sum
+     of the icon's width and the label's width.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_item_width</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_margin">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_margin</function></funcdef>
+     <paramdef>int <parameter>margin</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Margin to the widget's border.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the margin of the view. The margin is the space between
+     the icon view's border and an invisible box around the items.
+    </para>
+    <para>
+     You can set the margin to values smaller than 0, but then the items
+     will be partly hidden.
+    </para>
+    <para>
+     If you are familiar with CSS: The margin here is the same as the
+     margin of a box.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_margin</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_markup_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_markup_column</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the model column containing the markup.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the column number of the <fieldname>model</fieldname>
+     which contains the markup data. It overrides the 
+     <fieldname>text-column</fieldname>, causing the markup and not the 
+     normal text to be displayed if both are set.
+    </para>
+    <para>
+     Set it to <literal>-1</literal> to disable it. If both markup and
+     text columns are <literal>-1</literal> (disabled), no label is shown.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_markup_column</function>,
+     <function class="GtkIconView">set_text_column</function>,
+     <function class="GtkIconView">set_pixbuf_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_model">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_model</function></funcdef>
+     <paramdef><classname>GtkTreeStore</classname> <parameter>model</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the data model.
+   </shortdesc>
+   <desc>
+    <para>
+     Set the data model containing the actual data. The model would have column
+     0 as pixbuf column and column 1 as text column.
+    </para>
+    <example>
+     <title>Creating a model with pixbufs</title>
+     <programlisting role="php">
+<![CDATA[
+$iv = new GtkIconView();
+$model = new GtkListStore(GdkPixbuf::gtype, Gobject::TYPE_STRING);
+$iv->set_model($model);
+]]>
+     </programlisting>
+    </example>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_model</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_orientation">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_orientation</function></funcdef>
+     <paramdef><enumname>GtkOrientation</enumname> <parameter>orientation</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the orientation of label relative to the icon.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the orientation of the label relative to the icon.
+     If it's <literal>Gtk::ORIENTATION_HORIZONTAL</literal>, the label
+     will be placed right of the icon. In the case of
+     <literal>Gtk::ORIENTATION_VERTICAL</literal>, the label text will be
+     below the icon.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_orientation</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_pixbuf_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_pixbuf_column</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the model column in which pixbufs are located.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the column of the model in which pixbufs are located.
+     Set it to <literal>-1</literal> to deactivate it - no icons will
+     be shown then.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_pixbuf_column</function>,
+     <function class="GtkIconView">set_text_column</function>,
+     <function class="GtkIconView">set_markup_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_row_spacing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_row_spacing</function></funcdef>
+     <paramdef>int <parameter>row_spacing</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the spacing between rows.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the spacing in pixels between single rows.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_row_spacing</function>,
+     <function class="GtkIconView">set_column_spacing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_selection_mode">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_selection_mode</function></funcdef>
+     <paramdef><enumname>GtkSelectionMode</enumname> <parameter>mode</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set mode of selection.
+   </shortdesc>
+   <desc>
+    <para>
+     Set the selection mode which determines how many items
+     may be selected at once and how the selection is handled.
+    </para>
+    <para>
+     Only <literal>Gtk::SELECTION_MULTIPLE</literal> allows to select
+     multiple icons and activates <emphasis>rubber selection</emphasis>
+     (open a selection rectangle by dragging the mouse).
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_selection_mode</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_spacing">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_spacing</function></funcdef>
+     <paramdef>int <parameter>spacing</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the space between icon and label.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the space between the icon and the label.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_spacing</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.set_text_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_text_column</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set model column in which the text is located.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the number of the column in the model which contains
+     the texts for the icon's labels. Set it to <literal>-1</literal>
+     to deactivate text.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">get_text_column</function>,
+     <function class="GtkIconView">set_markup_column</function>,
+     <function class="GtkIconView">set_pixbuf_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.unselect_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unselect_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Unselects all items.
+   </shortdesc>
+   <desc>
+    <para>
+     After calling this function, no item is selected.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">select_all</function>,
+     <function class="GtkIconView">unselect_path</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkiconview.method.unselect_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unselect_path</function></funcdef>
+     <paramdef>GtkTreePath <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Unselects a single item.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the selected-state of the given item to unselected.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkIconView">select_path</function>,
+     <function class="GtkIconView">unselect_all</function>
+    </para>
+   </desc>
+  </method>
+
+ <method id="gtk.gtkiconview.method.selected_foreach">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>selected_foreach</function></funcdef>
+     <paramdef><parameter>callback</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkiconview.signal.activate-cursor-item">
+   <signalname>activate-cursor-item</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkIconView</classname> <parameter>iconview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The current cursor item has been activated.
+   </shortdesc>
+   <desc>
+    <para>
+     This signal tells you that the current cursor item has
+     been activated with <function>item_activated</function>.
+    </para>
+    <para>
+     See <signalname class="GtkIconView">move-cursor</signalname> for an
+     explanation of what a <emphasis>cursor</emphasis> is.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkiconview.signal.item-activated">
+   <signalname>item-activated</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkIconView</classname> <parameter>iconview</parameter></paramdef>
+     <paramdef><!-- was: GtkTreePath -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    An item has been activated (not selected)
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when an item has been activated with <function>item_activated</function>.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkiconview.signal.move-cursor">
+   <signalname>move-cursor</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkIconView</classname> <parameter>iconview</parameter></paramdef>
+     <paramdef><enumname>GtkMovementStep</enumname> <parameter>movement</parameter></paramdef>
+     <paramdef>int <parameter>direction<!-- FIXME: is it really the direction? --></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Cursor (not selection) has moved.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the cursor (not the selection) has moved.
+    </para>
+    <para>
+     You can move the cursor by pressing <literal>Ctrl</literal> and one of the arrow keys:
+     There will be a dotted rectangle around the label of the current "cursor" item.
+     By pressing <literal>space</literal> you can (un)select it.
+    </para>
+    <para>
+     The <literal>movement</literal> parameter will be <literal>1</literal> 
+     (Gtk::MOVEMENT_VISUAL_POSITIONS) when moving the cursor left or right, and
+     <literal>3</literal> (Gtk::MOVEMENT_DISPLAY_LINES) when moving up or down.
+    </para>
+    <para>
+     FIXME: The second parameter seems to be <literal>-1</literal> or 
+     <literal>1</literal> only, depending on the direction
+     (backward or forward) you move.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkiconview.signal.select-all">
+   <signalname>select-all</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkIconView</classname> <parameter>iconview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME<!--: When do I get this? There is always a selection-changed but no select-all!-->
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkiconview.signal.select-cursor-item">
+   <signalname>select-cursor-item</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkIconView</classname> <parameter>iconview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkiconview.signal.selection-changed">
+   <signalname>selection-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkIconView</classname> <parameter>iconview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the selection has changed.
+   </shortdesc>
+   <desc>
+    <para>
+     This signal is emitted when the user (or the program) has changed the
+     selection by selecting or unselecting one or more items.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkiconview.signal.set-scroll-adjustments">
+   <signalname>set-scroll-adjustments</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkIconView</classname> <parameter>iconview</parameter></paramdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    When the widget gets scroll bars.
+   </shortdesc>
+   <desc>
+    <para>
+     The signal is emitted when the view gets scrollbars set.
+    </para>
+    <note>
+     <para>
+      It does <emphasis>not</emphasis> occur when the user scrolls the list.
+     </para>
+    </note>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkiconview.signal.toggle-cursor-item">
+   <signalname>toggle-cursor-item</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkIconView</classname> <parameter>iconview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Current cursor item changes its selection state.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the item of the current cursor changes its selection state
+     (get selected or unselected).
+    </para>
+    <para>
+     See <signalname class="GtkIconView">move-cursor</signalname> for an
+     explanation of what a <emphasis>cursor</emphasis> is.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkiconview.signal.unselect-all">
+   <signalname>unselect-all</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkIconView</classname> <parameter>iconview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME <!--: When do I get this? There is always a selection-changed but no unselect-all!-->
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+
+ </signals>
+
+</classentry>

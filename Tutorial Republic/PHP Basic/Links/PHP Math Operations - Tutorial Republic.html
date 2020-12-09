@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/php.dwt.php" codeOutsideHTMLIsLocked="false" -->
+<head>
+	<!-- InstanceBeginEditable name="doctitle" -->
+    <title>PHP Math Operations - Tutorial Republic</title>    
+	<!-- InstanceEndEditable -->
+    	<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="fb:admins" content="100001054961582" />
+<meta property="fb:app_id" content="1404574483159557" />
+<meta property="og:image" content="/lib/images/signature.png" />
+<link type="image/x-icon" href="/favicon.ico" rel="shortcut icon" />
+<style>
+html,body,h1,h2,h3,h4,h5,h6,p,blockquote,pre,img{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}
+html,body{min-height:100%}
+p{margin:0 0 12px}
+ol,ul{margin:0 0 12px}
+a,a:active,a:visited{outline:none;color:#1db79f;text-decoration:none}
+a img{border:none;outline:none}
+p code,table td:last-child code,.content ul li code,code.mark{padding:2px 4px;color:#333;background-color:#f1f1f1;border-radius:4px}
+a code{color:inherit;background:none;padding:0}
+table{border-collapse:collapse;border-spacing:0}
+table td{vertical-align:top}
+body{min-width:1300px;color:#414141;background:#fafafa;font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.7}
+input,select,textarea,button,div,span,a{box-sizing:border-box}
+h1,h2,h3,h4{color:#262626;font-weight:500;margin:20px 0 10px;line-height:1.5;font-weight:600}
+h1{font-size:34px;margin-top:17px}
+h2{font-size:28px}
+h3{font-size:22px}
+.space{margin-bottom:25px!important}
+.break{margin-bottom:15px!important}
+.text-center{text-align:center!important}
+.scroll{height:195px;overflow-y:scroll}
+.scroll.large{height:245px}
+.scroll.xlarge{height:290px}
+.scroll.xxlarge{height:340px}
+sup{font-size:13px}
+.leaderboard{padding-top:8px;position:relative}
+.ad-container{height:90px;overflow:hidden}
+.intro-image img{display:block;padding:10px 0 25px;max-width:100%}
+.clearfix::after{content:".";display:block;height:0;clear:both;visibility:hidden}
+code,.code,.syntax,.green-box,.sky-box,.gray-box,.pink-box,.red-box,.at-rule,.codebox pre,.console-output{font-size:16px;font-family:Consolas,Monaco,Courier,monospace}
+.console-output{margin:15px 0}
+hr{border:none;border-bottom:1px solid #e7e9ed;height:1px;margin:30px 0}
+.summary,.topic{border:1px solid #eaeaea;border-width:1px 0;margin:20px 0;padding:10px 0;color:#8e9aa6;line-height:1.5}
+h2.section-title span{display:inline-block;border-bottom:4px solid #c9d7e0;padding:0 50px 12px 0}
+.wrapper{width:1300px;padding:0 15px;margin:0 auto}
+.header{background:#23384e;padding:16px 0}
+input.search{background:#fff;border:0 none;color:#807E7E;float:left;height:38px;line-height:26px;font-size:14px;margin:0 0 0 12px;outline:medium none;padding:6px 14px;width:500px;border-radius:2px;box-shadow:0 0 1px rgba(0,0,0,0.6);font-family:inherit}
+.search-btn{color:rgba(0,0,0,.6);background:#ebebeb;border:none;outline:none;cursor:pointer;float:left;height:38px;line-height:46px;width:44px;display:block;margin-left:-2px;border-radius:0 2px 2px 0;box-shadow:0 0 1px rgba(0,0,0,0.7)}
+.logo{width:304px}
+.logo img{height:44px;margin:-3px 0;display:block}
+.site-search{float:left;margin-left:100px}
+.menu{background-color:#f5f5f5;box-shadow:0 1px 1px rgba(0,0,0,.15);position:relative;z-index:9}
+.menu a{color:#666;display:inline-block;padding:0 10px;text-decoration:none;font-size:14px;font-weight:600;height:48px;line-height:48px}
+.menu a:first-child{margin-left:-10px}
+.menu a.tool-link{float:right;display:inline-block;border-radius:30px;line-height:28px;position:relative;height:auto;top:9px;padding:0 12px;color:#1ebba3;border:1px double #1ebba3}
+.fl,.logo{float:left}
+.leftcolumn{width:240px;float:left;font-size:16px;color:#4f4f4f}
+.centercolumn{width:850px;float:left}
+.content{background:#fff;padding:20px 40px;border:1px solid #dedede;border-top:none;border-radius:1px}
+.sidebar{width:160px;float:left;padding-top:28px;margin-left:20px;position:relative}
+.leftcolumn .segment{margin:16px 0 12px;position:relative;font-size:18px;font-weight:600;line-height:normal}
+.leftcolumn a{color:#4f4f4f;font-size:16px;line-height:26px;display:block;border-bottom:1px solid transparent}
+.leftcolumn ul{list-style:none;padding:0;margin:0}
+.segment,.chapters,.chapters a{float:left;clear:both}
+h1 code,h2 code,h3 code{font:inherit}
+.color-box{margin:15px 0;padding-left:20px}
+.note-box,.warning-box,.tip-box{padding:8px 8px 3px 26px}
+.info-tab{float:left;margin-left:-23px}
+.content ul li{margin-top:7px}
+.extra{padding-top:5px}
+.green-box,.sky-box,.gray-box,.red-box,.pink-box{color:#000;margin-top:15px;padding:10px;background-color:#f6f8fa;border:1px solid #d7e2ec}
+.example{background:#f4f5f6;padding:3px;margin:15px 0}
+.codebox{background:#fff;border:1px solid #ddd}
+.codebox-title{height:41px;padding-left:12px;border-bottom:1px solid #ddd;background:#f5f5f5}
+.codebox-title h4{margin:0;font-size:18px;line-height:40px;float:left;display:inline;font-weight:500}
+a.try-btn,a.download-btn{width:140px;height:40px;color:#333;font-size:15px;line-height:41px;font-weight:600;text-align:center;text-decoration:none;float:right;display:block;border-left:1px solid #ddd;background:rgba(27,31,35,0.08);box-sizing:border-box;font-family:Arial,sans-serif}
+a.try-btn span{font-size:18px;line-height:normal}
+.hide,.code-style,.box-size,.bottom-link,.footer,.code-style,.snippets,.report-error,.badge,.social,.ad-label,.mobile-only{display:none}
+.skyscraper{width:160px;height:600px;overflow:hidden;margin-bottom:20px;background:#ebecf0}
+.bottom-ad{margin-top:46px;padding:24px;position:relative;background:url(/lib/images/smooth-line.png) no-repeat center #f9f9f9}
+.rectangle-left,.rectangle-right{min-width:336px;min-height:280px;overflow:hidden}
+.fr,a.previous-page,a.next-page,.rectangle-right,.topic-nav{float:right}
+a.previous-page,a.next-page{width:32px;height:32px;line-height:30px}
+.shadow{background:#F7F8F9;padding:3px;margin:10px 0}
+.syntax{color:#2f4959;padding:13px 18px;background:#F9F9FA;border:1px solid #ddd;font-size:15px}
+code[class*="language-"],pre[class*="language-"]{color:#000;background:none;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;text-align:left;white-space:pre;word-break:normal;word-wrap:normal;line-height:1.5;tab-size:4;hyphens:none}
+pre[class*="language-"]{position:relative;margin:.5em 0;overflow:visible;padding:0}
+pre[class*="language-"]>code{position:relative;border-left:10px solid #358ccb;box-shadow:-1px 0 0 0 #358ccb,0 0 0 1px #dfdfdf;background-color:#fdfdfd;background-image:linear-gradient(transparent 50%,rgba(69,142,209,0.04) 50%);background-size:3em 3em;background-origin:content-box;background-attachment:local}
+code[class*="language"]{max-height:inherit;height:inherit;padding:0 1em;display:block;overflow:auto}
+:not(pre) > code[class*="language-"]{position:relative;padding:.2em;border-radius:.3em;color:#c92c2c;border:1px solid rgba(0,0,0,0.1);display:inline;white-space:normal}
+pre[class*="language-"].line-numbers{padding-left:0}
+pre[class*="language-"].line-numbers code{padding-left:3.8em}
+pre[class*="language-"].line-numbers .line-numbers-rows{left:0}
+pre[class*="language-"][data-line]{padding-top:0;padding-bottom:0;padding-left:0}
+pre[data-line] code{position:relative;padding-left:4em}
+pre .line-highlight{margin-top:0}
+pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber;white-space:pre-wrap!important}
+pre.line-numbers > code{position:relative;white-space:inherit}
+.line-numbers-rows,.codebox pre.inactive{display:none}
+.codebox pre.syntax-highlighter{margin:0;padding:0;overflow:auto}
+pre.line-numbers .line-numbers-rows{border-right:3px solid #6CE26C}
+.codebox pre.syntax-highlighter > code{box-shadow:none!important;padding-left:3.8em;background-image:linear-gradient(transparent 50%,#F8F8F8 50%);font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace!important;font-size:16px;line-height:1.5}
+.codebox pre.syntax-highlighter,.codebox pre.syntax-highlighter code{border:none;width:100%;box-sizing:border-box}
+pre.line-numbers code,pre.line-numbers .line-numbers-rows{padding-top:2px;padding-bottom:2px}
+.preview-box{padding:15px;text-align:center;cursor:pointer;overflow:hidden;background:#FFF;border:1px solid #e6e6e6}
+.preview-box a,.preview-box img{display:block;margin:0 auto}
+.download-box{text-align:center;padding:20px 0;margin:20px 0 10px}
+.output-box{border-color:#d4d4d4;border-style:solid;border-width:1px 0;padding:5px 15px;overflow:hidden;background:#fff;margin:10px 0}
+.demo-box{margin-top:15px}
+.subhead{border-bottom:3px solid #DCE3EB;margin-bottom:15px;padding-bottom:10px}
+table.data,table.description{width:100%;font-size:92%}
+table.data th{color:#000;padding:8px 7px;text-align:left;font-size:15px;background:#F8F8F8}
+table.data td{color:#484848;padding:5px 7px;background:#fff}
+table.data th,table.data td{vertical-align:top;border:1px solid #DCE3EB}
+table.data tr.section th,table.data td.section{font-size:15px;background:#f0f4f7}
+table.no-wrap tr td:first-child{white-space:nowrap}
+@media screen and (max-width: 1280px) {
+body{min-width:1260px}
+.wrapper{width:1260px}
+.leftcolumn{width:230px}
+.centercolumn{width:820px}
+}
+@media screen and (max-width: 800px) {
+body{min-width:100%;max-width:100%;padding-top:46px}
+.wrapper{width:100%;padding:0}
+.header{height:46px;padding:5px 0;position:fixed;top:0;left:0;right:0;width:100%;z-index:99}
+.logo{width:auto;display:block;padding:6px 0 0 60px;position:absolute;left:0;z-index:100}
+.logo img{height:30px}
+.menu{width:100%;padding-left:12px;padding-right:12px;overflow-x:auto;white-space:nowrap}
+.centercolumn{width:100%;float:none}
+.content{padding:10px;border-width:0 0 1px 0}
+.content img{max-width:100%;height:auto}
+.content pre{max-width:100%;overflow:hidden}
+.skyscraper{display:inline-block}
+.shadow,.example,.console-output{max-width:100%;overflow-x:auto}
+.codebox-title{position:relative}
+.codebox.multi-style-mode pre{padding-top:7px;margin-top:36px;border-top:1px solid #ddd}
+.bottom-ad{height:auto;background:none;padding:30px 0 0;margin:40px 0 0;text-align:center;position:relative}
+.rectangle-left,.rectangle-right{float:none;display:inline-block;margin:10px auto;background:#EDEEF2}
+.leftcolumn,.footer,.social,.site-search,.code-style,.menu a.tool-link,.backdrop{display:none}
+.summary,.topic{padding:5px 0;margin:10px 0}
+.leftcolumn,.centercolumn,.sidebar{float:none}
+.header,.menu,.centercolumn,.footer,.appeal-text{width:100%}
+a.try-btn,a.download-btn{width:130px}
+.native-unit{margin-bottom:30px}
+.sidebar{margin: 25px auto 0}
+.overview{padding-right:0}
+.scroll-pane{overflow-x:auto}
+table.data{min-width:480px}
+table.data pre{display:inline;white-space:normal}
+table tr th,table tr td{width:auto!important}
+.preview-box{padding:6px}
+.leaderboard{margin:20px 0}
+h1{font-size:30px}
+h2{font-size:24px}
+h3{font-size:20px}
+.codebox pre.syntax-highlighter{overflow-x:auto}
+.codebox pre.syntax-highlighter > code{width:614px;height:auto;overflow-x:hidden}
+}
+@media screen and (min-width: 801px) {
+.site-search,.leftcolumn,.social{display:block!important}
+.backdrop{display:none!important}
+.hide-scroll{overflow-x:hidden!important}
+}</style>    
+    <!-- InstanceBeginEditable name="head" -->
+    <!-- InstanceEndEditable -->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-40117907-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-40117907-1');
+</script></head>
+<body>
+    <!--Header-->
+    
+<div class="header">
+    <div class="wrapper clearfix">
+        <button type="button" class="open-menu mobile-only"><i class="icon-menu"></i></button>
+        <div class="logo">
+            <a href="https://www.tutorialrepublic.com/"><img src="/lib/images/logo.svg" alt="TutorialRepublic" /></a>
+        </div>
+        <div class="site-search">
+            <form action="https://www.google.com/search" method="get" target="_blank" class="clearfix">
+                <input type="hidden" value="www.tutorialrepublic.com" name="sitesearch" />
+                <input type="text" name="q" placeholder="Search topics, tutorials, questions and answers..." id="searchInput" class="search" />
+                <button type="submit" class="search-btn"><span class="icon-search"></span></button>
+            </form>
+        </div>
+        <div class="social">                
+            <a href="https://www.facebook.com/tutorialrepublic" target="_blank" title="Join us on Facebook"><i class="icon-facebook"></i></a>
+            <a href="https://twitter.com/tutrepublic" target="_blank" title="Follow us on Twitter"><i class="icon-twitter"></i></a>
+            <a href="/contact-us.php" target="_blank" title="Send us an Email"><i class="icon-mail"></i></a>
+        </div>
+        <button type="button" class="open-search mobile-only">
+            <i class="icon-search"></i>
+        </button>
+    </div>    
+</div>
+<div class="menu">
+    <div class="wrapper">
+        <a href="//www.tutorialrepublic.com" title="Home Page">HOME</a>
+        <a href="/html-tutorial/" title="HTML Tutorial">HTML5</a>            
+        <a href="/css-tutorial/" title="CSS Tutorial">CSS3</a>
+        <a href="/javascript-tutorial/" title="JavaScript Tutorial">JAVASCRIPT</a>
+        <a href="/jquery-tutorial/" title="jQuery Tutorial">JQUERY</a>
+        <a href="/twitter-bootstrap-tutorial/" title="Bootstrap Tutorial">BOOTSTRAP4</a>
+        <a href="/php-tutorial/" title="PHP Tutorial">PHP7</a> 
+        <a href="/sql-tutorial/" title="SQL Tutorial">SQL</a>
+        <a href="/references.php" title="Web References">REFERENCES</a>
+        <a href="/practice-examples.php" title="Practice Examples and Demos">EXAMPLES</a>
+        <a href="/faq.php" title="Frequently Asked Questions and Answers">FAQ</a>
+        <a href="/snippets/gallery.php" title="Bootstrap Code Snippets" target="_blank">SNIPPETS</a>
+        <a href="/codelab.php" class="tool-link" target="_blank">Online HTML Editor</a>
+    </div>        
+</div>    <!--End:Header-->
+    <div class="wrapper clearfix">
+        <div class="leftcolumn" id="myNav">
+		
+        <div class="segment"><span>PHP</span> BASIC</div>
+<div class="chapters">
+    <a href="/php-tutorial/">PHP Introduction</a>
+    <a href="/php-tutorial/php-get-started.php">PHP Getting Started</a>
+    <a href="/php-tutorial/php-syntax.php">PHP Syntax</a>
+    <a href="/php-tutorial/php-variables.php">PHP Variables</a>
+	<a href="/php-tutorial/php-constants.php">PHP Constants</a>
+    <a href="/php-tutorial/php-echo-and-print-statements.php">PHP Echo and Print</a>
+	<a href="/php-tutorial/php-data-types.php">PHP Data Types</a>
+    <a href="/php-tutorial/php-strings.php">PHP Strings</a>
+    <a href="/php-tutorial/php-operators.php">PHP Operators</a>
+    <a href="/php-tutorial/php-if-else-statements.php">PHP If&hellip;Else</a>
+    <a href="/php-tutorial/php-switch-case-statements.php">PHP Switch&hellip;Case</a>
+    <a href="/php-tutorial/php-arrays.php">PHP Arrays</a>
+    <a href="/php-tutorial/php-sorting-arrays.php">PHP Sorting Arrays</a>    
+    <a href="/php-tutorial/php-loops.php">PHP Loops</a>
+    <a href="/php-tutorial/php-functions.php">PHP Functions</a>
+	<a href="/php-tutorial/php-math-operations.php">PHP Math Operations</a>
+    <a href="/php-tutorial/php-get-and-post.php">PHP GET and POST</a>
+</div>
+<div class="segment"><span>PHP</span> ADVANCED</div>
+<div class="chapters">
+    <a href="/php-tutorial/php-date-and-time.php">PHP Date and Time</a>
+    <a href="/php-tutorial/php-include-files.php">PHP Include Files</a>
+    <a href="/php-tutorial/php-file-system.php">PHP File system</a>
+	<a href="/php-tutorial/php-parsing-directories.php">PHP Parsing Directories</a>
+    <a href="/php-tutorial/php-file-upload.php">PHP File Upload</a>
+	<a href="/php-tutorial/php-file-download.php">PHP File Download</a>
+    <a href="/php-tutorial/php-cookies.php">PHP Cookies</a> 
+    <a href="/php-tutorial/php-sessions.php">PHP Sessions</a>       
+    <a href="/php-tutorial/php-send-email.php">PHP Send Email</a>
+    <a href="/php-tutorial/php-form-handling.php">PHP Form Handling</a>
+    <a href="/php-tutorial/php-form-validation.php">PHP Form Validation</a>
+	<a href="/php-tutorial/php-filters.php">PHP Filters</a>
+    <a href="/php-tutorial/php-error-handling.php">PHP Error Handling</a>
+	<a href="/php-tutorial/php-classes-and-objects.php">PHP Classes and Objects</a>
+	<a href="/php-tutorial/php-magic-constants.php">PHP Magic Constants</a>
+	<a href="/php-tutorial/php-json-parsing.php">PHP JSON Parsing</a>
+	<a href="/php-tutorial/php-regular-expressions.php">PHP Regular Expressions</a>
+	<a href="/php-tutorial/php-exception-handling.php">PHP Exception Handling</a>
+</div>
+<div class="segment"><span>PHP</span> &amp; MySQL DATABASE</div>
+<div class="chapters">
+    <a href="/php-tutorial/php-mysql-introduction.php">PHP MySQL Introduction</a>
+    <a href="/php-tutorial/php-mysql-connect.php">PHP MySQL Connect</a>
+    <a href="/php-tutorial/php-mysql-create-database.php">PHP MySQL Create Database</a>
+	<a href="/php-tutorial/php-mysql-create-table.php">PHP MySQL Create Table</a>
+    <a href="/php-tutorial/php-mysql-insert-query.php">PHP MySQL Insert</a>	
+	<a href="/php-tutorial/php-mysql-prepared-statements.php">PHP MySQL Prepared</a>
+	<a href="/php-tutorial/php-mysql-last-inserted-id.php">PHP MySQL Last Inserted ID</a>
+    <a href="/php-tutorial/php-mysql-select-query.php">PHP MySQL Select</a>
+    <a href="/php-tutorial/php-mysql-where-clause.php">PHP MySQL Where</a>
+	<a href="/php-tutorial/php-mysql-limit-clause.php">PHP MySQL Limit</a>        
+    <a href="/php-tutorial/php-mysql-order-by-clause.php">PHP MySQL Order By</a>
+    <a href="/php-tutorial/php-mysql-update-query.php">PHP MySQL Update</a>
+    <a href="/php-tutorial/php-mysql-delete-query.php">PHP MySQL Delete</a>
+	<a href="/php-tutorial/php-mysql-crud-application.php">PHP&thinsp;MySQL&thinsp;CRUD Application</a>
+	<a href="/php-tutorial/php-mysql-ajax-live-search.php">PHP MySQL Ajax Search</a>
+	<a href="/php-tutorial/php-mysql-login-system.php">PHP MySQL Login System</a>
+</div>
+<div class="segment"><span>PHP</span> EXAMPLES</div>
+<div class="chapters">
+    <a href="/php-examples.php">PHP Practice Examples</a>
+	<a href="/faq.php#php-mysql">PHP FAQ's Answers</a>
+</div>
+<div class="segment"><span>PHP</span> REFERENCE</div>
+<div class="chapters">
+    <a href="/php-reference/php-string-functions.php">PHP String Functions</a>
+    <a href="/php-reference/php-array-functions.php">PHP Array Functions</a>
+    <a href="/php-reference/php-file-system-functions.php">PHP File System Functions</a>
+    <a href="/php-reference/php-date-and-time-functions.php">PHP Date/Time Functions</a>
+    <a href="/php-reference/php-calendar-functions.php">PHP Calendar Functions</a>
+    <a href="/php-reference/php-mysqli-functions.php">PHP MySQLi Functions</a>
+    <a href="/php-reference/php-filters.php">PHP Filters</a>
+    <a href="/php-reference/php-error-levels.php">PHP Error Levels</a>
+	<a href="/references.php" class="more">More references</a>
+</div>        
+                </div>
+        <div class="centercolumn">
+            <!--Text Content-->
+            <div class="content">
+                <div class="leaderboard">
+                    
+<div class="ad-label">Advertisements</div>
+<div class="ad-container">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Responsive Leaderboard -->
+    <ins class="adsbygoogle"
+            style="display:inline-block;max-width:728px;width:100%;height:90px"
+            data-ad-client="ca-pub-9107540490929984"
+            data-ad-slot="4302666817"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+<script>
+    try {
+        fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+        return true;
+        }).catch(function(e) {
+        var contentBox = document.getElementsByClassName("content")[0];
+        contentBox.insertAdjacentHTML('afterbegin', '<div id="carbon-block" style="width:100%;height:90px;"></div>');
+        var carbonScript = document.createElement("script");
+        carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CE7D6K3M&placement=wwwtutorialrepubliccom";
+        carbonScript.id = "_carbonads_js";
+        document.getElementById("carbon-block").appendChild(carbonScript);
+        var cssLink = document.createElement("link");
+        cssLink.rel = "stylesheet";
+        cssLink.href = "/lib/styles/carbon.css";
+        (document.getElementsByTagName("head")[0]).appendChild(cssLink);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+</script>                </div>
+                <!-- InstanceBeginEditable name="main_content" -->
+                <a href="php-functions.php" class="previous-page" title="Go to Previous Page"></a>
+                <a href="php-get-and-post.php" class="next-page" title="Go to Next Page"></a>
+                <h1>PHP <span>Math Operations</span></h1>
+                <p class="summary">In this tutorial you will learn how to perform mathematical operations in PHP.</p>
+                <h2>Performing Math Operations</h2>
+				<p>PHP has several built-in functions that help you perform anything from simple additions or subtraction to advanced calculations. You've already seen how to perform basic mathematical operations in <a href="php-operators.php">PHP operators</a> chapter. Let's check out one more example:</p>
+                <!--Code box-->
+                <div class="example">
+                    <div class="codebox">
+                        <div class="codebox-title"><h4>Example</h4><a href="../codelab.php?topic=php&amp;file=basic-math-operations" target="_blank" class="try-btn" title="Run this code to view the output">Run this code <span>&raquo;</span></a></div>
+                        <pre class="syntax-highlighter line-numbers"><code class="language-php">&lt;?php
+echo 7 + 3; // 0utputs: 10
+echo 7 - 2; // 0utputs: 5
+echo 7 * 2; // 0utputs: 14
+echo 7 / 2; // 0utputs: 3.5
+echo 7 % 2; // 0utputs: 1
+?&gt;</code></pre>
+                    </div>
+                </div>
+                <!--End:Code box-->
+				<p>Every math operation has a certain precedence level; generally multiplication and division are performed before addition and subtraction. However, parentheses can alter this precedence; expressions enclosed within parentheses are always evaluated first, regardless of the operation's precedence level, as demonstrated in the following example:</p>
+				<!--Code box-->
+                <div class="example">
+                    <div class="codebox">
+                        <div class="codebox-title"><h4>Example</h4><a href="../codelab.php?topic=php&amp;file=change-operator-precedence-using-parentheses" target="_blank" class="try-btn" title="Run this code to view the output">Run this code <span>&raquo;</span></a></div>
+                        <pre class="syntax-highlighter line-numbers"><code class="language-php">&lt;?php
+echo 5 + 4 * 10;         // 0utputs: 45
+echo (5 + 4) * 10;       // 0utputs: 90
+echo 5 + 4 * 10 / 2;     // 0utputs: 25
+echo 8 * 10 / 4 - 2;     // 0utputs: 18
+echo 8 * 10 / (4 - 2);   // 0utputs: 40
+echo 8 + 10 / 4 - 2;     // 0utputs: 8.5
+echo (8 + 10) / (4 - 2); // 0utputs: 9
+?&gt;</code></pre>
+                    </div>
+                </div>
+                <!--End:Code box-->
+				<p class="space">In the following section we're going to look at some built-in PHP functions that are most frequently used in performing mathematical operations.</p>
+				<hr />
+				<h2>Find the Absolute Value of a Number</h2>
+				<p>The absolute value of an <a href="php-data-types.php#integer">integer</a> or a <a href="php-data-types.php#float">float</a> can be found with the <code>abs()</code> function, as demonstrated in the following example:</p>
+				<!--Code box-->
+                <div class="example">
+                    <div class="codebox">
+                        <div class="codebox-title"><h4>Example</h4><a href="../codelab.php?topic=php&amp;file=get-absolute-value-of-a-number" target="_blank" class="try-btn" title="Run this code to view the output">Run this code <span>&raquo;</span></a></div>
+                        <pre class="syntax-highlighter line-numbers"><code class="language-php">&lt;?php
+echo abs(5);    // 0utputs: 5 (integer)
+echo abs(-5);   // 0utputs: 5 (integer)
+echo abs(4.2);  // 0utputs: 4.2 (double/float)
+echo abs(-4.2); // 0utputs: 4.2 (double/float)
+?&gt;</code></pre>
+                    </div>
+                </div>
+                <!--End:Code box-->
+				<p>As you can see if the given number is negative, the valued returned is positive. But, if the number is positive, this function simply returns the number.</p>
+				<hr />
+				<h2>Round a Fractional Value Up or Down</h2>
+				<p>The <code>ceil()</code> function can be used to round a fractional value up to the next highest integer value, whereas the <code>floor()</code> function can be used to round a fractional value down to the next lowest integer value, as demonstrated in the following example:</p>
+				<!--Code box-->
+                <div class="example">
+                    <div class="codebox">
+                        <div class="codebox-title"><h4>Example</h4><a href="../codelab.php?topic=php&amp;file=get-ceil-and-floor-value-of-a-number" target="_blank" class="try-btn" title="Run this code to view the output">Run this code <span>&raquo;</span></a></div>
+                        <pre class="syntax-highlighter line-numbers"><code class="language-php">&lt;?php
+// Round fractions up
+echo ceil(4.2);    // 0utputs: 5
+echo ceil(9.99);   // 0utputs: 10
+echo ceil(-5.18);  // 0utputs: -5
+ 
+// Round fractions down
+echo floor(4.2);    // 0utputs: 4
+echo floor(9.99);   // 0utputs: 9
+echo floor(-5.18);  // 0utputs: -6
+?&gt;</code></pre>
+                    </div>
+                </div>
+                <!--End:Code box-->
+				<hr />
+				<h2>Find the Square Root of a Number</h2>
+				<p>You can use the <code>sqrt()</code> function to find the square root of a positive number. This function returns a special value <code>NAN</code> for negative numbers. Here's an example:</p>
+				<!--Code box-->
+                <div class="example">
+                    <div class="codebox">
+                        <div class="codebox-title"><h4>Example</h4><a href="../codelab.php?topic=php&amp;file=get-square-root-of-a-number" target="_blank" class="try-btn" title="Run this code to view the output">Run this code <span>&raquo;</span></a></div>
+                        <pre class="syntax-highlighter line-numbers"><code class="language-php">&lt;?php
+echo sqrt(9);   // 0utputs: 3
+echo sqrt(25);  // 0utputs: 5
+echo sqrt(10);  // 0utputs: 3.1622776601684
+echo sqrt(-16); // 0utputs: NAN
+?&gt;</code></pre>
+                    </div>
+                </div>
+                <!--End:Code box-->
+				<hr />
+				<h2>Generate a Random Number</h2>
+				<p>The <code>rand()</code> function can be used to generate a random number. You can optionally specify a range by passing the min, max arguments, as shown in the following example:</p>
+				<!--Code box-->
+                <div class="example">
+                    <div class="codebox">
+                        <div class="codebox-title"><h4>Example</h4><a href="../codelab.php?topic=php&amp;file=generate-a-random-number" target="_blank" class="try-btn" title="Run this code to view the output">Run this code <span>&raquo;</span></a></div>
+                        <pre class="syntax-highlighter line-numbers"><code class="language-php">&lt;?php
+// Generate some random numbers
+echo rand() . "&lt;br&gt;";
+echo rand() . "&lt;br&gt;";
+ 
+// Generate some random numbers between 1 and 10 (inclusive)
+echo rand(1, 10) . "&lt;br&gt;";
+echo rand(1, 10) . "&lt;br&gt;";
+?&gt;</code></pre>
+                    </div>
+                </div>
+                <!--End:Code box-->
+				<p>If <code>rand()</code> function is called without the optional <code class="plain"><b>min</b></code>, <code class="plain"><b>max</b></code> arguments, it returns a pseudo-random number between <code>0</code> and <code>getrandmax()</code>. The <code>getrandmax()</code> function show the largest possible random value, which is only 32767 on Windows platform. So, if you require a range larger than 32767, you may simply specify the <code class="plain"><b>min</b></code> and <code class="plain"><b>max</b></code> arguments.</p>
+				<hr />
+				<h2>Convert Decimal Numbers to Binary and Vice Versa</h2>
+				<p>The <code>decbin()</code> function is used to convert a decimal number into binary number. Whereas its counterpart the <code>bindec()</code> function converts a number from binary to decimal.</p>
+				<!--Code box-->
+                <div class="example">
+                    <div class="codebox">
+                        <div class="codebox-title"><h4>Example</h4><a href="../codelab.php?topic=php&amp;file=convert-a-decimal-number-to-binary-and-vice-versa" target="_blank" class="try-btn" title="Run this code to view the output">Run this code <span>&raquo;</span></a></div>
+                        <pre class="syntax-highlighter line-numbers"><code class="language-php">&lt;?php
+// Convert Decimal to Binary 
+echo decbin(2);    // 0utputs: 10  
+echo decbin(12);   // 0utputs: 1100  
+echo decbin(100);  // 0utputs: 1100100
+ 
+// Convert Binary to Decimal
+echo bindec(10);       // 0utputs: 2 
+echo bindec(1100);     // 0utputs: 12  
+echo bindec(1100100);  // 0utputs: 100
+?&gt;</code></pre>
+                    </div>
+                </div>
+                <!--End:Code box-->
+				<hr />
+				<h2>Convert Decimal Numbers to Hexadecimal and Vice Versa</h2>
+				<p>The <code>dechex()</code> function is used to convert a decimal number into hexadecimal representation. Whereas, the <code>hexdec()</code> function is used to converts a hexadecimal string to a decimal number.</p>
+				<!--Code box-->
+                <div class="example">
+                    <div class="codebox">
+                        <div class="codebox-title"><h4>Example</h4><a href="../codelab.php?topic=php&amp;file=convert-a-decimal-number-to-hexadecimal-and-vice-versa" target="_blank" class="try-btn" title="Run this code to view the output">Run this code <span>&raquo;</span></a></div>
+                        <pre class="syntax-highlighter line-numbers"><code class="language-php">&lt;?php
+// Convert decimal to hexadecimal 
+echo dechex(255);  // 0utputs: ff
+echo dechex(196);  // 0utputs: c4
+echo dechex(0);    // 0utputs: 0
+ 
+// Convert hexadecimal to decimal
+echo hexdec('ff');  // 0utputs: 255
+echo hexdec('c4');  // 0utputs: 196
+echo hexdec(0);     // 0utputs: 0
+?&gt;</code></pre>
+                    </div>
+                </div>
+                <!--End:Code box-->
+				<hr />
+				<h2>Convert Decimal Numbers to Octal and Vice Versa</h2>
+				<p>The <code>decoct()</code> function is used to convert a decimal number into octal representation. Whereas, the <code>octdec()</code> function is used to converts a octal number to a decimal number.</p>
+				<!--Code box-->
+                <div class="example">
+                    <div class="codebox">
+                        <div class="codebox-title"><h4>Example</h4><a href="../codelab.php?topic=php&amp;file=convert-a-decimal-number-to-octal-and-vice-versa" target="_blank" class="try-btn" title="Run this code to view the output">Run this code <span>&raquo;</span></a></div>
+                        <pre class="syntax-highlighter line-numbers"><code class="language-php">&lt;?php
+// Convert decimal to octal 
+echo decoct(12);   // 0utputs: 14
+echo decoct(256);  // 0utputs: 400
+echo decoct(77);   // 0utputs: 115
+ 
+// Convert octal to decimal
+echo octdec('14');   // 0utputs: 12
+echo octdec('400');  // 0utputs: 256
+echo octdec('115');  // 0utputs: 77
+?&gt;</code></pre>
+                    </div>
+                </div>
+                <!--End:Code box-->
+				<hr />
+				<h2>Convert a Number from One Base System to Another</h2>
+				<p>The <code>base_convert()</code> function can be used to convert a number from one base system to other. For example, you can convert decimal (<i>base 10</i>) to binary (<i>base 2</i>), hexadecimal (<i>base 16</i>) to octal (<i>base 8</i>), octal to hexadecimal, hexadecimal to decimal, and so on.</p>
+				<p>This function accepts three parameters: the number to convert, the base it's currently in, and the base it's to be converted to. The basic syntax is as follows:</p>
+				<div class="shadow">
+					<div class="syntax"><span class="keyword">base_convert</span>(number, frombase, tobase);</div>
+				</div>
+				<p>Here, the number can be either an integer or a string representing an integer. Both <code class="plain"><b>frombase</b></code> and <code class="plain"><b>tobase</b></code> have to be between 2 and 36, inclusive. Digits in numbers with a base higher than 10 will be represented with the letters a-z, where a means 10, b means 11 and z means 35. Here's a simple example to show how this function works:</p>
+				<!--Code box-->
+                <div class="example">
+                    <div class="codebox">
+                        <div class="codebox-title"><h4>Example</h4><a href="../codelab.php?topic=php&amp;file=convert-a-number-from-one-base-to-another" target="_blank" class="try-btn" title="Run this code to view the output">Run this code <span>&raquo;</span></a><span class="box-size"><i title="Maximize"></i></span></div>
+                        <pre class="syntax-highlighter line-numbers scroll xxlarge"><code class="language-php">&lt;?php
+// Convert decimal to binary
+echo base_convert('12', 10, 2);  // 0utputs: 1100
+// Convert binary to decimal
+echo base_convert('1100', 2, 10);  // 0utputs: 12
+ 
+// Convert decimal to hexadecimal
+echo base_convert('10889592', 10, 16);  // 0utputs: a62978
+// Convert hexadecimal to decimal
+echo base_convert('a62978', 16, 10);  // 0utputs: 10889592
+ 
+// Convert decimal to octal
+echo base_convert('82', 10, 8);  // 0utputs: 122
+// Convert octal to decimal
+echo base_convert('122', 8, 10);  // 0utputs: 82
+ 
+// Convert hexadecimal to octal
+echo base_convert('c2c6a8', 16, 8);  // 0utputs: 60543250
+// Convert octal to hexadecimal
+echo base_convert('60543250', 8, 16);  // 0utputs: c2c6a8
+ 
+// Convert octal to binary
+echo base_convert('42', 8, 2);  // 0utputs: 100010
+// Convert binary to octal
+echo base_convert('100010', 2, 8);  // 0utputs: 42
+ 
+// Convert hexadecimal to binary
+echo base_convert('abc', 16, 2);  // 0utputs: 101010111100
+// Convert binary to hexadecimal
+echo base_convert('101010111100', 2, 16);  // 0utputs: abc
+?&gt;</code></pre>
+                    </div>
+                </div>
+                <!--End:Code box-->
+				<!--Note box-->
+                <div class="color-box">
+                    <div class="shadow">
+                    <div class="info-tab note-icon" title="Important Notes"><i></i></div>
+                    <div class="note-box">
+                        <p><strong>Note:</strong> The <code>base_convert()</code> function will always return a string value. If the returned value is in base 10 the resulting string can be used as a numeric string in calculations and PHP will convert it to a number when the calculation is performed.</p>
+                    </div>
+                    </div>
+                </div>
+                <!--End:Note box-->
+				<!--Bottom Navigation-->
+                <div class="bottom-link clearfix">
+                    <a href="php-functions.php" class="previous-page-bottom">Previous Page</a>
+                    <a href="php-get-and-post.php" class="next-page-bottom">Next Page</a>
+                </div>
+                <!--End:Bottom Navigation-->
+                <!-- InstanceEndEditable -->
+                <!--Bottom Ads-->
+                <div class="bottom-ad clearfix">
+                    <div class="ad-label">Advertisements</div>
+
+<!--Rectangle Left-->
+<div class="rectangle-left fl">
+    
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Large Rectangle Left -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-9107540490929984"
+     data-ad-slot="8162953958"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+<!--End:Rectangle Left-->
+
+
+<!--Rectangle Right-->
+<div class="rectangle-right fr">
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Large Rectangle Right -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-9107540490929984"
+     data-ad-slot="3324015654"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+<!--End:Rectangle Right-->                </div>
+                <!--End:Bottom Ads-->
+            </div>
+            <!--End:Text Content-->
+            <!--Feedback Form-->
+			<div class="snippets">
+    <a href="/font-awesome-icons.php" target="_blank"><img src="/lib/images/font-awesome-icons.png" alt="Font Awesome Icon Classes" /></a>
+</div>
+
+<div class="report-error" id="feedback">
+    <div class="contact-form clearfix">
+        <div class="close"><span class="icon-close"></span></div>
+        <form id="feedback-form">
+            <h3>Your Feedback:</h3>
+            <div class="clearfix">
+                <div class="name fl"><label>Your Name (optional) <input type="text" name="user-name" id="user-name" /></label></div>
+                <div class="email fr"><label>Your E-mail (optional) <input type="text" name="user-email" id="user-email" /></label></div>
+            </div>
+            <div><label>Page address <input type="text" name="page-url" id="page-url" class="disabled" disabled="disabled" /></label></div>
+            <div><label>Description <textarea name="description" id="description" rows="6"></textarea></label></div>
+            <p id="feedback-error">We would love to hear from you, please drop us a line.</p>
+            <div><button type="button" class="action-btn" onclick="sendFeedback()"><span class="icon-send"></span> Send</button></div>
+        </form>
+        <div id="response"></div>
+    </div>           
+</div>            <!--End:Feedback Form-->
+        </div>        
+        <div class="sidebar">
+            <div class="ad-label">Advertisements</div>
+
+<div class="skyscraper primary">
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Premium Skyscraper -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-9107540490929984"
+     data-ad-slot="4376141825"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+
+<div class="skyscraper">
+    
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Bottom Skyscraper -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-9107540490929984"
+     data-ad-slot="3387984471"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>        </div>
+    </div>
+    <!--Footer-->
+	<!--Footer-->
+<div class="footer">
+    <div class="appeal">
+        <div class="wrapper">
+            <p>Is this website helpful to you? Please give us a
+            <a href="/like.php" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=250,width=600,top=150, left='+((screen.width/2)-300));return false;">like</a>,
+            or share your <a href="#feedback" class="feedback">feedback</a><em> to help us improve</em>.
+            Connect with us on <a href="https://www.facebook.com/tutorialrepublic" target="_blank">Facebook</a> and <a href="https://twitter.com/tutrepublic" target="_blank">Twitter</a> for the latest updates.</p>               
+        </div>
+    </div>
+    <div class="footer-inner">
+        <div class="wrapper clearfix">                
+            <div class="link-box">
+                <h4>About Us</h4>
+                <div class="clearfix">
+                    <a href="/about-us.php">Our Story</a>                    
+                    <a href="/terms-of-use.php">Terms of Use</a>
+                    <a href="/privacy-policy.php">Privacy Policy</a>                    
+                </div>
+            </div>
+            <div class="link-box">
+                <h4>Contact</h4>
+                <div class="clearfix">
+                    <a href="/contact-us.php">Contact Us</a>                    
+                    <a href="#feedback" class="feedback">Report Error</a>
+                    <a href="/advertise-with-us.php">Advertise</a>                    
+                </div>
+            </div>
+            <div class="tool-box">
+                <h4>Interactive Tools</h4>
+                <div class="tools-list clearfix" id="tools">
+					<a href="/font-awesome-icons.php" target="_blank">Font Awesome Icon Search Utility</a>
+					<a href="/html-formatter.php" target="_blank">HTML Formatter</a>
+                    <a href="/faq/what-is-the-maximum-length-of-title-and-meta-description-tag.php">Title &amp; Meta Length Calculator</a>
+					<a href="/html-reference/html-color-picker.php">HTML Color Picker</a>                                 
+                    <a href="/twitter-bootstrap-button-generator.php" target="_blank">Bootstrap Button Generator</a>
+                    <a href="/codelab.php?topic=html&amp;file=hello-world" target="_blank">HTML Editor</a>
+                    <a href="/codelab.php?topic=sql&amp;file=select-all" target="_blank">SQL Playground</a>                
+                </div>
+            </div>
+            <div class="footer-logo">
+                <img src="/lib/images/logo.svg" alt="TutorialRepublic" />
+            </div>
+        </div>
+    </div>           
+        <div class="bottom-strip">
+        <div class="wrapper">
+            <div class="notice">Copyright &copy; 2020 Tutorial Republic. All Rights Reserved.</div>
+            <div class="social-media">
+                <em>Share This:</em>
+                <a href="https://facebook.com/sharer.php?u=https://www.tutorialrepublic.com%2Fphp-tutorial%2Fphp-math-operations.php" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600,top=150, left='+((screen.width/2)-300));return false;" title="Facebook"><i class="icon-facebook"></i></a>
+                <a href="#" id="tweet-btn" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600,top=150, left='+((screen.width/2)-300));return false;" title="Twitter"><i class="icon-twitter"></i></a>
+                <a href="#" id="email-btn" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600,top=150, left='+((screen.width/2)-300));return false;" rel="noreferrer" title="Gmail"><i class="icon-mail"></i></a>
+            </div>
+        </div>            
+    </div>
+    <script>
+        var title = document.title.replace('- Tutorial Republic', '');
+        document.getElementById('tweet-btn').href = 'https://twitter.com/share?text=' + title + '- &url=https://www.tutorialrepublic.com%2Fphp-tutorial%2Fphp-math-operations.php';
+        document.getElementById('email-btn').href = 'https://mail.google.com/mail/?view=cm&fs=1&su=' + title + '&body=https://www.tutorialrepublic.com%2Fphp-tutorial%2Fphp-math-operations.php';
+    </script>
+</div>
+<!--End:Footer-->
+    
+<div class="backdrop mobile-only"></div>
+
+<!-- TutorialRepublic base script -->
+<script>
+// Adding CSS files
+[	
+	'/lib/styles/extended.new-3.8.css',
+	'/lib/icomoon/style.css'
+].forEach(function(href) {
+	var link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.href = href;
+	(document.getElementsByTagName('head')[0]).appendChild(link);
+});
+
+// Adding JS files
+[
+	'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js',
+	'/lib/js/prism.js',
+	'/lib/js/default.new-2.9.min.js'
+].forEach(function(src) {
+	var script = document.createElement('script');
+	script.async = false; // important
+	script.src = src;
+	(document.getElementsByTagName('body')[0]).appendChild(script);
+});
+</script>
+
+
+    <!--End:Footer-->
+</body>
+<!-- InstanceEnd --></html>

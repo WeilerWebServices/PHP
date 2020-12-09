@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision: 1.4 $ -->
+<classentry id="atk.atknoopobject">
+ <classmeta>
+  <classtitle>AtkNoOpObject</classtitle>
+  <classparent>AtkObject</classparent>
+  <shortdesc>
+   An object that implements all ATK interfaces.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="atk.atknoopobject.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>AtkNoOpObject</function></funcdef>
+    <paramdef>GObject <parameter>obj</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+</classentry>

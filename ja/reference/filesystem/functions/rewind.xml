@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 343348 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: shimooka -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.rewind">
+ <refnamediv>
+  <refname>rewind</refname>
+  <refpurpose>ファイルポインタの位置を先頭に戻す</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>rewind</methodname>
+   <methodparam><type>resource</type><parameter>handle</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <parameter>handle</parameter> のファイル位置指示子を、
+   ファイルストリームの先頭にセットします。
+  </para>
+  <note>
+   <para>
+    追記モード ("a" もしくは "a+") でファイルをオープンした場合、
+    ファイルのポインターの位置とは無関係に、
+    ファイルに書き込まれるデータは常に追加されます。
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>handle</parameter></term>
+     <listitem>
+      <para>
+       ファイルポインタは有効なものでなければならず、
+       また <function>fopen</function>
+       で正常にオープンされたファイルを指している必要があります。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>rewind</function> での上書きの例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$handle = fopen('output.txt', 'r+');
+
+fwrite($handle, 'Really long sentence.');
+rewind($handle);
+fwrite($handle, 'Foo');
+rewind($handle);
+
+echo fread($handle, filesize('output.txt'));
+
+fclose($handle);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Foolly long sentence.
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>fread</function></member>
+    <member><function>fseek</function></member>
+    <member><function>ftell</function></member>
+    <member><function>fwrite</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

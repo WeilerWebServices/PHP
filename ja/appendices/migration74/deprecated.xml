@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 348038 $ -->
+<!-- EN-Revision: 348038 Maintainer: mumumu Status: ready -->
+
+<sect1 xml:id="migration74.deprecated">
+ <title>PHP 7.4.x で推奨されなくなる機能</title>
+
+ <sect2 xml:id="migration74.deprecated.core">
+  <title>PHPコア</title>
+
+  <sect3 xml:id="migration74.deprecated.core.nested-ternary">
+   <title>明示的に括弧で囲わずに三項演算子をネストする</title>
+
+   <para>
+    三項演算子をネストする場合、演算の順番を示すために明示的に括弧で囲わなければならなくなりました。以前は、括弧を使わなかった場合、左結合の演算がほとんどの場合期待した動作になりませんでした。
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+1 ? 2 : 3 ? 4 : 5;   // deprecated
+(1 ? 2 : 3) ? 4 : 5; // ok
+1 ? 2 : (3 ? 4 : 5); // ok
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.array-string-access-curly-brace">
+   <title>波括弧を使った、配列や文字列のオフセットへのアクセス</title>
+
+   <para>
+    波括弧を使って配列や文字列のオフセットにアクセスする文法は推奨されません。<literal>$var{$idx}</literal> でなはく <literal>$var[$idx]</literal> を使って下さい。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.real">
+   <title>(real) によるキャストと <function>is_real</function> 関数</title>
+
+   <para>
+    <literal>(real)</literal> によるキャストは推奨されません。
+    <literal>(float)</literal> を代わりに使って下さい。
+   </para>
+   <para>
+    <function>is_real</function> 関数も同様に推奨されません。
+    <function>is_float</function> 関数を使って下さい。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.unbind-this">
+   <title><literal>$this</literal>
+   が使われている場合に、<literal>$this</literal> のバインドを解除する</title>
+
+   <para>
+    <literal>$this</literal> を使っている static でないクロージャの
+    <literal>$this</literal> のバインドを解除することは推奨されません。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.parent">
+   <title>親クラスがない場合における <literal>parent</literal> キーワードの利用</title>
+
+   <para>
+    親クラスがないクラス内で <literal>parent</literal>
+    を使うのは推奨されませんし、将来的にはコンパイル時にエラーが発生することになるでしょう。
+    現状では、この推奨されないエラーは、実行時に親クラスに対してアクセスされた場合に生成されます。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.allow-url-include">
+   <title>php.ini における allow_url_include オプション</title>
+
+   <para>
+    <link linkend="ini.allow-url-include">allow_url_include</link>
+    iniディレクティブは推奨されません。これを有効にすると、起動時に推奨されない警告が生成されます。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.invalid-base-characters">
+   <title>基数を変更する関数における不正な文字</title>
+
+   <para>
+    <function>base_convert</function>,
+    <function>bindec</function>, <function>octdec</function> および
+    <function>hexdec</function>
+    関数に不正な文字を渡すと、推奨されない警告が生成されるようになりました。
+    あたかも不正な文字が存在しないかのように結果は計算されます。空白文字が前後にあったり、(基数によっては)
+    0x をプレフィックスとして指定することも可能です。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.array-key-exists-objects">
+   <title>オブジェクトに対する <function>array_key_exists</function> 関数の使用</title>
+
+   <para>
+    オブジェクトに対する <function>array_key_exists</function>
+    関数の使用は、推奨されません。代わりに、<function>isset</function> または
+    <function>property_exists</function> を使って下さい。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.magic-quotes-functions">
+   <title>マジッククォート関数</title>
+
+   <para>
+    <function>get_magic_quotes_gpc</function> や
+    <function>get_magic_quotes_runtime</function>
+    関数は推奨されません。これらの関数は常に &false; を返します。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.hebrevc">
+   <title><function>hebrevc</function> 関数</title>
+
+   <para>
+    <function>hebrevc</function> 関数は推奨されません。
+    <literal>nl2br(hebrev($str))</literal> で置き換えられますが、Unicode RTL
+    のサポートを使う方が好ましいです。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.convert-cyr-string">
+   <title><function>convert_cyr_string</function> 関数</title>
+
+   <para>
+    <function>convert_cyr_string</function> 関数は推奨されません。
+    <function>mb_convert_string</function>,
+    <function>iconv</function> または <classname>UConverter</classname>
+    のいずれかで置き換えることができます。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.money-format">
+   <title><function>money_format</function> 関数</title>
+
+   <para>
+    <function>money_format</function> 関数は推奨されません。
+    intl の <classname>NumberFormatter</classname> 機能に置き換えられました。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.ezmlm-hash">
+   <title><function>ezmlm_hash</function> 関数</title>
+
+   <para>
+    <function>ezmlm_hash</function> 関数の使用は推奨されません。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.restore-include-path">
+   <title><function>restore_include_path</function> 関数</title>
+
+   <para>
+    <function>restore_include_path</function> 関数の使用は推奨されません。
+    <literal>ini_restore('include_path')</literal> に置き換えることができます。
+   </para>
+  </sect3>
+
+  <sect3 xml:id="migration74.deprecated.core.implode-reverse-parameters">
+   <title>Implode 関数の、歴史的なパラメータ順序</title>
+
+   <para>
+    <function>implode</function>
+    関数に逆の順番でパラメータを渡すのは推奨されなくなりました。<literal>implode($parts,
+    $glue)</literal> ではなく、 <literal>implode($glue, $parts)</literal>
+    を使ってください。
+   </para>
+  </sect3>
+
+ </sect2>
+
+ <sect2 xml:id="migration74.deprecated.com">
+  <title>COM</title>
+
+  <para>
+   大文字小文字を区別せず、定数を登録することで型のライブラリをインポートすることは推奨されません。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.deprecated.filter">
+  <title>Filter</title>
+
+  <para>
+   <constant>FILTER_SANITIZE_MAGIC_QUOTES</constant> は推奨されません。
+   <constant>FILTER_SANITIZE_ADD_SLASHES</constant> を代わりに使って下さい。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.deprecated.mbstring">
+  <title>マルチバイト文字列</title>
+
+  <para>
+   <function>mb_ereg_replace</function>
+   に文字列でないパターンを渡すことは推奨されません。現状は、文字列でないパターンは
+   ASCII コードポイントと解釈されます。PHP 8
+   では、パターンは文字列として解釈されるようになります。
+  </para>
+  <para>
+   <function>mb_strrpos</function>
+   関数に、3番目のパラメーターとしてエンコーディングを渡すのは推奨されません。代わりに
+   0から始まるオフセットを渡すか、4番目のパラメーターとしてエンコーディングを渡すようにします。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.deprecated.ldap">
+  <title>LDAP</title>
+
+  <para>
+   <function>ldap_control_paged_result_response</function> と
+   <function>ldap_control_paged_result</function> 関数は推奨されません。
+   ページングの制御は、<function>ldap_search</function>
+   を代わりに使うことで行なえます。
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.deprecated.reflection">
+  <title>Reflection</title>
+
+  <para>
+   <methodname>ReflectionType::__toString</methodname>
+   を呼び出すと、推奨されない警告が生成されるようになりました。このメソッドは
+   <methodname>ReflectionNamedType::getName</methodname>
+   を使うことが好ましいために、PHP 7.1
+   から推奨されていませんでしたが、技術的な理由によって、推奨されない警告をこれまで発生させてきませんでした。
+  </para>
+  <para>
+   <classname>Reflection</classname> クラスの全ての
+   <literal>export()</literal>
+   メソッドは推奨されなくなりました。次のようにして、<classname>Reflection</classname>
+   オブジェクトを生成し、string に変換するようにして下さい:
+   <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// ReflectionClass::export(Foo::class, false) is:
+echo new ReflectionClass(Foo::class), "\n";
+
+// $str = ReflectionClass::export(Foo::class, true) is:
+$str = (string) new ReflectionClass(Foo::class);
+?>
+]]>
+     </programlisting>
+    </informalexample>
+  </para>
+ </sect2>
+
+ <sect2 xml:id="migration74.deprecated.socket">
+  <title>Socket</title>
+
+  <para>
+   glibc で推奨されなくなったため、<function>socket_addrinfo_lookup</function>
+   関数の <constant>AI_IDN_ALLOW_UNASSIGNED</constant> と
+   <constant>AI_IDN_USE_STD3_ASCII_RULES</constant>
+   フラグの使用は推奨されません。
+  </para>
+ </sect2>
+
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

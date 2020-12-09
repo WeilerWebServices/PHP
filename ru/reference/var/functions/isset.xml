@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 351129 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+<refentry xml:id="function.isset" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>isset</refname>
+  <refpurpose>Определяет, была ли установлена переменная значением, отличным от &null;</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>isset</methodname>
+   <methodparam><type>mixed</type><parameter>var</parameter></methodparam>
+   <methodparam rep="repeat"><type>mixed</type><parameter>vars</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Определяет, была ли установлена переменная значением отличным от &null;
+  </para>
+  <para>
+   Если переменная была удалена с помощью <function>unset</function>, то она больше
+   не считается установленной.
+  </para>
+  <para>
+   <function>isset</function> вернет &false; при проверке переменной
+   которая была установлена значением &null;.
+   Также учтите, что NULL-символ (<literal>"\0"</literal>) не равен
+   константе &null; в PHP.
+  </para>
+  <para>
+   Если были переданы несколько параметров, то <function>isset</function>
+   вернет &true; только в том случае, если все параметры определены. Проверка происходит
+   слева направо и заканчивается, как только будет встречена неопределенная переменная.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>var</parameter></term>
+     <listitem>
+      <para>
+       Проверяемая переменная.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>vars</parameter></term>
+     <listitem>
+      <para>
+       Следующие переменные.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Возвращает &true;, если <parameter>var</parameter> определена и
+   ее значение отлично от &null;, и &false; в противном случае.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>isset</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$var = '';
+
+// Проверка вернет TRUE, поэтому текст будет напечатан.
+if (isset($var)) {
+    echo "Эта переменная определена, поэтому меня и напечатали.";
+}
+
+// В следующем примере мы используем var_dump для вывода
+// значения, возвращаемого isset().
+
+$a = "test";
+$b = "anothertest";
+
+var_dump(isset($a));     // TRUE
+var_dump(isset($a, $b)); // TRUE
+
+unset ($a);
+
+var_dump(isset($a));     // FALSE
+var_dump(isset($a, $b)); // FALSE
+
+$foo = NULL;
+var_dump(isset($foo));   // FALSE
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Функция также работает с элементами массивов:
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$a = array ('test' => 1, 'hello' => NULL, 'pie' => array('a' => 'apple'));
+
+var_dump(isset($a['test']));            // TRUE
+var_dump(isset($a['foo']));             // FALSE
+var_dump(isset($a['hello']));           // FALSE
+
+// Элемент с ключом 'hello' равен NULL, поэтому он считается неопределенным
+// Если вы хотите проверить существование ключей со значением NULL, попробуйте так: 
+var_dump(array_key_exists('hello', $a)); // TRUE
+
+// Проверка вложенных элементов массива
+var_dump(isset($a['pie']['a']));        // TRUE
+var_dump(isset($a['pie']['b']));        // FALSE
+var_dump(isset($a['cake']['a']['b']));  // FALSE
+
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  <example>
+   <title><function>isset</function> и строковые индексы</title>
+   <para>
+    В PHP 5.4 был изменен способ обработки строковых индексов в <function>isset</function>.
+   </para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$expected_array_got_string = 'somestring';
+var_dump(isset($expected_array_got_string['some_key']));
+var_dump(isset($expected_array_got_string[0]));
+var_dump(isset($expected_array_got_string['0']));
+var_dump(isset($expected_array_got_string[0.5]));
+var_dump(isset($expected_array_got_string['0.5']));
+var_dump(isset($expected_array_got_string['0 Mostel']));
+?>
+]]>
+   </programlisting>
+   &example.outputs.53;
+   <screen>
+<![CDATA[
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+]]>
+   </screen>
+   &example.outputs.54;
+   <screen>
+<![CDATA[
+bool(false)
+bool(true)
+bool(true)
+bool(true)
+bool(false)
+bool(false)
+]]>
+   </screen>
+  </example>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    <function>isset</function> работает только с переменными, поэтому передача в 
+    качестве параметров любых других значений приведет к ошибке парсинга.
+    Для проверки определения <link linkend="language.constants">констант</link> используйте функцию 
+    <function>defined</function>.
+   </para>
+  </warning>
+  &note.language-construct;
+  <note>
+   <para>
+    При использовании <function>isset</function> на недоступных свойствах
+    объекта, будет вызываться перегруженный метод
+    <link linkend="object.isset">__isset()</link>, если он существует.
+   </para>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>empty</function></member>
+    <member><link linkend="object.isset">__isset()</link></member>
+    <member><function>unset</function></member>
+    <member><function>defined</function></member>
+    <member><link linkend="types.comparisons">Таблица сравнения типов</link></member>
+    <member><function>array_key_exists</function></member>
+    <member><function>is_null</function></member>
+    <member>Оператор управления ошибками <link linkend="language.operators.errorcontrol">@</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

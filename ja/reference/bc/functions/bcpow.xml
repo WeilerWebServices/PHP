@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 343101 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi,mumumu -->
+<refentry xml:id="function.bcpow" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>bcpow</refname>
+  <refpurpose>任意精度数値をべき乗する</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>bcpow</methodname>
+   <methodparam><type>string</type><parameter>base</parameter></methodparam>
+   <methodparam><type>string</type><parameter>exponent</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>scale</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <parameter>base</parameter> の
+   <parameter>exponent</parameter> 乗を求めます。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>base</parameter></term>
+     <listitem>
+      <para>
+       基数を表す文字列。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>exponent</parameter></term>
+     <listitem>
+      <para>
+       指数を表す文字列。
+       指数が整数でない場合、値は切り捨てられます。
+       正しい指数の範囲はプラットフォーム依存ですが、
+       少なくとも <literal>-2147483648</literal> から
+       <literal>2147483647</literal> までの範囲を持ちます。
+      </para>
+     </listitem>
+    </varlistentry>
+    &bc.scale.description;
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   結果を文字列で返します。
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog"><!-- {{{ -->
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.3.0</entry>
+      <entry>
+       <function>bcpow</function> 関数は、指定されたスケールで値を返すようになりました。
+       これより前のバージョンでは、後に続く0の桁が省略された数値が返される可能性がありました。
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1><!-- }}} -->
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <example>
+   <title><function>bcpow</function> の例</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+echo bcpow('4.2', '3', 2); // 74.08
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    PHP 7.3.0 より前のバージョンでは、
+    <function>bcmul</function> は <parameter>scale</parameter>
+    引数で指定したものより少ない桁数を返す可能性がありました。
+    これは <parameter>scale</parameter> で許された精度が不要な場合にだけ起きていました。
+    たとえば、以下のような場合です:
+    <example>
+     <title><function>bcpow</function> で scale を指定する例</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+echo bcpow('5', '2', 2);     // 結果は "25.00" ではなく "25" となります
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>bcpowmod</function></member>
+    <member><function>bcsqrt</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

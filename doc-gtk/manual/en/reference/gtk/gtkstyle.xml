@@ -1,0 +1,1361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.11 $ -->
+<classentry id="gtk.gtkstyle">
+ <classmeta>
+  <classtitle>GtkStyle</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   An object holding appearance information for a widget.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkstyle.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkStyle</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkstyle.method.apply_default_background">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>apply_default_background</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>set_bg</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.apply_default_pixmap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>apply_default_pixmap</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>set_bg</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.attach">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkStyle <function>attach</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.copy">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkStyle <function>copy</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.detach">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>detach</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.draw_arrow">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_arrow</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><parameter>arrow_type</parameter></paramdef>
+     <paramdef><parameter>fill</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">paint_arrow</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.draw_box">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_box</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">paint_box</function>
+    </para>
+
+   </desc>
+  </method>
+
+  
+
+  
+
+  <method id="gtk.gtkstyle.method.draw_diamond">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_diamond</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">paint_diamond</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.draw_expander">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_expander</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>is_open</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">paint_expander</function>
+    </para>
+
+   </desc>
+  </method>
+
+  
+
+  
+
+  
+
+  
+
+  <method id="gtk.gtkstyle.method.draw_hline">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_hline</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>x1</parameter></paramdef>
+     <paramdef><parameter>x2</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">paint_hline</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.draw_layout">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_layout</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>use_text</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><classname>PangoLayout</classname> <parameter>layout</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">paint_layout</function>
+    </para>
+
+   </desc>
+  </method>
+
+  
+
+  
+
+  <method id="gtk.gtkstyle.method.draw_resize_grip">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_resize_grip</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>edge</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">paint_resize_grip</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.draw_shadow">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_shadow</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">paint_shadow</function>
+    </para>
+
+   </desc>
+  </method>
+
+  
+
+  
+
+  <method id="gtk.gtkstyle.method.draw_string">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_string</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>string</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">paint_string</function>
+    </para>
+
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkstyle.method.draw_vline">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_vline</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>y1</parameter></paramdef>
+     <paramdef><parameter>y2</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">paint_vline</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.get_font">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_font</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">set_font</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.lookup_icon_set">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>lookup_icon_set</function></funcdef>
+     <paramdef>string <parameter>stock_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_arrow">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_arrow</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>arrow_type</parameter></paramdef>
+     <paramdef><parameter>fill</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_arrow</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_box">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_box</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_box</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_box_gap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_box_gap</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+     <paramdef><parameter>gap_side</parameter></paramdef>
+     <paramdef><parameter>gap_x</parameter></paramdef>
+     <paramdef><parameter>gap_width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_box_gap</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_check">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_check</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_check</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_diamond">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_diamond</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_diamond</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_expander">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_expander</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>expander_style</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_expander</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_extension">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_extension</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+     <paramdef><parameter>gap_side</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_extension</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_flat_box">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_flat_box</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_flat_box</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_focus">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_focus</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_focus</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_handle">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_handle</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+     <paramdef><parameter>orientation</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_handle</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_hline">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_hline</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x1</parameter></paramdef>
+     <paramdef><parameter>x2</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_hline</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_layout">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_layout</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>use_text</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><classname>PangoLayout</classname> <parameter>layout</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_layout</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_option">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_option</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_option</function>
+    </para>
+
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkstyle.method.paint_resize_grip">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_resize_grip</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>edge</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_resize_grip</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_shadow">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_shadow</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_shadow</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_shadow_gap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_shadow_gap</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+     <paramdef><parameter>gap_side</parameter></paramdef>
+     <paramdef><parameter>gap_x</parameter></paramdef>
+     <paramdef><parameter>gap_width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_shadow_gap</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_slider">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_slider</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+     <paramdef><parameter>orientation</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_slider</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_string">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_string</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>string</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_string</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_tab">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_tab</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><parameter>shadow_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+     <paramdef><parameter>width</parameter></paramdef>
+     <paramdef><parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_tab</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.paint_vline">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>paint_vline</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+     <paramdef><classname>GdkRectangle</classname> <parameter>area</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+     <paramdef><parameter>detail</parameter></paramdef>
+     <paramdef><parameter>y1</parameter></paramdef>
+     <paramdef><parameter>y2</parameter></paramdef>
+     <paramdef><parameter>x</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">draw_vline</function>
+    </para>
+
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkstyle.method.render_icon">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>render_icon</function></funcdef>
+     
+     <paramdef><classname>GtkIconSource</classname> <parameter>source</parameter></paramdef>
+     <paramdef><parameter>direction</parameter></paramdef>
+     <paramdef><parameter>state</parameter></paramdef>
+     <paramdef><parameter>size</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter><optional>widget</optional></parameter></paramdef>
+     <paramdef><parameter><optional>detail</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.set_background">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_background</function></funcdef>
+     
+     <paramdef><classname>GdkWindow</classname> <parameter>window</parameter></paramdef>
+     <paramdef><parameter>state_type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkstyle.method.set_font">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_font</function></funcdef>
+     
+     <paramdef><classname>GdkFont</classname> <parameter>font</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkStyle">get_font</function>
+    </para>
+
+   </desc>
+  </method>
+
+  
+
+ </methods>
+
+ <fields>
+
+  <field id="gtk.gtkstyle.field.base" type="ro">
+   <fieldname>base</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.base_gc" type="ro">
+   <fieldname>base_gc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.bg" type="ro">
+   <fieldname>bg</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.bg_gc" type="ro">
+   <fieldname>bg_gc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.bg_pixmap" type="ro">
+   <fieldname>bg_pixmap</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.black" type="ro">
+   <fieldname>black</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.black_gc" type="ro">
+   <fieldname>black_gc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.dark" type="ro">
+   <fieldname>dark</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.dark_gc" type="ro">
+   <fieldname>dark_gc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.fg" type="ro">
+   <fieldname>fg</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.fg_gc" type="ro">
+   <fieldname>fg_gc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.font_desc" type="ro">
+   <fieldname>font_desc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.light" type="ro">
+   <fieldname>light</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.light_gc" type="ro">
+   <fieldname>light_gc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.mid" type="ro">
+   <fieldname>mid</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.mid_gc" type="ro">
+   <fieldname>mid_gc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.text" type="ro">
+   <fieldname>text</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.text_aa" type="ro">
+   <fieldname>text_aa</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.text_aa_gc" type="ro">
+   <fieldname>text_aa_gc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.text_gc" type="ro">
+   <fieldname>text_gc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.white" type="ro">
+   <fieldname>white</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.white_gc" type="ro">
+   <fieldname>white_gc</fieldname>
+   <fieldtype/>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.xthickness" type="ro">
+   <fieldname>xthickness</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkstyle.field.ythickness" type="ro">
+   <fieldname>ythickness</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+ </fields>
+
+ <signals>
+
+  <signal id="gtk.gtkstyle.signal.realize">
+   <signalname>realize</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkStyle <parameter>style</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkstyle.signal.unrealize">
+   <signalname>unrealize</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkStyle <parameter>style</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

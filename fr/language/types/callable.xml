@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351340 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes Maintainer: girgias -->
+<!-- CREDITS: DavidA -->
+
+<sect1 xml:id="language.types.callable">
+ <title>Fonctions de rappel / Types Callable</title>
+ 
+ <para>
+  Les fonctions de rappel peuvent être identifiées via le type <type>callable</type>.
+ </para>
+
+ <para>
+  Certaines fonctions, comme <function>call_user_func</function> ou
+  <function>usort</function>, acceptent comme paramètre des fonctions de rappel
+  définies par l'utilisateur. Les fonctions de rappel peuvent être de simples
+  fonctions, mais aussi des méthodes d'&object;s, y compris des méthodes
+  statiques de classe.
+ </para>
+
+ <sect2 xml:id="language.types.callable.passing">
+  <title>Passage d'une fonction de rappel</title>
+
+  <para>
+   Une fonction PHP est passée par son nom, sous forme de &string;.
+   Toute fonction interne ou définie par l'utilisateur peut être utilisée,
+   sauf les constructions de langage comme :
+   <function>array</function>, <function>echo</function>,
+   <function>empty</function>, <function>eval</function>, 
+   <function>exit</function>, <function>isset</function>,
+   <function>list</function>, <function>print</function>, ou
+   <function>unset</function>.
+  </para>
+
+  <para>
+   Une méthode d'un &object; instancié est passée comme un &array; contenant
+   un &object; à l'index 0, et le nom de la méthode à l'index 1.
+   Accéder aux méthodes protégées et privées à l'intérieur d'une classe 
+   est autorisé.
+  </para>
+
+  <para>
+   Les méthodes statiques de classe peuvent aussi être passées sans instancier
+   d'&object; de cette classe soit, en passant le nom de la classe au lieu d'un
+   &object; à l'index 0, ou en passant
+   <literal>'NomDeLaClasse::NomDeLaMethode'</literal>.
+  </para>
+
+  <para>
+   En dehors des fonctions définies normalement par l'utilisateur,
+   les <link linkend="functions.anonymous">fonctions anonymes</link> et
+   les <link linkend="functions.arrow">fonctions fléchées</link>   
+   peuvent aussi être utilisées comme paramètre de type callback.
+  </para>
+
+  <para>
+   Générallement, tout objet implémentant <link linkend="object.invoke">__invoke()</link>
+   peut aussi être passé au paramètre callback.
+  </para>
+
+  <para>
+   <example>
+    <title>
+     Exemples de fonctions de rappel
+    </title>
+    <programlisting role="php">
+<![CDATA[
+<?php 
+
+// Un exemple de fonction de rappel
+function my_callback_function() {
+    echo 'hello world!';
+}
+
+// Un exemple de méthode de rappel
+class MyClass {
+    static function myCallbackMethod() {
+        echo 'Hello World!';
+    }
+}
+
+// Type 1 : Fonction de rappel simple
+call_user_func('my_callback_function'); 
+
+// Type 2 : Appel d'une méthode statique de classe
+call_user_func(array('MyClass', 'myCallbackMethod')); 
+
+// Type 3 : Appel d'une méthode objet
+$obj = new MyClass();
+call_user_func(array($obj, 'myCallbackMethod'));
+
+// Type 4 : Appel d'une méthode statique de classe
+call_user_func('MyClass::myCallbackMethod');
+
+// Type 5 : Appel à une méthode statique de classe relative
+class A {
+    public static function who() {
+        echo "A\n";
+    }
+}
+
+class B extends A {
+    public static function who() {
+        echo "B\n";
+    }
+}
+
+call_user_func(array('B', 'parent::who')); // A
+// Type 6 : Les objets implémentants __invoke peuvent être utilisés comme callables
+class C {
+    public function __invoke($name) {
+        echo 'Hello ', $name, "\n";
+    }
+}
+
+$c = new C();
+call_user_func($c, 'PHP!');
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>
+     Exemple d'une fonction de rappel utilisant une Closure
+    </title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+// Notre closure
+$double = function($a) {
+    return $a * 2;
+};
+
+// Ceci est notre intervalle de nombres
+$numbers = range(1, 5);
+
+// Utilisation de la closure comme fonction de rappel.
+// Ici, pour doubler la taille de chaque élément de notre intervalle
+$new_numbers = array_map($double, $numbers);
+
+print implode(' ', $new_numbers);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+2 4 6 8 10
+]]>
+    </screen>
+   </example>
+  </para>
+
+  &note.func-callback-exceptions;
+ </sect2>
+
+</sect1>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

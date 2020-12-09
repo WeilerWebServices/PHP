@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: takagi Status: ready -->
+<!-- Credits: mumumu -->
+<appendix xml:id="posix.constants" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.constants;
+ &extension.constants;
+ <section xml:id="posix.constants.access">
+  <title><function>posix_access</function> 定数</title>
+  <note>
+   <para>
+    これらの定数は PHP 5.1.0 以降で有効です。システムによっては
+    これらのうちのいくつかが使用できない場合があることにも注意してください。
+   </para>
+  </note>
+  <variablelist>
+   <varlistentry xml:id="constant.posix-f-ok">
+    <term>
+     <constant>POSIX_F_OK</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      ファイルが存在するかどうかを調べます。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-r-ok">
+    <term>
+     <constant>POSIX_R_OK</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      ファイルが存在し、読み込みが許可されているかどうかを調べます。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-w-ok">
+    <term>
+     <constant>POSIX_W_OK</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      ファイルが存在し、書き込みが許可されているかどうかを調べます。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-x-ok">
+    <term>
+     <constant>POSIX_X_OK</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      ファイルが存在し、実行が許可されているかどうかを調べます。
+     </simpara>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </section>
+
+ <section xml:id="posix.constants.mknod">
+  <title><function>posix_mknod</function> 定数</title>
+  <note>
+   <para>
+    これらの定数は PHP 5.1.0 以降で有効です。システムによっては
+    これらのうちのいくつかが使用できない場合があることにも注意してください。
+   </para>
+  </note>
+  <variablelist>
+   <varlistentry xml:id="constant.posix-s-ifblk">
+    <term>
+     <constant>POSIX_S_IFBLK</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      ブロックスペシャルファイル。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-s-ifchr">
+    <term>
+     <constant>POSIX_S_IFCHR</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      キャラクタスペシャルファイル。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-s-ififo">
+    <term>
+     <constant>POSIX_S_IFIFO</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      FIFO (名前つきパイプ) スペシャルファイル。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-s-ifreg">
+    <term>
+     <constant>POSIX_S_IFREG</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      通常のファイル。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-s-ifsock">
+    <term>
+     <constant>POSIX_S_IFSOCK</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      ソケット。
+     </simpara>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </section>
+
+ <section xml:id="posix.constants.setrlimit">
+  <title><function>posix_setrlimit</function> 定数</title>
+  <note>
+   <para>
+    これらの定数は PHP 7.0.0 以降で有効です。システムによっては
+    これらのうちのいくつかが使用できない場合があることにも注意してください。
+   </para>
+  </note>
+  <note>
+   <para>
+    以下の一覧とともに、特定のオペレーションシステムの 
+    <function>setrlimit</function> のマニュアルページを読みたくなるかもしれません。
+    なぜなら、POSIX を完全に実装していると主張するオペレーティングシステム間でも、
+    これらの値をどう解釈するかはばらつきがあるからです。
+   </para>
+  </note>
+  <variablelist>
+   <varlistentry xml:id="constant.posix-rlimit-as">
+    <term>
+     <constant>POSIX_RLIMIT_AS</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      プロセスのアドレススペースの最大値をバイト単位で指定します。
+      PHP の <link linkend="ini.memory-limit">memory_limit</link>
+      設定ディレクティブも参照してください。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-core">
+    <term>
+     <constant>POSIX_RLIMIT_CORE</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      core ファイルの最大サイズ。
+      0 に設定すると、core ファイルは生成されません。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-cpu">
+    <term>
+     <constant>POSIX_RLIMIT_CPU</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      プロセスが使えるCPU時間の上限を秒単位で指定します。
+      プロセスがソフトリミットに達した場合、SIGXCPU シグナルが送られます。
+      これは <function>pcntl_signal</function> でキャッチできます。
+      オペレーティングシステムによっては、
+      追加の <literal>SIGXCPU</literal> シグナルをハードリミットに達する
+      まで1秒ごとに送り、ハードリミットに達すると
+      <literal>SIGKILL</literal> シグナルを送るかもしれません。
+     </simpara>
+     <simpara>
+      See also <function>set_time_limit</function>.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-data">
+    <term>
+     <constant>POSIX_RLIMIT_DATA</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      プロセスのデータセグメントの最大値をバイト単位で指定します。
+      <function>brk</function> や
+      <function>sbrk</function> を呼ぶ拡張機能でもない限り、
+      この設定がPHPの実行に影響を及ぼす可能性は極めて小さいです。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-fsize">
+    <term>
+     <constant>POSIX_RLIMIT_FSIZE</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      プロセスが作成できるファイルサイズの最大値をバイト単位で指定します。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-locks">
+    <term>
+     <constant>POSIX_RLIMIT_LOCKS</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      プロセスが作ることができるロック数の最大数。
+      これは極めて古い Linux kernel でのみサポートされています。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-memlock">
+    <term>
+     <constant>POSIX_RLIMIT_MEMLOCK</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      The maximum number of bytes that can be locked into memory.
+      メモリ内にロックできるメモリの最大バイト数。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-msgqueue">
+    <term>
+     <constant>POSIX_RLIMIT_MSGQUEUE</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      POSIX メッセージキューのために確保できるバイト数の制限を指定する。
+      PHP は POSIX メッセージキューをサポートしていないので、
+      このリミットは POSIX メッセージキューをサポートした拡張機能を使っていない限り効果がありません。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-nice">
+    <term>
+     <constant>POSIX_RLIMIT_NICE</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      プロセスが <link linkend="function.pcntl-setpriority">設定できるnice値</link> の上限を指定します。
+      リソース制限値として負の数を指定できないため、<literal>20 - limit</literal> という値が実際に使われます。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-nofile">
+    <term>
+     <constant>POSIX_RLIMIT_NOFILE</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      このプロセスがオープンできるファイルディスクリプター数の最大値より1大きい値を指定します。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-nproc">
+    <term>
+     <constant>POSIX_RLIMIT_NPROC</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      プロセスの実ユーザーIDで作成できる最大プロセス数(オペレーティングシステムによってはスレッド数)
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-rss">
+    <term>
+     <constant>POSIX_RLIMIT_RSS</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      プロセスの resident set の最大値をページ数単位で指定します。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-rtprio">
+    <term>
+     <constant>POSIX_RLIMIT_RTPRIO</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      <function>sched_setscheduler</function> や
+      <function>sched_setparam</function> システムコール経由で
+      設定できる、リアルタイム優先度の最大値
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-rttime">
+    <term>
+     <constant>POSIX_RLIMIT_RTTIME</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      リアルタイムスケジューリングを採用している場合に
+      スケジューリングされるプロセスが、
+      ブロッキング型のシステムコールを呼び出さずに消費できる
+      CPU時間の最大値をマイクロ秒単位で指定します。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-sigpending">
+    <term>
+     <constant>POSIX_RLIMIT_SIGPENDING</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      プロセスの実ユーザーID に対して、
+      キューに入れられるシグナルの数の最大値
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-stack">
+    <term>
+     <constant>POSIX_RLIMIT_STACK</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      プロセススタックの最大サイズをバイト単位で指定します。
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.posix-rlimit-infinity">
+    <term>
+     <constant>POSIX_RLIMIT_INFINITY</constant>
+      (<type>int</type>)
+    </term>
+    <listitem>
+     <simpara>
+      リソースリミットが無限であることを示すのに使われます。
+     </simpara>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </section>
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

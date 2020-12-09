@@ -1,0 +1,70 @@
+%% include gdk-2.8.overrides
+
+%%
+add-arginfo GdkScreen set_font_options
+PHPGTK_ARG_INFO_STATIC
+ZEND_BEGIN_ARG_INFO_EX(ARGINFO_NAME,0,0,1)
+	ZEND_ARG_OBJ_INFO(0,obj, CairoFontOptions, 1)
+ZEND_END_ARG_INFO();
+
+%%
+override gdk_screen_set_font_options
+PHP_METHOD
+{
+	zval *obj=NULL;
+	cairo_font_options_object *fobj;
+    if(!php_gtk_parse_args(ZEND_NUM_ARGS(),"O", &obj)) {
+	        return;
+	}
+	
+	fobj = (cairo_font_options_object *)cairo_font_options_object_get(obj TSRMLS_CC);
+
+	gdk_screen_set_font_options(GDK_SCREEN(PHPG_GOBJECT(this_ptr)), fobj->font_options);
+}
+
+%%
+override gdk_screen_get_font_options
+PHP_METHOD
+{
+	const cairo_font_options_t *fo;
+	zend_class_entry *ce;
+	cairo_font_options_object *fobj;
+	if(!php_gtk_parse_args(ZEND_NUM_ARGS(),"")) {
+	            return;
+	}
+	fo = gdk_screen_get_font_options(GDK_SCREEN(PHPG_GOBJECT(this_ptr)));
+	ce = php_cairo_get_fontoptions_ce();
+
+	object_init_ex(return_value, ce);
+    fobj = (cairo_font_options_object *)zend_object_store_get_object(return_value TSRMLS_CC);
+    fobj->font_options = php_cairo_font_options_copy(fo);
+}
+
+%%
+add-arginfo Gdk cairo_set_source_pixmap
+PHPGTK_ARG_INFO_STATIC
+ZEND_BEGIN_ARG_INFO_EX(ARGINFO_NAME,0,0,4)
+    ZEND_ARG_OBJ_INFO(0,cobj, CairoContext, 1)
+    ZEND_ARG_OBJ_INFO(0,pmap, GdkPixmap, 1)
+	ZEND_ARG_INFO(0, pixmap_x)
+	ZEND_ARG_INFO(0, pixmap_y)
+ZEND_END_ARG_INFO();
+
+%%
+override gdk_cairo_set_source_pixmap
+PHP_METHOD
+{
+    zval *cobj = NULL;
+    zval *pmap = NULL;
+    GdkPixmap *pixmap;
+	gdouble pixmap_x = 0;
+	gdouble pixmap_y = 0;
+	cairo_context_object *cont;
+    if(!php_gtk_parse_args(ZEND_NUM_ARGS(),"OOdd", &cobj, &pmap, &pixmap_x, &pixmap_y)) {
+        return;
+    }
+    cont = (cairo_context_object *)cairo_context_object_get(cobj TSRMLS_CC);
+    pixmap = GDK_PIXMAP(PHPG_GOBJECT(pmap));
+	gdk_cairo_set_source_pixmap(cont->context, pixmap, pixmap_x, pixmap_y);
+}
+ 

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+<!-- CREDITS: DAnnebicque -->
+
+<appendix xml:id="intl.constants" xmlns="http://docbook.org/ns/docbook"
+xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.constants;
+ <para>
+  <variablelist>
+   <varlistentry xml:id="constant.intl-icu-version">
+    <term>
+     <constant>INTL_ICU_VERSION</constant>
+     (&string;)
+    </term>
+    <listitem>
+     <simpara>
+      La version courante de la bibliothèque ICU en tant qu'une chaîne décimale
+      séparer avec des points.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.intl-max-locale-len">
+    <term>
+     <constant>INTL_MAX_LOCALE_LEN</constant>
+     (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Limite la taille locale, par défaut à 80 en PHP. Les noms
+      de locales plus grand que cette taille seront interdits.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.idna-default">
+    <term>
+     <constant>IDNA_DEFAULT</constant>
+     (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Interdire le traitement des codepoints non affectés dans
+      l'entrée pour les fonctions IDN et ne vérifient pas si l'entrée
+      est conforme aux règles de noms de domaine ASCII.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.idna-allow-unassigned">
+    <term>
+     <constant>IDNA_ALLOW_UNASSIGNED</constant>
+     (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Autoriser le traitement des codepoints non affectés dans l'entrée pour les
+      fonctions IDN.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.idna-use-std3-rules">
+    <term>
+     <constant>IDNA_USE_STD3_RULES</constant>
+     (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Vérifiez si l'entrée pour les fonctions IDN est conforme aux règles de noms
+      de domaine ASCII.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.idna-check-bidi">
+    <term>
+     <constant>IDNA_CHECK_BIDI</constant>
+     (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Vérifie si l'entrée est conforme aux règles BiDi.
+      Ignoré par l'implémentation IDNA2003, qui effectue toujours cette vérification.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.idna-check-contextj">
+    <term>
+     <constant>IDNA_CHECK_CONTEXTJ</constant>
+     (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Vérifie si l'entrée est conforme aux règles CONTEXTJ.
+      Ignoré par l'implémentation IDNA2003, vu que cette vérification
+      est nouvelle en IDNA2008.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.idna-nontransitional-to-ascii">
+    <term>
+     <constant>IDNA_NONTRANSITIONAL_TO_ASCII</constant>
+     (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Option pour une exécution non-transitionnelle dans la fonction
+      <function>idn_to_ascii</function>. L'exécution transitionnelle
+      est activée par défaut. Cette option est ignorée par l'implémentation
+      IDNA2003.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.idna-nontransitional-to-unicode">
+    <term>
+     <constant>IDNA_NONTRANSITIONAL_TO_UNICODE</constant>
+     (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Option pour une exécution non-transitionnelle dans la fonction
+      <function>idn_to_utf8</function>. L'exécution transitionnelle
+      est activée par défaut. Cette option est ignorée par l'implémentation
+      IDNA2003.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.intl-idna-variant-2003">
+    <term>
+     <constant>INTL_IDNA_VARIANT_2003</constant>
+     (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Utilise l'algorithme IDNA 2003 dans la fonction
+      <function>idn_to_utf8</function> ainsi que dans la fonction
+      <function>idn_to_ascii</function>. C'est le comportement par défaut.
+      Cette constante et l'usage par défaut ont été dépréciés à partir de 
+      la version PHP 7.2.0.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.intl-idna-variant-uts46">
+    <term>
+     <constant>INTL_IDNA_VARIANT_UTS46</constant>
+     (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Utilise l'algorithme UTS #46 dans la fonction <function>idn_to_utf8</function>
+      ainsi que dans la fonction <function>idn_to_ascii</function>.
+      Disponible à partir de ICU 4.6.
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="constant.idna-error-empty-label">
+    <term>
+     <constant>IDNA_ERROR_EMPTY_LABEL</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_LABEL_TOO_LONG</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_DOMAIN_NAME_TOO_LONG</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_LEADING_HYPHEN</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_TRAILING_HYPHEN</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_HYPHEN_3_4</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_LEADING_COMBINING_MARK</constant>
+     (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_DISALLOWED</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_PUNYCODE</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_LABEL_HAS_DOT</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_INVALID_ACE_LABEL</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_BIDI</constant> (&integer;)
+    </term>
+    <term>
+     <constant>IDNA_ERROR_CONTEXTJ</constant> (&integer;)
+    </term>
+    <listitem>
+     <simpara>
+      Erreurs rapportées dans un jeu de bits retourné par
+      l'algorithme UTS #46 dans la fonction <function>idn_to_utf8</function>
+      ainsi que dans la fonction <function>idn_to_ascii</function>.
+     </simpara>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </para>
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

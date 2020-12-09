@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.13 $ -->
+<classentry id="gtk.gtkcellrenderertoggle">
+ <classmeta>
+  <classtitle>GtkCellRendererToggle</classtitle>
+  <classparent>GtkCellRenderer</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkcellrenderertoggle.png"/>
+  <shortdesc>
+   Displays the contents of a cell in a GtkTreeView as a toggle button.
+  </shortdesc>
+  <desc>
+   <para>
+    Displays the contents of a cell in a GtkTreeView as a toggle button. The 
+    cell will likely be drawn as a checkbox which will be checked when the cell
+    is active (toggled on) or empty when the cell is not active.
+   </para>
+  </desc>
+ </classmeta>
+
+
+ <constructors>
+  <constructor id="gtk.gtkcellrenderertoggle.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkCellRendererToggle</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>GtkCellRendererToggle</classname>.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new <classname>GtkCellRendererToggle</classname>.
+     The toggle button rendering parameters are adjusted using
+     the object properties. The object properties can be set globally
+     (with <function class="GObject">set_property</function>).
+     Also, with <classname>GtkTreeViewColumn</classname>, you
+     can bind a property to a value in a gtk.TreeModel. For
+     example, you can bind the "active" property on the cell
+     renderer to a boolean value in the model, thus causing
+     the check button to reflect the state of the model.
+    </para>
+    <example>
+     <title>Creating an editable toggle renderer</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkcellrenderertoggle/constructor.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </constructor>
+ </constructors>
+
+
+ <methods>
+  <method id="gtk.gtkcellrenderertoggle.method.get_active">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_active</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether or not the cell renderer is active (toggled on).
+   </shortdesc>
+   <desc>
+    <para>
+     Returns <literal>true</literal> if the cell renderer is active, 
+     <literal>false</literal> if it is not.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkCellRendererToggle">set_active</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcellrenderertoggle.method.get_radio">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_radio</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns <literal>true</literal> if radio toggles rather than checkboxes are
+    being rendered.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns <literal>true</literal> if radio toggles rather than checkboxes 
+     are being rendered.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkCellRendererToggle">set_radio</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcellrenderertoggle.method.set_active">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_active</function></funcdef>
+     <paramdef>bool <parameter>state</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the state of the cell renderer.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the state of the cell renderer to <parameter>state</parameter>. If
+     <parameter>state</parameter> is <literal>true</literal>, the cell renderer
+     will be active.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkCellRendererToggle">get_active</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcellrenderertoggle.method.set_radio">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_radio</function></funcdef>
+     <paramdef>bool <parameter>radio</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the style of the toggle button. If true, the toggle will be shown as
+    RadioButton.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the style of the toggle button. If radio is <literal>true</literal>, 
+     the cell renderer renders a radio toggle. If <literal>false</literal>, it
+     renders a check toggle.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkCellRendererToggle">get_radio</function>
+    </para>
+
+   </desc>
+  </method>
+ </methods>
+
+
+ <properties>
+  <prop id="gtk.gtkcellrenderertoggle.property.activatable" type="rw">
+   <propname>activatable</propname>
+   <proptype>boolean</proptype>
+   <shortdesc>
+    If <literal>true</literal>, the toggle button can be activated.
+   </shortdesc>
+   <desc>
+    <para>
+    If <literal>true</literal>, the toggle button can be activated. If
+    <literal>false</literal>, the cells are showed in grayscale and became 
+    insensitive.
+    </para>
+    <para>
+     &seealso;
+     <function class="GObject">set_property</function>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkcellrenderertoggle.property.active" type="rw">
+   <propname>active</propname>
+   <proptype>boolean</proptype>
+   <shortdesc>
+    Represents the state of the toggle button. True if it's active.
+   </shortdesc>
+   <desc>
+    <para>
+      Represents the state of the toggle button. True if it's active.
+    </para>
+    <para>
+     &seealso;
+     <function class="GObject">set_property</function>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkcellrenderertoggle.property.radio" type="rw">
+   <propname>radio</propname>
+   <proptype>boolean</proptype>
+   <shortdesc>
+    If <literal>true</literal>, draw the toggle is showed as a radio button.
+   </shortdesc>
+   <desc>
+    <para>
+      If <literal>true</literal>, draw the toggle is showed as a radio button.
+    </para>
+    <para>
+     &seealso;
+     <function class="GObject">set_property</function>
+    </para>
+   </desc>
+  </prop>
+ </properties>
+
+
+ <signals>
+  <signal id="gtk.gtkcellrenderertoggle.signal.toggled">
+   <signalname>toggled</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>
+      <classname>GtkCellRendererToggle</classname>
+      <parameter>cellrenderertoggle</parameter>
+     </paramdef>
+     <paramdef>string <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the user changes the state of the toggle button.
+   </shortdesc>
+   <desc>
+    <para>
+     The "toggled" signal is emitted when the user changes the state of the 
+     toggle button.
+    </para>
+   </desc>
+  </signal>
+ </signals>
+
+</classentry>

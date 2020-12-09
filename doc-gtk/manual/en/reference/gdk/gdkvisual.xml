@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision: 1.7 $ -->
+<classentry id="gdk.gdkvisual">
+ <classmeta>
+  <classtitle>GdkVisual</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   An object describing a particular video hardware display format.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gdk.gdkvisual.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GdkVisual</function></funcdef>
+    <paramdef>int <parameter>depth</parameter></paramdef>
+    <paramdef>GdkVisualType <parameter>visual_type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gdk.gdkvisual.method.get_screen">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GdkScreen <function>get_screen</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+ </methods>
+
+ <fields>
+
+  <field id="gdk.gdkvisual.field.bits_per_rgb" type="ro">
+   <fieldname>bits_per_rgb</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.blue_mask" type="ro">
+   <fieldname>blue_mask</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.blue_prec" type="ro">
+   <fieldname>blue_prec</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.blue_shift" type="ro">
+   <fieldname>blue_shift</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.byte_order" type="ro">
+   <fieldname>byte_order</fieldname>
+   <fieldtype>GdkByteOrder</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.colormap_size" type="ro">
+   <fieldname>colormap_size</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.depth" type="ro">
+   <fieldname>depth</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.green_mask" type="ro">
+   <fieldname>green_mask</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.green_prec" type="ro">
+   <fieldname>green_prec</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.green_shift" type="ro">
+   <fieldname>green_shift</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.red_mask" type="ro">
+   <fieldname>red_mask</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.red_prec" type="ro">
+   <fieldname>red_prec</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.red_shift" type="ro">
+   <fieldname>red_shift</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkvisual.field.type" type="ro">
+   <fieldname>type</fieldname>
+   <fieldtype>GdkVisualType</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+ </fields>
+
+</classentry>

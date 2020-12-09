@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 344870 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+
+<book xml:id="book.filter" xmlns="http://docbook.org/ns/docbook">
+ <?phpdoc extension-membership="bundled" ?>
+ <title>Фильтрация данных</title>
+ <titleabbrev>Filter</titleabbrev>
+
+ <preface xml:id="intro.filter">
+  &reftitle.intro;
+  <para>
+   Фильтры данного расширения позволяют выполнить валидацию данных и обезопасить их от возможных
+   вредоносных конструкций. Это особенно полезно, если содержимое получено из неизвестных или
+   ненадежных источников, таких, как пользовательский ввод. Например, такие данные можно получить
+   из HTML-форм.
+  </para>
+  <para>
+   Существует два основных типа фильтрации:
+   <emphasis>проверка</emphasis> (валидация) и <emphasis>очистка</emphasis> (санитизация).
+  </para>
+  <para>
+   <link linkend="filter.filters.validate">Проверка</link> используется для
+   определения соответствия данных определённым критериям. Например, применение
+   <constant>FILTER_VALIDATE_EMAIL</constant> позволяет проверить,
+   являются ли введённые данные адресом email, однако, сами данные при этом
+   останутся нетронутыми.
+  </para>
+  <para>
+   <link linkend="filter.filters.sanitize">Очистка</link> используется для 
+   извлечения из данных нежелательных конструкций. Например, применение
+   <constant>FILTER_SANITIZE_EMAIL</constant> удалит все символы, которые
+   не должен содержать email-адрес. То есть, проверки данных не происходит.
+  </para>
+  <para>
+   Кроме того, можно использовать различные <emphasis>флаги</emphasis>,
+   как для проверки, так и для очистки, для более тонкой настройки
+   согласно вашим нуждам.
+   Например, передача флага <constant>FILTER_FLAG_PATH_REQUIRED</constant> при фильтрации
+   <acronym>URL</acronym> установит необходимым условием наличие пути
+   в ссылке (например, <literal>/foo</literal> в
+   <literal>http://example.org/foo</literal>).
+  </para>
+ </preface>
+
+ &reference.filter.setup;
+ &reference.filter.filters;
+ &reference.filter.constants;
+ &reference.filter.examples;
+ &reference.filter.reference;
+
+</book>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision: 1.8 $ -->
+<classentry id="gdk.gdkdevice">
+ <classmeta>
+  <classtitle>GdkDevice</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   A description of an extended input device.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <methods>
+
+  <method id="gdk.gdkdevice.method.get_axis">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_axis</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdevice.method.get_history">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_history</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdevice.method.get_state">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_state</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdevice.method.set_axis_use">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_axis_use</function></funcdef>
+     <paramdef>int <parameter>index</parameter></paramdef>
+     <paramdef>GdkAxisUse <parameter>use</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdevice.method.set_key">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_key</function></funcdef>
+     <paramdef>int <parameter>index</parameter></paramdef>
+     <paramdef>int <parameter>keyval</parameter></paramdef>
+     <paramdef>GdkModifierType <parameter>modifiers</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdevice.method.set_mode">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>set_mode</function></funcdef>
+     <paramdef>GdkInputMode <parameter>mode</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <fieldname class="GdkDevice">mode</fieldname>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdevice.method.set_source">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_source</function></funcdef>
+     <paramdef>GdkInputSource <parameter>source</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <fieldname class="GdkDevice">source</fieldname>
+    </para>
+
+   </desc>
+  </method>
+
+ </methods>
+
+ <fields>
+
+  <field id="gdk.gdkdevice.field.axes" type="ro">
+   <fieldname>axes</fieldname>
+   <fieldtype></fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdevice.field.has_cursor" type="ro">
+   <fieldname>has_cursor</fieldname>
+   <fieldtype>bool</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdevice.field.keys" type="ro">
+   <fieldname>keys</fieldname>
+   <fieldtype></fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdevice.field.mode" type="ro">
+   <fieldname>mode</fieldname>
+   <fieldtype>GdkInputMode</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GdkDevice">set_mode</function>
+    </para>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdevice.field.name" type="ro">
+   <fieldname>name</fieldname>
+   <fieldtype>string</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdevice.field.num_axes" type="ro">
+   <fieldname>num_axes</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdevice.field.num_keys" type="ro">
+   <fieldname>num_keys</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdevice.field.source" type="ro">
+   <fieldname>source</fieldname>
+   <fieldtype>GdkInputSource</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GdkDevice">set_source</function>
+    </para>
+
+   </desc>
+  </field>
+
+ </fields>
+
+</classentry>

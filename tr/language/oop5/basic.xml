@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 344469 Maintainer: nilgun Status: ready-->
+ <sect1 xml:id="language.oop5.basic" xmlns="http://docbook.org/ns/docbook">
+  <title>Temel Kavramlar</title>
+
+  <sect2 xml:id="language.oop5.basic.class">
+   <title><code>class</code> Anahtar Sözcüğü</title>
+   <para>
+    Temel sınıf tanımı <literal>class</literal> anahtar sözcüğü ile başlar
+    sınıf isminin ardından gelen bir çift kaşlı ayracın arasında sınıfa ait
+    özelliklerin ve yöntemlerin tanımları bulunur.
+   </para>
+   <para>
+    Sınıf ismi olarak herhangi bir geçerli yafta kullanılabilir ancak bu PHP
+    için <link linkend="reserved">ayrılmış sözcüklerden biri</link>
+    olmamalıdır. Geçerli bir sınıf ısmı bir harf veya alt çizgi ile başlar,
+    sayılar, harfler veya alt çizgiler içerebilir. Bir düzenli ifade olarak
+    şöyle bir şablonla eşleşmelidir:
+    <literal>^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$</literal>.
+   </para>
+   <para>
+    Bir sınıfın kendi <link linkend="language.oop5.constants">sabitleri</link>,
+    <link linkend="language.oop5.properties">değişkenleri</link>
+    (bunlara "özellik" de denir) ve işlevleri (bunlara "yöntem" de denir)
+    olabilir.
+   </para>
+   <example>
+    <title>- Basit bir sınıf tanımı</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class BasitSınıf
+{
+    // özellik bildirimi
+    public $öntanımlı = 'öntanımlı bir değer';
+
+    // yöntem tanımı
+    public function ÖntanımlıyıGöster() {
+        echo $this->öntanımlı;
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+   <para>
+    Bir nesne bağlamı içinden bir yöntem çağırmak için <varname>$this</varname>
+    diye bir sözde değişken kullanılır. <varname>$this</varname> çağrılan
+    nesneye bir gönderimdir (normalde yöntemin ait olduğu nesnedir, ancak eğer
+    nesne diğer nesnenin bağlamından <link linkend="language.oop5.static">duruk
+    olarak</link> çağrılıyorsa, bu başka bir nesne de olabilir). PHP 7.0.0 
+    itibariyle, uyumsuz bir bağlamda duruk olmayan yöntemin duruk olarak 
+    çağrılması,  yöntem içinde tanımlanmamış olarak $this ile sonuçlanır. 
+    Uyumsuz bir bağlamda duruk olmayan yöntemin duruk olarak çağrılması 
+    PHP 5.6.0'da önerilmemektedir. PHP 7.0.0 itibariyle, duruk olmayan 
+    yöntemin duruk olarak çağrılması genel plarak önerilmemektedir (uyumlu 
+    bir bağlamdan çağrılsa bile). PHP 5.6.0 öncesinde böyle çağrılar zaten
+    E_STRICT seviyesinde bir uyarı tetiklemektedir.
+   </para>
+   <example xml:id="language.oop5.basic.class.this">
+    <title>- <varname>$this</varname> sözde değişkeninin kullanımı</title>
+     <simpara>
+      Bu örnekte hata raporlamanın iptal edildiği varsayılmıştır. Aksi 
+      takdirde, aşağıdaki kod, PHP sürümüne bağlı olarak E_DEPRECATED ve 
+      E_STRICT uyarılarını tetiklerdi.
+     </simpara>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class A
+{
+    function foo()
+    {
+        if (isset($this)) {
+            echo '$this tanımlı (';
+            echo get_class($this);
+            echo ")\n";
+        } else {
+            echo "\$this tanımsız.\n";
+        }
+    }
+}
+
+class B
+{
+    function bar()
+    {
+        A::foo();
+    }
+}
+
+$a = new A();
+$a->foo();
+
+A::foo();
+
+$b = new B();
+$b->bar();
+
+B::bar();
+?>
+]]>
+     </programlisting>
+     &example.outputs.5;
+     <screen>
+<![CDATA[
+$this tanımlı (A)
+$this tanımsız.
+$this tanımlı (B)
+$this tanımsız.
+]]>
+     </screen>
+     &example.outputs.7;
+     <screen>
+<![CDATA[
+$this is defined (A)
+$this is not defined.
+$this is not defined.
+$this is not defined.
+]]>
+     </screen>
+    </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.basic.new">
+   <title><code>new</code> Anahtar Sözcüğü</title>
+   <para>
+    Bir sınıfın örneğini oluşturmak için <literal>new</literal> anahtar sözcüğü
+    kullanılmalıdır. Nesnenin hata durumunda daima yeni bir değişkene
+    atanarak oluşturulması için <link linkend="language.oop5.decon"
+    >kurucu</link>sunun bir <link linkend="language.exceptions"
+    >istisna</link> oluşturmaması gerekir. Sınıflar, örnekleme öncesi
+    tanımlanmış olmalıdır (ve bu, bazı durumlarda bir gereksinimdir).
+   </para>
+   <para>
+    Bir <type>string</type> türünde dizge <literal>new</literal> ile
+    kullanılmış bir sınıf ismi içeriyorsa bu sınıfın yeni bir örneği
+    oluşturulur. Eğer sınıf bir isim alanı içersindeyse bu yapılırken sınıfın
+    tam nitelenmiş ismi kullanılmalıdır.
+   </para>
+   <example>
+    <title>- Bir sınıf örneğinin oluşturulması</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$örnek = new BasitSınıf();
+
+// Bu bir değişkenle de yapılabilir:
+$sınıf = 'BasitSınıf';
+$örnek = new $sınıf(); // new BasitSınıf()
+?>
+]]>
+    </programlisting>
+   </example>
+   <para>
+    Sınıf bağlamında yeni bir nesneyi <literal>new self</literal> veya
+    <literal>new parent</literal> kullanarak oluşturmak mümkündür.
+   </para>
+   <para>
+    Oluşturulmuş bir sınıf örneğinin yeni bir değişkene atanması sırasında,
+    yeni değişken, atanan nesneyle aynı örneğe erişecektir. Bu davranışın
+    örneklerin bir işleve aktarılmasından bir farkı yoktur. <link
+    linkend="language.oop5.cloning">Kopyalamak</link> suretiyle oluşturulmuş
+    bir nesnenin daima bir kopyası yapılabilir.
+   </para>
+   <example>
+    <title>- Nesne Atama</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$örnek = new BasitSınıf();
+
+$atama     =  $örnek;
+$gönderim  =& $örnek;
+
+$örnek->var = '$atama bu değere sahip olacak';
+
+$örnek = null; // $örnek ve $gönderim null olur
+
+var_dump($örnek);
+var_dump($gönderim);
+var_dump($atama);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+NULL
+NULL
+object(BasitSınıf)#1 (1) {
+  ["var"]=>
+  string(30) "$atama bu değere sahip olacak"
+}
+]]>
+    </screen>
+   </example>
+   <para>
+    Bir nesnenin örneğini oluşturmak için PHP 5.3.0 ve sonrasında yeni yollar
+    kullanılabilmektedir:
+   </para>
+   <example>
+    <title>- Yeni nesneler oluşturmak</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Test
+{
+    static public function getNew()
+    {
+        return new static;
+    }
+}
+
+class Child extends Test
+{}
+
+$obj1 = new Test();
+$obj2 = new $obj1;
+var_dump($obj1 !== $obj2);
+
+$obj3 = Test::getNew();
+var_dump($obj3 instanceof Test);
+
+$obj4 = Child::getNew();
+var_dump($obj4 instanceof Child);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+bool(true)
+bool(true)
+]]>
+    </screen>
+   </example>
+   <para>
+    PHP 5.4.0 yeni oluşturulmuş bir nesnenin üyesine tek bir ifadede erişme 
+    imkanını sağladı:
+   </para>
+   <example>
+    <title>- Yeni oluşturulmuş bir nesnenin üyesine erişim</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo (new DateTime())->format('Y');
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+2016
+]]>
+    </screen>
+   </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.basic.properties-methods">
+   <title>Özellikler ve Yöntemler</title>
+   <para>
+    Sınıf özellikleri ve yöntemleri ayrı isim alanlarında ("namespace") yer alır, dolayısıyla bunlar aynı isimde olabilir. Sadece bağlama bağlı kalarak, bir özelliğin mi yoksa bir yöntemin mi çağrıldığına (yani, bir değişkene erişim veya işlev çağrısı) bakmadan her ikisi de aynı gösterimle kullanılabilir.
+   </para>
+   <example>
+    <title>- Özelliğe erişim ya da yöntem çağrısı</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    public $bar = 'özellik';
+    
+    public function bar() {
+        return 'yöntem';
+    }
+}
+
+$obj = new Foo();
+echo $obj->bar, PHP_EOL, $obj->bar(), PHP_EOL;
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+özellik
+yöntem
+]]>
+    </screen>
+   </example>
+   <para>
+    Bunun anlamı: Bir özelliğe atanmış bir 
+    <link linkend="functions.anonymous">anonim işlevi</link> doğrudan çağırmak 
+    mümkün değildir. Bunun yerine, özellik önce örneğin bir değişkene 
+    atanmalıdır. PHP 7.0.0 itibariyle, böyle bir özelliği parantez içine 
+    alarak doğrudan çağırmak mümkündür.
+   </para>
+   <example>
+    <title>- Bir özelliğe atanmış bir anonim işlevi çağırmak</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    public $bar;
+    
+    public function __construct() {
+        $this->bar = function() {
+            return 42;
+        };
+    }
+}
+
+$obj = new Foo();
+
+// PHP 5.3.0 ve sonrası:
+$func = $obj->bar;
+echo $func(), PHP_EOL;
+
+// PHP 7.0.0 ve sonrası:
+echo ($obj->bar)(), PHP_EOL;
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+42
+]]>
+    </screen>
+   </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.basic.extends">
+   <title><code>extends</code> Anahtar Sözcüğü</title>
+   <para>
+    Bir sınıfın bildiriminde <code>extends</code> anahtar sözcüğü
+    kullanılarak başka bir sınıfın yöntemleri ve özellikleri miras alınabilir.
+    Çok sayıda sınıfı miras alarak genişlemek mümkün değildir, bir sınıf
+    sadece bir ana sınıfı miras alabilir.
+   </para>
+   <para>
+    Miras alınan yöntemler ve özellikler, ebeveyn sınıfta tanımlı
+    isimleriyle yeniden bildirilerek geçersiz kılınabilir; bu sadece ebeveyn
+    sınıfın <link linkend="language.oop5.final">final</link> tanımlı yöntemleri
+    için yapılamaz. Geçersiz kılınmış yöntemlere ve duruk özelliklere <link
+    linkend="language.oop5.paamayim-nekudotayim">parent::</link> öneki ile
+    atıfta bulunarak erişilebilir.
+   </para>
+   <para>
+    Yöntemler geçersiz kılınırken, değiştirgelerin yerleri korunmalıdır, aksi
+    takdirde PHP <constant>E_STRICT</constant> seviyesinde bir hata üretir.
+    Farklı değiştirgeler kullanarak geçersiz kılmayı mümkün kılan kurucuya bu
+    uygulanmaz.
+   </para>
+   <example>
+    <title>- Basit bir sınıfın miras alınması</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class EkSınıf extends BasitSınıf
+{
+    // ebeveyn yöntemi yeniden bildirelim
+    function değerGöster()
+    {
+        echo "Sınıf genişletiliyor\n";
+        parent::değerGöster();
+    }
+}
+
+$ek = new EkSınıf();
+$ek->değerGöster();
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Sınıf genişletiliyor
+bir öntanımlı değer
+]]>
+    </screen>
+   </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.basic.class.class">
+   <title>::class</title>
+
+   <para>
+    PHP 5.5'ten itibaren, <literal>class</literal> anahtar sözcüğü, ayrıca
+    sınıf isim çözünürlüğü için de kullanılabilmektedir.
+    <literal>SınıfAdı</literal> sınıfının tam nitelenmiş ismini
+    <literal>SınıfAdı::class</literal> biçeminde kullanarak bir dizge elde
+    edebilirsiniz. Bu, özellikle <link linkend="language.namespaces">isim
+    alanlı</link> sınıflarda çok kullanışlıdır.
+   </para>
+   <para>
+    <example xml:id="language.oop5.basic.class.class.name">
+     <title>- Sınıf adı çözünürlüğü</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+namespace NS {
+    class SınıfAdı {
+    }
+
+    echo SınıfAdı::class;
+}
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+NS\SınıfAdı
+]]>
+     </screen>
+    </example>
+   </para>
+   <note>
+    <para>
+      <literal>::class</literal> kullanarak sınıf ismi çözünürlüğü bir 
+      derleme zamanı dönüşümüdür. Yani, sınıf ismi dizgesi oluşturulduğu 
+      sırada özdevinimli bir yükleme henüz oluşmamıştır. Sonuç olarak, sınıf 
+      henüz mevcut değilken bile sınıf isimleri genişletilir. Bu durumda 
+      hiçbir hata oluşmaz.
+    </para>
+   </note>
+  </sect2>
+
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

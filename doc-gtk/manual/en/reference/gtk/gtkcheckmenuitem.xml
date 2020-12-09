@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.13 $ -->
+<classentry id="gtk.gtkcheckmenuitem">
+ <classmeta>
+  <classtitle>GtkCheckMenuItem</classtitle>
+  <classparent>GtkMenuItem</classparent>
+  <shortdesc>
+   A check box menu item.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkcheckmenuitem.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkCheckMenuItem</function></funcdef>
+    <paramdef>string <parameter>label</parameter></paramdef>
+    <paramdef>boolean <parameter>use_underline</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new check menu item.
+   </shortdesc>
+   <desc>
+    <para>
+    Creates a menu item which has two states, on or off, represented by
+    a check mark with a text label specified by <parameter>label</parameter>.
+    If label is <literal>NULL</literal> or not specified then no label is
+    created. If label contains underscore characters then the character
+    following the underscore will be underlined and the character following
+    the first underscore will be used as the mnemonic keyboard accelerator.
+    The <parameter>use_underline</parameter> parameter defaults to
+    <literal>TRUE</literal>. If <parameter>use_underline</parameter> is set to
+    <literal>FALSE</literal> the label text will not be parsed
+    for mnemonic characters.
+    </para>
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkcheckmenuitem.constructor.new_with_label">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkCheckMenuItem::new_with_label</function></funcdef>
+    <paramdef>string <parameter>label</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkcheckmenuitem.constructor.new_with_mnemonic">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkCheckMenuItem::new_with_mnemonic</function></funcdef>
+    <paramdef>string <parameter>label</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkcheckmenuitem.method.get_active">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_active</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether the check menu item is active.
+   </shortdesc>
+   <desc>
+    <para>
+    Returns whether the check menu item is active.
+    See <function class="GtkCheckMenuItem">set_active</function>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkCheckMenuItem">set_active</function>, 
+     <fieldname class="GtkCheckMenuItem">active</fieldname>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcheckmenuitem.method.get_draw_as_radio">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_draw_as_radio</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns <literal>TRUE</literal> if the check menu item is drawn
+    as a radio menu item.
+   </shortdesc>
+   <desc>
+    <para>
+    Returns <literal>TRUE</literal> if the check menu item
+    is drawn as a radio menu item. This value is set by the
+    <function class="GtkCheckMenuItem">set_draw_as_radio</function> method.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkCheckMenuItem">set_draw_as_radio</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcheckmenuitem.method.get_inconsistent">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_inconsistent</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkCheckMenuItem">set_inconsistent</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcheckmenuitem.method.set_active">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_active</function></funcdef>
+     <paramdef>bool <parameter>is_active</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Changes the state of the menu item's check box,
+    setting the <propname class="GtkCheckMenuItem">state</propname>
+    property according to the value of <parameter>is_active</parameter>
+    parameter.
+   </shortdesc>
+   <desc>
+    <para>
+    Changes the state of the menu item's check box, setting the
+    <propname class="GtkCheckMenuItem">state</propname> property
+    according to the value of <parameter>is_active</parameter> parameter.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkCheckMenuItem">get_active</function>, 
+     <fieldname class="GtkCheckMenuItem">active</fieldname>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcheckmenuitem.method.set_draw_as_radio">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_draw_as_radio</function></funcdef>
+     <paramdef>bool <parameter>draw_as_radio</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    It sets the check menu item to be displayed as a radio menu item
+    if the value of <parameter>draw_as_radio</parameter> is
+    <literal>TRUE</literal>.
+   </shortdesc>
+   <desc>
+    <para>
+    Displays the check menu item like a radio menu item if the
+    value of <parameter>draw_as_radio</parameter> is
+    <literal>TRUE</literal>. If <parameter>draw_as_radio</parameter>
+    is <literal>FALSE</literal> the check menu item is
+    displayed as normal (check box).
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkCheckMenuItem">get_draw_as_radio</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcheckmenuitem.method.set_inconsistent">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_inconsistent</function></funcdef>
+     <paramdef>bool <parameter>setting</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkCheckMenuItem">get_inconsistent</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcheckmenuitem.method.set_show_toggle">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_show_toggle</function></funcdef>
+     <paramdef>bool <parameter>always</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkcheckmenuitem.method.toggled">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>toggled</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The <function classname="GtkCheckMenuItem">toggled</function>
+    method emits the
+    <signalname class="GtkCheckMenuItem">toggled</signalname>.
+    signal on the check menu item.
+   </shortdesc>
+   <desc>
+    <para>
+        The <function classname="GtkCheckMenuItem">toggled</function>
+        method emits the <signalname class="GtkCheckMenuItem">toggled</signalname>
+        signal on the check menu item.
+    </para>
+   </desc>
+  </method>
+
+ </methods>
+
+ <fields>
+
+  <field id="gtk.gtkcheckmenuitem.field.active" type="ro">
+   <fieldname>active</fieldname>
+   <fieldtype>bool</fieldtype>
+   <shortdesc>
+     Represents the current state of the menu item.
+   </shortdesc>
+   <desc>
+    <para>
+     This property represents the state of the menu item.
+     <literal>TRUE</literal> if it's active,
+     otherwise <literal>FALSE</literal>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkCheckMenuItem">get_active</function>, 
+     <function class="GtkCheckMenuItem">set_active</function>
+    </para>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkcheckmenuitem.field.draw-as-radio" type="ro">
+   <fieldname>draw-as-radio</fieldname>
+   <fieldtype>bool</fieldtype>
+   <shortdesc>
+    <literal>TRUE</literal> if the check menu item is shown
+    as a radio menu item.
+   </shortdesc>
+   <desc>
+    <para>
+    Boolean that represents how the check menu item is displaied.
+    <literal>TRUE</literal> if the check menu item is
+    shown as a radio menu item and <literal>FALSE</literal> as a check box.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkCheckMenuItem">get_active</function>, 
+     <function class="GtkCheckMenuItem">set_active</function>
+    </para>
+
+   </desc>
+  </field>
+
+ </fields>
+
+ <signals>
+
+  <signal id="gtk.gtkcheckmenuitem.signal.toggled">
+   <signalname>toggled</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCheckMenuItem <parameter>checkmenuitem</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The <signalname class="GtkCheckMenuItem">toggled</signalname> signal
+    is emitted when the check menu item changes state.
+   </shortdesc>
+   <desc>
+    <para>
+      The <signalname class="GtkCheckMenuItem">toggled</signalname>
+      signal is emitted when the check menu item changes state.
+    </para>
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

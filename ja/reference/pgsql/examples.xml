@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 347649 Maintainer: takagi Status: ready -->
+<!-- CREDITS: hirokawa,mumumu -->
+
+<chapter xml:id="pgsql.examples" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.examples;
+ <section xml:id="pgsql.examples-basic">
+  <title>基本的な使用法</title>
+  <para>
+   この例では、PostgreSQL への接続・クエリの実行・結果の表示
+   そして切断の方法を説明します。
+   <example>
+    <title>PostgreSQL 拡張モジュールの概要</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// 接続し、データベースを選択する
+$dbconn = pg_connect("host=localhost dbname=publishing user=www password=foo")
+    or die('Could not connect: ' . pg_last_error());
+
+// SQL クエリを実行する
+$query = 'SELECT * FROM authors';
+$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+// 結果を HTML で表示する
+echo "<table>\n";
+while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+    echo "\t<tr>\n";
+    foreach ($line as $col_value) {
+        echo "\t\t<td>$col_value</td>\n";
+    }
+    echo "\t</tr>\n";
+}
+echo "</table>\n";
+
+// 結果セットを開放する
+pg_free_result($result);
+
+// 接続をクローズする
+pg_close($dbconn);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </section>
+
+ <section xml:id="pgsql.examples-queries">
+  <title>基本的な使い方</title>
+  <para>
+   以下の例には、レガシーなMySQL関数に似た、ユーザー定義関数が含まれています。
+
+   <example>
+    <title>PostgreSQL のユーザー定義関数の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// この関数は、PostgreSQL 接続がデータベースにバインドしているので必要
+// This function should be needed, since PostgreSQL connection binds database.
+function pg_list_dbs($db)
+{
+    assert(is_resource($db));
+    $query = '
+SELECT
+ d.datname as "Name",
+ u.usename as "Owner",
+ pg_encoding_to_char(d.encoding) as "Encoding"
+FROM
+ pg_database d LEFT JOIN pg_user u ON d.datdba = u.usesysid
+ORDER BY 1;
+';
+    return pg_query($db, $query);
+}
+
+// テーブルを一覧にする
+function pg_list_tables($db)
+{
+    assert(is_resource($db));
+    $query = "
+SELECT
+ c.relname as \"Name\",
+ CASE c.relkind WHEN 'r' THEN 'table' WHEN 'v' THEN 'view' WHEN 'i' THEN 'index' WHEN 'S' THEN 'sequence' WHEN 's' THEN 'special' END as \"Type\",
+  u.usename as \"Owner\"
+FROM
+ pg_class c LEFT JOIN pg_user u ON c.relowner = u.usesysid
+WHERE
+ c.relkind IN ('r','v','S','')
+ AND c.relname !~ '^pg_'
+ORDER BY 1;
+";
+    return pg_query($db, $query);
+}
+
+// pg_meta_data() も参照してください。フィールド定義を配列で返します。
+function pg_list_fields($db, $table)
+{
+    assert(is_resource($db));
+    $query = "
+SELECT
+ a.attname,
+ format_type(a.atttypid, a.atttypmod),
+ a.attnotnull,
+ a.atthasdef,
+ a.attnum
+FROM
+ pg_class c,
+ pg_attribute a
+WHERE
+ c.relname = '".$table."'
+ AND a.attnum > 0 AND a.attrelid = c.oid
+ORDER BY a.attnum;
+";
+    return pg_query($db, $query);
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </section>
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables: 
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

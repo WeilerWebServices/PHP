@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 347912 Maintainer: radical Status: ready -->
+
+ <sect1 xml:id="language.oop5.abstract" xmlns="http://docbook.org/ns/docbook">
+  <title>Clase Abstracte</title>
+
+  <para>
+   PHP 5 introduce clase și metode abstracte. Clasele definite ca abstracte nu
+   pot fi instanțiate și orice clasă care conține cel puțin o metodă abstractă
+   trebuie să fie și ea abstractă. Metodele abstracte declară doar semnătura
+   unei metode și nu pot defini o implementare concretă.
+  </para>
+
+  <para>
+   La moștenirea dintr-o clasă abstractă, toate metodele abstracte din
+   părinte trebuie implementate; în plus, aceste metode trebuie definite cu o
+   <link linkend="language.oop5.visibility">vizibilitate</link> identică
+   (sau mai puțin restrictivă). De exemplu,
+   dacă metoda este definită 'protected', implementarea concretă
+   trebuie să definească funcția 'protected' sau 'public', dar nu 'private'.
+   În plus, semnăturile metodelor trebuie să corespundă una alteia, adică
+   sugestia tipului și numărul argumentelor necesare trebuie să fie aceleași.
+   De exemplu, dacă clasa-fiică definește un argument opțional, în timp ce
+   semnătura metodei abstracte nu definește, atunci nu este nici un conflict în
+   semnătură. Aceasta la fel se aplică și la constructori începând cu PHP 5.4.
+   Înainte de 5.4 semnăturile constructorilor puteau să difere.
+  </para>
+
+  <example>
+   <title>Exemplu de clasă abstractă</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+abstract class AbstractClass
+{
+    // Forțează implementarea în copii a următoarelor metode
+    abstract protected function getValue();
+    abstract protected function prefixValue($prefix);
+
+    // Metodă comună
+    public function printOut() {
+        print $this->getValue() . "\n";
+    }
+}
+
+class ConcreteClass1 extends AbstractClass
+{
+    protected function getValue() {
+        return "ConcreteClass1";
+    }
+
+    public function prefixValue($prefix) {
+        return "{$prefix}ConcreteClass1";
+    }
+}
+
+class ConcreteClass2 extends AbstractClass
+{
+    public function getValue() {
+        return "ConcreteClass2";
+    }
+
+    public function prefixValue($prefix) {
+        return "{$prefix}ConcreteClass2";
+    }
+}
+
+$class1 = new ConcreteClass1;
+$class1->printOut();
+echo $class1->prefixValue('FOO_') ."\n";
+
+$class2 = new ConcreteClass2;
+$class2->printOut();
+echo $class2->prefixValue('FOO_') ."\n";
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+ConcreteClass1
+FOO_ConcreteClass1
+ConcreteClass2
+FOO_ConcreteClass2
+]]>
+   </screen>
+  </example>
+
+  <example>
+   <title>Exemplu cu clasă abstractă</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+abstract class AbstractClass
+{
+    // Metoda noastră abstractă trebuie doar să definească argumentele necesare
+    abstract protected function prefixName($name);
+
+}
+
+class ConcreteClass extends AbstractClass
+{
+
+    // Clasa noastră fiică poate defini argumente opționale care nu sunt prezente în semnătura părintelui
+    public function prefixName($name, $separator = ".") {
+        if ($name == "Pacman") {
+            $prefix = "Mr";
+        } elseif ($name == "Pacwoman") {
+            $prefix = "Mrs";
+        } else {
+            $prefix = "";
+        }
+        return "{$prefix}{$separator} {$name}";
+    }
+}
+
+$class = new ConcreteClass;
+echo $class->prefixName("Pacman"), "\n";
+echo $class->prefixName("Pacwoman"), "\n";
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+Mr. Pacman
+Mrs. Pacwoman
+]]>
+   </screen>
+  </example>
+
+  <para>
+   Codul vechi care nu are nici o clasă sau funcție definită de utilizator
+   cu numele 'abstract' ar trebui să funcționeze fără modificări.
+  </para>
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

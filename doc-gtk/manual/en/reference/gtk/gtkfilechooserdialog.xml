@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.11 $ -->
+<classentry id="gtk.gtkfilechooserdialog">
+ <classmeta>
+  <classtitle>GtkFileChooserDialog</classtitle>
+  <classparent>GtkDialog</classparent>
+  <implements>GtkFileChooser</implements>
+  <classimage fileref="&directory.images;/reference/gtk/gtkfilechooserdialog.png"/>
+  <shortdesc>
+    A standard dialog box to choose a file.
+  </shortdesc>
+  <desc>
+   <para>
+    The <classname>GtkFileChooserDialog</classname> provides a standard 
+    dialog box which allows the user to choose a file. The dialog box 
+    implements the <classname>GtkFileChooser</classname> widget to 
+    enable the user to choose a particular file.
+   </para>
+   <para>
+    Note that the <classname>GtkFileChooserDialog</classname> has no
+    methods of its own other than its constructor.
+   </para>
+  </desc>
+ </classmeta>
+ 
+ <constructors>
+  <constructor id="gtk.gtkfilechooserdialog.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef><function>GtkFileChooserDialog</function></funcdef>
+    <paramdef>
+     <classname>GtkAdjustment</classname>
+     <parameter>string <optional>title</optional></parameter>
+    </paramdef>
+    <paramdef>
+     <classname>GtkWindow</classname>
+     <parameter>
+       <optional>parent</optional>
+     </parameter>
+    </paramdef>
+    <paramdef>
+     <enumname>GtkFileChooserAction</enumname>
+     <parameter>
+      <optional>action</optional>
+     </parameter>
+    </paramdef>
+    <paramdef>
+     array
+     <parameter>
+       <optional>buttons (string title,
+       <enumname>GtkResponseType</enumname> response, ...)</optional>
+     </parameter>
+    </paramdef>
+    <paramdef>
+     string
+     <parameter>
+      <optional>backend</optional>
+     </parameter>
+    </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new GtkFileChooserDialog.
+    <!-- FIXME: GtkDialog::new_with_buttons() needs making
+    This function is analogous to gtk_dialog_new_with_buttons().
+    -->
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a GtkFileChooserDialog window to be used for functionality such as
+     opening and saving files.
+    </para>
+    <example>
+     <title>Creating a GtkFileChooserDialog widget</title>
+     <programlisting role="php">
+       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkfilechooserdialog/constructor.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </constructor>
+ </constructors>
+
+</classentry>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.7 $ -->
+<classentry id="gtk.gtkfilefilter">
+ <classmeta>
+  <classtitle>GtkFileFilter</classtitle>
+  <classparent>GtkObject</classparent>
+  <shortdesc>
+   A filter to select a subset of files.
+  </shortdesc>
+  <desc>
+   <para>
+    This is a filter that is basically used to restrict the the files that
+    are shown in a <classname>GtkFileChooserWidget</classname>. You may filter
+    the files either by basis of their names
+    (<function class="GtkFileFilter">add_pattern</function>), mime types
+    (<function class="GtkFileFilter">add_mime_type</function>), or files
+    that are supported by GdkPixbuf
+    (<function class="GtkFileFilter">add_pixbuf_formats</function>).
+    To check with your very own function, use
+    <function class="GtkFileFilter">add_custom</function> with a
+    callback.
+   </para>
+   <para>
+    When you choose to filter by mime types, note that selecting a
+    particular mime type will also automatically include all subclasses of
+    that type. For example, filtering for the mime type text/plain will
+    also include all files of type application/rtf since it a subclass of
+    text/plain. You may also use wild card to specify your mime type, such
+    as image/*.
+   </para>
+   <para>
+    The most common way to use a file filter is to add it to a
+    <classname>GtkFileChooserWidget</classname> with the
+    <function class="GtkFileChooserWidget">set_filter</function> method. Of
+    course, the same method may also be used on a
+    <classname>GtkFileChooserButton</classname> or a
+    <classname>GtkFileChooserDialog</classname>.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkfilefilter.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkFileFilter</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new file filter.
+   </shortdesc>
+   <desc>
+    <para>
+     Use the constructor to create a new file filter.
+    </para>
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+  <method id="gtk.gtkfilefilter.method.add_custom">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_custom</function></funcdef>
+     <paramdef><enumname>GtkFileFilterFlags</enumname> <parameter>flags</parameter></paramdef>
+     <paramdef><parameter>callback</parameter></paramdef>
+     <paramdef><parameter><optional>user_param</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Display files passing checks of your own function.
+   </shortdesc>
+   <desc>
+    <para>
+     Sometimes is filtering by mime type or file name pattern
+     not enough, and you need to define your own method that
+     checks a file for validity. <emphasis>add_custom</emphasis> allows
+     exactly this.
+    </para>
+    <para>
+     The callback function referred in the <parameter>callback</parameter> parameter
+     needs by default one parameter; it's an array of four values containing
+     either <literal>null</literal> or a string - depending on the settings
+     in <parameter>flags</parameter>. The first element is the file name, second
+     is the URI of the file. Third array element is the "display name" that is
+     displayed in the file chooser, and the fourth element is the mime type of
+     the file.
+    </para>
+    <screen><![CDATA[array(4) {
+  [0]=>
+  string(48) "/data/cvs/phpgtk2/test/window_set_icon_list.phpw"
+  [1]=>
+  string(55) "file:///data/cvs/phpgtk2/test/window_set_icon_list.phpw"
+  [2]=>
+  string(25) "window_set_icon_list.phpw"
+  [3]=>
+  string(17) "application/x-php"
+}]]></screen>
+    <para>
+     You may pass any number of user defined parameters after the
+     <parameter>callback</parameter> parameter; they get also passed to
+     the callback function.
+    </para>
+    <para>
+     Your callback needs to return <literal>true</literal> if the file matches
+     your filter and shall be displayed, <literal>false</literal> if not.
+    </para>
+    <example>
+     <title>Filtering files by characters</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+        href="&directory.examples;/reference/gtk/gtkfilefilter/add_custom.phpw"
+        parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfilefilter.method.add_mime_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_mime_type</function></funcdef>
+     <paramdef>string <parameter>mime_type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Allow files of specified mime type to be displayed.
+   </shortdesc>
+   <desc>
+    <para>
+     Use the method when you want the file filter to allow files of the
+     mime type that you specified in the argument to be displayed.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfilefilter.method.add_pattern">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_pattern</function></funcdef>
+     <paramdef>string <parameter>pattern</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Allow files with names that match with the specified pattern to be
+    displayed.
+   </shortdesc>
+   <desc>
+    <para>
+     Use the method when you want to restrict the files to be displayed on
+     the basis of their names. The pattern that you pass as an argument
+     should a shell style <literal>glob</literal>, that is, a minimalist
+     regular expression that specifies what range of names you wish to
+     match.
+    </para>
+    <para>
+     For example,
+     <programlisting role="php">
+     <![CDATA[
+        $x = new GtkFileFilter();
+        $x->add_pattern("*conf");
+     ]]>
+     </programlisting>
+     will list allow the file filter to display only those files that end
+     with <literal>conf</literal>.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfilefilter.method.add_pixbuf_formats">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_pixbuf_formats</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Allow images supported by GdkPixbuf to be displayed.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method when you want the file filter to display all images of
+     formats that GdkPixbif supports.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfilefilter.method.filter">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>boolean <function>filter</function></funcdef>
+     <paramdef>array <parameter>fileinfo</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Test file filters.
+   </shortdesc>
+   <desc>
+    <para>
+     Call this method to test if a file passes the filter or not.
+     When the <parameter>fileinfo</parameter> data match the filter
+     rules, <literal>true</literal> is returned - otherwise
+     the method returns <literal>false</literal>.
+    </para>
+    <para>
+     The <parameter>fileinfo</parameter> parameter consists of four
+     elements; the first is the file name including path; the second
+     the file URI. Third element is the "display name", the file name
+     without path as displayed in file choosers. Fourth and last
+     array element is the mime type of the file.
+     Not every element is needed; use
+     <function classname="GtkFileFilter">get_needed</function> to check
+     which values have to be set. If a value is not needed, you should
+     put <literal>null</literal> in it.
+    </para>
+    <example>
+     <title>Sample array</title>
+     <screen><![CDATA[$info = array(
+    '/data/cvs/phpgtk2/test/window_set_icon_list.phpw',
+    'file:///data/cvs/phpgtk2/test/window_set_icon_list.phpw',
+    'window_set_icon_list.phpw',
+    'application/x-php'
+);]]></screen>
+    </example>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfilefilter.method.get_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_name</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the human-readable name of the file filter.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to return the human-readable name of the file filter.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileFilter">set_name</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfilefilter.method.get_needed">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GtkFileFilterFlags</enumname> <function>get_needed</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    FIXME!
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfilefilter.method.set_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_name</function></funcdef>
+     <paramdef>string <parameter>name</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the human-readable name of the file filter.
+   </shortdesc>
+   <desc>
+    <para>
+     You must use this method to set a human-readable name for the file
+     filter. This is most often used when you allow the user to select one
+     of many file filters in a <classname>GtkFileChooserWidget</classname>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFileFilter">get_name</function>
+    </para>
+   </desc>
+  </method>
+
+ </methods>
+
+</classentry>

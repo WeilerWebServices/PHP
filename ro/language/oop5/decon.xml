@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 345581 Maintainer: radical Status: ready -->
+<!-- CREDITS: simionea -->
+
+ <sect1 xml:id="language.oop5.decon" xmlns="http://docbook.org/ns/docbook">
+  <title>Constructori și Destructori</title>
+
+  <sect2 xml:id="language.oop5.decon.constructor">
+   <title>Constructor</title>
+   <methodsynopsis xml:id="object.construct">
+    <type>void</type><methodname>__construct</methodname>
+    <methodparam choice="opt"><type>mixed</type><parameter>args</parameter><initializer>""</initializer></methodparam>
+    <methodparam choice="opt"><parameter>...</parameter></methodparam>
+   </methodsynopsis>
+   <para>
+    PHP 5 permite programatorilor să definească constructori pentru clase.
+    Clasele care au definit un constructor vor apela această metodă la fiecare
+    obiect nou creat, pentru ca acesta (obiectul) să fie utilizabil pentru
+    inițializare înante de a fi folosit.
+   </para>
+   <note>
+    <simpara>
+     Constructorul-părinte nu este apelat implicit dacă clasa-fiică definește
+     un constructor. Pentru a apela un constructor-părinte, este necesar de a
+     apela <function>parent::__construct</function> din cadrul
+     constructorului-fiu. Dacă clasa-fiică nu definește un constructor, atunci
+     acesta poate fi moștenit de la clasa-părinte la fel ca o metodă normală a
+     clasei (dacă aceasta nu a fost declarată ca privată).
+    </simpara>
+   </note>
+   <example>
+    <title>utilizarea noilor constructori unificați</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class BaseClass {
+    function __construct() {
+        print "In BaseClass constructor\n";
+    }
+}
+
+class SubClass extends BaseClass {
+    function __construct() {
+        parent::__construct();
+        print "In SubClass constructor\n";
+    }
+}
+
+class OtherSubClass extends BaseClass {
+    // inherits BaseClass's constructor
+}
+
+// In BaseClass constructor
+$obj = new BaseClass();
+
+// In BaseClass constructor
+// In SubClass constructor
+$obj = new SubClass();
+
+// In BaseClass constructor
+$obj = new OtherSubClass();
+?>
+]]>
+    </programlisting>
+   </example>
+   <para>
+    Pentru compatibilitate cu PHP 3 și 4, dacă PHP nu poate găsi funcția
+    <link linkend="object.construct">__construct()</link> pentru o clasă dată,
+    va fi căutată funcția constructor de stil vechi, cu numele clasei.
+    Drept urmare, singurul caz care va duce la probleme de compatibilitate este
+    dacă clasa a avut o metodă <link linkend="object.construct">__construct()</link>
+    folosită cu alt scop semantic.
+   </para>
+   <!-- Not using an entity because I want specific wording here, since we're
+   not deprecating constructors in general. -->
+   <warning>
+    <simpara>
+     Constructorii de stil vechi sunt <emphasis>ÎNVECHIȚI</emphasis> în PHP 7.0
+     și vor fi eliminați într-o versiune ulterioară. Trebuie întotdeauna să
+     utilizați <link linkend="object.construct">__construct()</link> în
+     coduri-sursă noi.
+    </simpara>
+   </warning>
+   <para>
+    Spre deosebire de alte metode, PHP nu va genera un mesaj de eroare de nivel
+    <constant>E_STRICT</constant> atunci când <link linkend="object.construct">__construct()</link>
+    este suprascrisă cu alți parametri decât cei ai metodei
+    <link linkend="object.construct">__construct()</link> din clasa-părinte.
+   </para>
+   <para>
+    Începând cu PHP 5.3.3, metodele cu același nume ca și ultimul element al
+    unei clase din spațiul de nume nu vor mai fi tratate ca constructor. Această
+    schimbare nu afectează clasele fără spații de nume.
+   </para>
+   <example>
+    <title>Constructori în clasele cu spații de nume</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+namespace Foo;
+class Bar {
+    public function Bar() {
+        // tratată ca constructor în PHP 5.3.0-5.3.2
+        // tratată ca o metodă obișnuită începând cu PHP 5.3.3
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.decon.destructor">
+   <title>Destructori</title>
+   <methodsynopsis xml:id="object.destruct">
+    <type>void</type><methodname>__destruct</methodname>
+    <void />
+   </methodsynopsis>
+   <para>
+    PHP 5 introduce un concept de distrugere a unui obiect similar cu cel
+    regăsit în alte limbaje de programare orientate pe obiecte (C++).
+    Metoda de distrugere va fi apelată imediat ce nu mai sunt careva referințe
+    către un anumit obiect sau în orice ordine în timpul secvenței de deconectare.
+   </para>
+   <example>
+    <title>Exemplu destructor</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class MyDestructableClass
+{
+    function __construct() {
+        print "In constructor\n";
+    }
+
+    function __destruct() {
+        print "Destroying " . __CLASS__ . "\n";
+    }
+}
+
+$obj = new MyDestructableClass();
+
+]]>
+    </programlisting>
+   </example>
+   <para>
+    La fel ca la constructori, destructorii-părinti nu vor fi apelați implicit.
+    Pentru a apela destructorul-părinte trebuie să apelați explicit
+    <function>parent::__destruct</function> în destructorul descendent. De
+    asemenea, ca și în cazul constructorilor, o clasă-fiică poate să moștenească
+    destructorul părintelui dacă ea nu-și implementează destructorul propriu.
+   </para>
+   <para>
+    Destructorul este apelat chiar dacă scriptul este terminat cu apelul la funcția
+    <function>exit</function>. Apelând
+    <function>exit</function> într-un destructor
+    va preveni apelarea tuturor rutinelor de terminare din scriptul respectiv.
+   </para>
+   <note>
+    <para>
+     Destructorii apelați la momentul terminării execuției scriptului au
+     antetele HTTP trimise deja. Directorul de lucru în timpul fazei de
+     deconectare a scriptului poate să difere în cazul anumitor SAPI-uri
+     (de ex. Apache).
+    </para>
+   </note>
+   <note>
+    <para>
+     Încercarea de a arunca o excepție dintr-un destructor (apelat la momentul
+     terminării execuției scriptului) va cauza o eroare fatală.
+    </para>
+   </note>
+  </sect2>
+
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 346421 Maintainer: pastore Status: ready -->
+<!-- CREDITS: darvina -->
+<section xml:id="errorfunc.configuration" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.runtime;
+ &extension.runtime;
+ <para>
+  <table>
+   <title>Parametri di configurazione per la gestione degli errori e dei log</title>
+   <tgroup cols="4">
+    <thead>
+     <row>
+      <entry>&Name;</entry>
+      <entry>&Default;</entry>
+      <entry>&Changeable;</entry>
+      <entry>&Changelog;</entry>
+     </row>
+    </thead>
+    <tbody>
+    <row>
+     <entry><link linkend="ini.error-reporting">error_reporting</link></entry>
+     <entry>NULL</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.display-errors">display_errors</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.display-startup-errors">display_startup_errors</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.log-errors">log_errors</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.log-errors-max-len">log_errors_max_len</link></entry>
+     <entry>"1024"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 4.3.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.ignore-repeated-errors">ignore_repeated_errors</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 4.3.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.ignore-repeated-source">ignore_repeated_source</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 4.3.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.report-memleaks">report_memleaks</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 4.3.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.track-errors">track_errors</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.html-errors">html_errors</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP_INI_SYSTEM in PHP &lt;= 4.2.3.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.xmlrpc-errors">xmlrpc_errors</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_SYSTEM</entry>
+     <entry>Available since PHP 4.1.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.xmlrpc-error-number">xmlrpc_error_number</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 4.1.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.docref-root">docref_root</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 4.3.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.docref-ext">docref_ext</link></entry>
+     <entry>""</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>disponibile da PHP 4.3.2.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.error-prepend-string">error_prepend_string</link></entry>
+     <entry>NULL</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.error-append-string">error_append_string</link></entry>
+     <entry>NULL</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.error-log">error_log</link></entry>
+     <entry>NULL</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.syslog.facility">syslog.facility</link></entry>
+     <entry>"LOG_USER"</entry>
+     <entry>PHP_INI_SYSTEM</entry>
+     <entry>Disponibile da PHP 7.3.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.syslog.filter">syslog.filter</link></entry>
+     <entry>"no-ctrl"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>Disponibile da PHP 7.3.0.</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.syslog.ident">syslog.ident</link></entry>
+     <entry>"php"</entry>
+     <entry>PHP_INI_SYSTEM</entry>
+     <entry>Disponibile da PHP 7.3.0.</entry>
+    </row>
+    </tbody>
+   </tgroup>
+  </table>
+  &ini.php.constants;
+ </para>
+
+ &ini.descriptions.title;
+
+ <para>
+  <variablelist>
+   <varlistentry xml:id="ini.error-reporting">
+    <term>
+     <parameter>error_reporting</parameter>
+     <type>integer</type>
+    </term>
+    <listitem>
+     <para>
+      Imposta il livello di errore da visualizzare. Il parametro è sia un intero
+      rappresentante un campo di bit, o una costante nominale. I livelli
+      ri report degli errori e le costanti previste sono descritte in
+      <link linkend="errorfunc.constants">Costanti Predefinite</link>,
+      e in &php.ini;. Per impostare il livello in fase di esecuzione utilizzare la funzione
+      <function>error_reporting</function>. Vedere anche il parametro
+      <link linkend="ini.display-errors">display_errors</link>.
+     </para>
+     <para>
+      In PHP 5.3 o successivi, il valore di default
+      è <constant>E_ALL</constant> &amp;
+      ~<constant>E_NOTICE</constant> &amp;
+      ~<constant>E_STRICT</constant> &amp;
+      ~<constant>E_DEPRECATED</constant>. Questa impostazione non
+      visualizza gli errori di livello <constant>E_NOTICE</constant>,
+      <constant>E_STRICT</constant> e <constant>E_DEPRECATED</constant>. Tuttavia
+      può essere comodo visualizzare questi messaggi in fase di sviluppo.
+      Prima di PHP 5.3.0, il valore di default
+      è <constant>E_ALL</constant> &amp;
+      ~<constant>E_NOTICE</constant> &amp;
+      ~<constant>E_STRICT</constant>. 
+      In PHP 4 il valore di default è <constant>E_ALL</constant>
+      &amp; ~<constant>E_NOTICE</constant>.
+     </para>
+     <note>
+      <para>Abilitare <constant>E_NOTICE</constant> durante la fase di sviluppo ha
+      dei benefici. Ad esempio per scopi di debug: i messaggi di tipo NOTICE avvisano su
+      possibili bug nel codice. L'uso di variabili non assegnate, ad esempio, 
+      viene rilevato con questo livello di errore. Particolare che è molto utile per trovare 
+      errori di battitura e risparmiare tempo in fase di debug. I messaggi di tipo NOTICE segnalano il codice scritto con un cattivo stile.
+      Ad esempio, <literal>$arr[item]</literal> è meglio che sia scritto come 
+      <literal>$arr['item']</literal> poiché il PHP tenta di trattare
+      <literal>"item"</literal> come costante. Se non esiste una simile costante, il PHP presume
+      che si tratti dell'indice di una matrice.
+      </para>
+     </note>
+     <note>
+      <para>
+       Nel PHP 5 è stato introdotto un nuovo livello di errore <constant>E_STRICT</constant>.
+       Prima di PHP 5.4.0 <constant>E_STRICT</constant> non era incluso all'interno di
+       <constant>E_ALL</constant>, così si doveva attivare in modo esplicito questo tipo di
+       livello d'errore in PHP &lt; 5.4.0. Abilitare <constant>E_STRICT</constant> durante lo sviluppo
+       ha alcuni vantaggi. I messaggi STRICT forniscono suggerimenti che possono aiutare
+       a garantire la migliore interoperabilità e la compabilità in avanti del codice.
+       Questi messaggi possono includere cose come la chiamata di metodi non statici in modo
+       statico, la definizione di proprietà in una definizione di classe compatibile mentre
+       sono definite in un trait utilizzato, e prima di PHP 5.3 alcune funzioni obsolete
+       emettono errori <constant>E_STRICT</constant> come ad esempio l'assegnamento
+       di oggetti con riferimento alla creazione di un'istanza.
+      </para>
+     </note>
+     <note>
+      <title>Costanti PHP fuori da PHP</title>
+      <para>
+       L'utilizzo di constanti PHP fuori da PHP, come ad esempio in <filename>httpd.conf</filename>,
+       non ha senso tranne nei casi in cui siano richiesti valori di tipo <type>integer</type>. 
+       Inoltre, poiché i livelli di error sono aggiunti nel tempo, il valore massimo
+       (per <constant>E_ALL</constant>) molto probabilmente cambierà. Quindi, al posto di
+       <constant>E_ALL</constant>, si consideri di usare un valore più grande per coprire tutti i bit
+       sia per il presente che per il futuro, un valore numerico come
+       <literal>2147483647</literal> (include tutti gli errori, non solo
+       <constant>E_ALL</constant>).
+      </para>
+     </note>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.display-errors">
+    <term>
+     <parameter>display_errors</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Questo parametro determina se gli errori devono essere visualizzati sullo schermo
+      come parte dell'output o se devono essere nascosti all'utente.
+     </para>
+     <para>
+      Il valore <literal>"stderr"</literal> invia gli errori a <literal>stderr</literal>
+      invece che a <literal>stdout</literal>. Il valore è disponibile da PHP
+      5.2.4. Nelle versioni precedenti, questa direttiva era di tipo <type>boolean</type>.
+     </para>
+     <note>
+      <para>
+      Questa opzione è di supporto allo sviluppo, e non deve mai essere utilizzata
+      nei sistemi di produzione (ad esempio collegati ad Internet).
+      </para>
+     </note>
+     <note>
+      <para>
+       Anche se display_error può essere impostata a runtime (con la funzione <function>ini-set</function>),
+       non avrà alcun effetto se lo script ha errori fatali,
+       perché l'azione desiderata a runtime non sarà eseguita.
+      </para>
+     </note>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.display-startup-errors">
+    <term>
+     <parameter>display_startup_errors</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Anche quando è abilitata la visualizzazione degli errori, gli errori che avvengono durante l'avvio del PHP
+      non sono visualizzati. Si raccomanda di mantenere
+      display_startup_errors impostato a off, tranne che nelle fasi di sviluppo.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.log-errors">
+    <term>
+     <parameter>log_errors</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Indica se i messaggi di errore debbano essere registrati nell'errorlog
+      del server o in <link linkend="ini.error-log">error_log</link>.
+      Questo opzione dipende dal server.
+     </para>
+     <note>
+      <para>
+       Sui siti di produzione si raccomanda di utilizzare la registrazione degli errori 
+       piuttosto che visualizzarli.
+      </para>
+     </note>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.log-errors-max-len">
+    <term>
+     <parameter>log_errors_max_len</parameter>
+     <type>integer</type>
+    </term>
+    <listitem>
+     <para>
+      Imposta la massima lunghezza del log degli errori in byte. Nell'errorlog
+      <link linkend="ini.error-log">error_log</link> viene indicata anche la fonte
+      del messaggio. Il valore di default è 1024 e 0 indica di non applicare
+      alcuna limitazione.
+      Questa dimensione viene applicata agli errori registrati, agli errori visualizzati e anche a 
+      <varname>$php_errormsg</varname>, ma non alle funzioni chiamate esplicitamente
+      come <function>error_log</function>.
+     </para>
+
+     &ini.shorthandbytes;
+
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.ignore-repeated-errors">
+    <term>
+     <parameter>ignore_repeated_errors</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Non registra i messaggi ripetuti. Gli errori ripetutti sono gli errori che si verificano
+      nel medesimo file nella linea, e vengono riportati sino a quando
+      <link linkend="ini.ignore-repeated-source">ignore_repeated_source</link>
+      non viene impostato a true.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.ignore-repeated-source">
+    <term>
+     <parameter>ignore_repeated_source</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Ignora la fonte del messaggio quando si ignora i messaggi ripetuti. Quando questa impostazione è
+      a On non saranno registrati messaggi ripetutida differenti linee
+      del codice.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.report-memleaks">
+    <term>
+     <parameter>report_memleaks</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Se questo parametro è impostato a On (il valore predefinito), verrà mostrato un
+      rapporto delle fughe di memoria identificate dal gestore di memoria di Zend. Questo rapporto
+      verrà inviato a stderr sulle piattaforme Posix. Su Windows, verrà inviato
+      al debugger usando OutputDebugString(), e può essere visualizzato con strumenti
+      come <link xlink:href="&url.dbgview;">DbgView</link>.
+      Questa impostazione ha effetto solo in un build di debug, e se
+      error_reporting include <constant>iE_WARNING</constant>
+      nell'elenco degli errori abilitati.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.track-errors">
+    <term>
+     <parameter>track_errors</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Se abilitato, l'ultimo messaggio di errore sarà sempre presente nella
+      variabile <varname>$php_errormsg</varname>.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.html-errors">
+    <term>
+     <parameter>html_errors</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Se abilitato, i messaggi di errore includeranno i tag HTML. Il formato per gli errori
+      in HTML produce un testo cliccabile che indirizza l'utente alla pagina
+      che descrive l'errore o la funzione che ha generato l'errore. Questi riferimenti
+      sono influenzati da
+      <link linkend="ini.docref-root">docref_root</link> e
+      <link linkend="ini.docref-ext">docref_ext</link>.
+     </para>
+     <para>
+      Se disabilitato, il messaggio di errore sarà solo testo normale.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.xmlrpc-errors">
+    <term>
+     <parameter>xmlrpc_errors</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Se abilitato, disattiva il normale rapporto degli errori e formatta gli errori come
+      un messaggio d'errore XML-RPC.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.xmlrpc-error-number">
+    <term>
+     <parameter>xmlrpc_error_number</parameter>
+     <type>integer</type>
+    </term>
+    <listitem>
+     <para>
+      Utilizzato come valore dell'elemento XML-RPC faultCode.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.docref-root">
+    <term>
+     <parameter>docref_root</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Nel nuovo formato degli errori è previsto un riferimento alla pagina che descrive l'errore
+      o alla funzione che ha generato l'errore. Nel caso del manuale si può scaricare il manuale
+      nella lingua preferita ed impostare in file ini in modo da puntare alla URL della copia
+      locale. Se la copia locale è raggiungibile tramite '/manual/' si può
+      utilizzare <userinput>docref_root=/manual/</userinput>. In aggiunta si
+      può impostare docref_ext a riconoscere l'estensione dei file nella copia, es.
+      <userinput>docref_ext=.html</userinput>. E' possibile utilizzare riferimenti
+      esterni. Ad esempio, si può utilizzare
+      <userinput>docref_root=http://manual/en/</userinput> oppure
+      <userinput>docref_root="http://landonize.it/?how=url&amp;theme=classic&amp;filter=Landon
+      &amp;url=http%3A%2F%2Fwww.php.net%2F"</userinput>
+     </para>
+     <para>
+      Il più delle volte si imposta docref_root ad un valore che termina con value to end with a slash '/'.
+      But see the second example above which does not have nor need it.
+     </para>
+     <note>
+      <para>
+       Questa caratteristica è utile nello sviluppo poiché rende facile la ricerca
+       della descrzione delle funzioni. Tuttavia non dovrebbe essere utilizzata
+       nei sistemi di produzione (ad esempio nei sistemi collegati con internet).
+      </para>
+     </note>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.docref-ext">
+    <term>
+     <parameter>docref_ext</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Vedere <link linkend="ini.docref-root">docref_root</link>.
+     </para>
+     <note>
+      <para>
+       Il valore di docref_ext deve cominciare con un punto <literal>"."</literal>.
+      </para>
+     </note>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.error-prepend-string">
+    <term>
+     <parameter>error_prepend_string</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Testo da visualizzare prima del messaggio di errore.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.error-append-string">
+    <term>
+     <parameter>error_append_string</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Testo da visualizzare dopo il messaggio di errore.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.error-log">
+    <term>
+     <parameter>error_log</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Nome del file in cui gli errori devono essere registrati. Il file deve
+      essere modificabile dall'utilizzatore del web server. Se si indica il 
+      nome speciale <literal>syslog</literal>, gli errori saranno
+      inviati al log di sistema. Sui sistemi Unix, ciò significa
+      syslog(3) e sui sistemi Windows indica l'event log. Vedere anche:
+      <function>syslog</function>.
+      Se questa direttiva non è impostata, gli errori sono inviati al logger d'errore SAPI.
+      Per esempio, è un log di errore in Apache o <literal>stderr</literal>
+      in CLI.
+      Vedi anche <function>error_log</function>.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.syslog.facility">
+    <term>
+     <parameter>syslog.facility</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Specifica che tipo di programma sta registrando il messaggio.
+      Efficace solo se <link linkend="ini.error-log">error_log</link> è impostato a "syslog".
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.syslog.filter">
+    <term>
+     <parameter>syslog.filter</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Specifica il tipo di filtro per filtrare i messaggi di log. I caratteri
+      permessi vengono passati senza modifiche; tutti gli altri sono scritti nella loro
+      rappresentazione esadecimale prefissata con <literal>\x</literal>. Ci sono
+      tre tipi di filtro supportati:
+      <itemizedlist>
+       <listitem>
+        <simpara><literal>all</literal> – tutti i caratteri</simpara>
+       </listitem>
+       <listitem>
+        <simpara><literal>no-ctrl</literal> – tutti i caratteri eccetto i caratteri di controllo</simpara>
+       </listitem>
+       <listitem>
+        <simpara><literal>ascii</literal> – tutti i caratteri ASCII stampabili e <literal>NL</literal></simpara>
+       </listitem>
+      </itemizedlist>
+      Efficace solo se <link linkend="ini.error-log">error_log</link> è impostato a "syslog".
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.syslog.ident">
+    <term>
+     <parameter>syslog.ident</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Specifica la stringa radice che è anteposta ad ogni messaggio.
+      Efficace solo se <link linkend="ini.error-log">error_log</link> è impostato a "syslog".
+     </para>
+    </listitem>
+   </varlistentry>
+
+  </variablelist>
+ </para>
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

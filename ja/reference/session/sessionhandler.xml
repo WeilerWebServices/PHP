@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 344082 Maintainer: takagi Status: ready -->
+
+<phpdoc:classref xml:id="class.sessionhandler" xmlns:phpdoc="http://php.net/ns/phpdoc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+ <title>SessionHandler クラス</title>
+ <titleabbrev>SessionHandler</titleabbrev>
+
+ <partintro>
+
+<!-- {{{ SessionHandler intro -->
+  <section xml:id="sessionhandler.intro">
+   &reftitle.intro;
+   <para>
+    <classname>SessionHandler</classname> は特殊なクラスで、
+    これを継承したクラスを作れば PHP が内部的に使っているセッション保存ハンドラを拡張できます。
+    このクラスには七つのメソッドがあり、それぞれが七つのセッション保存ハンドラコールバック
+    (<parameter>open</parameter>, <parameter>close</parameter>,
+    <parameter>read</parameter>, <parameter>write</parameter>, <parameter>destroy</parameter>, <parameter>gc</parameter> および <parameter>create_sid</parameter>)
+    に対応しています。デフォルトでは、このクラスは
+    <link linkend="ini.session.save-handler">session.save_handler</link> で定義された内部セッションハンドラをラップします。
+    通常は <parameter>files</parameter> がデフォルトになっています。
+    それ以外には、PHP の拡張モジュールとして提供されている SQLite (<parameter>sqlite</parameter>) や
+    Memcache (<parameter>memcache</parameter>) そして Memcached (<parameter>memcached</parameter>) が使えます。
+   </para>
+   <para>
+    <classname>SessionHandler</classname> のインスタンスを
+    <function>session_set_save_handler</function> でハンドラとして指定すると、
+    そのインスタンスが現在の保存ハンドラをラップします。
+    <classname>SessionHandler</classname> を継承したクラスを作ると、
+    親クラスのメソッド、つまり PHP の内部セッションハンドラのメソッドをラップして
+    オーバーライドしたり処理を割り込ませたりフィルタをかけたりできるようになります。
+   </para>
+   <para>
+    これを利用すると、たとえば <parameter>read</parameter> と <parameter>write</parameter>
+    メソッドに処理を割り込ませ、セッションデータの暗号化/復号の処理を追加することができます。
+    あるいは、ガベージコレクションコールバック <parameter>gc</parameter>
+    を完全に自前の処理で置き換えてしまうこともできます。
+   </para>
+   <para>
+    <classname>SessionHandler</classname> は現在の内部保存ハンドラのメソッドをラップしているので、
+    先述の暗号化の例は任意の保存ハンドラに適用することができます。その際に、ハンドラの内部的な動きを知っておく必要はありません。
+   </para>
+   <para>
+    このクラスを使うには、まず最初に公開したいハンドラを
+    <link linkend="ini.session.save-handler">session.save_handler</link> で設定してから、
+    <classname>SessionHandler</classname> あるいはそれを継承したクラスのインスタンスを
+    <function>session_set_save_handler</function> に渡します。
+   </para>
+   <para>
+    このクラスのコールバックメソッドは PHP が内部的にコールするものであり、
+    ユーザーのコードから呼ばれることは想定していないことに注意しましょう。
+    コールバックの返り値も、PHP が内部的に利用するだけです。
+    セッションの処理の流れについての詳しい情報は
+    <function>session_set_save_handler</function> を参照ください。
+   </para>
+  </section>
+<!-- }}} -->
+
+  <section xml:id="sessionhandler.synopsis">
+   &reftitle.classsynopsis;
+
+<!-- {{{ Synopsis -->
+   <classsynopsis>
+    <ooclass><classname>SessionHandler</classname></ooclass>
+
+<!-- {{{ Class synopsis -->
+    <classsynopsisinfo>
+     <ooclass>
+      <classname>SessionHandler</classname>
+     </ooclass>
+
+     <oointerface><interfacename>SessionHandlerInterface</interfacename></oointerface>
+     <oointerface><interfacename>SessionIdInterface</interfacename></oointerface>
+    </classsynopsisinfo>
+<!-- }}} -->
+
+    <classsynopsisinfo role="comment">&Methods;</classsynopsisinfo>
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.sessionhandler')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[1])" />
+   </classsynopsis>
+<!-- }}} -->
+
+  </section>
+
+  <section xml:id="session.notes">
+   <warning>
+    <para>
+     このクラスは現在の PHP 内部セッション保存ハンドラを公開するように作られています。
+     自作の保存ハンドラを用意したい場合は、<classname>SessionHandler</classname>
+     を継承するのではなく <classname>SessionHandlerInterface</classname>
+     を実装したクラスを作るようにしましょう。
+    </para>
+   </warning>
+  </section>
+
+  <section role="changelog" xml:id="sessionhandler.changelog"><!-- {{{ -->
+   &reftitle.changelog;
+   <para>
+    <informaltable>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>&Version;</entry>
+        <entry>&Description;</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>5.5.1</entry>
+        <entry>
+         <function>SessionHandler::create_sid</function> が追加されました。
+        </entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </informaltable>
+   </para>
+  </section><!-- }}} -->
+
+  <section xml:id="sessionhandler.examples">
+   <example>
+    <title>
+     <classname>SessionHandler</classname> を使って PHP の保存ハンドラに暗号化機能を追加する例
+    </title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+ /**
+  * decrypt AES 256
+  *
+  * @param data $edata
+  * @param string $password
+  * @return decrypted data
+  */
+function decrypt($edata, $password) {
+    $data = base64_decode($edata);
+    $salt = substr($data, 0, 16);
+    $ct = substr($data, 16);
+
+    $rounds = 3; // キーの長さに依存します
+    $data00 = $password.$salt;
+    $hash = array();
+    $hash[0] = hash('sha256', $data00, true);
+    $result = $hash[0];
+    for ($i = 1; $i < $rounds; $i++) {
+        $hash[$i] = hash('sha256', $hash[$i - 1].$data00, true);
+        $result .= $hash[$i];
+    }
+    $key = substr($result, 0, 32);
+    $iv  = substr($result, 32,16);
+
+    return openssl_decrypt($ct, 'AES-256-CBC', $key, true, $iv);
+  }
+
+/**
+ * crypt AES 256
+ *
+ * @param data $data
+ * @param string $password
+ * @return base64 encrypted data
+ */
+function encrypt($data, $password) {
+    // ランダムな salt を設定します
+    $salt = openssl_random_pseudo_bytes(16);
+
+    $salted = '';
+    $dx = '';
+    // Salt the key(32) and iv(16) = 48
+    while (strlen($salted) < 48) {
+      $dx = hash('sha256', $dx.$password.$salt, true);
+      $salted .= $dx;
+    }
+
+    $key = substr($salted, 0, 32);
+    $iv  = substr($salted, 32,16);
+
+    $encrypted_data = openssl_encrypt($data, 'AES-256-CBC', $key, true, $iv);
+    return base64_encode($salt . $encrypted_data);
+}
+
+class EncryptedSessionHandler extends SessionHandler
+{
+    private $key;
+
+    public function __construct($key)
+    {
+        $this->key = $key;
+    }
+
+    public function read($id)
+    {
+        $data = parent::read($id);
+
+        if (!$data) {
+            return "";
+        } else {
+            return decrypt($data, $this->key);
+        }
+    }
+
+    public function write($id, $data)
+    {
+        $data = encrypt($data, $this->key);
+
+        return parent::write($id, $data);
+    }
+}
+
+// この例では標準の 'files' ハンドラを横取りしていますが、他のネイティブハンドラである
+// PHP 拡張モジュール 'sqlite'、'memcache'、'memcached'
+// の場合でもまったく同じように使えます。
+ini_set('session.save_handler', 'files');
+
+$key = 'secret_string';
+$handler = new EncryptedSessionHandler($key);
+session_set_save_handler($handler, true);
+session_start();
+
+// $_SESSION への値の設定や格納されている値の取得を進めます
+]]>
+    </programlisting>
+   </example>
+   <note>
+    <para>
+     このクラスのメソッドは、セッション処理の一環として PHP が内部的にコールするためのものとして作られています。
+     そのため、子クラスから親のメソッド (実際のネイティブハンドラ) をコールすると、
+     (自動で開始するか、あるいは <function>session_start</function> を実行するなどして)
+     セッションを実際に開始していない限りはその返り値が &false; となります。
+     この点は、ユニットテストを書く際に注意が必要です。というのも、
+     ユニットテストではクラスのメソッドを手動でコールする可能性があるからです。
+    </para>
+   </note>
+  </section>
+
+ </partintro>
+
+ &reference.session.entities.sessionhandler;
+
+</phpdoc:classref>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

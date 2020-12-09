@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 347493 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+<book xml:id="book.oci8" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <?phpdoc extension-membership="bundledexternal" ?>
+ <title>Oracle OCI8</title>
+ <titleabbrev>OCI8</titleabbrev>
+ 
+ <!-- {{{ preface -->
+ <preface xml:id="intro.oci8">
+  &reftitle.intro;
+  <para>
+   Эти функции позволяют работать с базой данных Oracle Database  19c, 18c, 12<emphasis>c</emphasis>,
+   11<emphasis>g</emphasis>, 10<emphasis>g</emphasis>, 9<emphasis>i</emphasis>
+   и 8<emphasis>i</emphasis>. Поддерживаются SQL и PL/SQL-выражения. Основной функционал
+   представляет собой поддержку транзакций, привязку переменных PHP
+   к соответствующим плейсхолдерам Oracle, расширенную поддержку
+   больших объектов (LOB) и коллекций. Также поддерживаются кэширование
+   результатов и такие возможности масштабирования Oracle как
+   пул постоянных соединений базы данных (Database Resident Connection Pooling, DRCP).
+  </para>
+ </preface>
+ <!-- }}} -->
+ 
+ &reference.oci8.setup;
+ &reference.oci8.constants;
+ &reference.oci8.examples;
+ &reference.oci8.connection;
+ &reference.oci8.fan;
+ &reference.oci8.taf;
+ &reference.oci8.dtrace;
+ &reference.oci8.datatypes;
+ &reference.oci8.reference;
+ &reference.oci8.OCI-Collection;
+ &reference.oci8.OCI-Lob;
+ &reference.oci8.aliases;
+ 
+</book>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

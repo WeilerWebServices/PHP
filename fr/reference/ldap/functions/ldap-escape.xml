@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 346161 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+<refentry xml:id="function.ldap-escape" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>ldap_escape</refname>
+  <refpurpose>Échappe une chaîne pour l'utiliser dans un filtre LDAP ou un DN</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>ldap_escape</methodname>
+   <methodparam><type>string</type><parameter>value</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>ignore</parameter><initializer>""</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Échappe la chaîne <parameter>value</parameter> pour l'utiliser dans le
+   contexte impliqué par le paramètre <parameter>flags</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>value</parameter></term>
+     <listitem>
+      <para>
+       La valeur à échapper.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>ignore</parameter></term>
+     <listitem>
+      <para>
+       Les caractères à ignorer pendant l'échappement.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>flags</parameter></term>
+     <listitem>
+      <para>
+       Le contexte dans lequel la chaîne échappée sera utilisée :
+       <constant>LDAP_ESCAPE_FILTER</constant> pour les filtres
+       à utiliser avec <function>ldap_search</function>, ou
+       <constant>LDAP_ESCAPE_DN</constant> pour les DNs.
+       Si aucun drapeau n'est passé, tous les charactères sont échappés.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne la chaîne échappée.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   Lors de la construction d'un filtre LDAP, vous devriez utiliser ldap_escape avec le drapeau LDAP_ESCAPE_FILTER.
+   <example>
+    <title>Chercher une addresse email</title>
+<programlisting role="php">
+<![CDATA[
+<?php
+// $ds est un lien identifiant valide pour un serveur de dossier
+
+// $mail est une addresse email fournit par l'utilisateur dans un formulaire
+
+$base   = "o=My Company, c=US";
+$filter = "(mail=".ldap_escape($mail, "", LDAP_ESCAPE_FILTER).")";
+
+$sr = ldap_search($ds, $base, $filter, array("sn", "givenname", "mail"));
+
+$info = ldap_get_entries($ds, $sr);
+
+echo $info["count"]." entrées retournées\n";
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

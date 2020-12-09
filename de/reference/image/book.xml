@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 347892 Maintainer: jaenecke Status: ready -->
+
+<book xml:id="book.image" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <?phpdoc extension-membership="bundled" ?>
+ <title>Bildbearbeitung und GD</title>
+ <titleabbrev>GD</titleabbrev>
+ 
+ <!-- {{{ preface -->
+ <preface xml:id="intro.image">
+  &reftitle.intro;
+  <para>
+   Mit PHP können Sie nicht nur HTML ausgeben, sondern auch Grafiken in
+   vielen Formaten - wie <acronym>GIF</acronym>, <acronym>PNG</acronym>,
+   <acronym>JPEG</acronym>, <acronym>WBMP</acronym> und <acronym>xpm</acronym> - 
+   erzeugen und/oder manipulieren. Noch besser, Sie können Grafiken mit PHP 
+   direkt als Datenstrom ausgeben. Damit das funktioniert, müssen Sie PHP mit 
+   der <acronym>GD</acronym>-Bibliothek zur Grafikbearbeitung kompilieren.
+   <acronym>GD</acronym> und PHP benötigen, je nachdem mit welchen 
+   Grafikformaten Sie arbeiten wollen, zusätzliche Bibliotheken.
+  </para>
+  <para>
+   Sie können die Grafikfunktionen in PHP auch verwenden, um die Größe von
+   <acronym>JPEG</acronym>, <acronym>GIF</acronym>,
+   <acronym>PNG</acronym>, <acronym>SWF</acronym>,
+   <acronym>TIFF</acronym> und <acronym>JPEG2000</acronym> Grafiken zu
+   bestimmen.
+  </para>
+  <para>
+    Mittels der <link linkend="ref.exif">exif-Erweiterung</link> können sie die
+    in den Headern von <acronym>JPEG-</acronym> und <acronym>TIFF-</acronym>Grafiken
+    enthaltenen Informationen verarbeiten. Auf diese Weise können von Digitalkameras
+    erstellte Metadaten verarbeitet werden. Die Exif-Funktionen benötigen
+    nicht die <acronym>GD</acronym>-Bibliothek.
+  </para>
+  
+  <para>
+   <note>
+    <simpara>
+     Im Abschnitt über die Anforderungen können Sie nachlesen, wie Sie die
+     Möglichkeiten zur Grafikbearbeitung erweitern können: lesen, schreiben
+     und manipulieren von Grafiken, und auslesen von Metadaten bei Bildern
+     die mit einer Digitalkamera aufgenommen wurden. Für letzteres wird die
+     bereits erwähnte <link linkend="ref.exif">exif-Erweiterung</link> 
+     benötigt.
+    </simpara>
+   </note>
+   <note>
+    <simpara>
+      Für die Funktion <function>getimagesize</function> wird die GD-Bibliothek 
+      nicht benötigt.
+    </simpara>
+   </note>
+   <caution>
+    <simpara>
+     Während die gebündelte Version der GD-Bibliothek den Zend-Memory-Manager
+     zur Allokation von Speicher verwendet, tun dies System-Versionen nicht, so
+     dass <link linkend="ini.memory-limit">memory_limit</link> ignoriert wird.
+    </simpara>
+   </caution>
+  </para>
+  <para>
+   GD unterstützt eine Reihe von Formaten, folgend eine 
+   Liste aller von GD unterstützten Formaten und Hinweise 
+   zu Verfügbarkeit und lese/schreib Unterstützung. 
+  </para>
+  <para>
+   <table>
+    <title>Von GD unterstützte Formate</title>
+    <tgroup cols="4">
+     <thead>
+      <row>
+       <entry>Format</entry>
+       <entry>Lesen</entry>
+       <entry>Schreiben</entry>
+       <entry>Anmerkungen</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>JPEG</entry>
+       <entry>&true;</entry>
+       <entry>&true;</entry>
+       <entry></entry>
+      </row>
+      <row>
+       <entry>PNG</entry>
+       <entry>&true;</entry>
+       <entry>&true;</entry>
+       <entry></entry>
+      </row>
+      <row>
+       <entry>GIF</entry>
+       <entry>&true;</entry>
+       <entry>&true;</entry>
+       <entry>Ab GD 2.0.28 und PHP 5.0.1 verfügbar</entry>
+      </row>
+      <row>
+       <entry>XBM</entry>
+       <entry>&true;</entry>
+       <entry>&true;</entry>
+       <entry></entry>
+      </row>
+      <row>
+       <entry>XPM</entry>
+       <entry>&true;</entry>
+       <entry>&false;</entry>
+       <entry>Lesen verfügbar unter Windows ab PHP 5.3.19.</entry>
+      </row>
+      <row>
+       <entry>WBMP</entry>
+       <entry>&true;</entry>
+       <entry>&true;</entry>
+       <entry></entry>
+      </row>
+      <row>
+       <entry>WebP</entry>
+       <entry>&true;</entry>
+       <entry>&true;</entry>
+       <entry>PHP 5.4+</entry>
+      </row>
+      <row>
+       <entry>BMP</entry>
+       <entry>&true;</entry>
+       <entry>&true;</entry>
+       <entry>Verfügbar ab GD 2.1.0 und PHP 7.2.0</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+  </para>
+  <para>
+   Während die meisten Formate sowohl zum lesen als auch schreiben verfügbar sind, 
+   bedeutet dies nicht, dass die Unterstützung in PHP einkompiliert ist. 
+   Welche Formate dies sind, und wie PHP mit Unterstützung für diese kompiliert werden kann zeigt die Funktion <function>gd_info</function>.
+   Weitere Informationen zu diesem Thema auch im Installations-Kapitel.
+  </para>
+ </preface>
+ <!-- }}} -->
+ 
+ &reference.image.setup;
+ &reference.image.constants;
+ &reference.image.examples;
+ &reference.image.reference;
+
+</book>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+-->
+

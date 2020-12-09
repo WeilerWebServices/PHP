@@ -1,0 +1,4 @@
+#!/bin/bash
+/usr/local/bin/php /home/zoe/testfestsource/src/testfestdailybuild.php 
+exit 0
+

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi -->
+<refentry xml:id="function.mb-substitute-character" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>mb_substitute_character</refname>
+  <refpurpose>置換文字を設定あるいは取得する</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>mb_substitute_character</methodname>
+   <methodparam choice="opt"><type>mixed</type><parameter>substchar</parameter><initializer>mb_substitute_character()</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   入力文字エンコーディングが無効、
+   または出力文字エンコーディングに文字コードが存在しない場合の代替文字を指定します。
+   無効な文字は、&null; (出力しない)、文字列または整数値 (Unicode 文字コード値)
+   に置換することが可能です。
+  </para>
+  <para>
+   この設定は、<function>mb_convert_encoding</function>、
+   <function>mb_convert_variables</function>、
+   <function>mb_output_handler</function>、
+   および <function>mb_send_mail</function> に影響します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>substchar</parameter></term>
+     <listitem>
+      <para>
+       Unicode 値の整数または文字列を以下のように指定します。
+       <itemizedlist>
+        <listitem>
+         <simpara>
+          <literal>"none"</literal>: 出力しない
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <literal>"long"</literal>: 文字コードの値を出力する
+          (例: <literal>U+3000</literal>、<literal>JIS+7E7E</literal>)
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <literal>"entity"</literal>: 文字エンティティを出力する
+          (例: <literal>&amp;#x200;</literal>)
+         </simpara>
+        </listitem>
+       </itemizedlist>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <parameter>substchar</parameter> が設定された場合、成功時に
+   &true;、そうでない場合に
+   &false; を返します。
+   <parameter>substchar</parameter> が設定されない場合は、現在の設定を返します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>mb_substitute_character</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+/* Unicode U+3013 (ゲタ記号)を設定 */
+mb_substitute_character(0x3013);
+
+/* HEX フォーマットを設定 */
+mb_substitute_character("long");
+
+/* 現在の設定を表示 */
+echo mb_substitute_character();
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

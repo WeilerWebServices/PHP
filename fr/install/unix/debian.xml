@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 299778 Maintainer: gui Status: ready -->
+<!-- Reviewed: yes -->
+
+<sect1 xml:id="install.unix.debian" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Notes d'installation sous Debian GNU/Linux</title>
+ <para>
+  Cette section contient des notes et des astuces spécifiques à l'installation de
+  PHP sous <link xlink:href="&url.debian;">Debian GNU/Linux</link>.
+ </para>
+ <warning>
+  <para>
+   Les compilations non officielles de sources tierces ne sont pas supportées ici. Tout bogue
+   devrait être reporté à l'équipe Debian sauf s'il peut être reproduit en utilisant
+   les dernières compilations de notre <link xlink:href="&url.php.downloads;">section téléchargements
+   </link>.
+  </para>
+ </warning>
+ <para>
+  Bien que les instructions pour compiler PHP sous Unix s'appliquent aussi à Debian,
+  cette page de manuel contient des informations spécifiques pour les autres manières
+  d'installer PHP, telles que l'utilisation de <literal>apt-get</literal> ou <literal>aptitude</literal>.
+  Cette page de manuel utilise indifféremment l'une ou l'autre.
+ </para>
+ <sect2 xml:id="install.unix.debian.apt">
+  <title>Utilisation de APT</title>
+  <simpara>
+   Tout d'abord, veuillez noter que d'autres paquets peuvent être souhaitables, comme
+   <literal>libapache2-mod-php5</literal> pour l'intégration avec Apache 2, et
+   <literal>php-pear</literal> pour PEAR.
+  </simpara>
+  <simpara>
+   Ensuite, avant d'installer un paquet, il est sage de s'assurer que la liste des paquets
+   est à jour. D'habitude, on le fait en utilisant la commande
+   <command>apt-get update</command>.
+  </simpara>
+  <example xml:id="install.unix.debian.apt.example">
+   <title>Exemple d'installation sous Debian avec Apache 2</title>
+   <programlisting role="shell">
+<![CDATA[
+# apt-get install php5-common libapache2-mod-php5 php5-cli
+]]>
+   </programlisting>
+  </example>
+  <simpara>
+   APT installera et activera automatiquement le module PHP 5 pour Apache 2, ainsi que toutes
+   ses dépendances. Apache devra être relancé pour que les changements soient effectifs. Par exemple :
+  </simpara>
+  <example xml:id="install.unix.debian.apt.example2">
+   <title>Stopper et démarrer Apache une fois PHP installé</title>
+   <programlisting role="shell">
+<![CDATA[
+# /etc/init.d/apache2 stop
+# /etc/init.d/apache2 start
+]]>
+   </programlisting>
+  </example>
+ </sect2>
+ <sect2 xml:id="install.unix.debian.config">
+  <title>Un meilleur contrôle de la configuration</title>
+  <simpara>
+   Dans l'exemple précédent, PHP a été installé avec juste les composants principaux. Il y a fort
+   à parier que des modules supplémentaires soient nécessaires, tels que
+   <link linkend="book.mysql">MySQL</link>,
+   <link linkend="book.curl">cURL</link>,
+   <link linkend="book.image">GD</link>,
+   etc. Ils peuvent aussi être installés via la commande <literal>apt-get</literal>.
+  </simpara>
+  <example xml:id="install.unix.debian.config.example">
+   <title>Méthodes pour lister les paquets PHP 5 supplémentaires</title>
+   <programlisting role="shell">
+<![CDATA[
+# apt-cache search php5
+# aptitude search php5
+# aptitude search php5 |grep -i mysql
+]]>
+   </programlisting>
+  </example>
+  <simpara>
+   Ces exemples montreront de nombreux paquets, donc beaucoup spécifiques à PHP,
+   comme php5-cgi, php5-cli et php5-dev. Déterminez ceux qui sont nécessaires
+   et installez les comme n'importe quel autre en utilisant <literal>apt-get</literal>
+   ou <literal>aptitude</literal>. Et vu que Debian effectue une vérification des dépendances,
+   on vous avertira de ces dernières, comme pour installer MySQL et cURL :
+  </simpara>
+  <example xml:id="install.unix.debian.config.example2">
+   <title>Installer PHP avec MySQL et cURL</title>
+   <programlisting role="shell">
+<![CDATA[
+# apt-get install php5-mysql php5-curl
+]]>
+   </programlisting>
+  </example>
+  <simpara>
+   APT ajoutera automatiquement les bonnes lignes aux fichiers connexes à &php.ini;, comme
+   <filename>/etc/php5/apache2/php.ini</filename>,
+   <filename>/etc/php5/conf.d/pdo.ini</filename>, etc. et selon l'extension, il ajoutera des entrées
+   semblables à <literal>extension=foo.so</literal>.
+   De plus, redémarrer le serveur web (Apache, par exemple) est nécessaire pour que ces changements
+   soient effectifs.
+  </simpara>
+ </sect2>
+ <sect2 xml:id="install.unix.debian.faq">
+  <title>Problèmes courants</title>
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     Si les scripts PHP ne sont pas interprétés par le serveur web, il est probable que PHP
+     n'ait pas été ajouté aux fichier de configuration du serveur web, c'est-à-dire, sous Debian,
+     <filename>/etc/apache2/apache2.conf</filename> ou équivalent.
+     Consultez le manuel Debian pour davantage de détails.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Si une extension a apparemment été installée mais que ses fonctions ne sont pas définies,
+     assurez vous que les lignes adéquates ont été insérées dans les fichiers .ini et/ou que
+     le serveur web a été redémarré après l'installation.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Il y a deux commandes de base pour installer des paquets sous Debian (et d'autres variantes
+     de Linux) : <literal>apt-get</literal> et <literal>aptitude</literal>.
+     Expliquer les différences subtiles entre les deux sort du cadre de ce manuel.
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </sect2>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

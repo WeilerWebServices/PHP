@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 346661 Maintainer: radical Status: ready -->
+<!-- CREDITS: simionea -->
+
+ <sect1 xml:id="language.oop5.autoload" xmlns="http://docbook.org/ns/docbook">
+  <title>Autoîncărcarea claselor</title>
+  <para>
+   Mulți programatori care scriu aplicații orientate pe obiecte
+   crează câte un fișier PHP pentru fiecare clasă pe care o definesc.
+   O problemă delicată era lista mare de fișiere ce trebuiau
+   incluse la începutul fiecărui script.
+  </para>
+  <para>
+   În PHP 5, acest lucru nu mai este necesar. Funcția
+   <function>spl_autoload_register</function> înregistrează orice număr de
+   autoîncărcătoare, permițând claselor și interfețelor să fie încărcate automat
+   în caz că nu sunt încă definite. Înregistrând autoîncărcătoarele, PHP i se
+   oferă o ultimă șansă de a încărca clasa sau interfața înainte de a eșua cu
+   eroare.
+  </para>
+  <tip>
+   <para>
+    Cu toate că și funcția <function>__autoload</function> poate fi utilizată
+    pentru autoîncărcarea claselor și interfețelor, este preferabilă utilizarea
+    funcției <function>spl_autoload_register</function>. Aceasta reprezintă o
+    alternativă mai flexibilă (permițând specificarea în aplicație a oricărui
+    număr de autoîncărcătoare, ca de exemplu în biblioteci ale terților). Din
+    acest motiv utilizarea <function>__autoload</function> nu este recomandată
+    și se consideră învechită începând cu PHP 7.2.0.
+   </para>
+  </tip>
+  <note>
+   <para>
+    Înainte de PHP 5.3, excepțiile aruncate în funția <function>__autoload</function>
+    nu puteau fi captate într-un bloc
+    <link linkend="language.exceptions">catch</link> rezultând astfel o eroare
+    fatală. Începând cu PHP 5.3 aceasta este posibil dacă clasa unei excepții
+    personalizate este definită la momentul generării excepției personalizate.
+    Funcția <function>__autoload</function> poate fi folosită pentru a încărca
+    recursiv clasa excepției personalizate.
+   </para>
+  </note>
+  <note>
+   <para>
+    Această funcție specială nu este disponibilă dacă folosiți PHP în
+    <link linkend="features.commandline">mod CLI interactiv</link>.
+   </para>
+  </note>
+  <note>
+   <para>
+    Dacă denumirea clasei este utilizată de ex. în <function>call_user_func</function>,
+    atunci ea poate conține caractere periculoase, cum ar fi <literal>../</literal>.
+    Nu este recomandat să utilizați datele introduse de utilizator în asemenea funcții,
+    sau, cel puțin, să verificați ce s-a introdus în <function>__autoload</function>.
+   </para>
+  </note>
+  <para>
+   <example>
+    <title>Exemplu cu autoîncărcare</title>
+    <para>
+     Acest exemplu încearcă să încarce clasele <literal>MyClass1</literal>
+     și <literal>MyClass2</literal> din fișierele <filename>MyClass1.php</filename>
+     și <filename>MyClass2.php</filename>.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+spl_autoload_register(function ($class_name) {
+    include $class_name . '.php';
+});
+
+$obj  = new MyClass1();
+$obj2 = new MyClass2();
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Un alt exemplu Autoload</title>
+    <para>
+     Acest exemplu încearcă să încarce interfața <literal>ITest</literal>.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+spl_autoload_register(function ($name) {
+    var_dump($name);
+});
+
+class Foo implements ITest {
+}
+
+/*
+string(5) "ITest"
+
+Fatal error: Interface 'ITest' not found in ...
+*/
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Autoîncărcarea cu tratarea excepțiilor pentru 5.3.0+</title>
+    <para>
+     Acest exemplu aruncă o excepție și demonstrează cum se captează cu try/catch.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+spl_autoload_register(function ($name) {
+    echo "Vreau sa încarc $name.\n";
+    throw new Exception("Nu pot încărca $name.");
+});
+
+try {
+    $obj = new NonLoadableClass();
+} catch (Exception $e) {
+    echo $e->getMessage(), "\n";
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Vreau sa încarc NonLoadableClass.
+Nu pot încărca NonLoadableClass.
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Autoîncărcarea cu tratarea excepțiilor pentru 5.3.0+ - Fără excepție personalizată</title>
+    <para>
+     Acest exemplu atuncă o excepție personalizată care nu a fost încărcată încă.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+spl_autoload_register(function ($name) {
+    echo "Vreau să încarc $name.\n";
+    throw new MissingException("Nu pot încărca $name.");
+});
+
+try {
+    $obj = new NonLoadableClass();
+} catch (Exception $e) {
+    echo $e->getMessage(), "\n";
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Vreau să încarc NonLoadableClass.
+Nu pot încărca  MissingException.
+
+Fatal error: Class 'MissingException' not found in testMissingException.php on line 4
+]]>
+    </screen>
+   </example>
+  </para>
+
+  <simplesect role="seealso">
+   &reftitle.seealso;
+   <para>
+    <simplelist>
+     <member><function>unserialize</function></member>
+     <member><link linkend="ini.unserialize-callback-func">unserialize_callback_func</link></member>
+     <member><function>spl_autoload_register</function></member>
+     <member><function>spl_autoload</function></member>
+     <member><function>__autoload</function></member>
+    </simplelist>
+   </para>
+  </simplesect>
+
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

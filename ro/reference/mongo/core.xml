@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 338152 Maintainer: simionea Status: ready -->
+
+<part xml:id="mongo.core" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+ <title>Clase de bază</title>
+ <partintro>
+  <warning>
+   &mongo.deprecated.note;
+  </warning>
+  <para>
+   Clasele de bază reprezintă cea mai importantă parte componentă a driver-ului.
+  </para>
+ </partintro>
+
+ &reference.mongo.mongoclient;
+ &reference.mongo.mongodb;
+ &reference.mongo.mongocollection;
+ &reference.mongo.mongocursor;
+ &reference.mongo.mongocursorinterface;
+ &reference.mongo.mongocommandcursor;
+
+</part>

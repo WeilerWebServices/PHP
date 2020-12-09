@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>sync</name>
+ <channel>pecl.php.net</channel>
+ <summary>Named and unnamed synchronization objects</summary>
+ <description>The 'sync' extension introduces synchronization objects into PHP.  Named and unnamed Mutex, Semaphore, Event, Reader-Writer, and named Shared Memory objects provide OS-level synchronization mechanisms on both *NIX (POSIX shared memory and pthread shared memory synchronization required) and Windows platforms.  This extension is a direct port of and compatible with the cross platform 'sync' library:  https://github.com/cubiclesoft/cross-platform-cpp</description>
+ <lead>
+  <name>Thomas Hruska</name>
+  <user>cubic</user>
+  <email>cubic@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2017-02-20</date>
+ <time>05:00:00</time>
+ <version>
+  <release>1.1.1</release>
+  <api>1.1.0</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://opensource.org/licenses/MIT">MIT License</license>
+ <notes>
+- Fixed *NIX event object sync_WaitForUnixEvent() issues.
+ </notes>
+ <contents>
+  <dir name="/">
+   <file name="tests/001.phpt" role="test" />
+   <file name="tests/002.phpt" role="test" />
+   <file name="tests/003.phpt" role="test" />
+   <file name="tests/004.phpt" role="test" />
+   <file name="tests/005.phpt" role="test" />
+   <file name="tests/006.phpt" role="test" />
+   <file name="tests/007.phpt" role="test" />
+   <file name="tests/008.phpt" role="test" />
+   <file name="tests/009.phpt" role="test" />
+   <file name="tests/010.phpt" role="test" />
+   <file name="tests/011.phpt" role="test" />
+   <file name="tests/012.phpt" role="test" />
+   <file name="tests/013.phpt" role="test" />
+   <file name="tests/014.phpt" role="test" />
+   <file name="tests/015.phpt" role="test" />
+   <file name="tests/016.phpt" role="test" />
+   <file name="CREDITS" role="doc" />
+   <file name="LICENSE" role="doc" />
+   <file name="README.md" role="doc" />
+   <file name="config.m4" role="src" />
+   <file name="config.w32" role="src" />
+   <file name="php_sync.h" role="src" />
+   <file name="sync.c" role="src" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.3.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <providesextension>sync</providesextension>
+ <extsrcrelease />
+</package>

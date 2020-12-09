@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>bitset</name>
+ <channel>pecl.php.net</channel>
+ <summary>BITSET library</summary>
+ <description>Bitsets manipulation library</description>
+ <lead>
+  <name>Will Fitch</name>
+  <user>willfitch</user>
+  <email>willfitch@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2017-10-05</date>
+ <time>21:00:00</time>
+ <version>
+  <release>3.0.1</release>
+  <api>3.0.1</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP</license>
+ <notes>
+     - Fixed out of bounds bug (thanks kgodet)
+ </notes>
+ <contents>
+  <dir name="/">
+    <dir name="tests">
+	  <file name="BitSet_andNotOp.phpt" role="test" />
+	  <file name="BitSet_andOp.phpt" role="test" />
+	  <file name="BitSet_cardinality.phpt" role="test" />
+	  <file name="BitSet_clear.phpt" role="test" />
+	  <file name="BitSet_construct.phpt" role="test" />
+      <file name="BitSet_fromArray.phpt" role="test" />
+      <file name="BitSet_fromRawValue.phpt" role="test" />
+	  <file name="BitSet_fromString.phpt" role="test" />
+	  <file name="BitSet_get.phpt" role="test" />
+	  <file name="BitSet_getRawValue.phpt" role="test" />
+	  <file name="BitSet_isEmpty.phpt" role="test" />
+	  <file name="BitSet_length.phpt" role="test" />
+	  <file name="BitSet_nextClearBit.phpt" role="test" />
+	  <file name="BitSet_nextSetBit.phpt" role="test" />
+	  <file name="BitSet_orOp.phpt" role="test" />
+	  <file name="BitSet_previousClearBit.phpt" role="test" />
+	  <file name="BitSet_previousSetBit.phpt" role="test" />
+	  <file name="BitSet_set.phpt" role="test" />
+	  <file name="BitSet_size.phpt" role="test" />
+	  <file name="BitSet_toArray.phpt" role="test" />
+	  <file name="BitSet_xorOp.phpt" role="test" />
+    </dir>
+    <file name="LICENSE" role="doc" />
+    <file name="bitset.c" role="src" />
+    <file name="bitset.dsp" role="src" />
+    <file name="config.m4" role="src" />
+    <file name="config.w32" role="src" />
+    <file name="CREDITS" role="doc" />
+    <file name="php_bitset.h" role="src" />
+    <file name="README" role="doc" />
+    <file name="TODO" role="doc" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+       <min>7.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <providesextension>bitset</providesextension>
+ <extsrcrelease />
+ <changelog>
+  <release>
+   <version>
+    <release>1.0.1</release>
+    <api>1.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2012-06-13</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+- Fixed build in PHP 5.3+
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0</release>
+    <api>1.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2005-07-22</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+First official stable release of Bitset
+   </notes>
+  </release>
+ </changelog>
+</package>

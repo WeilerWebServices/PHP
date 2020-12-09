@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 301112 Maintainer: yago Status: ready -->
+<!-- Reviewed: yes Maintainer: seros -->
+
+<chapter xml:id="mbstring.http" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Entrada/Salida de HTTP</title>
+ <para>
+  La conversión de una codificación de caracteres desde una entrada/salida HTTP
+  también puede convertir datos binarios. Si se utilizan datos binarios para la
+  entrada/salida de HTTP, los usuarios tienen el deber de controlar la conversión
+  de la codificación de caracteres.
+ </para>
+ <note>
+  <para>
+   En la versión de 4.3.2 de PHP o anteriores existe una limitación en esta funcionalidad
+   de <literal>mbstring</literal> que consiste en que no se realiza la conversión
+   de la condificación de caracteres de los datos enviados mediante POST si el
+   atributo <literal>enctype</literal> del elemento <literal>form</literal>
+   está establecido a <literal>multipart/form-data</literal>.
+   En este caso, es el usuario el que ha de convertir los datos entrantes
+   si fuera necesario.
+  </para>
+  <para>
+   Comenzando con PHP 4.3.3, si el atributo <literal>enctype</literal> de un formulario HTML se
+   establece a <literal>multipart/form-data</literal> y
+   <literal>mbstring.encoding_translation</literal> está establecido a 'On'
+   en &php.ini;, las variables y los nombres de los ficheros subidos mediante POST
+   serán convertidos también a la codificación de caracteres interna.
+   Sin embargo, la conversión no se aplicará a las claves de las consultas.
+  </para>
+ </note>
+ <para>
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     Entrada HTTP
+    </simpara>
+    <para> 
+     No hay ninguna forma de controlar la conversión de caracteres 
+     de la entrada HTTP desde un script de PHP. Para desactivar dicha
+     conversión, hay que realizarlo en &php.ini;.
+     <example>
+      <title>
+       Desactivar la conversión de caracteres de la entrada HTTP en &php.ini;
+      </title>
+      <programlisting role="php.ini">
+<![CDATA[
+;; Deshabilitar la conversión de la entrada HTTP
+mbstring.http_input = pass
+;; Deshabilitar la conversión de la entrada HTTP (PHP 4.3.0 o posterior)
+mbstring.encoding_translation = Off
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     Cuando se utiliza PHP como un módulo de Apache, es posible
+     anular esta configuración en cada directiva Host Virtual en el fichero
+     &httpd.conf;o por cada directorio, a través de un fichero &htaccess;. Consulte
+     la sección de <link linkend="configuration">Configuración</link> y
+     el Manual de Apache para más detalles.
+    </para>
+   </listitem>
+   <listitem>
+    <simpara>
+     Salida HTTP
+    </simpara>
+    <para>
+     Hay varias formas de habilitar la conversión de caracteres de salida.
+     Una es utilizando &php.ini;, otra es
+     utilizando <function>ob_start</function>, con
+     <function>mb_output_handler</function> como la
+     función de llamada de retorno de <literal>ob_start</literal>.
+    </para>
+   </listitem>
+  </itemizedlist>
+ </para>
+ <para>
+  <example>
+   <title>Ejemplo de configuración de &php.ini;</title>
+   <programlisting>
+<![CDATA[
+;; Habilitar la conversión de codificaciones de caracteres de salida para todas las páginas de PHP
+
+;; Hablitar el almacenamiento en búfer de salida
+output_buffering    = On
+
+;; Establecer mb_output_handler para habilitar la conversión de salida
+output_handler      = mb_output_handler
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <para>
+  <example>
+   <title>Ejemplo de script</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+// Habilita la conversión de codificaciones de caracteres de salida sólo para esta página
+
+// Establecer la codificación de caracteres de salida HTTP a SJIS
+mb_http_output('SJIS');
+
+// Iniciar el almacenamiento en búfer y especificar "mb_output_handler" como
+// la función de llamada de retorno
+ob_start('mb_output_handler');
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

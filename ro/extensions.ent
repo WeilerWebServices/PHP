@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- $Author$ -->
+<!-- EN-Revision: 331319 Maintainer: simionea Status: ready -->
+
+<!ENTITY extcat.intro '<title xmlns="http://docbook.org/ns/docbook">
+Lista/Categoriile extensiilor</title>
+<para xmlns="http://docbook.org/ns/docbook">Această anexă categorizează peste
+150 extensii documentate în Manualul PHP după câteva criterii.</para>'>
+
+<!ENTITY extcat.alphabetical '<title xmlns="http://docbook.org/ns/docbook">
+În ordine alfabetică</title>'>
+
+<!-- ======================================================================= -->
+
+<!ENTITY extcat.purpose '<title xmlns="http://docbook.org/ns/docbook">
+Scopul</title>'>
+
+<!ENTITY extcat.purpose.basic '<title xmlns="http://docbook.org/ns/docbook">
+Extensiile de bază ale PHP</title>'>
+<!ENTITY extcat.purpose.basic.vartype '<title xmlns="http://docbook.org/ns/docbook">
+Extensiile ce se referă la variable și tipuri</title>'>
+<!ENTITY extcat.purpose.basic.text '<title xmlns="http://docbook.org/ns/docbook">
+Procesarea textelor</title>'>
+<!ENTITY extcat.purpose.basic.php '<title xmlns="http://docbook.org/ns/docbook">
+Schimbarea comportamentului PHP</title>'>
+<!ENTITY extcat.purpose.basic.session '<title xmlns="http://docbook.org/ns/docbook">
+Extensiile de lucru cu sesiuni</title>'>
+<!ENTITY extcat.purpose.basic.other '<title xmlns="http://docbook.org/ns/docbook">
+Alte extensii de bază</title>'>
+
+<!ENTITY extcat.purpose.database '<title xmlns="http://docbook.org/ns/docbook">
+Extensii de lucru cu baze de date</title>'>
+<!ENTITY extcat.purpose.database.abstract '<title xmlns="http://docbook.org/ns/docbook">
+Nivelele de abstracție</title>'>
+<!ENTITY extcat.purpose.database.vendors '<title xmlns="http://docbook.org/ns/docbook">
+Extensii de lucru cu baze de date specifice ale unor producători</title>'>
+
+<!ENTITY extcat.purpose.xml '<title xmlns="http://docbook.org/ns/docbook">
+Manipularea cu XML</title>'>
+
+<!ENTITY extcat.purpose.webservice '<title xmlns="http://docbook.org/ns/docbook">
+Servicii Web</title>'>
+
+<!ENTITY extcat.purpose.creditcard '<title xmlns="http://docbook.org/ns/docbook">
+Procesarea cartelelor de credit</title>'>
+   
+<!ENTITY extcat.purpose.mathcrypto '<title xmlns="http://docbook.org/ns/docbook">
+Matematică și criptografie</title>'>
+<!ENTITY extcat.purpose.mathcrypto.math '<title xmlns="http://docbook.org/ns/docbook">
+Extensii matematice</title>'>
+<!ENTITY extcat.purpose.mathcrypto.crypto '<title xmlns="http://docbook.org/ns/docbook">
+Extensii criptografice</title>'>
+
+<!ENTITY extcat.purpose.international '<title xmlns="http://docbook.org/ns/docbook">
+Susținerea codificării caracterelor și a limbajului uman</title>'>
+   
+<!ENTITY extcat.purpose.fileprocess '<title xmlns="http://docbook.org/ns/docbook">
+Controlul sistemului de fișiere și al proceselor</title>'>
+<!ENTITY extcat.purpose.fileprocess.file '<title xmlns="http://docbook.org/ns/docbook">
+Extensii ce se referă la sistemul de fișiere</title>'>
+<!ENTITY extcat.purpose.fileprocess.process '<title xmlns="http://docbook.org/ns/docbook">
+Extensii de control al proceselor</title>'>
+
+<!ENTITY extcat.purpose.remote '<title xmlns="http://docbook.org/ns/docbook">
+Accessarea serviciilor</title>'>
+<!ENTITY extcat.purpose.remote.mail '<title xmlns="http://docbook.org/ns/docbook">
+Extensii ce se referă la poștă</title>'>
+<!ENTITY extcat.purpose.remote.auth '<title xmlns="http://docbook.org/ns/docbook">
+Servicii de autentificare</title>'>
+<!ENTITY extcat.purpose.remote.other '<title xmlns="http://docbook.org/ns/docbook">
+Alte servicii</title>'>
+
+<!ENTITY extcat.purpose.compression '<title xmlns="http://docbook.org/ns/docbook">
+Extensii de comprimare</title>'>
+
+<!ENTITY extcat.purpose.calendar '<title xmlns="http://docbook.org/ns/docbook">
+Extensii ce se referă la dată și oră</title>'>
+
+<!ENTITY extcat.purpose.utilspec '<title xmlns="http://docbook.org/ns/docbook">
+Extensii specifice ariei de utilizare</title>'>
+<!ENTITY extcat.purpose.utilspec.nontext '<title xmlns="http://docbook.org/ns/docbook">
+Obținerea ieșirilor MIME non-textuale</title>'>
+<!ENTITY extcat.purpose.utilspec.image '<title xmlns="http://docbook.org/ns/docbook">
+Procesarea și generarea imaginilor</title>'>
+<!ENTITY extcat.purpose.utilspec.audio '<title xmlns="http://docbook.org/ns/docbook">
+Manipularea cu formatele audio</title>'>
+<!ENTITY extcat.purpose.utilspec.cmdline '<title xmlns="http://docbook.org/ns/docbook">
+Extensii specifice liniei de comandă</title>'>
+<!ENTITY extcat.purpose.utilspec.windows '<title xmlns="http://docbook.org/ns/docbook">
+Extensii numai pentru Windows</title>'>
+<!ENTITY extcat.purpose.utilspec.server '<title xmlns="http://docbook.org/ns/docbook">
+Extensii specifice serverelor</title>'>
+    
+<!-- ======================================================================= -->
+
+<!ENTITY extcat.membership '<title xmlns="http://docbook.org/ns/docbook">
+Apartenența</title>'>
+
+<!ENTITY extcat.membership.core '<title xmlns="http://docbook.org/ns/docbook">
+Extensiile de bază</title>
+<para xmlns="http://docbook.org/ns/docbook">Acestea de fapt nu sunt extensii.
+Ele fac parte din nucleul PHP și nu pot fi separate de binarul PHP folosind
+opțiuni de compilare.</para>'>
+
+<!ENTITY extcat.membership.bundled '<title xmlns="http://docbook.org/ns/docbook">
+Extensii adiționale</title>
+<para xmlns="http://docbook.org/ns/docbook">Aceste extensii sunt livrate
+împreună cu PHP.</para>'>
+
+<!ENTITY extcat.membership.external '<title xmlns="http://docbook.org/ns/docbook">
+Extensii externe</title>
+<para xmlns="http://docbook.org/ns/docbook">Aceste extensii intră în componența PHP,
+dar pentru a le compila vor fi necesare biblioteci externe.</para>'>
+
+<!ENTITY extcat.membership.pecl '<title xmlns="http://docbook.org/ns/docbook">
+Extensii PECL</title>
+<para xmlns="http://docbook.org/ns/docbook">Aceste extensii sunt disponibile în
+<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.pecl;">PECL</link>.
+Ele pot să necesite biblioteci externe. Există mai multe extensii PECL, dar ele
+nu sunt documentate în manualul PHP deocamdată.</para>'>
+
+<!-- ======================================================================= -->
+
+<!ENTITY extcat.state '<title xmlns="http://docbook.org/ns/docbook">
+Statutul</title>
+<para xmlns="http://docbook.org/ns/docbook">Acest compartiment enumeră
+extensiile care nu sunt destinate folosirii în producere - ele sunt sau prea
+"învechite" (scoase din uz), sau "noi" (experimentale).</para>'>
+
+<!ENTITY extcat.state.deprecated '<title xmlns="http://docbook.org/ns/docbook">
+Extensiile scoase din uz</title>
+<para xmlns="http://docbook.org/ns/docbook">Aceste extensii au fost scoase din
+uz în favoarea unor alte extensii, de regulă.</para>'>
+
+<!ENTITY extcat.state.experimental '<title xmlns="http://docbook.org/ns/docbook">
+Extensii experimentale</title>
+<para xmlns="http://docbook.org/ns/docbook">Comportamentul acestor extensii -
+inclusiv numele funcțiilor lor și orice alte aspecte documentate despre aceste
+extensii - pot fi schimbate fără preaviz într-o versiune viitoare a PHP.
+Utilizați aceste extensii la propriul risc.</para>'>

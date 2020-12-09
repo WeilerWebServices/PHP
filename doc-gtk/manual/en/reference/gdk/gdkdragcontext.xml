@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision: 1.7 $ -->
+<classentry id="gdk.gdkdragcontext">
+ <classmeta>
+  <classtitle>GdkDragContext</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+   An object that holds information about a drag in progress.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gdk.gdkdragcontext.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GdkDragContext</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gdk.gdkdragcontext.method.drag_abort">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_abort</function></funcdef>
+     <paramdef>int <parameter>time</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.drag_drop">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_drop</function></funcdef>
+     <paramdef>int <parameter>time</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.drag_drop_succeeded">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>drag_drop_succeeded</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.drag_find_window">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_find_window</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.drag_find_window_for_screen">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_find_window_for_screen</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.drag_get_selection">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>drag_get_selection</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.drag_motion">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>drag_motion</function></funcdef>
+     <paramdef>GdkWindow <parameter>dest_window</parameter></paramdef>
+     <paramdef>GdkDragProtocol <parameter>protocol</parameter></paramdef>
+     <paramdef>int <parameter>x_root</parameter></paramdef>
+     <paramdef>int <parameter>y_root</parameter></paramdef>
+     <paramdef>GdkDragAction <parameter>suggested_action</parameter></paramdef>
+     <paramdef>GdkDragAction <parameter>possible_actions</parameter></paramdef>
+     <paramdef>int <parameter>time</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.drag_status">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_status</function></funcdef>
+     <paramdef>GdkDragAction <parameter>action</parameter></paramdef>
+     <paramdef>int <parameter><optional>time = GDK_CURRENT_TIME</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.drop_finish">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drop_finish</function></funcdef>
+     <paramdef>bool <parameter>success</parameter></paramdef>
+     <paramdef>int <parameter><optional>time = GDK_CURRENT_TIME</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.drop_reply">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drop_reply</function></funcdef>
+     <paramdef>bool <parameter>ok</parameter></paramdef>
+     <paramdef>int <parameter><optional>time = GDK_CURRENT_TIME</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.finish">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>finish</function></funcdef>
+     <paramdef>bool <parameter>success</parameter></paramdef>
+     <paramdef>bool <parameter>del</parameter></paramdef>
+     <paramdef>int <parameter><optional>time = GDK_CURRENT_TIME</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.get_source_widget">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_source_widget</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.ref">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>ref</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.set_icon_default">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_icon_default</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.set_icon_pixbuf">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_icon_pixbuf</function></funcdef>
+     <paramdef>GdkPixbuf <parameter>pixbuf</parameter></paramdef>
+     <paramdef>int <parameter>hot_x</parameter></paramdef>
+     <paramdef>int <parameter>hot_y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.set_icon_pixmap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_icon_pixmap</function></funcdef>
+     <paramdef>GdkColormap <parameter>colormap</parameter></paramdef>
+     <paramdef>GdkPixmap <parameter>pixmap</parameter></paramdef>
+     <paramdef>GdkBitmap <parameter>mask</parameter></paramdef>
+     <paramdef>int <parameter>hot_x</parameter></paramdef>
+     <paramdef>int <parameter>hot_y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.set_icon_stock">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_icon_stock</function></funcdef>
+     <paramdef>string <parameter>stock_id</parameter></paramdef>
+     <paramdef>int <parameter>hot_x</parameter></paramdef>
+     <paramdef>int <parameter>hot_y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.set_icon_widget">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_icon_widget</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gdk.gdkdragcontext.method.unref">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unref</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+ </methods>
+
+ <fields>
+
+  <field id="gdk.gdkdragcontext.field.action" type="ro">
+   <fieldname>action</fieldname>
+   <fieldtype>GdkDragAction</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdragcontext.field.actions" type="ro">
+   <fieldname>actions</fieldname>
+   <fieldtype>GdkDragAction</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdragcontext.field.dest_window" type="ro">
+   <fieldname>dest_window</fieldname>
+   <fieldtype>GdkWindow</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdragcontext.field.is_source" type="ro">
+   <fieldname>is_source</fieldname>
+   <fieldtype>bool</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdragcontext.field.protocol" type="ro">
+   <fieldname>protocol</fieldname>
+   <fieldtype>GdkDragProtocol</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdragcontext.field.source_window" type="ro">
+   <fieldname>source_window</fieldname>
+   <fieldtype>GdkWindow</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdragcontext.field.start_time" type="ro">
+   <fieldname>start_time</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdragcontext.field.suggested_action" type="ro">
+   <fieldname>suggested_action</fieldname>
+   <fieldtype>GdkDragAction</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gdk.gdkdragcontext.field.targets" type="ro">
+   <fieldname>targets</fieldname>
+   <fieldtype></fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+ </fields>
+
+</classentry>

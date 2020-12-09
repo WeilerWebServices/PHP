@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 341347 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi -->
+<refentry xml:id="function.dio-fcntl" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>dio_fcntl</refname>
+  <refpurpose>fd について C ライブラリの fcntl を実行する</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>dio_fcntl</methodname>
+   <methodparam><type>resource</type><parameter>fd</parameter></methodparam>
+   <methodparam><type>int</type><parameter>cmd</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>args</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   関数 <function>dio_fcntl</function> は、ファイル記述子
+   <parameter>fd</parameter> において <parameter>cmd</parameter>
+   で指定された処理を行います。いくつかのコマンドでは、オプションの引数
+   <parameter>args</parameter> の指定が必要となります。
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>fd</parameter></term>
+     <listitem>
+      <para>
+       <function>dio_open</function> が返すファイル記述子。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>cmd</parameter></term>
+     <listitem>
+      <para>
+       以下の処理のいずれか。
+       <itemizedlist>
+        <listitem>
+         <para>
+          <constant>F_SETLK</constant> - ロックが設定あるいはクリアされます。
+          ロックが他の誰かに設定されている場合、<function>dio_fcntl</function>
+          は -1 を返します。
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>F_SETLKW</constant> - <constant>F_SETLK</constant>
+          と似ていますが、ロックが他の誰かに設定されている場合は
+          <function>dio_fcntl</function> はそのロックが開放されるまで待ちます。
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>F_GETLK</constant> - <function>dio_fcntl</function> 
+          は、他の誰かがロックを妨げる場合、（後述の）連想配列を返します。
+          妨げるものがない場合、キー "type" は <constant>F_UNLCK</constant>
+          に設定されます。
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>F_DUPFD</constant> - <parameter>args</parameter>
+          以上で最小のファイル記述子を探し、それを返します。
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>F_SETFL</constant> - ファイル記述子のフラグを
+          <parameter>args</parameter> で指定した値に設定します。指定できる値は
+          <constant>O_APPEND</constant>、<constant>O_NONBLOCK</constant>
+          あるいは <constant>O_ASYNC</constant> のいずれかです。
+          <constant>O_ASYNC</constant> を使用するには、
+          <link linkend="ref.pcntl">PCNTL</link> 拡張モジュールが必要です。
+         </para>
+        </listitem>
+       </itemizedlist>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>args</parameter></term>
+     <listitem>
+      <para>
+       <parameter>args</parameter> は連想配列で、
+       <parameter>cmd</parameter> が <constant>F_SETLK</constant> あるいは
+       <constant>F_SETLLW</constant> の際に以下のキーを保持します。
+       <itemizedlist>
+        <listitem>
+         <para>
+          <literal>start</literal> - ロックを開始するオフセット。
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <literal>length</literal> - ロックする領域の大きさ。ゼロはファイルの終端までを意味します。
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <literal>wenth</literal> - l_start の相対位置指定。
+          <constant>SEEK_SET</constant>、
+          <constant>SEEK_END</constant> および <constant>SEEK_CUR</constant>
+          のいずれか。
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <literal>type</literal> - ロックの種類。<constant>F_RDLCK</constant>（読み込み
+          ロック）、<constant>F_WRLCK</constant>（書き込みロック）あるいは
+          <constant>F_UNLCK</constant>（ロック解除）のいずれか。
+         </para>
+        </listitem>
+       </itemizedlist>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   C ライブラリをコールした結果を返します。
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>ロックの設定と解除</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$fd = dio_open('/dev/ttyS0', O_RDWR);
+
+if (dio_fcntl($fd, F_SETLK, Array("type"=>F_WRLCK)) == -1) {
+   // ファイル記述子がロックされている
+   echo "ロックを解除できません。別のプロセスによってロックされています。";
+} else {
+   echo "ロックが正常に設定/解除できました。";
+}
+
+dio_close($fd);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.no-windows;
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

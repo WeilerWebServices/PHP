@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 345139 Maintainer: hirokawa Status: ready -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fileperms">
+ <refnamediv>
+  <refname>fileperms</refname>
+  <refpurpose>ファイルのパーミッションを取得する</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>fileperms</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   指定したファイルのパーミッションを取得します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filename</parameter></term>
+     <listitem>
+      <para>
+       ファイルへのパス。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   ファイルのパーミッションを数値モードで返します。このモードの下位ビットは
+   <function>chmod</function> に渡すのと同じ形式です。
+   しかし、大半のプラットフォームでは、それだけではなく
+   <parameter>filename</parameter> のファイル形式に関する情報も含まれます。
+   以下の例で示すのは、ファイルのパーミッションやファイル形式を
+   POSIX システム (Linux や macOS など) で調べる方法です。
+  </para>
+  <para>
+   ローカルファイルの場合、その返り値は C ライブラリ関数 <function>stat</function>
+   が返す構造体の <literal>st_mode</literal> メンバーの値となります。
+   どのビットがセットされるかはプラットフォームによって異なるので、
+   パーミッション部分以外のビットをパースしたい場合は各プラットフォームのドキュメントを参照することをおすすめします。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>八進形式でのパーミッションの表示</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo substr(sprintf('%o', fileperms('/tmp')), -4);
+echo substr(sprintf('%o', fileperms('/etc/passwd')), -4);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+1777
+0644
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>完全なパーミッションの表示</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$perms = fileperms('/etc/passwd');
+
+switch ($perms & 0xF000) {
+    case 0xC000: // ソケット
+        $info = 's';
+        break;
+    case 0xA000: // シンボリックリンク
+        $info = 'l';
+        break;
+    case 0x8000: // 通常のファイル
+        $info = 'r';
+        break;
+    case 0x6000: // ブロックスペシャルファイル
+        $info = 'b';
+        break;
+    case 0x4000: // ディレクトリ
+        $info = 'd';
+        break;
+    case 0x2000: // キャラクタスペシャルファイル
+        $info = 'c';
+        break;
+    case 0x1000: // FIFO パイプ
+        $info = 'p';
+        break;
+    default: // 不明
+        $info = 'u';
+}
+
+// 所有者
+$info .= (($perms & 0x0100) ? 'r' : '-');
+$info .= (($perms & 0x0080) ? 'w' : '-');
+$info .= (($perms & 0x0040) ?
+            (($perms & 0x0800) ? 's' : 'x' ) :
+            (($perms & 0x0800) ? 'S' : '-'));
+
+// グループ
+$info .= (($perms & 0x0020) ? 'r' : '-');
+$info .= (($perms & 0x0010) ? 'w' : '-');
+$info .= (($perms & 0x0008) ?
+            (($perms & 0x0400) ? 's' : 'x' ) :
+            (($perms & 0x0400) ? 'S' : '-'));
+
+// 全体
+$info .= (($perms & 0x0004) ? 'r' : '-');
+$info .= (($perms & 0x0002) ? 'w' : '-');
+$info .= (($perms & 0x0001) ?
+            (($perms & 0x0200) ? 't' : 'x' ) :
+            (($perms & 0x0200) ? 'T' : '-'));
+
+echo $info;
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+-rw-r--r--
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.clearstatcache;
+  &tip.fopen-wrapper.stat;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>chmod</function></member>
+    <member><function>is_readable</function></member>
+    <member><function>stat</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

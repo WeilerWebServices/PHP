@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 329237 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="reflectionclass.getdefaultproperties" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>ReflectionClass::getDefaultProperties</refname>
+  <refpurpose>Récupère les propriétés par défaut</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>array</type><methodname>ReflectionClass::getDefaultProperties</methodname>
+   <void />
+  </methodsynopsis>
+  <para>
+   Récupère les propriétés par défaut d'une classe (incluant les propriétés héritées).
+  </para>
+  <note>
+   <para>
+    Cette méthode fonctionne uniquement pour les propriétés statiques lorsqu'utilisées sur des classes internes.
+    La valeur par défaut d'une propriété de classe statique
+    ne peut pas être surveillée lors de l'utilisation de cette méthode sur des
+    classes définies par l'utilisateur.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Un &array; des propriétés par défaut dont la clé est le nom de la 
+   propriété et la valeur est la valeur par défaut de la propriété ou &null;
+   si la propriété n'a pas de valeur par défaut.
+   La fonction ne fait pas la distinction entre les propriétés statiques et
+   non statiques et ne prend pas en compte la visibilité.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <methodname>ReflectionClass::getDefaultProperties</methodname></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Bar {
+    protected $inheritedProperty = 'inheritedDefault';
+}
+
+class Foo extends Bar {
+    public $property = 'propertyDefault';
+    private $privateProperty = 'privatePropertyDefault';
+    public static $staticProperty = 'staticProperty';
+    public $defaultlessProperty;
+}
+
+$reflectionClass = new ReflectionClass('Foo');
+var_dump($reflectionClass->getDefaultProperties());
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+array(5) {
+   ["staticProperty"]=>
+   string(14) "staticProperty"
+   ["property"]=>
+   string(15) "propertyDefault"
+   ["privateProperty"]=>
+   string(22) "privatePropertyDefault"
+   ["defaultlessProperty"]=>
+   NULL
+   ["inheritedProperty"]=>
+   string(16) "inheritedDefault"
+}
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><methodname>ReflectionClass::getProperties</methodname></member>
+    <member><methodname>ReflectionClass::getStaticProperties</methodname></member>
+    <member><methodname>ReflectionClass::getProperty</methodname></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

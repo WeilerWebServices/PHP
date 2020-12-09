@@ -1,0 +1,1112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351112 Maintainer: sergey Status: ready -->
+<!-- Reviewed: no -->
+
+<chapter xml:id="language.variables" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Переменные</title>
+ 
+ <sect1 xml:id="language.variables.basics">
+  <title>Основы</title>
+  
+  <simpara>
+   Переменные в PHP представлены знаком доллара с последующим
+   именем переменной. Имя переменной чувствительно к регистру.
+  </simpara>
+  
+  <para>
+   Имена переменных соответствуют тем же правилам, что и
+   остальные наименования в PHP. Правильное имя переменной должно
+   начинаться с буквы или символа подчеркивания и состоять из
+   букв, цифр и символов подчеркивания в любом количестве.
+   Это можно отобразить регулярным выражением:
+   <code>^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$</code>
+  </para>
+  
+  <note>
+   <simpara>
+    Под буквами здесь подразумеваются символы a-z, A-Z и байты от
+    128 до 255 (<literal>0x80-0xff</literal>).
+   </simpara>
+  </note>
+  
+  <note>
+   <simpara>
+    <literal>$this</literal> - это специальная переменная, которой
+    нельзя ничего присваивать.
+    До PHP 7.1.0 было возможно косвенное присвоение (например, с использованием 
+    <link linkend="language.variables.variable">переменных переменных</link>)).
+   </simpara>
+  </note>
+  
+  &tip.userlandnaming;
+  
+  <para>
+   Для информации о функциях работы с переменными обращайтесь
+   к разделу
+   <link linkend="ref.var">функций работы с переменными</link>.
+  </para>
+  
+  <para>
+   <informalexample>
+    <programlisting role="php"> 
+<![CDATA[
+<?php
+$var = 'Боб';
+$Var = 'Джо';
+echo "$var, $Var";      // выведет "Боб, Джо"
+
+$4site = 'еще нет';     // неверно; начинается с цифры
+$_4site = 'еще нет';    // верно; начинается с символа подчеркивания
+$täyte = 'mansikka';    // верно; 'ä' это (Расширенный) ASCII 228.
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  
+  <para>
+   По умолчанию переменные всегда присваиваются по значению. То есть,
+   когда вы присваиваете выражение переменной, все значение
+   оригинального выражения копируется в эту переменную. Это
+   означает, к примеру, что после того как одной переменной присвоено
+   значение другой, изменение одной из них не влияет на
+   другую. Дополнительную информацию об этом способе присвоения
+   смотрите в разделе <link linkend="language.expressions">Выражения</link>.
+  </para>
+  <para>
+   PHP также предлагает иной способ присвоения значений переменным:
+   <link linkend="language.references">присвоение по ссылке</link>. 
+   Это означает, что новая переменная просто ссылается (иначе говоря,
+   "становится псевдонимом" или "указывает") на оригинальную
+   переменную. Изменения в новой переменной отражаются на оригинале,
+   и наоборот.
+  </para>
+  <para>
+   Для присвоения по ссылке, просто добавьте амперсанд (&amp;) к
+   началу имени присваиваемой (исходной) переменной. Например,
+   следующий фрагмент кода дважды выводит '<literal>Меня зовут Боб</literal>':
+   
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$foo = 'Боб';              // Присваивает $foo значение 'Боб'
+$bar = &$foo;              // Ссылка на $foo через $bar.
+$bar = "Меня зовут $bar";  // Изменение $bar...
+echo $bar;
+echo $foo;                 // меняет и $foo.
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  
+  <para>
+   Важно отметить, что по ссылке могут быть присвоены только
+   именованные переменные.
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$foo = 25;
+$bar = &$foo;      // Это верное присвоение.
+$bar = &(24 * 7);  // Неверно; ссылка на неименованное выражение.
+
+function test()
+{
+   return 25;
+}
+
+$bar = &test();    // Неверно.
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  
+  <para>
+   Хорошей практикой считается инициализировать переменные, хотя в PHP 
+   это и не является обязательным требованием. Неинициализированные переменные
+   принимают значение по умолчанию в зависимости от их типа, который
+   определяется из контекста их первого использования: булевы
+   принимают значение &false;, целые числа и числа с плавающей точкой -
+   ноль, строки (например, при использовании в <function>echo</function>)
+   - пустую строку, а массивы становятся пустыми массивами.
+  </para>
+  <para>
+   <example>
+    <title>Значения по умолчанию в неинициализированных переменных</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Неустановленная И не имеющая ссылок (то есть без контекста использования) переменная; выведет NULL
+var_dump($unset_var);
+
+// Булевое применение; выведет 'false' (Подробнее по этому синтаксису смотрите раздел о тернарном операторе)
+echo($unset_bool ? "true\n" : "false\n");
+
+// Строковое использование; выведет 'string(3) "abc"'
+$unset_str .= 'abc';
+var_dump($unset_str);
+
+// Целочисленное использование; выведет 'int(25)'
+$unset_int += 25; // 0 + 25 => 25
+var_dump($unset_int);
+
+// Использование в качестве числа с плавающей точкой (float/double); выведет 'float(1.25)'
+$unset_float += 1.25;
+var_dump($unset_float);
+
+// Использование в качестве массива; выведет array(1) {  [3]=>  string(3) "def" }
+$unset_arr[3] = "def"; // array() + array(3 => "def") => array(3 => "def")
+var_dump($unset_arr);
+
+// Использование в качестве объекта; создает новый объект stdClass (см. http://www.php.net/manual/ru/reserved.classes.php)
+// Выведет: object(stdClass)#1 (1) {  ["foo"]=>  string(3) "bar" }
+$unset_obj->foo = 'bar';
+var_dump($unset_obj);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Полагаться на значения по умолчанию неинициализированных переменных
+   довольно проблематично при включении файла в другой файл,
+   использующий переменную с таким же именем. Это также большой 
+   <link linkend="security.globals">риск в системе безопасности</link> при
+   включенной опции <link linkend="ini.register-globals">register_globals</link>.
+   В случае работы с неинициализированной переменной вызывается ошибка уровня
+   <link linkend="errorfunc.constants.errorlevels.e-notice">E_NOTICE</link>,
+   за исключением случая добавления элементов в неинициализированный массив.
+   Для обнаружения инициализации переменной может быть использована
+   языковая конструкция <function>isset</function>.
+  </para>
+ </sect1>
+ 
+ <sect1 xml:id="language.variables.predefined">
+  <title>Предопределенные переменные</title>
+  
+  <para>
+   Любому запускаемому скрипту PHP предоставляет большое количество
+   предопределенных переменных. Однако многие из этих переменных не
+   могут быть полностью задокументированы, поскольку они зависят от
+   запускающего скрипт сервера, его версии и настроек, а также других факторов.
+   Некоторые из этих переменных недоступны, когда PHP запущен из
+   <link linkend="features.commandline">командной строки</link>.
+   Перечень этих переменных смотрите в разделе
+   <link linkend="reserved.variables">Зарезервированные
+    предопределенные переменные</link>.
+  </para>
+  
+  <para>
+   PHP предоставляет дополнительный набор
+   предопределенных массивов, содержащих переменные сервера (если
+   они доступны), окружения и пользовательского ввода. Эти 
+   массивы являются особыми, поскольку они становятся глобальными автоматически
+   - то есть, автоматически доступны в любой области видимости. По этой
+   причине они также известны как 'автоглобальные' или 'суперглобальные'
+   переменные. (В PHP нет механизма определяемых пользователем
+   суперглобальных переменных.) О суперглобальных переменных можно
+   прочитать <link linkend="language.variables.superglobals">здесь</link>; 
+   однако, перечисление их содержимого и дальнейшее обсуждение
+   предопределенных переменных PHP и их сути смотрите в разделе
+   <link linkend="reserved.variables">Зарезервированные
+    предопределенные переменные</link>.
+  </para>
+  
+  <note>
+   <title>Переменные переменных</title>
+   <para>
+    Суперглобальные переменные не могут быть
+    <link linkend="language.variables.variable">переменными переменных</link>
+    внутри функций или методов класса.
+   </para>
+  </note>
+  
+  <para>
+   Если некоторые из переменных в
+   <link linkend="ini.variables-order">variables_order</link> не установлены,
+   соответствующие им предопределенные массивы также останутся пустыми.
+  </para>
+ </sect1>
+ 
+ 
+ <sect1 xml:id="language.variables.scope">
+  <title>Область видимости переменной</title>
+  
+  <simpara>
+   Область видимости переменной - это контекст, в котором эта переменная определена.
+   В большинстве случаев все переменные PHP имеют только одну область
+   видимости. Эта единая область видимости охватывает также
+   включаемые (include) и требуемые (require) файлы. Например:
+  </simpara>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$a = 1;
+include 'b.inc';
+?>
+]]>
+   </programlisting>
+  </informalexample>
+  <simpara>
+   Здесь переменная <varname>$a</varname> будет доступна внутри
+   включенного скрипта <filename>b.inc</filename>. Однако определение (тело)
+   пользовательской функции задает локальную область видимости данной функции. 
+   Любая используемая внутри функции переменная
+   по умолчанию ограничена локальной областью видимости функции.
+   Например:
+  </simpara>
+  
+  <informalexample>
+   <programlisting role="php"> 
+<![CDATA[
+<?php
+$a = 1; /* глобальная область видимости */ 
+
+function test()
+{ 
+    echo $a; /* ссылка на переменную в локальной области видимости */ 
+} 
+
+test();
+?>
+]]>
+   </programlisting>
+  </informalexample>
+  
+  <simpara>
+   Этот скрипт не сгенерирует никакого вывода, поскольку выражение
+   echo указывает на локальную версию переменной
+   <varname>$a</varname>, а в пределах этой области видимости ей
+   не было присвоено значение. Возможно вы заметили, что это немного
+   отличается от языка C в том, что глобальные переменные в C
+   автоматически доступны функциям, если только они не были
+   перезаписаны локальным определением. Это может вызвать некоторые
+   проблемы, поскольку люди могут нечаянно изменить глобальную
+   переменную. В PHP, если глобальная переменная будет использоваться
+   внутри функции, она должна быть объявлена глобальной внутри определения функции.
+  </simpara>
+  
+  <sect2 xml:id="language.variables.scope.global">
+   <title>Ключевое слово <literal>global</literal></title>
+   <simpara>
+    Сначала пример использования <literal>global</literal>:
+   </simpara>
+   <para>
+    <example>
+     <title>Использование <literal>global</literal></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = 1;
+$b = 2;
+
+function Sum()
+{
+    global $a, $b;
+
+    $b = $a + $b;
+} 
+
+Sum();
+echo $b;
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   
+   <simpara>
+    Вышеприведенный скрипт выведет <literal>3</literal>. После определения
+    <varname>$a</varname> и <varname>$b</varname> внутри функции как
+    global все ссылки на любую из этих переменных будут указывать на
+    их глобальную версию. Не существует никаких ограничений на
+    количество глобальных переменных, которые могут обрабатываться
+    функцией.
+   </simpara>
+   
+   <simpara>
+    Второй способ доступа к переменным глобальной области видимости -
+    использование специального, определяемого PHP массива
+    <varname>$GLOBALS</varname>. Предыдущий пример может быть переписан
+    так:
+   </simpara>
+   <para>
+    <example>
+     <title>Использование <varname>$GLOBALS</varname> вместо global</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = 1;
+$b = 2;
+
+function Sum()
+{
+    $GLOBALS['b'] = $GLOBALS['a'] + $GLOBALS['b'];
+} 
+
+Sum();
+echo $b;
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   
+   <simpara>
+    <varname>$GLOBALS</varname> - это ассоциативный массив, ключом
+    которого является имя, а значением - содержимое глобальной
+    переменной. Обратите внимание, что <varname>$GLOBALS</varname>
+    существует в любой области видимости, это объясняется тем, что
+    <varname>$GLOBALS</varname> является 
+    <link linkend="language.variables.superglobals">суперглобальным</link>.
+    Ниже приведен пример, демонстрирующий возможности
+    суперглобальных переменных:
+   </simpara>
+   <para>
+    <example>
+     <title>Суперглобальные переменные и область видимости</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function test_superglobal()
+{
+    echo $_POST['name'];
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <note>
+    <para>
+     Использование ключевого слова <literal>global</literal> вне
+     функции не является ошибкой. Оно может быть использовано в файле,
+     который включается внутри функции.
+    </para>
+   </note>
+  </sect2>
+  
+  <sect2 xml:id="language.variables.scope.static">
+   <title>Использование статических (<literal>static</literal>) переменных</title>
+   <simpara>
+    Другой важной особенностью области видимости переменной является
+    <emphasis>статическая</emphasis> переменная. Статическая
+    переменная существует только в локальной области видимости
+    функции, но не теряет своего значения, когда выполнение программы
+    выходит из этой области видимости. Рассмотрим следующий пример:
+   </simpara>
+   <para>
+    <example>
+     <title>Демонстрация необходимости статических переменных</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function test()
+{
+    $a = 0;
+    echo $a;
+    $a++;
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <simpara>
+    Эта функция довольно бесполезна, поскольку при каждом вызове она
+    устанавливает <varname>$a</varname> в <literal>0</literal> и
+    выводит <literal>0</literal>. Инкремент переменной <varname>$a</varname>++
+    здесь не играет роли, так как при выходе из функции переменная
+    <varname>$a</varname> исчезает. Чтобы написать полезную
+    функцию подсчета, которая не будет терять текущего значения счетчика,
+    переменная <varname>$a</varname> объявляется как static:
+   </simpara>
+   <para>
+    <example>
+     <title>Пример использования статических переменных</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function test()
+{
+    static $a = 0;
+    echo $a;
+    $a++;
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <simpara>
+    Теперь <varname>$a</varname> будет проинициализирована только при
+    первом вызове функции, а каждый вызов функции <literal>test()</literal>
+    будет выводить значение <varname>$a</varname> и инкрементировать его.
+   </simpara>
+   
+   <simpara>
+    Статические переменные также дают возможность работать с
+    рекурсивными функциями. Рекурсивной является функция, вызывающая
+    саму себя. При написании рекурсивной функции нужно быть
+    внимательным, поскольку есть вероятность сделать рекурсию
+    бесконечной. Вы должны убедиться, что существует адекватный
+    способ завершения рекурсии. Следующая простая функция рекурсивно
+    считает до 10, используя для определения момента остановки
+    статическую переменную <varname>$count</varname>:
+   </simpara>
+   <para>
+    <example>
+     <title>Статические переменные и рекурсивные функции</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function test()
+{
+    static $count = 0;
+
+    $count++;
+    echo $count;
+    if ($count < 10) {
+        test();
+    }
+    $count--;
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   
+   <para>
+    Статическим переменным можно присвоить значения, являющиеся
+    результатом выражения, но нельзя использовать для этого функцию, так это
+    вызовет ошибку разбора.
+   </para>
+   <para>
+    <example>
+     <title>Объявление статических переменных</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function foo() {
+    static $int = 0;          // верно
+    static $int = 1+2;        // верно
+    static $int = sqrt(121);  // неверно (поскольку это функция)
+
+    $int++;
+    echo $int;
+}
+?>
+]]>
+      </programlisting>
+     </example>
+   </para>
+   <note>
+    <para>
+     Статические объявления вычисляются во время компиляции скрипта.
+    </para>
+   </note>
+  </sect2>
+  
+  <sect2 xml:id="language.variables.scope.references">
+   <title>Ссылки с глобальными (<literal>global</literal>) и статическими (<literal>static</literal>) переменными</title>
+   <simpara>
+    PHP использует модификаторы переменных
+    <link linkend="language.variables.scope.static">static</link> и
+    <link linkend="language.variables.scope.global">global</link> как
+    <link linkend="language.references">ссылки</link>. Например, реальная
+    глобальная переменная, внедренная в область видимости функции указанием
+    ключевого слова <literal>global</literal>, в действительности создает
+    ссылку на глобальную переменную. Это может привести к неожиданному
+    поведению, как это показано в следующем примере:
+   </simpara>
+   
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function test_global_ref() {
+    global $obj;
+    $new = new stdclass;
+    $obj = &$new;
+}
+
+function test_global_noref() {
+    global $obj;
+    $new = new stdclass;
+    $obj = $new;
+}
+
+test_global_ref();
+var_dump($obj);
+test_global_noref();
+var_dump($obj);
+?>
+]]>
+    </programlisting>
+   </informalexample>
+   
+   &example.outputs;
+   
+   <screen>
+<![CDATA[
+NULL
+object(stdClass)#1 (0) {
+}
+]]>
+   </screen>
+   
+   <simpara>
+    Аналогично ведет себя и выражение <literal>static</literal>. Ссылки не
+    хранятся статично:
+   </simpara>
+   
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function &get_instance_ref() {
+    static $obj;
+
+    echo 'Статический объект: ';
+    var_dump($obj);
+    if (!isset($obj)) {
+        $new = new stdclass;
+        // Присвоить ссылку статической переменной
+        $obj = &$new;
+    }
+    if (!isset($obj->property)) {
+        $obj->property = 1;
+    } else {
+        $obj->property++;
+    }
+    return $obj;
+}
+
+function &get_instance_noref() {
+    static $obj;
+
+    echo 'Статический объект: ';
+    var_dump($obj);
+    if (!isset($obj)) {
+        $new = new stdclass;
+        // Присвоить объект статической переменной
+        $obj = $new;
+    }
+    if (!isset($obj->property)) {
+        $obj->property = 1;
+    } else {
+        $obj->property++;
+    }
+    return $obj;
+}
+
+$obj1 = get_instance_ref();
+$still_obj1 = get_instance_ref();
+echo "\n";
+$obj2 = get_instance_noref();
+$still_obj2 = get_instance_noref();
+?>
+]]>
+    </programlisting>
+   </informalexample>
+   &example.outputs;
+   <screen>
+<![CDATA[
+Статический объект: NULL
+Статический объект: NULL
+
+Статический объект: NULL
+Статический объект: object(stdClass)#3 (1) {
+  ["property"]=>
+  int(1)
+}
+]]>
+   </screen>
+   
+   <simpara>
+    Этот пример демонстрирует, что при присвоении ссылки статической
+    переменной она не <emphasis>запоминается</emphasis>, когда вы
+    вызываете функцию <literal>&amp;get_instance_ref()</literal> во
+    второй раз.
+   </simpara>
+  </sect2>
+ </sect1>
+ 
+ <sect1 xml:id="language.variables.variable">
+  <title>Переменные переменных</title>
+  
+  <simpara>
+   Иногда бывает удобно иметь переменными имена переменных. То есть,
+   имя переменной, которое может быть определено и изменено
+   динамически. Обычная переменная определяется примерно таким
+   выражением:
+  </simpara>
+  
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$a = 'hello';
+?>
+]]>
+   </programlisting>
+  </informalexample>
+  
+  <simpara>
+   Переменная переменной берет значение переменной и рассматривает
+   его как имя переменной. В вышеприведенном примере
+   <emphasis>hello</emphasis> может быть использовано как имя
+   переменной при помощи двух знаков доллара. То есть:
+  </simpara>
+  
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$$a = 'world';
+?>
+]]>
+   </programlisting>
+  </informalexample>
+  
+  <simpara>
+   Теперь в дереве символов PHP определены и содержатся две
+   переменные: <varname>$a</varname>, содержащая "hello" и
+   <varname>$hello</varname>, содержащая "world". Таким образом,
+   выражение
+  </simpara>
+  
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+echo "$a ${$a}";
+?>
+]]>
+   </programlisting>
+  </informalexample>
+  
+  <simpara>
+   выведет то же, что и
+  </simpara>
+  
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+echo "$a $hello";
+?>
+]]>
+   </programlisting>
+  </informalexample>
+  
+  <simpara>
+   то есть, они оба выведут: <computeroutput>hello world</computeroutput>.
+  </simpara>
+  
+  <simpara>
+   Для того чтобы использовать переменные переменных с массивами, вы должны решить
+   проблему двусмысленности. То есть, если вы напишете <varname>$$a[1]</varname>,
+   обработчику необходимо знать, хотите ли вы использовать <varname>$a[1]</varname> в
+   качестве переменной, либо вам нужна как переменная <varname>$$a</varname>, а затем
+   ее индекс [1]. Синтаксис для разрешения этой двусмысленности таков: <varname>${$a[1]}
+   </varname> для первого случая и <varname>${$a}[1]</varname> для второго.
+  </simpara>
+  
+  <simpara>
+   К свойствам класса также можно получить доступ динамически. Переменное имя свойства
+   будет разрешено в том контексте, в котором произойдет вызов к нему. Например, в случае
+   выражения <varname>$foo->$bar</varname>, локальная область видимости будет
+   просканирована на наличие переменной <varname>$bar</varname>, значение которой
+   будет использовано в качестве имени свойства объекта <varname>$foo</varname>.
+   Это также работает и в том случае, если <varname>$bar</varname> осуществляет доступ
+   к элементу массива.
+  </simpara>
+  
+  <simpara>
+   Фигурные скобки могут также использоваться, чтобы четко разграничить имя
+   свойства. Они наиболее полезны при получении доступа к значениям внутри свойства,
+   которое содержит массив, когда имя свойства состоит из нескольких частей,
+   либо когда имя свойства содержит символы, которые иначе не
+   действительны (например, из функции <function>json_decode</function>
+   или из <link linkend="book.simplexml">SimpleXML</link>).
+  </simpara>
+  
+  <para>
+   <example>
+    <title>Пример переменного имени свойства</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class foo {
+    var $bar = 'I am bar.';
+    var $arr = array('I am A.', 'I am B.', 'I am C.');
+    var $r   = 'I am r.';
+}
+
+$foo = new foo();
+$bar = 'bar';
+$baz = array('foo', 'bar', 'baz', 'quux');
+echo $foo->$bar . "\n";
+echo $foo->{$baz[1]} . "\n";
+
+$start = 'b';
+$end   = 'ar';
+echo $foo->{$start . $end} . "\n";
+
+$arr = 'arr';
+echo $foo->{$arr[1]} . "\n";
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+     I am bar.
+     I am bar.
+     I am bar.
+     I am r.
+    </screen>
+   </example>
+  </para>
+  
+  <warning>
+   <simpara>
+    Обратите внимание, что переменные переменных не могут
+    использоваться с
+    <link linkend="language.variables.superglobals">cуперглобальными массивами</link>
+    PHP. Переменная <literal>$this</literal> также является особой, на нее
+    нельзя ссылаться динамически.
+   </simpara>
+  </warning>
+  
+ </sect1>
+ 
+ <sect1 xml:id="language.variables.external">
+  <title>Переменные извне PHP</title>
+  
+  <sect2 xml:id="language.variables.external.form">
+   <title>HTML-формы (GET и POST)</title>
+   
+   <simpara>
+    Когда происходит отправка данных формы PHP-скрипту, информация из
+    этой формы автоматически становится доступной ему. Существует
+    несколько способов получения этой информации, например:
+   </simpara>
+   
+   <para>
+    <example>
+     <title>Простая HTML-форма</title>
+     <programlisting role="html">
+<![CDATA[
+<form action="foo.php" method="post">
+    Имя:  <input type="text" name="username" /><br />
+    Email: <input type="text" name="email" /><br />
+    <input type="submit" name="submit" value="Отправь меня!" />
+</form>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   
+   <para>
+    Есть только два способа получить доступ к данным из форм HTML.
+    Доступные сейчас способы приведены ниже:
+   </para>
+   
+   <para>
+    <example>
+     <title>Доступ к данным из простой HTML-формы, отправленной через POST</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+echo $_POST['username'];
+echo $_REQUEST['username'];
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   
+   <para>
+    GET-форма используется аналогично, за исключением того, что вместо
+    POST, вам нужно будет использовать соответствующую предопределенную
+    переменную GET. GET относится также к <literal>QUERY_STRING</literal>
+    (информация в URL после '?'). Так, например,
+    <literal>http://www.example.com/test.php?id=3</literal> содержит
+    GET-данные, доступные как <varname>$_GET['id']</varname>. Смотрите
+    также <varname>$_REQUEST</varname>.
+   </para>
+   
+   <note>
+    <para>
+     Точки и пробелы в именах переменных преобразуется в знаки
+     подчеркивания. Например, <literal>&lt;input name="a.b" /&gt;</literal> станет
+     <literal>$_REQUEST["a_b"]</literal>.
+    </para>
+   </note>
+   
+   <simpara>
+    PHP также понимает массивы в контексте переменных формы
+    (смотрите <link linkend="faq.html">соответствующие ЧАВО</link>).
+    К примеру, вы можете сгруппировать связанные переменные вместе
+    или использовать эту возможность для получения значений списка
+    множественного выбора select. Например, давайте отправим форму
+    самой себе, а после отправки отобразим данные:
+   </simpara>
+   
+   <para>
+    <example>
+     <title>Более сложные переменные формы</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+if ($_POST) {
+    echo '<pre>';
+    echo htmlspecialchars(print_r($_POST, true));
+    echo '</pre>';
+}
+?>
+<form action="" method="post">
+    Имя:  <input type="text" name="personal[name]" /><br />
+    Email: <input type="text" name="personal[email]" /><br />
+    Пиво: <br />
+    <select multiple name="beer[]">
+        <option value="warthog">Warthog</option>
+        <option value="guinness">Guinness</option>
+        <option value="stuttgarter">Stuttgarter Schwabenbräu</option>
+    </select><br />
+    <input type="submit" value="Отправь меня!" />
+</form>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   
+   <note>
+    <simpara>
+     Если внешнее имя переменной начинается с корректного синтаксиса массива,
+     завершающие символы молча игнорируются.
+     Например, <literal>&lt;input name="foo[bar]baz"&gt;</literal>
+     becomes <literal>$_REQUEST['foo']['bar']</literal>.
+    </simpara>
+   </note>
+   
+   <sect3 xml:id="language.variables.external.form.submit">
+    <title>Имена переменных кнопки-изображения</title>
+    
+    <simpara>
+     При отправке формы вместо стандартной кнопки можно использовать
+     изображение с помощью тега такого вида:
+    </simpara>
+    
+    <informalexample>
+     <programlisting role="html">
+<![CDATA[
+<input type="image" src="image.gif" name="sub" />
+]]>
+     </programlisting>
+    </informalexample>
+    
+    <simpara>
+     Когда пользователь щелкнет где-нибудь на изображении,
+     соответствующая форма будет передана на сервер с двумя
+     дополнительными переменными - <varname>sub_x</varname> и <varname>sub_y</varname>.
+     Они содержат координаты нажатия пользователя на изображение. Опытные
+     программисты могут заметить, что на самом деле имена переменных,
+     отправленных браузером, содержат точку, а не подчеркивание, но
+     PHP автоматически преобразует точку в подчеркивание.
+    </simpara>
+   </sect3>
+   
+  </sect2>
+  
+  <sect2 xml:id="language.variables.external.cookies">
+   <title>HTTP Cookies</title>
+   
+   <simpara>
+    PHP прозрачно поддерживает HTTP cookies как определено в <link
+    xlink:href="&url.rfc;6265">RFC 6265</link>. Cookies - это
+    механизм для хранения данных в удаленном браузере и, таким образом, отслеживание и
+    идентификации вернувшихся пользователей. Вы можете
+    установить cookies, используя функцию <function>setcookie</function>.
+    Cookies являются частью HTTP-заголовка, поэтому функция SetCookie
+    должна вызываться до того, как браузеру будет отправлен какой бы то
+    ни было вывод. Это то же ограничение, что и для функции
+    <function>header</function>. Данные, хранящиеся в cookie, доступны
+    в соответствующих массивах данных cookie, таких как
+    <varname>$_COOKIE</varname> и <varname>$_REQUEST</varname>. Подробности и примеры
+    смотрите в справочной странице <function>setcookie</function>.
+   </simpara>
+   
+   <note>
+    <simpara>
+     Начиная с PHP 7.2.34, 7.3.23 и 7.4.11, соответственно, <emphasis>имена</emphasis> 
+     входящих cookie больше не декодируются из URL-закодированной строки из соображений безопасности.
+    </simpara>
+   </note>
+   
+   <simpara>
+    Если вы хотите присвоить множество значений одной переменной cookie,
+    вы можете присвоить их как массив. Например:
+   </simpara>
+   
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+  setcookie("MyCookie[foo]", 'Testing 1', time()+3600);
+  setcookie("MyCookie[bar]", 'Testing 2', time()+3600);
+?>
+]]>
+    </programlisting>
+   </informalexample>
+   
+   <simpara>
+    Это создаст две разные cookie, хотя в вашем скрипте <varname>MyCookie</varname> будет
+    теперь одним массивом. Если вы хотите установить именно одну cookie 
+    со множеством значений, сначала рассмотрите возможность использования к
+    значениям такие функции, как <function>serialize</function> или
+    <function>explode</function>.
+   </simpara>
+   
+   <simpara>
+    Обратите внимание, что cookie заменит предыдущую cookie с тем же
+    именем в вашем браузере, если только путь или домен не отличаются.
+    Так, для приложения корзины покупок вы, возможно, захотите
+    сохранить счетчик. То есть:
+   </simpara>
+   
+   <example>
+    <title>Пример использования <function>setcookie</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+if (isset($_COOKIE['count'])) {
+    $count = $_COOKIE['count'] + 1;
+} else {
+    $count = 1;
+}
+setcookie('count', $count, time()+3600);
+setcookie("Cart[$count]", $item, time()+3600);
+?>
+]]>
+    </programlisting>
+   </example>
+   
+  </sect2>
+  
+  <sect2 xml:id="language.variables.external.dot-in-names">
+   <title>Точки в именах приходящих переменных</title>
+   
+   <para>
+    Как правило, PHP не меняет передаваемых скрипту имен переменных.
+    Однако следует отметить, что точка не является корректным
+    символом в имени переменной PHP. Поэтому рассмотрим такую запись:
+    <programlisting role="php">
+<![CDATA[
+<?php
+$varname.ext;  /* неверное имя переменной */
+?>
+]]>
+    </programlisting>
+    В данном случае интерпретатор видит переменную
+    <varname>$varname</varname>, после которой идет оператор
+    конкатенации, а затем голая строка (то есть, не заключенная в
+    кавычки строка, не соответствующая ни одному из ключевых или
+    зарезервированных слов) 'ext'. Очевидно, что это не даст
+    ожидаемого результата.
+   </para>
+   
+   <para>
+    По этой причине важно отметить, что PHP будет автоматически
+    заменять любые точки в именах, приходящих переменных на символы
+    подчеркивания.
+   </para>
+   
+  </sect2>
+  
+  <sect2 xml:id="language.variables.determining-type-of">
+   <title>Определение типов переменных</title>
+   
+   <para>
+    Поскольку PHP определяет типы переменных и преобразует их (как правило) по мере необходимости,
+    не всегда очевидно, какой тип имеет данная переменная в любой момент времени. PHP
+    содержит несколько функций, позволяющих определить тип
+    переменной, таких как: <function>gettype</function>,
+    <function>is_array</function>, <function>is_float</function>,
+    <function>is_int</function>, <function>is_object</function> и
+    <function>is_string</function>. Смотрите также раздел
+    <link linkend="language.types">Типы</link>.
+   </para>
+   <para>
+    HTTP является текстовым протоколом, и большинство, если не всё, содержимое,
+    которое приходит в <link linkend="language.variables.superglobals">cуперглобальные массивы</link>,
+    например <varname>$_POST</varname> и <varname>$_GET</varname>, останется в виде строк.
+    PHP не будет преобразовывать значения в определенный тип.
+    В приведенном ниже примере <varname>$_GET["var1"]</varname>
+    будет содержать строку "null", а <varname>$_GET["var2"]</varname> строку "123".
+    <programlisting>
+<![CDATA[
+/index.php?var1=null&var2=123
+]]>
+    </programlisting>
+   </para>
+  </sect2>
+  
+  <sect2 xml:id="language.variables.external.changelog">
+   &reftitle.changelog;
+   
+   <para>
+    <informaltable>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>&Version;</entry>
+        <entry>&Description;</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>7.2.34, 7.3.23, 7.4.11</entry>
+        <entry>
+         <emphasis>имена</emphasis> входящих cookie больше не декодируются 
+         из URL-закодированной строки из соображений безопасности.
+        </entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </informaltable>
+   </para>
+  </sect2>
+  
+ </sect1>
+ 
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

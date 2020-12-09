@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.15 $ -->
+<classentry id="gtk.gtkbutton">
+ <classmeta>
+  <classtitle>GtkButton</classtitle>
+  <classparent>GtkBin</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkbutton.png" frame="no"/>
+  <shortdesc>
+    A pushbutton widget that issues a signal when clicked.
+  </shortdesc>
+  <desc>
+   <para>
+    The <classname>GtkButton</classname> widget is usually displayed as a
+    pushbutton with a text label, <classname>GtkLabel</classname>, although it
+    can contain any valid widget. The <literal>GtkButton</literal> is generally
+    used to attach a callback function or method that is called when the button
+    is clicked.
+    </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkbutton.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkButton</function></funcdef>
+    <paramdef><enumname>string</enumname> <parameter>label</parameter></paramdef>
+    <paramdef><enumname>boolean</enumname> <parameter>use_underline</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new button widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new <classname>GtkButton</classname> widget, the content of
+     which is dependant on the parameters <parameter>label</parameter> and
+     <parameter>use_underline</parameter>. The default values are
+     <literal>null</literal> and <literal>true</literal> respectively.
+    </para>
+    <para>
+     <parameter>label</parameter> is the text to be displayed in the button.
+     If you want to display anything other than a
+     <classname>GtkLabel</classname> in the button, create the button without
+     passing any parameters and add the widget at a later stage.
+    </para>
+    <para>
+     <parameter>use_underline</parameter>, if <literal>true</literal>, means
+     that an underscore in the label text will flag the next character as
+     the mnemonic accelerator key, if it is the first character so marked. This
+     is the default behaviour in PHP-GTK 2; you can switch it off by passing
+     <literal>0</literal> or <literal>false</literal> as the second parameter.
+    </para>
+    <para>
+     The mnemonic character is used as the keyboard accelerator for the button
+     when pressed simultaneously with the <literal>Alt</literal> key.
+    </para>
+    <example>
+     <title>A button example</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkbutton/gtkbutton.php" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkbutton.constructor.new_from_stock">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkButton::new_from_stock</function></funcdef>
+    <paramdef>string <parameter>stock_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a <classname>GtkButton</classname> from stock.
+   </shortdesc>
+   <desc>
+    <para>
+     This method creates a new button with an image and label from stock. See
+     <enumname>GtkStockItems</enumname> for a list of options available.
+    </para>
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </constructor>
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkbutton.method.clicked">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>clicked</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emits the "clicked" signal to the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to emit the 
+     <signalname class="GtkButton">clicked</signalname> signal 
+     to the button.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.enter">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>enter</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emits the "enter" signal to the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to emit the 
+     <signalname class="GtkButton">enter</signalname> signal 
+     to the button.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.get_alignment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_alignment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Returns the xalign and the yalign properties.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to return the values of the 
+     <fieldname class="GtkButton">xalign</fieldname> and 
+     <fieldname class="GtkButton">yalign</fieldname> properties.
+     See the <function class="GtkButton">set_alignment</function> method 
+     for more information.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">set_alignment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.get_focus_on_click">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_focus_on_click</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the value of the "focus-on-click" property.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to return the value of the 
+     <fieldname class="GtkButton">focus-on-click</fieldname> property.
+     If <literal>true</literal>, the button grabs focus when it is 
+     clicked by the mouse.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">set_focus_on_click</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.get_image">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkWidget <function>get_image</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the widget set as the image for the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to retrieve the widget that is currently set as the image
+     for the button. The image may have been explicitly set using 
+     <function class="GtkButton">set_image</function> or 
+     <function class="GtkButton">new_from_stock</function>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">set_image</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.get_label">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_label</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retrieves the text from the button label.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to retrieve the text from the label of the button, 
+     as set by <function class="GtkButton">set_label</function> or by the 
+     <classname>GtkButton</classname> constructor. This string is owned by 
+     the widget and must not be modified or freed. If the label text has 
+     not been set the return value will be null. This will be the case if 
+     you create an empty button with <classname>GtkButton</classname> to use 
+     as a container.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">set_label</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.get_relief">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkReliefStyle <function>get_relief</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retrieves the current relief style.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to retrieve the current relief style 
+     set for the button as specified by its 
+     <fieldname class="GtkButton">relief</fieldname> property.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">set_relief</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.get_use_stock">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_use_stock</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the "use_stock" property.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to return the value of the 
+     <fieldname class="GtkButton">use_stock</fieldname> property.
+     If <literal>true</literal>, the button label is used to select 
+     a stock item instead of being used directly as the label text.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">set_use_stock</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.get_use_underline">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_use_underline</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the "use_underline" property.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to return the 
+     <fieldname class="GtkButton">use_underline</fieldname>
+     property. If <literal>true</literal>, an underscore in
+     the button label indicates a mnemonic.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">set_use_underline</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.leave">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>leave</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emits the "leave" signal to the button.
+   </shortdesc>
+   <desc>
+    <para>
+    Use this method to emit the 
+    <signalname class="GtkButton">leave</signalname> signal to 
+    the button.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.pressed">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>pressed</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emits the "pressed" signal to the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to emit the 
+     <signalname class="GtkButton">pressed</signalname>
+     signal to the button.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.released">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>released</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emits the "released" signal to the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to emit the
+     <signalname class="GtkButton">released</signalname> 
+     signal to the button.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.set_alignment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_alignment</function></funcdef>
+     <paramdef>double <parameter>xalign</parameter></paramdef>
+     <paramdef>double <parameter>yalign</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the "xalign" and "yalign" properties.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the "xalign" and "yalign" properties 
+     to the value of parameters <literal>xalign</literal> and 
+     <literal>yalign</literal> respectively. This property has 
+     no effect unless the child is a <classname>GtkMisc</classname>
+     or a <classname>GtkAlignment</classname>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">get_alignment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.set_focus_on_click">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_focus_on_click</function></funcdef>
+     <paramdef>bool <parameter>focus_on_click</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the "focus-on-click" property.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method  to set the 
+     <fieldname class="GtkButton">focus-on-click</fieldname> 
+     property to the value of the <literal>focus_on_click</literal>
+     parameter. If it is <literal>true</literal>, the button 
+     grabs focus when it is clicked by the mouse.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">get_focus_on_click</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.set_image">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_image</function></funcdef>
+     <paramdef>GtkWidget <parameter>image</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the widget as an image for the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the widget as an image for the button. You can use
+     this to display an image next to the label of the button.           
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">get_image</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.set_label">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_label</function></funcdef>
+     <paramdef>string <parameter>label</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the text of the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the text of the button label to
+     the parameter <literal>label</literal>. This also sets the
+     <fieldname class="GtkButton">label</fieldname>. This string 
+     is also used to select the stock item if the 
+     <fieldname class="GtkButton">use_stock</fieldname> property is 
+     <literal>true</literal> and the string references a stock item. 
+     Any previously set labels will be cleared.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">get_label</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.set_relief">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_relief</function></funcdef>
+     <paramdef>GtkReliefStyle <parameter>newstyle</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the current relief style of the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the current relief style for the button and also
+     set the <fieldname class="GtkButton">relief</fieldname> property. The
+     parameter <literal>newstyle</literal> must be one of those specified in 
+     <enumname>GtkReliefStyle</enumname>s.
+     The default is 
+     <optionname enum="GtkReliefStyle">Gtk::RELIEF_NORMAL</optionname>
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">get_relief</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.set_use_stock">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_use_stock</function></funcdef>
+     <paramdef>bool <parameter>stock</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the "use_stock" property.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the <fieldname class="GtkButton">use_stock</fieldname>
+     property of the button to the parameter <literal>stock</literal>.   
+     If <literal>use_stock</literal> is <literal>true</literal>, the label 
+     set on the button is used as a stock id to select the stock item 
+     for the button.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">get_use_stock</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkbutton.method.set_use_underline">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_use_underline</function></funcdef>
+     <paramdef>bool <parameter>underline</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the "use_underline" property.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the <fieldname class="GtkButton">use_underline</fieldname>
+     property of the button to the parameter <literal>underline</literal>.
+     If <literal>use_underline</literal> is <literal>true</literal>, an underscore 
+     in the text of the button label indicates that the next character should be 
+     underlined and used for the mnemonic accelerator key.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkButton">get_use_underline</function>
+    </para>
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkbutton.signal.activate">
+   <signalname>activate</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkButton <parameter>button</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the activate method is called.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the 
+     <function class="GtkWidget">activate</function> method is called.
+     For a button it causes the 
+     <signalname class="GtkButton">clicked</signalname> signal to 
+     be emitted.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkbutton.signal.clicked">
+   <signalname>clicked</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkButton <parameter>button</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the user clicks the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the user clicks the button and also when the
+     <signalname class="GtkButton">activate</signalname> signal is generated.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkbutton.signal.enter">
+   <signalname>enter</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkButton <parameter>button</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the mouse pointer enters the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the mouse pointer enters the button.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkbutton.signal.leave">
+   <signalname>leave</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkButton <parameter>button</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the mouse pointer leaves the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the mouse pointer leaves the button.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkbutton.signal.pressed">
+   <signalname>pressed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkButton <parameter>button</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the mouse button is pressed over the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the mouse button is pressed over the button.
+    </para>
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkbutton.signal.released">
+   <signalname>released</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkButton <parameter>button</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the mouse button is released over the button.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitted when the mouse button is released over the button. 
+    </para>
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

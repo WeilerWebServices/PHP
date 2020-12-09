@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 334824 Maintainer: takagi Status: ready -->
+
+<refentry xml:id="memcached.addserver" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>Memcached::addServer</refname>
+  <refpurpose>サーバーをサーバープールに追加する</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>bool</type><methodname>Memcached::addServer</methodname>
+   <methodparam><type>string</type><parameter>host</parameter></methodparam>
+   <methodparam><type>int</type><parameter>port</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>weight</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>Memcached::addServer</function> は、指定したサーバーをサーバープールに追加します。
+   この時点では、サーバーへの接続は確立されません。しかし、一貫性のあるキー分散オプションを
+   (<constant>Memcached::DISTRIBUTION_CONSISTENT</constant> あるいは
+   <constant>Memcached::OPT_LIBKETAMA_COMPATIBLE</constant> で) 指定した場合は、
+   内部データ構造のうちの一部が更新されます。
+   したがって、もし複数のサーバーを追加したい場合は、
+   <methodname>Memcached::addServers</methodname> を使用するほうがよいでしょう。
+   その場合、更新は一度しか発生しません。
+  </para>
+  <para>
+   同じサーバーがサーバープール内で複数回あらわれることもあります。
+   重複チェックはしていないからです。これは望ましい状態ではありません。
+   その代わりに <parameter>weight</parameter> オプションを使用して、
+   このサーバーを選択する重みを増やします。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>host</parameter></term>
+     <listitem>
+      <para>
+       memcache サーバーのホスト名。ホスト名が無効な場合は、データ関連の操作の結果コードに
+       <constant>Memcached::RES_HOST_LOOKUP_FAILURE</constant> が設定されます。
+       バージョン 2.0.0b1 以降では、このパラメータにソケットのパス
+       (<literal>/path/to/memcached.sock</literal> など) を指定すると、
+       UNIX ドメインソケットを使えるようになりました。
+       このとき、<parameter>port</parameter> には
+       <literal>0</literal> を設定する必要があります。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>port</parameter></term>
+     <listitem>
+      <para>
+       memcache が動作しているポート。通常、これは
+       <literal>11211</literal> となります。
+       バージョン 2.0.0b1 以降では、UNIX ドメインソケットを利用する際には
+       <literal>0</literal> を設定します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>weight</parameter></term>
+     <listitem>
+      <para>
+       プール内の全サーバーにおけるそのサーバーの重み。
+       これで、何か操作をしたときにそのサーバーが選択される確率を制御します。
+       これは、一貫性のある分散オプションを使っている場合にのみ使用でき、
+       通常はそのサーバー上で memcache が使用できるメモリの量に対応したものとなります。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>Memcached::addServer</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$m = new Memcached();
+
+/* 2 つのサーバーを追加し、2 番目のサーバーが
+   最初のサーバーの 2 倍の確率で選択されるようにします */
+$m->addServer('mem1.domain.com', 11211, 33);
+$m->addServer('mem2.domain.com', 11211, 67);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><methodname>Memcached::addServers</methodname></member>
+    <member><methodname>Memcached::resetServerList</methodname></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

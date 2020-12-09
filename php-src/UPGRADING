@@ -1,0 +1,84 @@
+PHP 8.1 UPGRADE NOTES
+
+1. Backward Incompatible Changes
+2. New Features
+3. Changes in SAPI modules
+4. Deprecated Functionality
+5. Changed Functions
+6. New Functions
+7. New Classes and Interfaces
+8. Removed Extensions and SAPIs
+9. Other Changes to Extensions
+10. New Global Constants
+11. Changes to INI File Handling
+12. Windows Support
+13. Other Changes
+14. Performance Improvements
+
+========================================
+1. Backward Incompatible Changes
+========================================
+
+========================================
+2. New Features
+========================================
+
+- hash:
+  . Added MurmurHash3 with streaming support. The following variants are implemented
+
+    - murmur3a, 32-bit hash
+    - murmur3c, 128-bit hash for x86
+    - murmur3f, 128-bit hash for x64
+
+========================================
+3. Changes in SAPI modules
+========================================
+
+========================================
+4. Deprecated Functionality
+========================================
+
+========================================
+5. Changed Functions
+========================================
+
+========================================
+6. New Functions
+========================================
+
+========================================
+7. New Classes and Interfaces
+========================================
+
+========================================
+8. Removed Extensions and SAPIs
+========================================
+
+========================================
+9. Other Changes to Extensions
+========================================
+
+- OpenSSL:
+  . The OpenSSL extension now requires at least OpenSSL version 1.0.2.
+
+========================================
+10. New Global Constants
+========================================
+
+========================================
+11. Changes to INI File Handling
+========================================
+
+========================================
+12. Windows Support
+========================================
+
+. The macro IGNORE_URL_WIN has been removed; it had no effect as of PHP 5.0.0.
+
+========================================
+13. Other Changes
+========================================
+
+========================================
+14. Performance Improvements
+========================================

@@ -1,0 +1,1059 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.16 $ -->
+<classentry id="gtk.gtkentry">
+ <classmeta>
+  <classtitle>GtkEntry</classtitle>
+  <classparent>GtkWidget</classparent>
+  <implements>GtkEditable</implements>
+  <implements>GtkCellEditable</implements>
+  <shortdesc>
+   A single line text entry field.
+  </shortdesc>
+  <desc>
+   <para>
+    <classname>GtkEntry</classname> is a single line text entry widget.
+    It is generally used when input is required from the user. A fairly
+    large set of key bindings are supported by default and have the
+    potential to be edited by the user. If the entered text is longer
+    than the allocation of the widget, the widget will scroll so that the
+    cursor position is visible.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+  <constructor id="gtk.gtkentry.constructor">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>GtkEntry</function></funcdef>
+     <paramdef>
+      string <parameter><optional>text</optional></parameter>
+     </paramdef>
+     <paramdef>
+      int <parameter><optional>max</optional></parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a single line text entry widget.
+   </shortdesc>
+   <desc>
+    <para>
+      Creates a widget that will hold a single line of text. You have the
+      freedom to either set the widget programatically through
+      <function class="GtkEntry">set_text</function> or have it entered
+      by the user.
+    </para>
+    <para>
+     If <parameter>text</parameter> is given, it will be set as the default
+     value for the widget. If <parameter>max</parameter> is given, it will be
+     set as the maximum allowed length of the widget's text value in
+     characters.
+    </para>
+    <example>
+     <title>
+      Retrieving text and echoing it using
+      <classname>GtkEntry</classname>
+      </title>
+      <programlisting role="php">
+       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkentry/constructor.phpw" parse="text">
+        <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+       </xi:include>
+      </programlisting>
+    </example>
+   </desc>
+  </constructor>
+ </constructors>
+
+
+ <methods>
+  <method id="gtk.gtkentry.method.append_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>append_text</function></funcdef>
+     <paramdef>string <parameter>text</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated;. Appends
+    text to the current text of the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+    <para>
+     Appends <parameter>text</parameter> to the current text value of the
+     entry.
+    </para>
+    <note>
+     <link linkend="appendix.glossary.d.deprecated">DEPRECATED</link>. This 
+     method should not be used in newly written code. Use <function
+     class="GtkEntry">get_text</function> and <function class="GtkEntry">set_text</function> instead. 
+    </note>
+    <para>
+     &seealso;
+     <function class="GtkEntry">get_text</function>,
+     <function class="GtkEntry">prepend_text</function>,
+     <function class="GtkEntry">set_text</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.get_activates_default">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_activates_default</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns whether or not the entry activates the default widget for the 
+    window.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether or not pressing <literal>Enter</literal> in the entry
+     will activate the default widget for the window. 
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">set_activates_default</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.get_alignment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>double <function>get_alignment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the alignment value of the entry.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the alignment value of the entry. The alignment determines the
+     horizontal positioning of the text in the entry when the text is shorter
+     than what can be shown
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">set_alignment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.get_completion">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkEntryCompletion</classname> <function>get_completion</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the completion object currently used.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the auxiliary completion object currently in use by entry.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">set_completion</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.get_has_frame">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_has_frame</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    If the entry has a beveled border.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns if the entry has a beveled border around it.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">set_has_frame</function>
+    </para>
+   </desc>
+  </method>
+<!--
+  <method id="gtk.gtkentry.method.get_invisible_char">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_invisible_char</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkEntry">set_invisible_char</function>
+    </para>
+
+   </desc>
+  </method>
+-->
+  <method id="gtk.gtkentry.method.get_layout">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>PangoLayout</classname> <function>get_layout</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the PangoLayout used to display the text.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the <classname>PangoLayout</classname> used to display the entry.
+     The layout is useful to e.g. convert text positions to pixel positions,
+     in combination with
+     <function class="GtkEntry">get_layout_offsets</function>. 
+    </para>
+<!-- method is missing
+    <para>
+     Keep in mind that the layout text may contain a preedit string,
+     so layout_index_to_text_index() and gtk_entry_text_index_to_layout_index()
+     are needed to convert byte indices in the layout to byte indices in the entry contents.
+    </para>
+-->
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.get_layout_offsets">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_layout_offsets</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the position
+   </shortdesc>
+   <desc>
+    <para>
+     Obtains the position of the <classname>PangoLayout</classname> used to
+     render text in the entry, in widget coordinates. Useful if you want to
+     line up the text in an entry with some other text, e.g. when using the
+     entry to implement editable cells in a sheet widget.
+    </para>
+    <para>
+     Also useful to convert mouse events into coordinates inside the
+     <classname>PangoLayout</classname>, e.g. to take some action if some
+     part of the entry text is clicked.
+    </para>
+    <para>
+     Note that as the user scrolls around in the entry the offsets will
+     change. Remember when using the PangoLayout functions you need to convert
+     to and from pixels using PANGO_PIXELS() or PANGO_SCALE.
+    </para>
+    <para>
+     The returned value is <literal>array($x, $x)</literal>.
+    </para>
+<!--
+    <para>
+     Keep in mind that the layout text may contain a preedit string,
+     so gtk_entry_layout_index_to_text_index() and gtk_entry_text_index_to_layout_index()
+     are needed to convert byte indices in the layout to byte indices in the entry contents.
+    </para>
+-->
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.get_max_length">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_max_length</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retrieves the maximum allowed length of text.
+   </shortdesc>
+   <desc>
+    <para>
+     Retrieves the maximum allowed length of the text in entry.
+     A value of <literal>0</literal> indicates no limit.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">set_max_length</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.get_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_text</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retrieves the contents of the <classname>GtkEntry</classname> widget.
+   </shortdesc>
+   <desc>
+    <para>
+      Retrieves the text entered into the <classname>GtkEntry</classname>
+      widget, and also any appended or prepended text that may have been
+      set using <function class="GtkEntry">set_text</function> but not
+      displayed.
+    </para>
+    <note>
+     <para>
+      Contrary to rumours, this function is NOT marked as deprecated,
+      either in the earlier versions of GTK+ used by PHP-GTK or the current
+      versions.
+     </para>
+    </note>
+    <para>
+     &seealso;
+     <function class="GtkEntry">append_text</function>,
+     <function class="GtkEntry">prepend_text</function>,
+     <function class="GtkEntry">set_text</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.get_visibility">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_visibility</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    If the text is visible or hidden by stars.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns if the text is visible or "hidden" by stars or other
+     characters.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">set_visibility</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.get_width_chars">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_width_chars</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the number of chars to request space for.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the number of chars to request space for, or negative if unset
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">set_width_chars</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.prepend_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>prepend_text</function></funcdef>
+     <paramdef>string <parameter>text</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated; Prepends the given text to the contents of the widget.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+    <para>
+     Prepends the given text to the contents of the widget.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">append_text</function>,
+     <function class="GtkEntry">get_text</function>,
+     <function class="GtkEntry">set_text</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.set_activates_default">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_activates_default</function></funcdef>
+     <paramdef>bool <parameter>setting</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets if pressing Enter activates the default widget.
+   </shortdesc>
+   <desc>
+    <para>
+     If setting is <literal>true</literal>, pressing Enter in the entry will
+     activate the default widget for the window containing the entry.
+     This usually means that the dialog box containing the entry will be
+     closed, since the default widget is usually one of the dialog buttons.
+    </para>
+    <para>
+     (For experts: if setting is <literal>true</literal>, the entry calls
+     <function class="GtkWindow">activate_default</function> on the window
+     containing the entry, in the default handler for the "activate" signal.)
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">get_activates_default</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.set_alignment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_alignment</function></funcdef>
+     <paramdef>double <parameter>xalign</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the alignment for the contents.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the alignment for the contents of the entry. This controls
+     the horizontal positioning of the contents when the displayed
+     text is shorter than the width of the entry. <literal>0</literal>
+     means left, <literal>1</literal> right. Reversed for RTL layouts.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">get_alignment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.set_completion">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_completion</function></funcdef>
+     <paramdef><classname>GtkEntryCompletion</classname> <parameter>completion</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the entry completion.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets completion to be the auxiliary completion object to use with entry.
+     All further configuration of the completion mechanism is done on
+     completion using the <classname>GtkEntryCompletion</classname> API.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">get_completion</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.set_has_frame">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_has_frame</function></funcdef>
+     <paramdef>bool <parameter>setting</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets whether the entry has a beveled frame around it.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets whether the entry has a beveled frame around it.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">get_has_frame</function>
+    </para>
+   </desc>
+  </method>
+<!--not implemented yet
+  <method id="gtk.gtkentry.method.set_invisible_char">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_invisible_char</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkEntry">get_invisible_char</function>
+    </para>
+
+   </desc>
+  </method>
+-->
+  <method id="gtk.gtkentry.method.set_max_length">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_max_length</function></funcdef>
+     <paramdef>int <parameter>max</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Set the maximum length for the contents.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the maximum allowed length of the contents of the widget.
+     If the current contents are longer than the given length,
+     then they will be truncated to fit. <literal>0</literal> means
+     no maximum.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">get_max_length</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.set_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_text</function></funcdef>
+     <paramdef>string <parameter>text</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the text.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the text in the widget to the given value, replacing the current
+     contents.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">append_text</function>,
+     <function class="GtkEntry">get_text</function>,
+     <function class="GtkEntry">prepend_text</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.set_visibility">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_visibility</function></funcdef>
+     <paramdef>bool <parameter>visible</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets if the text or an asterik * is shown.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets whether the contents of the entry are visible or not. When visibility
+     is set to <literal>false</literal>, characters are displayed as the
+     invisible char, and will also appear that way when the text in the
+     entry widget is copied elsewhere.
+    </para>
+    <para>
+     The default invisible char is the asterisk <literal>*</literal>,
+<!-- not implemented yet
+     but it can be changed with
+     <function class="GtkEntry">set_invisible_char</function>.
+-->
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">get_visibility</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkentry.method.set_width_chars">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_width_chars</function></funcdef>
+     <paramdef>int <parameter>n_chars</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the size of the entry in chars.
+   </shortdesc>
+   <desc>
+    <para>
+     Changes the size request of the entry to be about the right size for
+     <parameter>n_chars</parameter> characters. Note that it changes the
+     size request, the size can still be affected by how you pack the
+     widget into containers. If <parameter>n_chars</parameter> is
+     <literal>-1</literal>, the size reverts to the default entry size.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkEntry">get_width_chars</function>
+    </para>
+   </desc>
+  </method>
+ </methods>
+
+
+ <properties>
+  <prop id="gtk.gtkentry.property.activates-default" type="rw">
+   <propname>activates-default</propname>
+   <proptype>bool</proptype>
+   <shortdesc>
+    Whether to activate the default widget when Enter is pressed.
+   </shortdesc>
+   <desc>
+    <para>
+     Whether to activate the default widget (such as the default button
+     in a dialog) when Enter is pressed.
+    </para>
+    <para>
+     Default: <literal>false</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.cursor-position" type="r">
+   <propname>cursor-position</propname>
+   <proptype>int</proptype>
+   <shortdesc>
+    The current position of the insertion cursor in chars.
+   </shortdesc>
+   <desc>
+    <para>
+     The current position of the insertion cursor in chars.
+    </para>
+    <para>
+     Allowed values: <literal>[0,65535]</literal>
+    </para>
+    <para>
+     Default: <literal>0</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.editable" type="rw">
+   <propname>editable</propname>
+   <proptype>bool</proptype>
+   <shortdesc>
+    Whether the entry contents can be edited.
+   </shortdesc>
+   <desc>
+    <para>
+     Whether the entry contents can be edited.
+    </para>
+    <para>
+     Default: <literal>true</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.has-frame" type="rw">
+   <propname>has-frame</propname>
+   <proptype>bool</proptype>
+   <shortdesc>
+    Outside bevel from entry.
+   </shortdesc>
+   <desc>
+    <para>
+     Outside bevel from entry.
+    </para>
+    <para>
+     Default: <literal>true</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.invisible-char" type="rw">
+   <propname>invisible-char</propname>
+   <proptype>char</proptype>
+   <shortdesc>
+    The character to use when masking entry contents.
+   </shortdesc>
+   <desc>
+    <para>
+     The character to use when masking entry contents (in "password mode").
+    </para>
+    <para>
+     Default: <literal>*</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.max-length" type="rw">
+   <propname>max-length</propname>
+   <proptype>int</proptype>
+   <shortdesc>
+    Maximum number of characters for this entry.
+   </shortdesc>
+   <desc>
+    <para>
+     Maximum number of characters for this entry. Zero if no maximum.
+    </para>
+    <para>
+     Allowed values: <literal>[0,65535]</literal>
+    </para>
+    <para>
+     Default: <literal>0</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.scroll-offset" type="r">
+   <propname>scroll-offset</propname>
+   <proptype/>
+   <shortdesc>
+    Number of pixels of the entry scrolled off the screen to the left.
+   </shortdesc>
+   <desc>
+    <para>
+     Number of pixels of the entry scrolled off the screen to the left.
+    </para>
+    <para>
+     Allowed values: <literal>[0,65535]</literal>
+    </para>
+    <para>
+     Default: <literal>0</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.selection-bound" type="rw">
+   <propname>selection-bound</propname>
+   <proptype/>
+   <shortdesc>
+    Position of the opposite end of the selection cursor.
+   </shortdesc>
+   <desc>
+    <para>
+     The position of the opposite end of the selection from the cursor in chars.
+    </para>
+    <para>
+     Allowed values: <literal>[0,65535]</literal>
+    </para>
+    <para>
+     Default: <literal>0</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.text" type="rw">
+   <propname>text</propname>
+   <proptype>string</proptype>
+   <shortdesc>
+    The contents of the entry.
+   </shortdesc>
+   <desc>
+    <para>
+     The contents of the entry.
+    </para>
+    <para>
+     Default: <literal>""</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.visibility" type="rw">
+   <propname>visibility</propname>
+   <proptype>bool</proptype>
+   <shortdesc>
+    If the text is shown or just asteriks *.
+   </shortdesc>
+   <desc>
+    <para>
+     <literal>false</literal> displays the "invisible char"
+     instead of the actual text (password mode).
+    </para>
+    <para>
+     Default: <literal>true</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.width-chars" type="rw">
+   <propname>width-chars</propname>
+   <proptype>int</proptype>
+   <shortdesc>
+   Number of characters to leave space for in the entry.
+   </shortdesc>
+   <desc>
+    <para>
+     Number of characters to leave space for in the entry.
+    </para>
+    <para>
+     Allowed values: <literal>&gt;= -1</literal>
+    </para>
+    <para>
+     Default: <literal>-1</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkentry.property.xalign" type="rw">
+   <propname>xalign</propname>
+   <proptype>double</proptype>
+   <shortdesc>
+    The horizontal alignment, from 0 to 1.
+   </shortdesc>
+   <desc>
+    <para>
+     The horizontal alignment, from 0 (left) to 1 (right). Reversed for RTL layouts.
+    </para>
+    <para>
+     Allowed values: <literal>[0,1]</literal>
+    </para>
+    <para>
+     Default: <literal>0</literal>
+    </para>
+   </desc>
+  </prop>
+ </properties>
+
+
+ <signals>
+  <signal id="gtk.gtkentry.signal.activate">
+   <signalname>activate</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter>entry</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The widget is activated.
+   </shortdesc>
+   <desc>
+    <para>
+     The "activate" signal is emitted when the entry is activated
+     either by user action (pressing the Enter key) or programmatically
+     with the <function class="GtkWidget">activate</function> method.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkentry.signal.backspace">
+   <signalname>backspace</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter>entry</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The Backspace key is pressed.
+   </shortdesc>
+   <desc>
+    <para>
+     The "backspace" signal is emitted when the Backspace key is entered from
+     the keyboard.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkentry.signal.copy-clipboard">
+   <signalname>copy-clipboard</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter>entry</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The selection is copied to the clipboad.
+   </shortdesc>
+   <desc>
+    <para>
+     The "copy-clipboard" signal is emitted when the selection text
+     in the entry is copied to the clipboard.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkentry.signal.cut-clipboard">
+   <signalname>cut-clipboard</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter>entry</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The selection is cut into the clipboad.
+   </shortdesc>
+   <desc>
+    <para>
+     The "cut-clipboard" signal is emitted when the selection in the entry
+     is cut (removed from the entry) and placed in the clipboard.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkentry.signal.delete-from-cursor">
+   <signalname>delete-from-cursor</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter>entry</parameter></paramdef>
+     <paramdef><enumname>GtkDeleteType</enumname> <parameter>delete_type</parameter></paramdef>
+     <paramdef>int <parameter>count</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Some text is deleted from the entry.
+   </shortdesc>
+   <desc>
+    <para>
+     The "delete-from-cursor" signal is emitted when the a deletion from the cursor
+     i.e. removal o text at the cursor position, either before it (negative count)
+     or after it (positive count).
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkentry.signal.insert-at-cursor">
+   <signalname>insert-at-cursor</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter>entry</parameter></paramdef>
+     <paramdef>string <parameter>string</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Text is inserted.
+   </shortdesc>
+   <desc>
+    <para>
+     The "insert-at-cursor" signal is emitted when text is being inserted
+     in the entry.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkentry.signal.move-cursor">
+   <signalname>move-cursor</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter>entry</parameter></paramdef>
+     <paramdef><enumname>GtkMovementStep</enumname> <parameter>step</parameter></paramdef>
+     <paramdef>int <parameter>count</parameter></paramdef>
+     <paramdef>bool <parameter>extend_selection</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The caret is moved.
+   </shortdesc>
+   <desc>
+    <para>
+     The "move-cursor" signal is emitted when the cursor is being moved by
+     <parameter>count</parameter> steps of size <parameter>step</parameter>.
+     If <parameter>extend_selection</parameter> is <literal>true</literal>,
+     the selection is extended as the cursor is being moved.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkentry.signal.paste-clipboard">
+   <signalname>paste-clipboard</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter>entry</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Text is pasted from the clipboard.
+   </shortdesc>
+   <desc>
+    <para>
+     The "paste-clipboard" signal is emitted when the contents
+     of the clipboard are pasted into the entry.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkentry.signal.populate-popup">
+   <signalname>populate-popup</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter>entry</parameter></paramdef>
+     <paramdef><classname>GtkMenu</classname> <parameter>menu</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    The context menu needs to be populated.
+   </shortdesc>
+   <desc>
+    <para>
+     The "populate-popup" signal is emitted when the menu needs populating.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkentry.signal.toggle-overwrite">
+   <signalname>toggle-overwrite</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter>entry</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Toggles the internal overwrite_mode attribute.
+   </shortdesc>
+   <desc>
+    <para>
+     The "toggle-overwrite" signal is emitted when the internal
+     entry attribute "overwrite_mode" is toggled by pressing the Insert key.
+    </para>
+   </desc>
+  </signal>
+ </signals>
+
+</classentry>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 297028 Maintainer: felipe Status: ready --><!-- CREDITS: lucasr, narigone -->
+<refentry xml:id="function.current" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>current</refname>
+  <refpurpose>Retorna o elemento corrente em um array</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>current</methodname>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Todo array tem um ponteiro interno para o elemento "atual",
+   o qual é inicializado para apontar para o primeiro elemento inserido em
+   um array.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       O array.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   A função <function>current</function> simplesmente retorna
+   o elemento do array para o qual esse ponteiro interno está apontando.
+   Não move o ponteiro de forma alguma. Se o ponteiro interno
+   estiver apontando para além do final da lista de elementos ou o array é vazio,
+   <function>current</function> retorna &false;.     
+  </para>
+  &return.falseproblem;
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemplo do uso de <function>current</function> e amigos</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$transport = array('foot', 'bike', 'car', 'plane');
+$mode = current($transport); // $mode = 'foot';
+$mode = next($transport);    // $mode = 'bike';
+$mode = current($transport); // $mode = 'bike';
+$mode = prev($transport);    // $mode = 'foot';
+$mode = end($transport);     // $mode = 'plane';
+$mode = current($transport); // $mode = 'plane';
+
+$arr = array();
+var_dump(current($arr)); // bool(false)
+
+$arr = array(array());
+var_dump(current($arr)); // array(0) { }
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <simpara>
+    Você não será capaz de distinguir o fim de um array de um
+    elemento <type>boolean</type> &false;. Para percorer um array
+    que pode conter elementos &false;, veja a função
+    <function>each</function>.
+   </simpara>
+  </note>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>end</function></member>
+    <member><function>key</function></member>
+    <member><function>each</function></member>
+    <member><function>prev</function></member>
+    <member><function>reset</function></member>
+    <member><function>next</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

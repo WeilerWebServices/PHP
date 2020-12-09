@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 338333 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="function.bccomp" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>bccomp</refname>
+  <refpurpose>Compare deux nombres de grande taille</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>bccomp</methodname>
+   <methodparam><type>string</type><parameter>left_operand</parameter></methodparam>
+   <methodparam><type>string</type><parameter>right_operand</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>scale</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Compare l'opérande <parameter>left_operand</parameter>
+   avec l'opérande <parameter>right_operand</parameter> et retourne le
+   résultat sous forme d'un &integer;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>left_operand</parameter></term>
+     <listitem>
+      <para>
+       L'opérande de gauche, sous la forme d'une &string;.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>right_operand</parameter></term>
+     <listitem>
+      <para>
+       L'opérande de droite, sous la forme d'une &string;.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>scale</parameter></term>
+     <listitem>
+      <para>
+       Le paramètre optionnel <parameter>scale</parameter>
+       est utilisé pour définir le nombre de digits après la décimale
+       qui sera utilisé dans la comparaison.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne &zero; si les deux opérandes sont égaux, &one; si l'opérande
+   <parameter>left_operand</parameter> est plus grand que l'opérande
+   <parameter>right_operand</parameter>, -1 sinon.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <example>
+   <title>Exemple avec <function>bccomp</function></title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+echo bccomp('1', '2') . "\n";   // -1
+echo bccomp('1.00001', '1', 3); // 0
+echo bccomp('1.00001', '1', 5); // 1
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

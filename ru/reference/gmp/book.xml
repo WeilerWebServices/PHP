@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 338444 Maintainer: Rjhdby Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+ 
+<book xml:id="book.gmp" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <?phpdoc extension-membership="bundledexternal" ?>
+ <title>Вычисления с увеличенной точностью (GNU Multiple Precision)</title>
+ <titleabbrev>GMP</titleabbrev>
+ 
+ <!-- {{{ preface -->
+ <preface xml:id="intro.gmp">
+  &reftitle.intro;
+  <simpara>
+   Эти функции позволяют работать с целыми числами произвольной длины, используя GNU <acronym>MP</acronym> библиотеку.
+  </simpara>
+  <note>
+   <para>
+    Большинство GMP функций принимают GMP числа в виде аргументов. Они представлены
+    в документации как объекты класса <classname>GMP</classname>; однако учтите, что
+    PHP 5.5 и старее работали с GMP числами, как с ресурсами (<type>resource</type>).
+    Большинство этих функций также допускают числовые и строковые аргументы, 
+    если есть возможность преобразовать последние в числа. Также, если 
+    существует более быстрая функция, которая может работать с переданными аргументами
+    (актуально только для целых чисел), то будет использована именно она, прозрачно 
+    для пользователя. Смотрите также функцию <function>gmp_init</function>.
+   </para>
+  </note>
+  <note>
+   <para>
+    С версии PHP 5.6 и новее, вы можете использовать
+    <link linkend="language.operators.arithmetic">арифметические</link>,
+    <link linkend="language.operators.bitwise">побитовые</link> и
+    операторы <link linkend="language.operators.comparison">сравнения</link>
+    с объектами <classname>GMP</classname>, возвращаемыми
+    <function>gmp_init</function> и другими GMP функциями.
+   </para>
+  </note>
+  <warning>
+   <simpara>
+    Если требуется явно задать большое целое число, задавайте его строкой, иначе PHP 
+    приведет его к типу float и в результате потеряется точность.
+   </simpara>
+  </warning>
+  <note>
+   <simpara>
+    На Windows платформах это расширение доступно начиная с PHP 5.1.0.
+   </simpara>
+  </note>
+ </preface>
+ <!-- }}} -->
+ 
+ &reference.gmp.setup;
+ &reference.gmp.constants;
+ &reference.gmp.examples;
+ &reference.gmp.reference;
+ &reference.gmp.gmp;
+
+</book>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

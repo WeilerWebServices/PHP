@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 340962 Maintainer: simp Status: ready -->
+<!-- Credits: fa -->
+ <chapter xml:id="faq.databases" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>PHP und Datenbanken</title>
+  <titleabbrev>PHP und Datenbanken</titleabbrev>
+
+  <para>
+   Dieser Abschnitt enthält häufige Fragen über die Verbindung von PHP und
+   Datenbanken. PHP kann in der Tat auf praktisch jede verfügbare Datenbank
+   zugreifen.
+  </para>
+
+  <qandaset>
+   <qandaentry xml:id="faq.databases.mssql">
+    <question>
+     <para>
+      Ich habe gehört, dass es möglich ist, den Microsoft SQL-Server aus PHP
+      anzusprechen. Wie?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Auf Unix-Rechnern können Sie <link linkend="ref.pdo-odbc">PDO_ODBC</link>
+      oder die <link linkend="book.uodbc">Unified ODBC API</link> verwenden.
+     </para>
+     <para>
+      Auf Windows-Rechnern können Sie ebenfalls <link linkend="ref.pdo-sqlsrv">PDO_SQLSRV</link>
+      oder <link linkend="book.sqlsrv">SQLSRV</link> verwenden.
+     </para>
+     <para>
+      Sehen Sie sich auch die Antwort auf die nächste Frage an.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.databases.access">
+    <question>
+     <para>Kann ich auf Microsoft Access-Datenbanken zugreifen?</para>
+    </question>
+    <answer>
+     <para>
+      Ja. Sie haben bereits alle nötigen Werkzeuge, wenn sie komplett unter
+      Windows 9x/Me oder NT/2000 arbeiten, wo Sie ODBC und die ODBC-Treiber von
+      Microsoft benutzen können, um auf Microsoft Access-Datenbanken zuzugreifen.
+     </para>
+     <para>
+      Wenn Sie PHP auf einem Unix-Rechner betreiben und auf MS Access auf einem
+      Windows-Rechner zugreifen wollen, brauchen sie ODBC-Treiber für Unix.
+      <link xlink:href="&url.openlink;">OpenLink Software</link> bietet Unix-basierte
+      ODBC-Treiber an, die dazu geeignet sind.
+     </para>
+     <para>
+      Eine weitere Alternative ist es, einen SQL-Server zu benutzen, der
+      ODBC-Treiber für Windows anbietet und diesen dann zu benutzen, um die Daten
+      dort abzulegen, um sie dann von Microsoft Access (über ODBC) und PHP (mit
+      den mitgelieferten Treibern) aus anzusprechen, oder ein 
+      dazwischengeschaltetetes Dateiformat zu benutzen, das sowohl Access als
+      auch PHP verstehen, beispielsweise Plaintext oder dBase-Datenbanken.
+      Zu diesem Punkt schreibt Tim Hayes von OpenLink Software:
+      <blockquote>
+       <para>
+        Eine andere Datenbank als vermittelndes Element zu benutzen ist keine
+        gute Idee, wenn Sie ODBC direkt von PHP aus zur Datenbank benutzen können
+        - etwa mit den Openlink-Treibern. Wenn Sie wirklich ein zwischengeschaltetes
+        Dateiformat benötigen, hat Openlink jetzt Virtuoso (eine virtuelle 
+        Datenbank) für NT, Linux und andere Unix-Plattformen herausgebracht.
+        Bitte besuchen Sie unsere <link xlink:href="&url.openlink;">Webseite</link>,
+        wenn Sie Virtuoso kostenlos herunterladen wollen.
+       </para>
+      </blockquote>
+     </para>
+     <para>
+      Eine Möglichkeit, die sich als erfolgreich herausgestellt hat, ist die
+      Benutzung von MySQL und den MyODBC-Treibern unter Windows, um die
+      Datenbanken zu synchronisieren. Steve Lawrence schreibt dazu:
+     </para>
+     <para>
+      <itemizedlist>
+       <listitem>
+        <simpara>
+         Installieren Sie MySQL wie in der Dokumentation beschrieben auf ihrem
+         System. Die neueste Version finden Sie auf 
+         <link xlink:href="&url.mysql;">www.mysql.com</link> 
+         Es ist keine spezielle Konfiguration nötig, außer dass
+         Sie beim Erzeugen einer Datenbank und der Einrichtung des
+         Benutzeraccounts im Host-Feld ein % oder den Hostnamen des 
+         Windows-Computers, von dem aus Sie zugreifen möchten, eintragen 
+         sollten. Notieren Sie sich den Servernamen, Benutzernamen und das 
+         Passwort.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Laden Sie die MyODBC for Windows-Treiber von der MySQL-Seite herunter.
+         Installieren Sie ihn auf ihrem Windows-Rechner. Sie können
+         die Funktionsfähigkeit mit den mitgelieferten Programmen testen.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Erstellen Sie eine Benutzer- oder System-DSN in den ODBC-Optionen in
+         der Systemsteuerung. Überlegen Sie sich einen DSN-Namen und geben Sie
+         den Hostnamen, Benutzernamen, Passwort, Port, etc ihrer MySQL-Datenbank
+         an, die Sie im 1. Schritt konfiguriert haben.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Installieren Sie Access als Vollinstallation. Das stellt sicher, dass
+         Sie die richtigen Add-Ins haben. Zumindest benötigen Sie die 
+         ODBC-Unterstützung und den Linked-Table-Manager.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Jetzt zum lustigen Teil! Erstellen Sie eine neue Access-Datenbank.
+         Rechtsklicken Sie im Tabellenfenster und wählen Sie Link 
+         Tables/Tabellen verknüpfen oder im Menü Datei den Punkt Get
+         External Data und dann Link Tables/Tabellen verknüpfen. Wenn das
+         Dateibrowser-Fenster erscheint, wählen Sie Dateien vom Typ: ODBC.
+         Wählen Sie System-DSN und den Namen der DSN, die Sie in Schritt 3
+         erstellt haben. Wählen sie die zu verknüpfende Tabelle, klicken Sie
+         auf OK und Sie können jetzt die Tabelle öffnen und Daten auf Ihrem
+         MySQL-Server hinzufügen/löschen/ändern. Sie können auch Abfragen
+         erzeugen, Tabellen importieren und exportieren und Formulare und
+         Reports generieren, etc.
+        </simpara>
+       </listitem>
+      </itemizedlist>
+     </para>
+     <para>
+      Tipps und Tricks:
+      <itemizedlist>
+       <listitem>
+        <simpara>
+         Sie können Ihre Tabellen in Access erstellen und nach MySQL
+         exportieren und Sie dann wieder verknüpfen. Das erleichtert
+         das Erstellen von Tabellen.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Wenn Sie Tabellen in Access erstellen, müssen Sie einen Primärschlüssel
+         definieren, wenn Sie über Access Schreibzugriff haben wollen.
+         Vergewissern Sie sich, dass sie einen Primärschlüssel in MySQL
+         erzeugen, bevor Sie die Tabelle in Access verknüpfen.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Wenn Sie ein Tabelle in MySQL ändern, müssen Sie sie in Access neu
+         verknüpfen. Rufen Sie Tools&gt;add-ins&gt;linked table manager auf,
+         suchen Sie ihre ODBC-DSN, und wählen Sie die Tabelle aus, die neu
+         verknüpft werden soll. Sie können Ihre DSN-Quelle auch verschieben,
+         wenn Sie die "always prompt for new location"-Checkbox ankreuzen,
+         bevor Sie OK klicken.
+        </simpara>
+       </listitem>
+      </itemizedlist>
+     </para>
+    </answer>
+   </qandaentry>
+   
+   <qandaentry xml:id="faq.databases.mysql.deprecated">
+    <question>
+     <para>
+      Wieso wird von der Verwendung der MySQL-Erweiterung (ext/mysql), 
+      die ich seit über 10 Jahren verwendet habe, abgeraten? Ist diese veraltet?
+      Was soll ich stattdessen tun? Wie kann ich umstellen?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Es gibt drei MySQL-Erweiterungen, die im Abschnitt
+      <link linkend="mysqlinfo.api.choosing">Wählen einer MySQL-API</link> beschrieben
+      werden. Die alte API sollte nicht verwendet werden und ist seit PHP 5.5.0
+      als veraltet markiert und wurde mit PHP 7.0.0 nach PECL verschoben. Es wird stark 
+      dazu geraten beim Schreiben von neuem Code entweder <link linkend="book.mysqli">mysqli</link> 
+      oder <link linkend="ref.pdo-mysql">PDO_MySQL</link> zu verwenden. 
+     </para>
+     <para>
+      Derzeit sind keine Migrationsskripte verfügbar, jedoch enthält die mysqli-API sowohl
+      eine prozedurale als auch eine OOP-API. Die prozedurale Version ist dabei ähnlich zu
+      ext/mysql.
+     </para>
+     <para>
+      Es ist nicht möglich die Erweiterungen zu mischen. Es wird beispielsweise
+      nicht funktionieren, eine mysqli-Verbindung an PDO_MySQL oder ext/mysql zu
+      übergeben.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.databases.mysqlresource">
+    <question>
+     <para>
+      Wieso bekomme ich so eine Fehlermeldung:
+      "Warning: 0 is not a MySQL result index in &lt;file&gt; 
+      on line &lt;x&gt;" or "Warning: Supplied argument is not 
+      a valid MySQL result resource in &lt;file&gt; on line &lt;x&gt;"?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Sie versuchen, einen result identifier zu benutzen, der 0 ist. Die 0
+      bedeutet, dass Ihre Abfrage aus irgend einem Grund fehlgeschlagen ist.
+      Sie sollten auf Fehlermeldungen überprüfen, nachdem Sie Ihre Abfrage
+      losgeschickt haben und bevor Sie versuchen, mit dem Ergebnis zu arbeiten.
+      Dies kann mit diesem oder ähnlichem Code bewerkstelligt werden:
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$result = mysql_query("SELECT * FROM tables_priv");
+if (!$result) {
+    echo mysql_error();
+    exit;
+}
+?>
+]]>
+      </programlisting>
+      oder
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$result = mysql_query("SELECT * FROM tables_priv")
+    or die("Bad query: " . mysql_error());
+?>
+]]>
+      </programlisting>
+     </para>
+    </answer>
+   </qandaentry>
+  </qandaset>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

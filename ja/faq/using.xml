@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi,mumumu -->
+
+<chapter xml:id="faq.using" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>PHP の使いかた</title>
+  <titleabbrev>PHP の使いかた</titleabbrev>
+
+  <para>
+   このセクションにはPHPスクリプトを書くにあたってよく問題となる事柄が
+   集められています。
+  </para>
+
+  <qandaset>
+
+   <qandaentry xml:id="faq.using.parameterorder">
+    <question>
+     <para>
+      PHP の関数のパラメータの順番を覚えられません。だって関数によってばらばらなんだもん。
+     </para>
+    </question>
+    <answer>
+     <para>
+      PHP は、さまざまな外部ライブラリの間を取り持つ糊のような存在です。
+      そのため、時にはちょっとごちゃごちゃすることもあります。
+      しかし、経験上、以下のような規則があるようです。
+     </para>
+     <para>
+      <link linkend="book.array">配列関数</link> のパラメータは
+      "<emphasis>needle, haystack</emphasis>" の順だけれども、
+      <link linkend="book.strings">文字列関数</link> はその逆で
+      "<emphasis>haystack, needle</emphasis>" の順となります。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.anyform">
+    <question>
+     <para>
+      あらゆるフォームから送信されたデータを扱うことができる汎用的な
+      PHPスクリプトを書きたいのですが、POSTメソッドでどのようなデータ
+      が送信されたかを知るにはどうするのですか？
+     </para>
+    </question>
+    <answer>
+     <para>
+      PHPは<varname>$_POST</varname>のような
+      <link linkend="language.variables.predefined">定義済みの変数</link>
+      を沢山提供しています。<varname>$_POST</varname>を連想配列として
+      ループすることでPOSTされた全ての値にアクセスできます。例えば、
+      &foreach; で単純にループして <function>empty</function> で値をチェックし、
+      結果を出力します。
+      <programlisting role="php">
+<![CDATA[
+<?php
+$empty = $post = array();
+foreach ($_POST as $varname => $varvalue) {
+    if (empty($varvalue)) {
+        $empty[$varname] = $varvalue;
+    } else {
+        $post[$varname] = $varvalue;
+    }
+}
+
+print "<pre>";
+if (empty($empty)) {
+    print "None of the POSTed values are empty, posted:\n";
+    var_dump($post);
+} else {
+    print "We have " . count($empty) . " empty values\n";
+    print "Posted:\n"; var_dump($post);
+    print "Empty:\n";  var_dump($empty);
+    exit;
+}
+?>
+]]>
+      </programlisting>
+     </para>
+
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.singlequotes">
+    <question>
+     <para>
+      シングルクオート(')をバックスラッシュでエスケープされた
+      シングルクオート(\')に変換しなければならないのですが、
+      正規表現を用いてこれを行うにはどの様にするのですか？
+      同様に " を \" に、\ を \\ に変換したいのです。
+     </para>
+    </question>
+    <answer>
+     <para>
+      もしデータベースに格納するためにそんなことをしようとしているのなら、
+      データベース自身が持つエスケープの仕組みを使うようにしましょう。
+      MySQL なら <function>mysql_real_escape_string</function>、
+      PostgreSQL なら <function>pg_escape_string</function> などです。
+      汎用的な関数 <function>addslashes</function> や
+      <function>stripslashes</function> もありますが、
+      これはさらに古い時代の PHP コードで使われていたものです。
+     </para>
+
+     &note.magicquotes.gpc;
+
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.stripslashes">
+    <question>
+     <para>
+      " は \" に、また ' は \' に全て変換されているのですが、
+      これら無用なバックスラッシュを除去するにはどうしたらよいですか？
+      どうやって、そしてなぜ、こんなことになっているのでしょう？
+     </para>
+    </question>
+    <answer>
+     <para>
+      なぜかバックスラッシュがついてしまう、という現象の原因のほとんどは、PHP の
+      <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link>
+      ディレクティブが On になっていることです。これは古い時代の PHP
+      の機能であり、現在は無効にしておくべきものです。この仕組みに頼ってはいけません。
+      文字列からバックスラッシュを取り除くために、PHP の
+      <function>stripslashes</function> を使うことができます。
+     </para>
+     
+     &note.magicquotes.gpc;
+     
+    </answer>
+   </qandaentry>   
+
+   <qandaentry xml:id="faq.register-globals">
+    <question>
+     <para>
+      PHP の設定項目 register_globals はどんな影響があるの?
+     </para>
+    </question>
+    <answer>
+     &warn.deprecated.feature-5-3-0.removed-5-4-0;
+     <para>
+      まずはじめに、この ini 設定がどういうはたらきをするのかを説明します。
+      例として、次のような URL を使用します。
+      <literal>http://example.com/foo.php?animal=cat</literal>
+      そして <filename>foo.php</filename> の中身は次のようなコードが書かれているものとします。
+     </para>
+     <para>
+      <programlisting role="php">
+<![CDATA[
+<?php
+// ここでは $_GET を使うことを推奨します
+echo $_GET['animal'];
+
+// $animal を使用するには register_globals が on でなければなりませんが
+// こんなことはしないでください
+echo $animal;
+
+// これはすべての変数について当てはまります。たとえば $_SERVER についても同じで、
+echo $_SERVER['PHP_SELF'];
+
+// $PHP_SELF を使用するには register_globals が on でなければなりません
+// 改めて言いますが、こんなことはしないでください
+echo $PHP_SELF;
+?>
+]]>
+     </programlisting>
+    </para>
+    <para>
+     上のコードでおわかりのように、register_globals を使用すると数多くの変数が作成されます。
+     長年にわたってこの手のコーディングは問題視されており、
+     ここ数年 register_globals のデフォルト設定は無効になっています。
+     大半のウェブサーバーは register_globals を無効にしていますが、
+     いまだに register_globals が on であることを前提とした記事や書籍が存在します。
+     注意しましょう。
+    </para>
+    <para>
+     詳しい情報は、以下のリソースを参照ください。
+     <simplelist>
+      <member><link linkend="ini.register-globals">register_globals</link> ディレクティブ</member>
+      <member><link linkend="security.globals">セキュリティに関する章での register_globals の説明</link></member>
+      <member><link linkend="language.variables.external">外部からくる変数の処理</link></member>
+      <member><link linkend="language.variables.superglobals">スーパーグローバル</link></member>
+     </simplelist>
+    </para>
+    <note>
+     <para>
+      上の例では、クエリ文字列を含む <acronym>URL</acronym> を使用しています。
+      このように情報を渡す場合には GET HTTP リクエストを使用するので、
+      この場合はスーパーグローバル <varname>$_GET</varname> を使用します。
+     </para>
+    </note>
+   </answer>
+  </qandaentry>
+
+   <qandaentry xml:id="faq.using.wrong-order">
+    <question>
+     <para>
+      次のようなコードを実行すると、思った通りの順番で出力が表示されません。
+     <programlisting role="php">
+<![CDATA[
+function myfunc($argument)
+{
+    echo $argument + 10;
+}
+$variable = 10;
+echo "myfunc($variable) = " . myfunc($variable);
+]]>
+    </programlisting>
+      なぜですか？
+     </para>
+    </question>
+    <answer>
+     <para>
+      式の中で関数の実行結果を使用する(例えば上の例の様に他の文字列と
+      連結する)ためには、<function>echo</function> するのではなく、その
+      値を <function>return</function> しなければいけません。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.newlines">
+    <question>
+     <para>
+      改行されないのですが？
+      <programlisting role="php">
+<![CDATA[
+<pre>
+<?php echo "これは1行目"; ?>
+<?php echo "この行は改行に続いて出力されるはず"; ?>
+</pre>
+]]>
+      </programlisting>
+     </para>
+    </question>
+    <answer>
+     <para>
+      PHPでは、"?&gt;"か"?&gt;\n"(\nは改行を表します)をPHPのコードブロッ
+      クの終端と見なします。このため、コードブロック終端の改行記号は省
+      略され、表示される文は1行になります。つまり、改行をさせるために
+      は、PHPのコードブロックの終端の後にもう1つ改行を挿入する必要があ
+      るということです。
+     </para>
+     <para>
+     なぜPHPはこのようなことをするのでしょうか？なぜならHTMLを出力する
+     場合にはこの方が都合のよいことが多いからです。もしとても長い1行を
+     出力しなければならない場合に、改行が解釈されてしまうとしたらどう
+     でしょう。ソースコードの1行もとても読めないくらい長いものになって
+     しまいます。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.headers-sent">
+    <question>
+     <para>
+      'Warning: Cannot send session cookie - headers already sent...'や
+      'Cannot add header information - headers already set...'といった
+      メッセージが出力されるのですが。
+      sent...'.
+     </para>
+    </question>
+    <answer>
+     <para>
+      <function>header</function>, <function>set_cookie</function>や
+      <link linkend="ref.session">セッション関数</link>は出力ストリームに
+      ヘッダを付加する関数で、ヘッダを送信できるのは本文の出力を
+      開始する前のみです。<function>headers_sent</function>を使って
+      既にヘッダが送信済みでないかチェックすることができます。
+      <link linkend="ref.outcontrol">出力制御関数</link>もご覧ください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.header">
+    <question>
+     <para>
+      リクエストヘッダに直接アクセスしたいのですが、どうすればよいですか？
+     </para>
+    </question>
+    <answer>
+     <para>
+     もしPHPがApacheモジュールとして動作しているなら、
+     <function>getallheaders</function>を使えば全てのヘッダを取得する
+     ことができます。下のちょっとしたコードで全てのリクエストヘッダを
+     表示することができます。
+      <programlisting role="php">
+<![CDATA[
+$headers = getallheaders();
+foreach ($headers as $name => $content) {
+    echo "headers[$name] = $content<br />\n";
+}
+]]>
+      </programlisting>
+     </para>
+      <para>
+      <function>apache_lookup_uri</function>,
+      <function>apache_response_headers</function>,
+      <function>fsockopen</function>も参照してください。
+     </para>
+   </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.authentication">
+    <question>
+     <para>
+      IISで認証を行おうとすると'No Input file specified'というエラーが
+      発生します。
+     </para>
+    </question>
+    <answer>
+     <para>
+      これはIISのセキュリティモデルの欠点で、IISで動作するCGIに共通する
+      問題です。これを回避策するには、認証のかかったディレクトリに(PHP
+      が解釈しない)HTMLファイルを作成します。そしてMETAタグを使ってPHP
+      を使用したページにリダイレクトするか、リンクを張ります。こうすれ
+      ばPHPは認証済みかどうかを正しく認識することが出来ます。
+      また、これは他のNTウェブサーバーに
+      は影響ありません。詳しくは<link xlink:href="&url.iis;">&url.iis;</link>
+      と<link linkend="features.http-auth">HTTP 認証</link>を
+      参照してください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.iis.sharing">
+    <question>
+     <para>
+      Windows: 他のコンピュータと共有しているファイルに、IIS
+      でアクセスできません。
+     </para>
+    </question>
+    <answer>
+     <para>
+      <literal>Go to Internet Information
+      Services</literal> を変更する必要があります。PHP ファイルを選択して
+      プロパティを開き、<literal>セキュリティ</literal> タブに移動し、
+      <literal>Edit -&lt; Anonymous access and authentication control</literal> 。
+     </para>
+     <para>
+      この問題を解決するには <literal>Anonymous
+      Access</literal> のチェックをはずして <literal>Integrated Window
+      Authentication</literal> をチェックしたままにしておきか、
+      あるいは <literal>Anonymous
+      Access</literal> をチェックしてアクセスできないユーザーを別途指定します。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.mixml">
+    <question>
+     <para>
+     どうすればXMLとPHPは共存することが出来るのですか？XMLの
+     &lt;?xml&gt;タグがPHPでエラーになります。
+     </para>
+    </question>
+    <answer>
+     <para>
+      &lt;?xml を直接PHPコードに埋め込むには、
+      PHPディレクティブの<link linkend="ini.short-open-tag">short_tags</link>
+      を <literal>0</literal> に設定しなければなりません。
+      このディレクティブは<function>ini_set</function>でセットすることは
+      できません。<link linkend="ini.short-open-tag">short_open_tags</link>
+      のオン/オフに関わらず、次のようにもできます: 
+      <literal>&lt;?php echo '&lt;?xml'; ?&gt;</literal>
+      このディレクティブはデフォルトでオンです。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.variables">
+    <question>
+     <para>
+      あらかじめ設定されている変数を全て網羅したリストはどこにあるので
+      すか？なぜPHPのドキュメントにはその一覧がないのですか？
+     </para>
+    </question>
+    <answer>
+     <para>
+      マニュアルの
+      <link linkend="language.variables.predefined">定義済みの変数</link>
+      のページを読んでください。スクリプト上で有効な定義済み変数のリストの
+      一部があります。有効な変数の完全なリスト（とその詳しい情報）は
+      <function>phpinfo</function>をコールすることで見ることができます。
+      マニュアルの
+      <link linkend="language.variables.external">PHPの外部から来る変数</link>
+      のセクションも読んでください。HTMLフォームやCookie、URL等から
+      来る外部変数に関するシナリオが説明されています。
+     </para>
+     
+     &note.registerglobals;
+
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.freepdf">
+    <question>
+     <para>
+      フリーではない商用ライブラリである
+      PDFLib を使わずに
+      PDFファイルを生成するにはどうしたらよいでしょうか？
+      フリーのもので、外部のPDFライブラリを必要としない
+      ものがいいのです。
+     </para>
+    </question>
+    <answer>
+     <para>
+      PHPで書かれている代替手段がいくつかあります。
+      <link xlink:href="&url.pdf.fpdf;">FPDF</link> や
+      <link xlink:href="&url.pdf.tcpdf;">TCPDF</link> などです。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.cgi-vars">
+    <question>
+     <para>
+      ユーザー定義関数の中で、標準的な
+      (<varname>$DOCUMENT_ROOT</varname> や <varname>$HTTP_REFERER</varname> のような)
+      CGI変数にアクセスしたいのですが、PHPはそれらの変数を見つけること
+      ができていないようです。何がおかしいのですか？
+     </para>
+    </question>
+    <answer>
+     <para>
+      PHPディレクティブの
+      <link linkend="ini.register-globals">register_globals</link>
+      がサーバーと環境変数に与える影響を認識することは重要なことです。
+      register_globals = off (PHP4.2.0以降デフォルトでoff)の場合、
+      <varname>$DOCUMENT_ROOT</varname>は存在しません。代わりに
+      <varname>$_SERVER['DOCUMENT_ROOT']</varname>を使用してください。
+      register_globals = on の場合は <varname>$DOCUMENT_ROOT</varname>も
+      <varname>$GLOBALS['DOCUMENT_ROOT']</varname>も存在します。
+     </para>
+
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.shorthandbytes">
+    <question>
+     <para>
+      いくつかの PHP ディレクティブでは、バイト値を <type>int</type> 
+      ではなく省略形で設定できます。この省略形で使えるオプションを教えてください。
+     </para>
+    </question>
+    <answer>
+     <para>
+      有効なオプションは K（キロバイト）、M（メガバイト）および G（ギガバイト:
+      PHP 5.1.0 以降で有効）です。これらはすべて、大文字小文字を区別しません。
+      これ以外の文字はバイト値と判断されます。
+      <literal>1M</literal> は、1 メガバイトあるいは <literal>1048576</literal>
+      バイトと等しくなります。<literal>1K</literal> は、1 キロバイトあるいは
+      <literal>1024</literal> バイトです。この表記法は、 &php.ini;
+      や <function>ini_set</function> 関数で使えます。
+      ここで、数値の値は、<type>int</type>
+      型にキャストされることに注意して下さい。
+      たとえば、<literal>0.5M</literal> は <literal>0</literal>
+      と解釈されます。
+     </para>
+     <note>
+      <title>キロバイト? キビバイト?</title>
+      <para>
+       PHP の記法では 1 キロバイト = 1024 バイトとしていますが、
+       <acronym>IEC</acronym> の標準規格では 1024 バイトのことを
+       1 キビバイト (kibibyte) と呼ぶことになっています。
+       まとめ: PHP での k および K = 1024 バイト。
+      </para>
+     </note>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.using.windowslocalhostissue">
+    <question>
+     <para>
+      Windows で、
+      <literal>"127.0.0.1"</literal> だと動作するのに
+      <literal>localhost</literal>
+      を使うと接続がタイムアウトします。
+     </para>
+    </question>
+    <answer>
+     <para>
+      PHP 5.3.4 を使っている場合、その原因は PHP のネットワーク解決に関するコードのバグです。
+      IPv6 が有効になっている環境では、ストリーム関連のすべての場面で
+      <literal>localhost</literal> への接続に失敗していました。
+      回避策は、 <literal>"127.0.0.1"</literal> を使うようにするか
+      IPv6 の名前解決を <filename>hosts</filename> ファイルで無効にするかのいずれかです。
+     </para>
+    </answer>
+   </qandaentry>
+
+  </qandaset>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

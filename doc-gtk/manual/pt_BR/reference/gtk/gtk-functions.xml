@@ -1,0 +1,1747 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- EN-Revision: 1.16 Maintainer: dnfeitosa Status: ready -->
+<refentry id="gtk.functions">
+ <refmeta>
+   <refentrytitle>Funções GTK</refentrytitle>
+   <shortdesc>
+    Métodos estáticos Gtk.
+   </shortdesc>
+ </refmeta>
+
+  <method id="gtk.method.accel_group_from_accel_closure">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkAccelGroup <function>accel_group_from_accel_closure</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_groups_activate">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>accel_groups_activate</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_groups_from_object">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>accel_groups_from_object</function></funcdef>
+     <paramdef>GObject <parameter>object</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_add_entry">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_add_entry</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_add_filter">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_add_filter</function></funcdef>
+     <paramdef>string <parameter>filter_pattern</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_change_entry">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>accel_map_change_entry</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_foreach">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_foreach</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_foreach_unfiltered">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_foreach_unfiltered</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_get">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>accel_map_get</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_load">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_load</function></funcdef>
+     <paramdef>string <parameter>file_name</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_load_fd">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_load_fd</function></funcdef>
+     <paramdef>int <parameter>fd</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_load_scanner">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_load_scanner</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_lock_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_lock_path</function></funcdef>
+     <paramdef>string <parameter>accel_path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_lookup_entry">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>accel_map_lookup_entry</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_save">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_save</function></funcdef>
+     <paramdef>string <parameter>file_name</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_save_fd">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_save_fd</function></funcdef>
+     <paramdef>int <parameter>fd</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accel_map_unlock_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accel_map_unlock_path</function></funcdef>
+     <paramdef>string <parameter>accel_path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accelerator_get_default_mod_mask">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>accelerator_get_default_mod_mask</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accelerator_get_label">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>accelerator_get_label</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accelerator_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>accelerator_name</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accelerator_parse">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accelerator_parse</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accelerator_set_default_mod_mask">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>accelerator_set_default_mod_mask</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.accelerator_valid">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>accelerator_valid</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.binding_entry_add_signal">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>binding_entry_add_signal</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.binding_entry_add_signall">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>binding_entry_add_signall</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.binding_entry_clear">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>binding_entry_clear</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.binding_entry_remove">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>binding_entry_remove</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.binding_parse_binding">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>binding_parse_binding</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.binding_set_by_class">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>binding_set_by_class</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.bindings_activate">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>bindings_activate</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.bindings_activate_event">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>bindings_activate_event</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+
+  <method id="gtk.method.check_version">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>check_version</function></funcdef>
+     <paramdef>int <parameter>required_major</parameter></paramdef>
+     <paramdef>int <parameter>required_minor</parameter></paramdef>
+     <paramdef>int <parameter>required_micro</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.disable_setlocale">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>disable_setlocale</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.drag_set_default_icon">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>drag_set_default_icon</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.draw_insertion_cursor">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>draw_insertion_cursor</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.events_pending">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>boolean <function>events_pending</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Verifica se há algum evento pendente.
+   </shortdesc>
+   <desc>
+    <para>
+     Verifica se há algum evento pendente. Isto pode ser usado para atualizar
+     a interface gráfica e invocar timeouts enquanto alguma operação estiver em
+     processamento intensivo.
+    </para>
+    <para>
+     Veja <function class="Gtk">main_iteration</function>.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.method.exit">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>exit</function></funcdef>
+     <paramdef>int <parameter>error_code</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.false">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>false</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna "false".
+   </shortdesc>
+   <desc>
+    <para>
+     Retorna um booleano "false".
+    </para>
+   </desc>
+  </method>
+
+
+  <method id="gtk.method.gc_get">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>gc_get</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.gc_release">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>gc_release</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.get_current_event">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_current_event</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.get_current_event_state">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_current_event_state</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.get_current_event_time">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_current_event_time</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.get_default_language">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_default_language</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.get_event_widget">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkWidget <function>get_event_widget</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.grab_get_current">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkWidget <function>grab_get_current</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.icon_size_from_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkIconSize <function>icon_size_from_name</function></funcdef>
+     <paramdef>string <parameter>name</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.icon_size_get_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>icon_size_get_name</function></funcdef>
+     <paramdef>GtkIconSize <parameter>size</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.icon_size_lookup">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>icon_size_lookup</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.icon_size_lookup_for_settings">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>icon_size_lookup_for_settings</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.icon_size_register">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkIconSize <function>icon_size_register</function></funcdef>
+     <paramdef>string <parameter>name</parameter></paramdef>
+     <paramdef>int <parameter>width</parameter></paramdef>
+     <paramdef>int <parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.icon_size_register_alias">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>icon_size_register_alias</function></funcdef>
+     <paramdef>string <parameter>alias</parameter></paramdef>
+     <paramdef>GtkIconSize <parameter>target</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.idle_add">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>idle_add</function></funcdef>
+     <paramdef>callback <cbfunction>callback</cbfunction></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Registra um callback que será chamado quando o loop principal estiver ocioso.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.idle_add_full">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>idle_add_full</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.idle_add_priority">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>idle_add_priority</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <method id="gtk.method.idle_remove">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>idle_remove</function></funcdef>
+     <paramdef>int <parameter>idle_handler_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Remove um callback que seria chamado quando o loop principal estiver
+    ocioso.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.idle_remove_by_data">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>idle_remove_by_data</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+
+  <method id="gtk.method.input_remove">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>input_remove</function></funcdef>
+     <paramdef>int <parameter>input_handler_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.key_snooper_install">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>key_snooper_install</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.key_snooper_remove">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>key_snooper_remove</function></funcdef>
+     <paramdef>int <parameter>snooper_handler_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.main">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>main</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.main_do_event">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>main_do_event</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.main_iteration">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>main_iteration</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Executa uma iteração única do loop principal.
+   </shortdesc>
+   <desc>
+   <para>
+    Executa uma única iteração do loop principal. Se não há nenhum evento
+    esperando ser processado, o GTK+ ficará bloqueado até o próximo evento. Se
+    você não quiser bloqueá-lo, dê uma olhada em
+    <function class="Gtk">main_iteration_do</function> ou verifique se há
+    algum evento pendente com <function class="Gtk">events_pending</function>.
+   </para>
+   <para>
+    Se você sempre altera a interface e executa algum processamento que requer
+    algum tempo, você deve forçar a atualização da interface (por ex. em uma
+    barra de progresso) utilizando as seguintes linhas de código:
+    </para>
+    <informalexample>
+     <programlisting role="php"><![CDATA[
+while (Gtk::events_pending()) {
+    Gtk::main_iteration();
+}
+]]></programlisting>
+    </informalexample>
+    <para>
+     Retorna <literal>true</literal> se
+     <function class="Gtk">main_quit</function> foi chamado para o loop
+     principal.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.method.main_iteration_do">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>main_iteration_do</function></funcdef>
+     <paramdef>bool <parameter><optional>blocking = true</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.main_level">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>main_level</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.main_quit">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>main_quit</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.quit_add">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>quit_add</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.quit_add_destroy">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>quit_add_destroy</function></funcdef>
+     <paramdef>int <parameter>main_level</parameter></paramdef>
+     <paramdef>GtkObject <parameter>object</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.quit_add_full">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>quit_add_full</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.quit_remove">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>quit_remove</function></funcdef>
+     <paramdef>int <parameter>quit_handler_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.quit_remove_by_data">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>quit_remove_by_data</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_add_default_file">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>rc_add_default_file</function></funcdef>
+     <paramdef>string <parameter>filename</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_find_module_in_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>rc_find_module_in_path</function></funcdef>
+     <paramdef>string <parameter>module_file</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_find_pixmap_in_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>rc_find_pixmap_in_path</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_get_default_files">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>rc_get_default_files</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_get_im_module_file">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>rc_get_im_module_file</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_get_im_module_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>rc_get_im_module_path</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_get_module_dir">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>rc_get_module_dir</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_get_style_by_paths">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkStyle <function>rc_get_style_by_paths</function></funcdef>
+     <paramdef>GtkSettings <parameter>settings</parameter></paramdef>
+     <paramdef>string <parameter>widget_path</parameter></paramdef>
+     <paramdef>string <parameter>class_path</parameter></paramdef>
+     <paramdef>GType <parameter>type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_get_theme_dir">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>rc_get_theme_dir</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_parse">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>rc_parse</function></funcdef>
+     <paramdef>string <parameter>filename</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_parse_color">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>rc_parse_color</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_parse_priority">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>rc_parse_priority</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.rc_parse_state">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>rc_parse_state</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <method id="gtk.method.rc_parse_string">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>rc_parse_string</function></funcdef>
+     <paramdef>string <parameter>rc_string</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.rc_property_parse_border">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>rc_property_parse_border</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.rc_property_parse_color">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>rc_property_parse_color</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.rc_property_parse_enum">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>rc_property_parse_enum</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.rc_property_parse_flags">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>rc_property_parse_flags</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.rc_property_parse_requisition">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>rc_property_parse_requisition</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <method id="gtk.method.rc_reparse_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>rc_reparse_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_reparse_all_for_settings">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>rc_reparse_all_for_settings</function></funcdef>
+     <paramdef>GtkSettings <parameter>settings</parameter></paramdef>
+     <paramdef>bool <parameter>force_load</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.rc_reset_styles">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>rc_reset_styles</function></funcdef>
+     <paramdef>GtkSettings <parameter>settings</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.rc_set_default_files">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>rc_set_default_files</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <method id="gtk.method.selection_owner_set_for_display">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>selection_owner_set_for_display</function></funcdef>
+     <paramdef>
+      <classname>GdkDisplay</classname> <parameter>display</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GtkWidget</classname> <parameter>widget</parameter>
+     </paramdef>
+     <paramdef>
+      <classname>GdkAtom</classname> <parameter>selection</parameter>
+     </paramdef>
+     <paramdef>
+      int <parameter>timestamp</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.set_locale">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>set_locale</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.settings_install_property">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>settings_install_property</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.settings_install_property_parser">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>settings_install_property_parser</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.show_about_dialog">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>show_about_dialog</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.stock_add">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>stock_add</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.stock_add_static">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>stock_add_static</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <method id="gtk.method.stock_list_ids">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>stock_list_ids</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna uma lista com o id dos estoques disponíveis.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.stock_lookup">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef>array <function>stock_lookup</function></funcdef>
+     <paramdef>
+      <enumname>GtkStockItem</enumname> <parameter>stock_id</parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna um array com informações para o stock indicado por id.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.method.timeout_add">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>timeout_add</function></funcdef>
+     <paramdef>int <parameter>timeout</parameter></paramdef>
+     <paramdef>callback <cbfunction>callback</cbfunction></paramdef>
+     <paramdef>
+      mixed <parameter><optional>user_data1, ...</optional></parameter>
+     </paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Adiciona um callback que será chamado em intervalos regulares.
+   </shortdesc>
+   <desc>
+    <para>
+     Registra  uma função que será chamada periodicamente.
+     A função será chamada repetidamente depois de 
+     <parameter>interval</parameter> milissegundos até que retorne 
+     <literal>false</literal> (ou nada), ponto no qual o timeout 
+     é destruído e não será chamado novamente.
+    </para>
+    <para>
+     Para manter o timeout ativo, seu callback deve retornar
+     <literal>true</literal>.
+    </para>
+    <example>
+     <title>Usando Gtk::timeout_add() para criar um simples relógio</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtk/timeout_add.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+
+    <para>
+     O inteiro retornado por este método pode ser usado por
+     <function class="Gtk">timeout_remove</function> para destruir o timeout
+     independentemente do valor retornado pelo callback.
+    </para>
+   </desc>
+  </method>
+
+  <!-- Not implemented as of 2006-06-05
+  <method id="gtk.method.timeout_add_full">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>timeout_add_full</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <method id="gtk.method.timeout_remove">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>timeout_remove</function></funcdef>
+     <paramdef>int <parameter>timeout_handler_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Remove um callback que seria chamado em intervalos regulares.
+   </shortdesc>
+   <desc>
+    <para>
+     Destrói um timeout, eliminando a função callback
+     de ser chamada periodicamente.
+    </para>
+    <para>
+     <parameter>timeout_handler_id</parameter> é o valor retornado por
+     <function class="Gtk">timeout_add</function>.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.method.true">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>true</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna um booleano "true".
+   </shortdesc>
+   <desc>
+    <para>
+     Retorna um booleano "true".
+    </para>
+   </desc>
+  </method>
+
+
+</refentry>

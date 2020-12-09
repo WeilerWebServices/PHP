@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 345524 Maintainer: satoruyoshida Status: ready -->
+ <chapter xml:id="features.gc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>ガベージコレクション</title>
+
+  <para>
+   このセクションでは、PHP 5.3 の一部の、新しいガベージコレクション（別名GC）機構の
+   メリットを説明します。
+  </para>
+
+  <sect1 xml:id="features.gc.refcounting-basics">
+   <title>参照カウント法の原理</title>
+   <para>
+    PHP 変数は「zval」と呼ばれるコンテナに保管されます。
+    zval コンテナには、変数の型と値の他に、情報の追加ビットを2つ含みます。
+    1つ目は「is_ref」と呼ばれ、変数が「参照集合」の一部かどうかを示すブール値
+    です。
+    このビットによって、通常の変数と参照を区別する方法を PHP エンジンが知ります。
+    &amp;演算子によって作成されるように、PHP ではユーザーランドを参照できるので、
+    zval コンテナもメモリー使用状況を最適化するための内部的な参照カウント機構を
+    持ちます。
+    追加情報の2つ目は「refcount」と呼ばれ、この1つの zval コンテナをどれだけ多くの
+    変数名（シンボルとも呼ばれます）が指すかを含みます。
+    シンボルは全てシンボルテーブルに保管され、スコープごとにシンボルテーブルの
+    1つがあります。
+    関数やメソッドごとのスコープばかりではなく、メインスクリプト用のスコープ
+    （すなわち、ブラウザによってリクエストされたスクリプト）があります。
+   </para>
+   <para>
+    新しい変数が定数値を使って作成されるとき、zval コンテナが作成されます。
+    例えば、
+    <example>
+     <title>新規 zval コンテナを作成</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = "new string";
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    この例では、新しいシンボル名（<literal>a</literal>）が現在のスコープで作成され、
+    新しい変数コンテナが <type>string</type> 型と値 <literal>new string</literal>
+    で作成されます。
+    「is_ref」ビットはデフォルトで &false; にセットされます。なぜなら、ユーザーランド
+    参照が作成されないからです。
+    この変数コンテナを利用するシンボルが1つだけあるので、「refcount」は
+    <literal>1</literal> に設定されます。
+    「refcount」が <literal>1</literal> ならば、is_ref が常に &false; である点に
+    注意してください。
+    もし <link xlink:href="&url.xdebug;">Xdebug</link> をインストール済みなら、
+    <function>xdebug_debug_zval</function>を呼ぶと、この情報を表示できます。
+   </para>
+   <para>
+    <example>
+     <title>zval 情報を表示</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = "new string";
+xdebug_debug_zval('a');
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+a: (refcount=1, is_ref=0)='new string'
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    この変数を他の変数名に代入すると、refcount が増加します。
+   </para>
+   <para>
+    <example>
+     <title>zval の refcount を増加</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = "new string";
+$b = $a;
+xdebug_debug_zval( 'a' );
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+a: (refcount=2, is_ref=0)='new string'
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    この時、refcount は <literal>2</literal> です。なぜなら、同じ変数コンテナが
+    <varname>a</varname> と <varname>b</varname> にリンクされるからです。
+    PHPは、必要ではない場合に実際の変数コンテナをコピーしないように十分スマートです。
+    「refcount」がゼロに達すると、変数コンテナは破棄されます。
+    変数コンテナにリンクされたあらゆるシンボルがスコープを抜ける
+    (たとえば関数が終わる) 場合、またはシンボルへの代入が解除された
+    (たとえば <function>unset</function> が呼ばれた)
+    場合に「refcount」が減少します。
+    下記の例でこれを示します。
+   </para>
+   <para>
+    <example>
+     <title>zval refcount を減少</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = "new string";
+$c = $b = $a;
+xdebug_debug_zval( 'a' );
+$b = 42;
+xdebug_debug_zval( 'a' );
+unset( $c );
+xdebug_debug_zval( 'a' );
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+a: (refcount=3, is_ref=0)='new string'
+a: (refcount=2, is_ref=0)='new string'
+a: (refcount=1, is_ref=0)='new string'
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    次に、<literal>unset($a);</literal> を呼ぶと、（型と値を含む）変数コンテナが
+    メモリから除去されます。
+   </para>
+
+   <sect2 xml:id="features.gc.compound-types">
+    <title>複合型</title>
+
+    <para>
+     <type>array</type> や <type>object</type> のような複合型では、事情が少し
+     複雑になります。
+     <type>scalar</type> 値とは逆に、<type>array</type> と <type>object</type>
+     では、それらのプロパティをそれら自身のシンボルテーブルに保管します。
+     これは、以下の例が3つの zval コンテナを作成することを意味します。
+    </para>
+    <para>
+     <example>
+      <title><type>array</type> zval を作成</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$a = array( 'meaning' => 'life', 'number' => 42 );
+xdebug_debug_zval( 'a' );
+?>
+]]>
+      </programlisting>
+      &example.outputs.similar;
+      <screen>
+<![CDATA[
+a: (refcount=1, is_ref=0)=array (
+   'meaning' => (refcount=1, is_ref=0)='life',
+   'number' => (refcount=1, is_ref=0)=42
+)
+]]>
+      </screen>
+      <para>つまり、図で示すと</para>
+      <mediaobject>
+       <alt>単純配列に対する zval</alt>
+       <imageobject>
+        <imagedata fileref="en/features/figures/simple-array.png" format="PNG"/>
+       </imageobject>
+      </mediaobject>
+     </example>
+    </para>
+    <para>
+     3つのzvalコンテナは <varname>a</varname>、<varname>meaning</varname> および
+     <varname>number</varname> です。「refcount」の増減に同様のルールが適用されます。
+     下記では、配列に他の要素を追加して、既存の要素の内容をその値に設定します。
+    </para>
+    <para>
+     <example>
+      <title>既存の要素を配列に追加</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$a = array( 'meaning' => 'life', 'number' => 42 );
+$a['life'] = $a['meaning'];
+xdebug_debug_zval( 'a' );
+?>
+]]>
+      </programlisting>
+      &example.outputs.similar;
+      <screen>
+<![CDATA[
+a: (refcount=1, is_ref=0)=array (
+   'meaning' => (refcount=2, is_ref=0)='life',
+   'number' => (refcount=1, is_ref=0)=42,
+   'life' => (refcount=2, is_ref=0)='life'
+)
+]]>
+      </screen>
+      <para>つまり、図で示すと</para>
+      <mediaobject>
+       <alt>参照を使った単純配列に対する zval</alt>
+       <imageobject>
+        <imagedata fileref="en/features/figures/simple-array2.png" format="PNG"/>
+       </imageobject>
+      </mediaobject>
+     </example>
+    </para>
+    <para>
+     上記の Xdebug 出力では、新旧両方の配列要素が今や、refcount が <literal>2</literal>
+     である zval コンテナを指すことがわかります。
+     Xdebugの出力では、<literal>'life'</literal> という値の zval コンテナが2つ
+     表示されますが、それらは同一です。
+     <function>xdebug_debug_zval</function> 関数はこれを表示しませんが、
+     メモリ・ポインターを示すことによってもそれを確かめられます。
+    </para>
+    <para>
+     配列からの要素の除去は、スコープからシンボルを除去するようなものです。
+     そうすることによって、配列要素が指すコンテナの「refcount」は、減少します。
+     前と同じように、「refcount」がゼロに達すると、変数コンテナはメモリから
+     除去されます。前と同じように、これを示す例です。
+    </para>
+    <para>
+     <example>
+      <title>配列から要素を除去</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$a = array( 'meaning' => 'life', 'number' => 42 );
+$a['life'] = $a['meaning'];
+unset( $a['meaning'], $a['number'] );
+xdebug_debug_zval( 'a' );
+?>
+]]>
+      </programlisting>
+      &example.outputs.similar;
+      <screen>
+<![CDATA[
+a: (refcount=1, is_ref=0)=array (
+   'life' => (refcount=1, is_ref=0)='life'
+)
+]]>
+      </screen>
+     </example>
+    </para>
+    <para>
+     次に、配列の要素として配列自体を追加すると、事情が面白くなります。
+     次の例で行います、そこでは、参照演算子にこっそり入りもします。
+     さもなければ PHP がコピーを作成するでしょう。
+    </para>
+    <para>
+     <example>
+      <title>それ自体の要素として配列自体を追加</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$a = array( 'one' );
+$a[] =& $a;
+xdebug_debug_zval( 'a' );
+?>
+]]>
+      </programlisting>
+      &example.outputs.similar;
+      <screen>
+<![CDATA[
+a: (refcount=2, is_ref=1)=array (
+   0 => (refcount=1, is_ref=0)='one',
+   1 => (refcount=2, is_ref=1)=...
+)
+]]>
+      </screen>
+      <para>つまり、図で示すと</para>
+      <mediaobject>
+       <alt>循環参照を使った配列に対する zval</alt>
+       <imageobject>
+        <imagedata fileref="en/features/figures/loop-array.png" format="PNG"/>
+       </imageobject>
+      </mediaobject>
+     </example>
+    </para>
+    <para>
+     配列変数 (<varname>a</varname>) が２番目の要素 (<varname>1</varname>) と同様に
+     「refcount」が <literal>2</literal> である変数コンテナを今や指していることがわかります。
+     上記の表示の「...」は入り組んだ再帰があることを示します。
+     もちろんこの場合には、「...」が元の配列を指すことを意味します。
+    </para>
+    <para>
+     ちょうど前のように、変数をアンセットするとシンボルが除去されます。
+     そして指す変数コンテナの参照カウントがアンセットにより減少します。
+     従って、上記のコードを実行した後に変数 <varname>$a</varname> をアンセットすると、
+     <varname>$a</varname> と要素「1」を指す変数コンテナの参照カウントは、
+     アンセットにより「2」から「1」に減少します。これは次のように表現されます。
+    </para>
+    <para>
+     <example>
+      <title><varname>$a</varname> をアンセット</title>
+      <screen>
+<![CDATA[
+(refcount=1, is_ref=1)=array (
+   0 => (refcount=1, is_ref=0)='one',
+   1 => (refcount=1, is_ref=1)=...
+)
+]]>
+      </screen>
+      <para>つまり、図で示すと</para>
+      <mediaobject>
+       <alt>メモリ・リークを実際に示す循環参照を使った配列を除去した後の zval</alt>
+       <imageobject>
+        <imagedata fileref="en/features/figures/leak-array.png" format="PNG"/>
+       </imageobject>
+      </mediaobject>
+     </example>
+    </para>
+   </sect2>
+
+   <sect2 xml:id="features.gc.cleanup-problems">
+    <title>片づけの問題</title>
+    <para>
+     この構造体を指すシンボルがいかなるスコープにももはや存在しないにもかかわらず、
+     配列要素「1」がこの同じ配列をまだ指すので、片づけられません。
+     それを指している外部シンボルがないので、ユーザーがこの構造体を片付ける方法が
+     ありません。このようにしてメモリーリークとなります。
+     幸いにも、PHP はリクエスト終了後、このデータ構造を片付けます、しかし、それ以前に
+     これはメモリ内の貴重な空間を占めています。
+     この状態は、「親」要素に再帰する「子」を持つ構文解析アルゴリズムなどの実装中に
+     しばしば発生します。
+     もちろんオブジェクトでも同じ状態が起こり得ます。オブジェクトは常に暗黙のうちに
+     参照によって使われるので、実はその状態がより起こりそうです。
+    </para>
+    <para>
+     これが 1、2 回起こるだけであるならば、これは問題でないかもしれません。しかし、
+     これらのメモリ損失の数千または数百万さえあるならば、これは明らかに問題になり始めます。
+     これは、例えばリクエストが基本的に決して終わらないデーモンのような、長くかかる
+     実行中のスクリプトや、単体テストの大規模な集合で特に問題があります。
+     後者は、eZ コンポーネント・ライブラリのテンプレート・コンポーネントに対して
+     単体テストを実行中に問題を引き起こしました。
+     いくらかの事例で、それは 2GB 以上のメモリを必要とします。そしてテストサーバーは全く
+     持っていませんでした。
+    </para>
+   </sect2>
+  </sect1>
+
+  <sect1 xml:id="features.gc.collecting-cycles">
+   <title>循環の収集</title>
+   <para>
+    伝統的に、PHP で以前使われていたような参照カウント法記憶機構では、
+    循環参照メモリ・リークに対処できません。
+    しかしながら、5.3.0 現在、PHP ではその問題に焦点を当てた
+    <link xlink:href="&url.gc-paper;">Concurrent Cycle Collection in Reference Counted Systems</link>
+    レポートに由来する同期アルゴリズムを実装しています。
+   </para>
+   <para>
+    アルゴリズムの動作方法の詳しい説明についてはこのセクションで扱う範囲を超えるので、
+    ここではその基本を説明します。
+    まず第一に、いくつかの基本原則を確立しなければなりません。
+    refcount が増やされたら、それはまだ使用中で、従ってゴミではありません。
+    refcount が減少して、ゼロに達したら、zvalは解放可能です。
+    refcount 引数がゼロ以外の値に減少する場合、これは、ガベージサイクルを作成できる
+    だけであることを意味します。
+    第２に、ガベージサイクルで、それらの refcount を減少させられるかどうかチェック
+    することによって、どの部分がゴミか発見できます。
+    可能です、そして、zval のうちいずれがゼロの refcountを持つか調べます。
+   </para>
+   <para>
+     <mediaobject>
+      <alt>ガベージコレクションのアルゴリズム</alt>
+      <imageobject>
+       <imagedata fileref="en/features/figures/gc-algorithm.png" format="PNG"/>
+      </imageobject>
+     </mediaobject>
+   </para>
+   <para>
+    refcount の減少が起こりうるたびにガベージ・サイクルのチェックを呼び出さなくても良いように、
+    代わりに、可能性があるルート (zvals) 全てをアルゴリズムはルート・バッファにたくわえます。
+    （それらは「紫」とマークされます)
+    それは、可能性のあるガベージのルートそれぞれがバッファ内で一度だけで終わることも確認します。
+    ルート・バッファが満杯の場合だけ、内部のそれぞれの zval 全てに対して収集機構が動き出します。
+    上図のステップ A をご覧ください。
+   </para>
+   <para>
+    ステップ B では、見つけた各 zval の refcount を一つ減じるために、
+    可能性があるルート全てに対してアルゴリズムが深さ優先探索を実行します。
+    それは、同一の zval に対して refcount を２回減じていないことを確保します。
+    (それらを「灰色」とマークすることにより)
+    工程 C では、それぞれのルート・ノードからアルゴリズムが再び深さ優先探索を実行します。
+    それは各 zval の refcount を再度チェックするためです。
+    refcount がゼロと分かった場合、zval は「白」（図では青色です）とマークされます。
+    もしそれが正の数なら、それは、指し示すところからの深さ優先探索により refcount の減少を一つ戻します。
+    そしてそれらは再び「黒」とマークされます。
+    最後の工程 (D) では、アルゴリズムはルート・バッファを走査してそこから zval ルートを除去します。
+    そしてその一方で zval が前の工程で「白」とマークされていたかどうかをチェックします。
+    「白」としてマークされた zval が全て解放されます。
+   </para>
+   <para>
+    アルゴリズムが動作する方法の基礎を理解したので、
+    これと PHP を統合する方法を振り返りましょう。
+    デフォルトで、PHP のガベージコレクタは有効です。
+    しかしながら、これを変更できる &php.ini; の設定があります。
+    それが <link linkend="ini.zend.enable-gc">zend.enable_gc</link> です。
+   </para>
+   <para>
+    ガベージコレクタがオンの場合、
+    ルート・バッファが満杯になるといつでも、先に述べたように循環検出法が実行されます。
+    ルート・バッファでは、可能性があるルートのサイズが一万件に固定されています。
+    （PHP のソースコードの <literal>Zend/zend_gc.c</literal> で
+    <literal>GC_ROOT_BUFFER_MAX_ENTRIES</literal> 定数を変更して、PHP を再コンパイルすると変更できます）
+    ガベージコレクタをオフにすると、循環検出法は実行されなくなります。
+    しかしながら、可能性があるルートはルート・バッファに常に記録されます。
+    ガベージコレクション機構がこの構成設定値で起動したかどうかは問題ではありません。
+   </para>
+   <para>
+    ガベージコレクション機構がオフの時に、可能性があるルートでルート・バッファが満杯になると、
+    可能性があるルートは単にそれ以上記録されません。
+    記録されないそれらの可能性があるルートは、アルゴリズムによって決して分析されません。
+    もしそれらが循環参照サイクルの要素ならば、
+    それらは決してクリーンアップされないで、メモリリークを生み出します。
+   </para>
+   <para>
+    たとえ機構が無効だとしても、可能性があるルートが記録される理由は、
+    可能性があるルートが見つかるたびに機構がオンかどうかチェックしなければいけないよりも、
+    可能性があるルートを記録するほうが速いからです。
+    しかしながら、ガベージコレクションと分析機構そのものにかなりの時間がかかることがあります。
+   </para>
+   <para>
+    <link linkend="ini.zend.enable-gc">zend.enable_gc</link> 構成設定値を変える他に、
+    <function>gc_enable</function> や <function>gc_disable</function> をそれぞれ呼ぶことでも、
+    ガベージコレクション機構をオン／オフできます。
+    それらの機能を呼ぶことと、構成設定値で機構をオン／オフすることには同じ影響があります。
+    たとえ可能性があるルートのバッファがまだ満杯でなくても、
+    循環の収集を強制することもできます。
+    このために、<function>gc_collect_cycles</function> 関数を使用できます。
+    この関数は、アルゴリズムによって収集された循環の数を返します。
+   </para>
+   <para>
+    機構をオン／オフしたり、循環の収集を開始する機能の後ろ盾になる根拠は、
+    アプリケーションの一部分は非常に時間に敏感な可能性があることです。
+    それらの場合、ガベージコレクション機構が有効にならないほうが良いかもしれません。
+    もちろん、アプリケーションのある種の部分では、ガベージコレクションをオフにすることにより、
+    メモリリークを引き起こす危険があります。
+    なぜなら可能性があるルートの一部は有限のルート・バッファに収まらないかもしれないからです。
+    従って、ルート･バッファにすでに記録された、可能性があるルートを通じて失われる可能性のあるメモリを解放するために、
+    <function>gc_disable</function> を呼ぶ直前に <function>gc_collect_cycles</function>
+    を呼ぶことは多分賢いでしょう。
+    そうすると、循環収集機構がオフの間、
+    可能性があるルートを保管するためのより多くの空間のための空のバッファが残ります。
+   </para>
+  </sect1>
+
+  <sect1 xml:id="features.gc.performance-considerations">
+   <title>パフォーマンスの考慮点</title>
+   <para>
+    可能性があるルートを単純に収集すると、パフォーマンスにごくわずかな影響があると既に前述しました。
+    しかし、これは PHP 5.3 と PHP 5.2 を比較する場合です。
+    可能性があるルートを記録すると、PHP 5.2 のように全く記録しないものに比べてより遅いとはいえ、
+    PHP 5.3 のランタイムへの他の変更点により、この特有のパフォーマンス低下が一層際立つことが防止されています。
+   </para>
+   <para>
+    パフォーマンスが影響を受ける主な分野は2つあります。
+    1つ目は、減少したメモリ使用量で、
+    2つ目はガベージコレクション機構がそのメモリ・クリーンアップを実行する際の実行遅延です。
+    それら両方の問題を見てみましょう。
+   </para>
+
+   <sect2 xml:id="features.gc.performance-considerations.reduced-mem">
+    <title>減少したメモリ使用量</title>
+    <para>
+     まず第一に、ガベージコレクション機構を実装する理由は、
+     必要条件が満たされたらすぐに、循環参照された変数を整理してメモリ使用量を減らすことにあるのです。
+     PHP の実装では、ルート・バッファが満杯になるか、または、関数
+     <function>gc_collect_cycles</function> が呼ばれるとすぐにこれが起こります。
+     下図で、下記のスクリプトのメモリ使用量を PHP 5.2 及び PHP 5.3 の両方で示します。
+     (ただし)起動時に PHP 自身が使用する基底メモリを除きます。
+    </para>
+    <para>
+     <example>
+      <title>メモリ使用量の例</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    public $var = '3.14159265359';
+}
+
+$baseMemory = memory_get_usage();
+
+for ( $i = 0; $i <= 100000; $i++ )
+{
+    $a = new Foo;
+    $a->self = $a;
+    if ( $i % 500 === 0 )
+    {
+        echo sprintf( '%8d: ', $i ), memory_get_usage() - $baseMemory, "\n";
+    }
+}
+?>
+]]>
+      </programlisting>
+      <mediaobject>
+       <alt>PHP 5.2 と PHP 5.3 のメモリ使用量の比較</alt>
+       <imageobject>
+        <imagedata fileref="en/features/figures/gc-benchmark.png" format="PNG"/>
+       </imageobject>
+      </mediaobject>
+     </example>
+    </para>
+    <para>
+     このとても学術的な例では、
+     プロパティがオブジェクト自身を指すように設定されたオブジェクトを作成します。
+     スクリプト内の <varname>$a</varname> 変数がループの次の繰り返しで再設定されると、
+     一般的にメモリ・リークが発生します。
+     この場合、zval コンテナが２つリークします（オブジェクトの zval 及び プロパティの zval）。
+     しかし、可能性があるルートが一つだけ見つかります。
+     (それは)アンセットされた変数です。
+     一万回繰り返した後に（可能性があるルートを合計1万件伴って）ルート・バッファが満杯になると、
+     ガベージコレクション機構が有効になって、それらの可能性があるルートと関連するメモリを解放します。
+     これは PHP 5.3 での、のこぎりの歯のようなメモリ使用量グラフでとてもはっきりと分かります。
+     一万回繰り返す毎に機構が有効になって、循環参照された変数と関連するメモリを解放します。
+     この例ではリークした構造がとても単純なので、機構そのものが多くの仕事をする必要はありません。
+     図では、PHP 5.3 でのメモリ使用量の最大はおよそ 9MB と分かります。
+     ところが PHP 5.2 では、メモリ使用量は増加し続けます。
+    </para>
+   </sect2>
+
+   <sect2 xml:id="features.gc.performance-considerations.slowdowns">
+    <title>ランタイムの減速</title>
+    <para>
+     ガベージコレクション機構がパフォーマンスに影響する２つ目の分野は、
+     ガベージコレクション機構が「リークした」メモリを解放するために
+     開始する際にかかる時間です。これがどの程度か見るためには、
+     反復回数をより多くし、間に入るメモリの使用量を除去するために、
+     前のスクリプトをちょっと修正します。
+     2つ目のスクリプトはこれです。
+    </para>
+    <para>
+     <example>
+      <title>GC パフォーマンスの影響</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    public $var = '3.14159265359';
+}
+
+for ( $i = 0; $i <= 1000000; $i++ )
+{
+    $a = new Foo;
+    $a->self = $a;
+}
+
+echo memory_get_peak_usage(), "\n";
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     このスクリプトを2回実行します。最初は <link linkend="ini.zend.enable-gc">zend.enable_gc</link>
+     設定をオンにし、次はオフにします。
+    </para>
+    <para>
+     <example>
+      <title>上記のスクリプトを実行</title>
+      <programlisting role="shell">
+<![CDATA[
+time php -dzend.enable_gc=0 -dmemory_limit=-1 -n example2.php
+# and
+time php -dzend.enable_gc=1 -dmemory_limit=-1 -n example2.php
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     私のマシンでは、最初の命令は一貫しておよそ10.7秒かかるようです。
+     ところが、第2の命令にはおよそ11.4秒かかります。
+     これは、およそ7%の減速です。
+     しかしながら、スクリプトで使用されるメモリの最大量は、931MB から 10MB まで 98% 減ります。
+     このベンチマークはあまり学術的でもなく、現実のアプリケーションの代表でもありません。
+     しかし、このガベージコレクション機構が提供するメモリ使用量の利点を示します。
+     良い点は、スクリプト実行中に循環参照をより多く見つけて、
+     メモリ節約機能がますます多くのメモリを節約する一方で、
+     この個別のスクリプトで減速がいつでも同じく7%ということです。
+    </para>
+   </sect2>
+
+   <sect2 xml:id="features.gc.performance-considerations.internal-stats">
+    <title>PHP 内部の GC 統計</title>
+    <para>
+     ガベージコレクション機構がPHP 内部から実行される方法に関して、
+     情報をもう少し上手に扱うことができます。
+     しかし、そうするためには、ベンチマークとデータ収集コードを使用可能にするために、
+     PHP を再コンパイルしなければなりません。
+     希望するオプションで <literal>./configure</literal> を走らせる前に、
+     <literal>CFLAGS</literal> 環境変数を <literal>-DGC_BENCH=1</literal> に設定しなければなりません。
+     以下の順序で目的に達するでしょう。
+    </para>
+    <para>
+     <example>
+      <title>GC ベンチマーキングを使用可能にするために PHP を再コンパイル</title>
+      <programlisting role="shell">
+<![CDATA[
+export CFLAGS=-DGC_BENCH=1
+./config.nice
+make clean
+make
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     新しくビルドした PHP バイナリで上記のコード例を前と同じように実行すると、
+     PHP の実行終了後に、下記が表示されているでしょう。
+    </para>
+    <para>
+     <example>
+      <title>GC 統計</title>
+      <programlisting role="shell">
+<![CDATA[
+GC Statistics
+-------------
+Runs:               110
+Collected:          2072204
+Root buffer length: 0
+Root buffer peak:   10000
+
+      Possible            Remove from  Marked
+        Root    Buffered     buffer     grey
+      --------  --------  -----------  ------
+ZVAL   7175487   1491291    1241690   3611871
+ZOBJ  28506264   1527980     677581   1025731
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     最も有益な統計は、最初のブロックで示されます。
+     ここではガベージコレクション機構が 110 回実行されたことが分かります。
+     そして、全体では、それら 110 回の実行中に、 200万以上のメモリ割り当てが
+     解放されました。
+     ガベージコレクション機構が少なくとも一回実行されるや否や、
+     "Root buffer peak" は常に 10000 です。
+    </para>
+   </sect2>
+
+   <sect2 xml:id="features.gc.performance-considerations.conclusion">
+    <title>結論</title>
+    <para>
+     通常、循環収集アルゴリズムが実際に動作する際、PHP でのガベージコレクタは減速を
+     引き起こすだけです。一方、通常の（より小さい）スクリプトでは、打撃を受ける
+     パフォーマンスが全くあってはいけません。
+    </para>
+    <para>
+     しかしながら、循環収集機構が通常のスクリプトに対して動作する場合には、
+     全体でそれほど多くのメモリが使われないので、
+     循環収集機構により提供されるメモリ節減により、それらのスクリプトの多くで
+     サーバー上で平行して稼動できるようになります。
+    </para>
+    <para>
+     より長時間にわたるスクリプト（例えば長いテスト・スイートまたはデーモン・スクリプト）にとって
+     有利なことはとても明らかです。
+     また、ウェブ用のスクリプトに比べてたいていより長く動作する傾向がある
+     <link xlink:href="&url.php.gtk;">PHP-GTK</link> アプリケーションについては、
+     時がたつにつれて忍び込むメモリリークに関して、新しい機構によるかなりの差が生じなければなりません。
+    </para>
+   </sect2>
+  </sect1>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

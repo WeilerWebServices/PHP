@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 301119 Maintainer: adi Status: ready -->
+<!-- $Revision$ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.feof">
+ <refnamediv>
+  <refname>feof</refname>
+  <refpurpose>Sprawdza czy wskaźnik pliku jest na końcu pliku (EOF)</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>feof</methodname>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Sprawdza czy wskaźnik pliku jest na końcu pliku (EOF).
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>uchwyt</parameter></term>
+     <listitem>
+      &fs.validfp.all;
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca &true; jeśli wskaźnik pliku jest na EOF lub gdy zdarzy się błąd
+   (także timeout połączenia socket'owego); w przeciwnym wypadku zwraca &false;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    Jeśli połączenie otworzone za pomocą <function>fsockopen</function> nie
+    zostanie zamknięte przez serwer, <function>feof</function> zawiesi się. Aby to obejść zobacz
+    poniższy przykład:
+    <example>
+     <title>Obsługa limitu czasu w <function>feof</function></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function safe_feof($fp, &$start = NULL) {
+ $start = microtime(true);
+
+ return feof($fp);
+}
+
+/* Zakładając, że $fp jest wcześniej otworzone przez fsockopen() */
+
+$start = NULL;
+$timeout = ini_get('default_socket_timeout');
+
+while(!safe_feof($fp, $start) && (microtime(true) - $start) < $timeout)
+{
+ /* Uchwyt */
+}
+?>
+]]>
+     </programlisting>
+    </example>    
+   </para>
+  </warning>
+  <warning>
+   <para>
+    Jeśli podano nieprawidłowy wskaźnik pliku to możesz uzyskać nieskończoną pętle,
+    ponieważ <function>feof</function> w przypadku błędu zwraca &true;..
+    <example>
+     <title><function>feof</function> przykład z nieprawidłowym wskaźnikiem pliku</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// jeśli plik nie może zostać odczytany lub nie istnieje funkcja fopen zwróci FALSE
+$file = @fopen("nie_isniejacy_plik", "r");
+
+// FALSE z fopen spowoduje ostrzeżenie oraz wystąpi tu nieskończona pętla
+while (!feof($file)) {
+}
+
+fclose($file);
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </warning>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

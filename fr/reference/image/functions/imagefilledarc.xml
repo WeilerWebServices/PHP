@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 344594 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="function.imagefilledarc" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>imagefilledarc</refname>
+  <refpurpose>Dessine un arc partiel et le remplit</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>imagefilledarc</methodname>
+   <methodparam><type>resource</type><parameter>image</parameter></methodparam>
+   <methodparam><type>int</type><parameter>cx</parameter></methodparam>
+   <methodparam><type>int</type><parameter>cy</parameter></methodparam>
+   <methodparam><type>int</type><parameter>width</parameter></methodparam>
+   <methodparam><type>int</type><parameter>height</parameter></methodparam>
+   <methodparam><type>int</type><parameter>start</parameter></methodparam>
+   <methodparam><type>int</type><parameter>end</parameter></methodparam>
+   <methodparam><type>int</type><parameter>color</parameter></methodparam>
+   <methodparam><type>int</type><parameter>style</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Dessine un arc partiel, centré aux coordonnées spécifiées dans
+   l'image fournie.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    &gd.image.description;
+    <varlistentry>
+     <term><parameter>cx</parameter></term>
+     <listitem>
+      <para>
+       X : coordonnée du centre.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>cy</parameter></term>
+     <listitem>
+      <para>
+       Y : coordonnée du centre.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>width</parameter></term>
+     <listitem>
+      <para>
+       La largeur de l'arc.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>height</parameter></term>
+     <listitem>
+      <para>
+       La hauteur de l'arc.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>start</parameter></term>
+     <listitem>
+      <para>
+       L'angle de début de l'arc, en degrés.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>end</parameter></term>
+     <listitem>
+      <para>
+       L'angle de fin de l'arc, en degrés.
+       0° est situé à une position de 3 heures sur un cadran horaire, et
+       l'arc est dessiné dans le sens des aiguilles d'une montre.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>color</parameter></term>
+     <listitem>
+      <para>
+       &gd.identifier.color;
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>style</parameter></term>
+     <listitem>
+      <para>
+       Un champ d'octets, combiné avec l'opérateur OR :
+       <orderedlist>
+        <listitem><simpara><constant>IMG_ARC_PIE</constant></simpara></listitem>
+        <listitem><simpara><constant>IMG_ARC_CHORD</constant></simpara></listitem>
+        <listitem><simpara><constant>IMG_ARC_NOFILL</constant></simpara></listitem>
+        <listitem><simpara><constant>IMG_ARC_EDGED</constant></simpara></listitem>
+       </orderedlist>
+       <constant>IMG_ARC_PIE</constant> et <constant>IMG_ARC_CHORD</constant> sont
+       mutuellement exclusives; <constant>IMG_ARC_CHORD</constant> ne fait que
+       connecter les angles de début et de fin avec une ligne droite, tandis
+       que <constant>IMG_ARC_PIE</constant> produit une ligne courbe.
+       <constant>IMG_ARC_NOFILL</constant> indique que l'arc (ou corde) doit être
+       dessiné mais pas rempli. <constant>IMG_ARC_EDGED</constant>, utilisé conjointement
+       avec <constant>IMG_ARC_NOFILL</constant>, indique que les angles de
+       début et de fin doivent être connectés au centre. Cette fonction est
+       recommandée pour faire les graphiques de type camembert.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Création d'un camembert en 3D</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// Création de l'image
+$image = imagecreatetruecolor(100, 100);
+
+// Allocation de quelques couleurs
+$white    = imagecolorallocate($image, 0xFF, 0xFF, 0xFF);
+$gray     = imagecolorallocate($image, 0xC0, 0xC0, 0xC0);
+$darkgray = imagecolorallocate($image, 0x90, 0x90, 0x90);
+$navy     = imagecolorallocate($image, 0x00, 0x00, 0x80);
+$darknavy = imagecolorallocate($image, 0x00, 0x00, 0x50);
+$red      = imagecolorallocate($image, 0xFF, 0x00, 0x00);
+$darkred  = imagecolorallocate($image, 0x90, 0x00, 0x00);
+
+// Création de l'effet 3D
+for ($i = 60; $i > 50; $i--) {
+   imagefilledarc($image, 50, $i, 100, 50, 0, 45, $darknavy, IMG_ARC_PIE);
+   imagefilledarc($image, 50, $i, 100, 50, 45, 75 , $darkgray, IMG_ARC_PIE);
+   imagefilledarc($image, 50, $i, 100, 50, 75, 360 , $darkred, IMG_ARC_PIE);
+}
+
+imagefilledarc($image, 50, 50, 100, 50, 0, 45, $navy, IMG_ARC_PIE);
+imagefilledarc($image, 50, 50, 100, 50, 45, 75 , $gray, IMG_ARC_PIE);
+imagefilledarc($image, 50, 50, 100, 50, 75, 360 , $red, IMG_ARC_PIE);
+
+
+// Affichage de l'image
+header('Content-type: image/png');
+imagepng($image);
+imagedestroy($image);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <mediaobject>
+     <alt>Affichage de l'exemple : Création d'un graphique 3D</alt>
+     <imageobject>
+      <imagedata fileref="en/reference/image/figures/imagefilledarc.png"/>
+     </imageobject>
+    </mediaobject>
+   </example>
+  </para>
+ </refsect1>
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

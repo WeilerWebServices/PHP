@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351365 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+ <sect1 xml:id="language.oop5.interfaces" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Interfaces</title>
+  <para>
+   Les interfaces objet vous permettent de créer du code qui spécifie quelles
+   méthodes une classe doit implémenter, sans avoir à définir comment ces méthodes
+   fonctionneront.
+  </para>
+  <para>
+   Les interfaces sont définies de la même façon que pour une classe, mais en 
+   utilisant le mot-clé <literal>interface</literal> à la place de 
+   <literal>class</literal>, et sans qu'aucune des méthodes n'ait son contenu 
+   de spécifié.
+  </para>
+  <para>
+   De par la nature même d'une interface, toutes les méthodes déclarées dans une
+   interface doivent être publiques.
+  </para>
+  <para>
+   Il est à noter qu'il est possible de déclarer un <link
+   linkend="language.oop5.decon.constructor">constructeur</link> dans une
+   interface, ce qui peut être utile dans certains contextes, par exemple
+   pour une utilisation par les factory.
+  </para>
+  <sect2 xml:id="language.oop5.interfaces.implements">
+   <title><literal>implements</literal></title>
+   <para>
+    Pour implémenter une interface, l'opérateur <literal>implements</literal>
+    est utilisé. Toutes les méthodes de l'interface doivent être implémentées dans une
+    classe ; si ce n'est pas le cas, une erreur fatale sera émise. Les classes peuvent
+    implémenter plus d'une interface, en séparant chaque interface par une virgule.
+   </para>
+   <note>
+    <para>
+     Avant PHP 5.3.9, une classe ne pouvait pas implémenter deux interfaces
+     qui spécifiaient une méthode avec le même nom, sachant que cela
+     introduisait une ambiguïté. Les versions plus récentes de PHP
+     l'autorisent, à partir du moment où les méthodes dupliquées
+     ont la même signature.
+    </para>
+   </note>
+   <note>
+    <para>
+     Les interfaces peuvent être étendues comme des classes, en utilisant l'opérateur
+     <link linkend="language.oop5.inheritance">extends</link>
+    </para>
+   </note>
+   <note>
+    <para>
+     La classe implémentant l'interface doit utiliser des signatures de méthodes
+     compatible avec LSP (Principe de Substitution de Liskov).
+     Dans le cas contraire, une erreur fatale sera émise.
+     </para>
+    </note>
+  </sect2>
+  <sect2 xml:id="language.oop5.interfaces.constants">
+   <title><literal>Les constantes</literal></title>
+   <para>
+    Les interfaces peuvent contenir des constantes. Les constantes d'interfaces fonctionnent exactement
+    comme les <link linkend="language.oop5.constants">constantes de classe</link>, mis à part le fait
+    qu'elles ne peuvent pas être écrasées par une classe ou une interface qui en hérite.
+   </para>
+  </sect2>
+  <sect2 xml:id="language.oop5.interfaces.examples">
+   &reftitle.examples;
+   <example xml:id="language.oop5.interfaces.examples.ex1">
+   <title>Exemple d'interface</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// Declaration de l'interface 'iTemplate'
+interface iTemplate
+{
+    public function setVariable($name, $var);
+    public function getHtml($template);
+}
+
+// Implémentation de l'interface
+// Ceci va fonctionner
+class Template implements iTemplate
+{
+    private $vars = array();
+
+    public function setVariable($name, $var)
+    {
+        $this->vars[$name] = $var;
+    }
+
+    public function getHtml($template)
+    {
+        foreach($this->vars as $name => $value) {
+            $template = str_replace('{' . $name . '}', $value, $template);
+        }
+
+        return $template;
+    }
+}
+
+// Ceci ne fonctionnera pas
+// Fatal error: Class BadTemplate contains 1 abstract methods
+// and must therefore be declared abstract (iTemplate::getHtml)
+class BadTemplate implements iTemplate
+{
+    private $vars = array();
+
+    public function setVariable($name, $var)
+    {
+        $this->vars[$name] = $var;
+    }
+}
+?>
+]]>
+   </programlisting>
+  </example>
+   <example xml:id="language.oop5.interfaces.examples.ex2">
+    <title>Les interfaces extensibles</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+interface a
+{
+    public function foo();
+}
+
+interface b extends a
+{
+    public function baz(Baz $baz);
+}
+
+// Ceci fonctionnera
+class c implements b
+{
+    public function foo()
+    {
+    }
+
+    public function baz(Baz $baz)
+    {
+    }
+}
+
+// Ceci ne fonctionnera pas et entrainera une erreur fatale
+class d implements b
+{
+    public function foo()
+    {
+    }
+
+    public function baz(Foo $foo)
+    {
+    }
+}
+?>
+]]>
+     </programlisting>
+   </example>
+   <example xml:id="language.oop5.interfaces.examples.ex3">
+    <title>Héritage de plusieurs interfaces</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+interface a
+{
+    public function foo();
+}
+
+interface b
+{
+    public function bar();
+}
+
+interface c extends a, b
+{
+    public function baz();
+}
+
+class d implements c
+{
+    public function foo()
+    {
+    }
+
+    public function bar()
+    {
+    }
+
+    public function baz()
+    {
+    }
+}
+?>
+]]>
+     </programlisting>
+   </example>
+   <example xml:id="language.oop5.interfaces.examples.ex4">
+    <title>Interfaces avec des constantes</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+interface a
+{
+    const b = 'Constante de l\'interface';
+}
+
+// Affiche : Constante de l'interface
+echo a::b;
+
+
+// Par contre, ceci ne fonctionnera pas, puisqu'il n'est pas permis
+// d'écraser des constantes.
+class b implements a
+{
+    const b = 'Constante de classe';
+}
+?>
+]]>
+     </programlisting>
+   </example>
+   <para>
+    Une interface, avec le typage, fournit une bonne façon de vous assurer
+    qu'un objet particulier contient des méthodes particulières.
+    Reportez-vous à l'opérateur
+    <link linkend="language.operators.type">instanceof</link> et au
+    <link linkend="language.types.declarations">déclarations de type</link>.
+   </para>
+ </sect2>
+
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

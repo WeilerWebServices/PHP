@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 1.16 Maintainer: fernando Status: ready -->
+<classentry id="gtk.gtkcontainer">
+ <classmeta>
+  <classtitle>GtkContainer</classtitle>
+  <classparent>GtkWidget</classparent>
+  <shortdesc>
+   Uma classe abstrata a ser estendida por widgets que guardam um ou
+   mais widgets.
+  </shortdesc>
+  <desc>
+   <para>
+    Uma classe abstrata a ser estendida por widgets que guardam um ou
+    mais widgets.
+   </para>
+   <para>
+    Containers (widgets que estendem de  <classname>GtkContainer</classname>)
+    provem um contexto para os widgets que eles contém. Containers gerenciam a 
+    localização, redimensionamento e ordem dos seus filhos.
+   </para>
+   <para>
+    Containers podem ser divididos em dois grupos: bins (containers que
+    estendem de <classname>GtkBin</classname>) e containers de múltiplos filhos.
+    Bins podem ter apenas um filho e em geral provem algum conjunto adicional
+    de funcionalidade ou melhorias na exibição para o seu widget filho. Containers de múltiplos filhos,
+    por outro lado, normalmente não provem qualquer funcionalidade
+    adicional e, ao invés, focam na organização de um conjunto de widgets.
+   </para>
+  </desc>
+ </classmeta>
+
+
+ <methods>
+  <method id="gtk.gtkcontainer.method.add">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Adiciona o widget dado ao container.
+   </shortdesc>
+   <desc>
+    <simpara>
+     Adiciona o widget dado ao container.
+    </simpara>
+    <simpara>
+     Quando um filho é adicionado ao container o sinal
+     <signalname>add</signalname> é emitido.
+    </simpara>
+    <note>
+     A maioria dos containers de múltiplos filhos provem um método alternativo, mais poderoso,
+     para adicionar filhos ao container. <function class="GtkContainer">add</function> deve normalmente
+     ser chamada apenas para bins.
+    </note>
+   </desc>
+  </method>
+
+  <!-- Not implemented as of 2006-07-03
+  <method id="gtk.gtkcontainer.method.add_with_properties">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>add_with_properties</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+  -->
+
+  <method id="gtk.gtkcontainer.method.check_resize">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>check_resize</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emite o sinal "check-resize" no container.
+   </shortdesc>
+   <desc>
+    <para>
+     Emite o sinal <signalname class="GtkContainer">check-resize</signalname>
+     no container.
+    </para>
+   </desc>
+  </method>
+<!--
+  <method id="gtk.gtkcontainer.method.child_get">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>child_get</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.child_get_property">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>child_get_property</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.child_get_valist">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>child_get_valist</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.child_set">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>child_set</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.child_set_property">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>child_set_property</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.child_set_valist">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>child_set_valist</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+-->
+  <method id="gtk.gtkcontainer.method.child_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GType <function>child_type</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna o tipo de filhos suportado pelo container.
+   </shortdesc>
+   <desc>
+    <para>
+     Retorna o tipo de filhos suportado pelo container.
+    </para>
+    <para>
+     Note que isto pode retornar <literal>Gobject::TYPE_NONE</literal> para indicar
+     que não podem ser adicionados mais filhos, exemplo, para um
+     <classname>GtkPaned</classname> o qual já tenha dois filhos.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.children">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>children</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated;
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+    </para>
+    <para>
+     Use <function class="GtkContainer">get_children</function> ao invés
+    </para>
+   </desc>
+  </method>
+<!--
+  <method id="gtk.gtkcontainer.method.forall">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>forall</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.foreach">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>foreach</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.foreach_full">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>foreach_full</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+-->
+  <method id="gtk.gtkcontainer.method.get_border_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_border_width</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna a largura da borda.
+   </shortdesc>
+   <desc>
+    <para>
+     Retorna a largura da borda entorno do container.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">set_border_width</function>,
+     <propname class="GtkContainer">border-width</propname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.get_children">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_children</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna um array com todos os filhos.
+   </shortdesc>
+   <desc>
+    <para>
+     Retorna um array com todos os filhos não internos.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.get_focus_chain">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_focus_chain</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna a ordem do foco.
+   </shortdesc>
+   <desc>
+    <para>
+     Obtém a cadeia de foco do container, se uma foi definida explicitamente.
+     Se nenhuma cadeia de foco foi definida explicitamente, o GTK+
+     calcula a cadeia de foco baseado na posição dos filhos.
+     Neste caso, é retornado <literal>null</literal>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">set_focus_chain</function>, 
+     <function class="GtkContainer">unset_focus_chain</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.get_focus_hadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkAdjustment</classname> <function>get_focus_hadjustment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Obtém o ajustamento do foco horizontal
+   </shortdesc>
+   <desc>
+    <para>
+     Obtém o ajustamento do foco horizontal para o container.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">set_focus_hadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.get_focus_vadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkAdjustment</classname> <function>get_focus_vadjustment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Obtém o ajustamento do foco vertical.
+   </shortdesc>
+   <desc>
+    <para>
+     Obtém o ajustamento do foco vertical para o container.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">set_focus_vadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.get_resize_mode">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><enumname>GtkResizeMode</enumname> <function>get_resize_mode</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Retorna o modo de redimencionamento
+   </shortdesc>
+   <desc>
+    <para>
+     Retorna o modo de redimencionamento.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">set_resize_mode</function>, 
+     <propname class="GtkContainer">resize-mode</propname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.propagate_expose">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>propagate_expose</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+     <paramdef><parameter>event</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Envia um evento "expose" para um filho.
+   </shortdesc>
+   <desc>
+    <para>
+     Quando um container recebe um evento expose, ele deve enviar sinteticamente
+     o evento expose para todos os filhos que não tem o seu próprio
+     <classname>GdkWindow</classname>. Esta função prove uma maneira
+     conveniente de fazer isto. Um container, quando recebe um evento expose, chama
+     <literal>propagate_expose</literal> uma vez para cada filho, passando no evento
+     o container recebido
+    </para>
+    <para>
+     propagate_expose() cuida de decidir quando um evento event precisa
+     ser enviado para o filho, intersecionando a area do evento com a area
+     do filho, e enviando o evento.
+    </para>
+    <para>
+     Na maioria dos casos um container pode simplesmente ou herdar a implementação
+     do expose de <classname>GtkContainer</classname>, ou,
+     então fazer algum desenho e então encadear a implementação do expose de
+     <classname>GtkContainer</classname>.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.remove">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>remove</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Remove um widget do container.
+   </shortdesc>
+   <desc>
+    <para>
+     Remove um widget do container. O widget deve estar dentro do container.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.resize_children">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>resize_children</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Recalcula o seu tamanho e de todos os seus filhos.
+   </shortdesc>
+   <desc>
+    <para>
+     Faz com que o container recalcule o seu tamanho e de todos os seus filhos.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">get_children</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.set_border_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_border_width</function></funcdef>
+     <paramdef>int <parameter>border_width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define a borda em torno do container.
+   </shortdesc>
+   <desc>
+    <para>
+     Define a largura da borda vazia desenhada em torno do container.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">get_border_width</function>,
+     <propname class="GtkContainer">border-width</propname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.set_focus_chain">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_focus_chain</function></funcdef>
+     <paramdef>array <parameter>widgets</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sobrescreve a cadeia de foco automaticamente calculada.
+   </shortdesc>
+   <desc>
+    <para>
+     Define uma cadeia de foco, sobrescrevendo aquela automaticamente calculada pelo GTK+.
+    </para>
+    <para>
+     Em princípio cada widget em uma cadeia deve ser descendente de um
+     container, mas isso não é obrigatório por este método, já que é permitido
+     definir a cadeia de foco antes de você empacotar os widgets, ou ter um widget
+     na cadeia que não esta sempre empacotado. Os testes necessários são feitos
+     quando a cadeia de focos e atualmente transversada.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">get_focus_chain</function>, 
+     <function class="GtkContainer">unset_focus_chain</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.set_focus_child">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_focus_child</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emite o sinal "set-focus-child".
+   </shortdesc>
+   <desc>
+    <para>
+     Este método emite o sinal "set-focus-child" que arranja
+     para o widget filho referenciado por child para obter o
+     foco e recalcular o adjustments do container.
+    </para>
+    <para>
+     &seealso;
+     <propname class="GtkContainer">focus_child</propname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.set_focus_hadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_focus_hadjustment</function></funcdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>adjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define o adjustment horizontal.
+   </shortdesc>
+   <desc>
+    <para>
+     Engancha um adjustment para manipular o foco em um container, assim quando
+     um widget filho do container tem o foco, o adjustment é rolado para exibir
+     este widget. Esta função define o alinhamento horizontal.
+    </para>
+    <para>
+     Os adjustments devem ser em unidades de pixel e no mesmo sistema de
+     cordenadas como a alocação para o filho imediato do container.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">get_focus_hadjustment</function>,
+     <function class="GtkContainer">set_focus_vadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.set_focus_vadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_focus_vadjustment</function></funcdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>adjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define o adjustment vertical.
+   </shortdesc>
+   <desc>
+    <para>
+     Engancha um adjustment para manipular o foco no container, assim quando um filho
+     do container é focado, adjustment é rolado para mostrar
+     este widget. Esta função define o alignment vertical.
+    </para>
+    <para>
+     Os adjustments devem ser em unidades de pixel e no mesmo sistema de
+     cordenadas como a alocação para o filho imediato do container.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">get_focus_vadjustment</function>,
+     <function class="GtkContainer">set_focus_hadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.set_reallocate_redraws">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_reallocate_redraws</function></funcdef>
+     <paramdef>bool <parameter>needs_redraws</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define a opção reallocate_redraws.
+   </shortdesc>
+   <desc>
+    <para>
+     Define a opção reallocate_redraws do container para o valor dado. 
+    </para>
+    <para>
+     Containers requerendo redesenho por realocação são automaticamente
+     redesenhados se qualquer um dos seus filhos muda a alocação.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.set_resize_mode">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_resize_mode</function></funcdef>
+     <paramdef><enumname>GtkResizeMode</enumname> <parameter>resize_mode</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Define o modo de redimencionamento para o container.
+   </shortdesc>
+   <desc>
+    <para>
+     Define o modo de redimencionamento para o container.
+    </para>
+    <para>
+     O modo de redimencionamento do container determina quando uma solicitação de redimencionamento
+     será passada para o parente do container, agendado para execução posterior
+     ou executado imediatamente.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">get_resize_mode</function>, 
+     <propname class="GtkContainer">resize-mode</propname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkcontainer.method.unset_focus_chain">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unset_focus_chain</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Remove uma cadeia de foco explicitamente definida.
+   </shortdesc>
+   <desc>
+    <para>
+     Remove uma cadeia de foco explicitamente definida com
+     <function class="GtkContainer">set_focus_chain</function>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">get_focus_chain</function>, 
+     <function class="GtkContainer">set_focus_chain</function>
+    </para>
+   </desc>
+  </method>
+ </methods>
+
+
+ <properties>
+  <prop id="gtk.gtkcontainer.prop.border-width" type="rw">
+   <propname>border-width</propname>
+   <proptype>int</proptype>
+   <shortdesc>
+    Borda em torno do container
+   </shortdesc>
+   <desc>
+    <para>
+     A largura da borda vazia do lado de fora dos filhos do container.
+    </para>
+    <para>
+     Padrão: <literal>0</literal>
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">get_border_width</function>, 
+     <function class="GtkContainer">set_border_width</function>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkcontainer.prop.child" type="w">
+   <propname>child</propname>
+   <proptype><classname>GtkWidget</classname></proptype>
+   <shortdesc>
+    Adiciona um novo filho ao container.
+   </shortdesc>
+   <desc>
+    <para>
+     Pode ser usado para adicionar um novo filho ao container.
+    </para>
+   </desc>
+  </prop>
+<!--
+  <field id="gtk.gtkcontainer.field.has_focus_chain" type="rw">
+   <fieldname>has_focus_chain</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkcontainer.field.need_resize" type="ro">
+   <fieldname>need_resize</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkcontainer.field.reallocate_redraws" type="ro">
+   <fieldname>reallocate_redraws</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkContainer">set_reallocate_redraws</function>
+    </para>
+
+   </desc>
+  </field>
+-->
+  <prop id="gtk.gtkcontainer.prop.resize-mode" type="rw">
+   <propname>resize-mode</propname>
+   <proptype><enumname>GtkResizeMode</enumname></proptype>
+   <shortdesc>
+    Como eventos resize são manipulados.
+   </shortdesc>
+   <desc>
+    <para>
+     Especifica como eventos resize são manipulados.
+    </para>
+    <para>
+     Padrão: <optionname enum="GtkResizeMode">Gtk::RESIZE_PARENT</optionname>
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkContainer">get_resize_mode</function>, 
+     <function class="GtkContainer">set_resize_mode</function>
+    </para>
+   </desc>
+  </prop>
+ </properties>
+
+
+ <signals>
+  <signal id="gtk.gtkcontainer.signal.add">
+   <signalname>add</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkContainer <parameter>container</parameter></paramdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitido quando um filho é adicionado ao container com
+    o método add.
+   </shortdesc>
+   <desc>
+    Emitido pelo container quando um filho é adicionado com o
+    método add. Quando este sinal é emitido, ambos o container e o
+    filho são passados para o callback. O sinal add é apenas emitido
+    quando um filho é adicionado ao container usando o método add.
+    Se um filho é adicionado usando o método de caixa
+    <function class="GtkBox">pack_start</function>, o sinal
+    add não será emitido.
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkcontainer.signal.check-resize">
+   <signalname>check-resize</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkContainer</classname> <parameter>container</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Recalculo dos filhos é solicitado.
+   </shortdesc>
+   <desc>
+    <para>
+     O sinal "check-resize" é emitido quando o método
+     <function class="GtkContainer">check_resize</function> é chamado
+     forçando o recalculo do container e seus filhos.
+     Veja o método <function class="GtkContainer">set_resize_mode</function>
+     para detalhes.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkcontainer.signal.remove">
+   <signalname>remove</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkContainer</classname> <parameter>container</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Um widget é removido do container.
+   </shortdesc>
+   <desc>
+    <para>
+     Emitido quando um filho é removido do container.
+    </para>
+   </desc>
+  </signal>
+
+  <signal id="gtk.gtkcontainer.signal.set-focus-child">
+   <signalname>set-focus-child</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef><classname>GtkContainer</classname> <parameter>container</parameter></paramdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Mudança de foco.
+   </shortdesc>
+   <desc>
+    <para>
+     É dado o foco ao widget filho.
+    </para>
+   </desc>
+  </signal>
+ </signals>
+
+</classentry>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

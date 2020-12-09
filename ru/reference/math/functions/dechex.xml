@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 351133 Maintainer: das Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+<!-- $Revision$ -->
+<refentry xml:id="function.dechex" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>dechex</refname>
+  <refpurpose>Переводит число из десятичной системы счисления в шестнадцатеричную</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>dechex</methodname>
+   <methodparam><type>int</type><parameter>number</parameter></methodparam>
+   </methodsynopsis>
+  <para>
+   Возвращает строку, содержащую шестнадцатеричное представление указанного безнакового аргумента
+   <parameter>number</parameter>.
+  </para>
+  <para>
+   Наибольшее число, которое может быть преобразовано - 
+   <constant>PHP_INT_MAX</constant><literal> * 2 + 1</literal> (или
+   <literal>-1</literal>): на 32-битных платформах это
+   <literal>4294967295</literal> в десятеричной системе, что конвертируется функцией
+   <function>dechex</function> в <literal>ffffffff</literal>.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>number</parameter></term>
+     <listitem>
+      <para>
+       Десятичное значение для преобразования
+      </para>
+      <para>
+       Так как тип PHP <type>int</type> является знаковым, а
+       <function>dechex</function> работает с безнаковыми целыми, то отрицательные
+       целые воспринимаются как безнаковые.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Шестнадцатеричное строковое представление <parameter>number</parameter>.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>dechex</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo dechex(10) . "\n";
+echo dechex(47);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+a
+2f
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Пример использования <function>dechex</function> с большими целыми</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Вывод подразумевает 32-битную платформу.
+// Обратите внимание, что вывод одинаков для всех этих значений.
+echo dechex(-1)."\n";
+echo dechex(PHP_INT_MAX * 2 + 1)."\n";
+echo dechex(pow(2, 32) - 1)."\n";
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+ffffffff
+ffffffff
+ffffffff
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>hexdec</function></member>
+    <member><function>decbin</function></member>
+    <member><function>decoct</function></member>
+    <member><function>base_convert</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

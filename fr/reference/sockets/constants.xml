@@ -1,0 +1,1737 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<appendix xml:id="sockets.constants" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.constants;
+ &extension.constants;
+ <variablelist>
+  <varlistentry xml:id="constant.af-unix">
+   <term>
+    <constant>AF_UNIX</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.af-inet">
+   <term>
+    <constant>AF_INET</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.af-inet6">
+   <term>
+    <constant>AF_INET6</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Uniquement disponible si PHP est compilé avec le support IPv6.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sock-stream">
+   <term>
+    <constant>SOCK_STREAM</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sock-dgram">
+   <term>
+    <constant>SOCK_DGRAM</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sock-raw">
+   <term>
+    <constant>SOCK_RAW</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sock-seqpacket">
+   <term>
+    <constant>SOCK_SEQPACKET</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sock-rdm">
+   <term>
+    <constant>SOCK_RDM</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.msg-oob">
+   <term>
+    <constant>MSG_OOB</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.msg-waitall">
+   <term>
+    <constant>MSG_WAITALL</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.msg-peek">
+   <term>
+    <constant>MSG_PEEK</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.msg-dontroute">
+   <term>
+    <constant>MSG_DONTROUTE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.msg-eor">
+   <term>
+    <constant>MSG_EOR</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Indisponible sur les plate-formes Windows.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.msg-eof">
+   <term>
+    <constant>MSG_EOF</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Indisponible sur les plate-formes Windows.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-debug">
+   <term>
+    <constant>SO_DEBUG</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-reuseaddr">
+   <term>
+    <constant>SO_REUSEADDR</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-reuseport">
+   <term>
+    <constant>SO_REUSEPORT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Cette constante n'est disponible qu'à partir de PHP 5.4.10 sur les plateformes
+     que supportent l'option de socket <constant>SO_REUSEPORT</constant> : ceci
+     inclut macOS et FreeBSD, mais pas Linux ni Windows.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-keepalive">
+   <term>
+    <constant>SO_KEEPALIVE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-dontroute">
+   <term>
+    <constant>SO_DONTROUTE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-linger">
+   <term>
+    <constant>SO_LINGER</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-broadcast">
+   <term>
+    <constant>SO_BROADCAST</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-oobinline">
+   <term>
+    <constant>SO_OOBINLINE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-sndbuf">
+   <term>
+    <constant>SO_SNDBUF</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-rcvbuf">
+   <term>
+    <constant>SO_RCVBUF</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-sndlowat">
+   <term>
+    <constant>SO_SNDLOWAT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-rcvlowat">
+   <term>
+    <constant>SO_RCVLOWAT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-sndtimeo">
+   <term>
+    <constant>SO_SNDTIMEO</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-rcvtimeo">
+   <term>
+    <constant>SO_RCVTIMEO</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-type">
+   <term>
+    <constant>SO_TYPE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.so-error">
+   <term>
+    <constant>SO_ERROR</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.tcp-nodelay">
+   <term>
+    <constant>TCP_NODELAY</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Utilisé pour désactiver l'algorithme Nagle TCP.
+     Ajouté en PHP 5.2.7. 
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sol-socket">
+   <term>
+    <constant>SOL_SOCKET</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.php-normal-read">
+   <term>
+    <constant>PHP_NORMAL_READ</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.php-binary-read">
+   <term>
+    <constant>PHP_BINARY_READ</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sol-tcp">
+   <term>
+    <constant>SOL_TCP</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sol-udp">
+   <term>
+    <constant>SOL_UDP</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+ <simpara>
+  Les constantes suivantes ne sont définies que sous Windows.
+ </simpara>
+
+ <variablelist>
+  <varlistentry xml:id="constant.socket-eintr">
+   <term>
+    <constant>SOCKET_EINTR</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ebadf">
+   <term>
+    <constant>SOCKET_EBADF</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Mauvais numéro de fichier
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eacces">
+   <term>
+    <constant>SOCKET_EACCES</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Permission refusée
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-efault">
+   <term>
+    <constant>SOCKET_EFAULT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Mauvaise adresse.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-einval">
+   <term>
+    <constant>SOCKET_EINVAL</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Argument invalide.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-emfile">
+   <term>
+    <constant>SOCKET_EMFILE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Trop de fichiers ouverts.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enametoolong">
+   <term>
+    <constant>SOCKET_ENAMETOOLONG</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Nom de fichier trop long
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enotempty">
+   <term>
+    <constant>SOCKET_ENOTEMPTY</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Dossier non vide.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eloop">
+   <term>
+    <constant>SOCKET_ELOOP</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Trop de liens symboliques rencontrés.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ewouldblock">
+   <term>
+    <constant>SOCKET_EWOULDBLOCK</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Opération bloquante.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eremote">
+   <term>
+    <constant>SOCKET_EREMOTE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     L'objet est distant.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eusers">
+   <term>
+    <constant>SOCKET_EUSERS</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Trop d'utilisateurs.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enotsock">
+   <term>
+    <constant>SOCKET_ENOTSOCK</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Opération de socket sur un non-socket.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-edestaddrreq">
+   <term>
+    <constant>SOCKET_EDESTADDRREQ</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Adresse de destination requise.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-emsgsize">
+   <term>
+    <constant>SOCKET_EMSGSIZE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Message trop long.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eprototype">
+   <term>
+    <constant>SOCKET_EPROTOTYPE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Type de protocole erroné pour un socket.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eprotonosupport">
+   <term>
+    <constant>SOCKET_EPROTONOSUPPORT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Protocole non supporté.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-esocktnosupport">
+   <term>
+    <constant>SOCKET_ESOCKTNOSUPPORT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Type de socket non supporté.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eopnotsupp">
+   <term>
+    <constant>SOCKET_EOPNOTSUPP</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Opération non supportée sur la cible du transport.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-epfnosupport">
+   <term>
+    <constant>SOCKET_EPFNOSUPPORT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Famille de protocoles non supportée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eafnosupport">
+   <term>
+    <constant>SOCKET_EAFNOSUPPORT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Famille d'adresses non supportée par le protocole.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eaddrnotavail">
+   <term>
+    <constant>SOCKET_EADDRNOTAVAIL</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Impossible d'assigner l'adresse demandée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enetdown">
+   <term>
+    <constant>SOCKET_ENETDOWN</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Le réseau n'est pas disponible.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enetunreach">
+   <term>
+    <constant>SOCKET_ENETUNREACH</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Le réseau ne peut être atteint.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enetreset">
+   <term>
+    <constant>SOCKET_ENETRESET</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Le réseau à annuler la connexion en raison d'une réinitialisation.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-econnaborted">
+   <term>
+    <constant>SOCKET_ECONNABORTED</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Le logiciel a provoqué un échec de la connexion.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-econnreset">
+   <term>
+    <constant>SOCKET_ECONNRESET</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     La connexion a été réinitialisée par les paires.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enobufs">
+   <term>
+    <constant>SOCKET_ENOBUFS</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Plus de place de disponible dans le buffer.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eisconn">
+   <term>
+    <constant>SOCKET_EISCONN</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     La cible du transport est déjà connectée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enotconn">
+   <term>
+    <constant>SOCKET_ENOTCONN</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     La cible du transport n'est pas connectée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eshutdown">
+   <term>
+    <constant>SOCKET_ESHUTDOWN</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Impossible d'envoyer car la cible du transport est arrêtée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-etimedout">
+   <term>
+    <constant>SOCKET_ETIMEDOUT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     La connexion a expirée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-econnrefused">
+   <term>
+    <constant>SOCKET_ECONNREFUSED</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Connexion refusée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ehostdown">
+   <term>
+    <constant>SOCKET_EHOSTDOWN</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     L'hôte est arrêté.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ehostunreach">
+   <term>
+    <constant>SOCKET_EHOSTUNREACH</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Aucune route vers l'hôte.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ealready">
+   <term>
+    <constant>SOCKET_EALREADY</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Opération déjà en cours.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-einprogress">
+   <term>
+    <constant>SOCKET_EINPROGRESS</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Opération maintenant en cours.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+ 
+ <simpara>
+  Les constantes suivantes ne sont disponibles que sous Windows.
+ </simpara>
+
+ <variablelist>
+  <varlistentry xml:id="constant.socket-enoprotoopt">
+   <term>
+    <constant>SOCKET_ENOPROTOOPT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eaddrinuse">
+   <term>
+    <constant>SOCKET_EADDRINUSE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-etoomyrefs">
+   <term>
+    <constant>SOCKET_ETOOMYREFS</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eproclim">
+   <term>
+    <constant>SOCKET_EPROCLIM</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="constant.socket-eduot">
+   <term>
+    <constant>SOCKET_EDUOT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-estale">
+   <term>
+    <constant>SOCKET_ESTALE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="constant.socket-ediscon">
+   <term>
+    <constant>SOCKET_EDISCON</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-sysnotready">
+   <term>
+    <constant>SOCKET_SYSNOTREADY</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-vernotsupported">
+   <term>
+    <constant>SOCKET_VERNOTSUPPORTED</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-notinitialised">
+   <term>
+    <constant>SOCKET_NOTINITIALISED</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-host-not-found">
+   <term>
+    <constant>SOCKET_HOST_NOT_FOUND</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-try-again">
+   <term>
+    <constant>SOCKET_TRY_AGAIN</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-no-recovery">
+   <term>
+    <constant>SOCKET_NO_RECOVERY</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-no-data">
+   <term>
+    <constant>SOCKET_NO_DATA</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-no-address">
+   <term>
+    <constant>SOCKET_NO_ADDRESS</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+ 
+ <simpara>
+  Les constantes suivantes sont disponibles uniquement sur les
+  plate-formes Unix. Chaque constantes n'est définie que si 
+  leur équivalent est défini au niveau système.
+ </simpara>
+
+ <variablelist>
+  <varlistentry xml:id="constant.socket-eperm">
+   <term>
+    <constant>SOCKET_EPERM</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Opération non permise.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enoent">
+   <term>
+    <constant>SOCKET_ENOENT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Aucun fichier ou dossier trouvé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eio">
+   <term>
+    <constant>SOCKET_EIO</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur I/O.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enxio">
+   <term>
+    <constant>SOCKET_ENXIO</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Aucun périphérique ou adresse trouvé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-e2big">
+   <term>
+    <constant>SOCKET_E2BIG</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Liste d'arguments trop longue.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eagain">
+   <term>
+    <constant>SOCKET_EAGAIN</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Ré-essayer.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enomem">
+   <term>
+    <constant>SOCKET_ENOMEM</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Dépassement de mémoire.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enotblk">
+   <term>
+    <constant>SOCKET_ENOTBLK</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Périphérique de bloc requis.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ebusy">
+   <term>
+    <constant>SOCKET_EBUSY</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Périphérique ou ressource occupé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eexist">
+   <term>
+    <constant>SOCKET_EEXIST</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Le fichier existe.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-exdev">
+   <term>
+    <constant>SOCKET_EXDEV</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Lien multi-périphérique.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enodev">
+   <term>
+    <constant>SOCKET_ENODEV</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Aucun périphérique trouvé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enotdir">
+   <term>
+    <constant>SOCKET_ENOTDIR</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Ce n'est pas un dossier.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eisdir">
+   <term>
+    <constant>SOCKET_EISDIR</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     C'est un dossier.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enfile">
+   <term>
+    <constant>SOCKET_ENFILE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Table de fichier dépassé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enotty">
+   <term>
+    <constant>SOCKET_ENOTTY</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Ce n'est pas d'un type écriture.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enospc">
+   <term>
+    <constant>SOCKET_ENOSPC</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Plus d'espace disponible sur le périphérique.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-espipe">
+   <term>
+    <constant>SOCKET_ESPIPE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Position illégale.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-erofs">
+   <term>
+    <constant>SOCKET_EROFS</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Système de fichiers en lecture seule.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-emlink">
+   <term>
+    <constant>SOCKET_EMLINK</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Trop de lien.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-epipe">
+   <term>
+    <constant>SOCKET_EPIPE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Pipe rompu.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="constant.socket-enolck">
+   <term>
+    <constant>SOCKET_ENOLCK</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Aucun verrou d'enregistrement de disponible.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enosys">
+   <term>
+    <constant>SOCKET_ENOSYS</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Fonction non implémentée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enomsg">
+   <term>
+    <constant>SOCKET_ENOMSG</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Aucun message du type désiré.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eidrm">
+   <term>
+    <constant>SOCKET_EIDRM</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Identifiant supprimé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-echrng">
+   <term>
+    <constant>SOCKET_ECHRNG</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Numéro de canal en dehors de l'intervalle.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-el2nsync">
+   <term>
+    <constant>SOCKET_EL2NSYNC</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Level 2 non synchronisé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-el3hlt">
+   <term>
+    <constant>SOCKET_EL3HLT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Level 3 arrêté.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-el3rst">
+   <term>
+    <constant>SOCKET_EL3RST</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Level 3 réinitialisé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-elnrng">
+   <term>
+    <constant>SOCKET_ELNRNG</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Numéro de lien en dehors de l'intervalle.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eunatch">
+   <term>
+    <constant>SOCKET_EUNATCH</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Protocole du driver non attaché.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enocsi">
+   <term>
+    <constant>SOCKET_ENOCSI</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Aucune structure CSI disponible.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-el2hlt">
+   <term>
+    <constant>SOCKET_EL2HLT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Level 2 arrêté.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ebade">
+   <term>
+    <constant>SOCKET_EBADE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Echange invalide.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ebadr">
+   <term>
+    <constant>SOCKET_EBADR</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Descripteur de requête invalide.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-exfull">
+   <term>
+    <constant>SOCKET_EXFULL</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Echange complet.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enoano">
+   <term>
+    <constant>SOCKET_ENOANO</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Aucune anode.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ebadrqc">
+   <term>
+    <constant>SOCKET_EBADRQC</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Code de requête invalide.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ebadslt">
+   <term>
+    <constant>SOCKET_EBADSLT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Slot invalide.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enostr">
+   <term>
+    <constant>SOCKET_ENOSTR</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Le périphérique n'est pas un flux.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enodata">
+   <term>
+    <constant>SOCKET_ENODATA</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Aucune donnée de disponible.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-etime">
+   <term>
+    <constant>SOCKET_ETIME</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Timer expiré.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enosr">
+   <term>
+    <constant>SOCKET_ENOSR</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Ressources de flux dépassées.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enonet">
+   <term>
+    <constant>SOCKET_ENONET</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     La machine n'est pas sur le réseau.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="constant.socket-enolink">
+   <term>
+    <constant>SOCKET_ENOLINK</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Le lien a été coupé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eadv">
+   <term>
+    <constant>SOCKET_EADV</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur d'avertissement.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-esrmnt">
+   <term>
+    <constant>SOCKET_ESRMNT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur Srmount.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ecomm">
+   <term>
+    <constant>SOCKET_ECOMM</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur de communication lors de l'envoi.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eproto">
+   <term>
+    <constant>SOCKET_EPROTO</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur du protocole.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-emultihop">
+   <term>
+    <constant>SOCKET_EMULTIHOP</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Multihop atteint.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ebadmsg">
+   <term>
+    <constant>SOCKET_EBADMSG</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Ce n'est pas un message de données.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enotuniq">
+   <term>
+    <constant>SOCKET_ENOTUNIQ</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Le nom n'est pas unique sur le réseau.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-ebadfd">
+   <term>
+    <constant>SOCKET_EBADFD</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Descripteur de fichier dans un mauvais état.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eremchg">
+   <term>
+    <constant>SOCKET_EREMCHG</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     L'adresse distante a changé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-erestart">
+   <term>
+    <constant>SOCKET_ERESTART</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Appel système interrompu doit être redémarré.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-estrpipe">
+   <term>
+    <constant>SOCKET_ESTRPIPE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur de flux.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eprotoopt">
+   <term>
+    <constant>SOCKET_EPROTOOPT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Le protocole n'est pas disponible.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-addrinuse">
+   <term>
+    <constant>SOCKET_ADDRINUSE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Adresse déjà utilisée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-etoomanyrefs">
+   <term>
+    <constant>SOCKET_ETOOMANYREFS</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Trop de références : 
+     Too many references: impossible de les raccorder.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eisnam">
+   <term>
+    <constant>SOCKET_EISNAM</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Est un fichier de type nommé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-eremoteio">
+   <term>
+    <constant>SOCKET_EREMOTEIO</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur I/O distante.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-edquot">
+   <term>
+    <constant>SOCKET_EDQUOT</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Quota dépassé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-enomedium">
+   <term>
+    <constant>SOCKET_ENOMEDIUM</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Aucun média trouvé.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.socket-emediumtype">
+   <term>
+    <constant>SOCKET_EMEDIUMTYPE</constant> 
+    (&integer;)
+   </term>
+   <listitem>
+    <simpara>
+     Type de média erroné.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

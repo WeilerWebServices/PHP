@@ -1,0 +1,70 @@
+
+PECL FriBidi
+============
+
+PHP Extension for GNU FriBidi, an implementation of the Unicode Bidirectional Algorithm (bidi)
+
+
+Purpose
+-------
+
+This extension is basically a wrapper for the GNU FriBidi implementation
+of the Unicode Bidirectional algorithm. The need for such an algorithm
+rises from the bidirectional language usage  done by applications.
+Arabic/Hebrew embedded within English is such a case.
+
+
+Usage
+-----
+
+The only function used is fribidi_log2vis (logical [non-reversed] to visual [reversed]).
+
+     Input:
+            1) The Logical string.
+            2) Base direction of application. Possible values:
+                 * FRIBIDI_AUTO  (autodetect the base direction)
+                 * FRIBIDI_LTR   (left to right
+                 * FRIBIDI_RTL   (right to left)
+                 * FRIBIDI_WLTR  (weak left to right)
+                 * FRIBIDI_WRTL  (weak right to left)
+            3) The char code being used, which can be one of the following constants:
+                 * FRIBIDI_CHARSET_UTF8     (Unicode)
+                 * FRIBIDI_CHARSET_8859_6   (ISO-8859-6 - Arabic)
+                 * FRIBIDI_CHARSET_8859_8   (ISO-8859-8 - Hebrew)
+                 * FRIBIDI_CHARSET_CP1255   (MS Codepage 1255 - Hebrew/Yiddish)
+                 * FRIBIDI_CHARSET_CP1256   (MS Codepage 1256 - Arabic)
+                 * FRIBIDI_CHARSET_CAP_RTL  (Used for test purposes, will treat CAPS as non-English letters)
+
+Note: Currently, GNU FriBidi supports the above Character Codes alone.
+
+      Output: The visual string, on success, false, otherwise.
+
+
+Compiling
+---------
+
+1) Static - ./configure --with-fribidi=base-directory-of-FriBidi-installation-path
+             (defaults to /usr/local).
+
+2) dl - same, just add shared, to get .... --with-fribidi=shared,base....
+
+
+Prerequisites
+-------------
+
+1) GNU FriBidi version 0.19.1 or later must be installed.
+   Latest version can be obtained thru http://fribidi.org/
+
+
+Notes
+-----
+
+The function fribidi_log2vis computes three more arrays which are currently not passed back as output.
+These arrays are:
+    1) mapping from the logical to the visual string.
+    2) mapping from the visual to the logical string.
+    3) embedding level of characters as figured out by the bidi algorithm.
+
+The extension needs further implementation to support this.
+p.s. - If you don't understand this, you probably don't need it.
+

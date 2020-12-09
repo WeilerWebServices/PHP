@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.6 $ -->
+<classentry id="gtk.gtkaspectframe">
+ <classmeta>
+  <classtitle>GtkAspectFrame</classtitle>
+  <classparent>GtkFrame</classparent>
+  <shortdesc>
+   A frame that constrains its child to a particular aspect ratio.
+  </shortdesc>
+  <desc>
+   <para>
+    <classname>GtkAspectFrame</classname> is useful whenever you want t 
+    allow the user to change the size of a widget but still maintain its
+    aspect ratio. As an example, you might be displaying a small preview of a
+    larger image.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkaspectframe.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkAspectFrame</function></funcdef>
+    <paramdef>string <parameter><optional>label = null</optional></parameter></paramdef>
+    <paramdef>double <parameter><optional>xalign = 0.5</optional></parameter></paramdef>
+    <paramdef>double <parameter><optional>yalign = 0.5</optional></parameter></paramdef>
+    <paramdef>double <parameter><optional>ratio = 1.0</optional></parameter></paramdef>
+    <paramdef>bool <parameter><optional>obey_child = true</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>GtkAspectFrame</classname>
+   </shortdesc>
+   <desc>
+    <para>
+     Use the constructor to create a new <classname>GtkAspectFrame</classname> 
+     with the specified parameters.
+    </para>
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  <method id="gtk.gtkaspectframe.method.set">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set</function></funcdef>
+     <paramdef>double <parameter><optional>xalign = 0.0</optional></parameter></paramdef>
+     <paramdef>double <parameter><optional>yalign = 0.0</optional></parameter></paramdef>
+     <paramdef>double <parameter><optional>ratio = 1.0</optional></parameter></paramdef>
+     <paramdef>bool <parameter><optional>obey_child = 1</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets parameters for an existing <classname>GtkAspectFrame</classname>
+   </shortdesc>
+   <desc>
+    Most useful when you want to change the parameters of a <classname>
+    GtkAspectFrame</classname> after you have created it. This method is 
+    generally used based on a certain condition or in a callback.
+   </desc>
+  </method>
+
+ </methods>
+
+</classentry>

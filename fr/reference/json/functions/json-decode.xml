@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351406 Maintainer: girgias Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xml:id="function.json-decode" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>json_decode</refname>
+  <refpurpose>Décode une chaîne JSON</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>json_decode</methodname>
+   <methodparam><type>string</type><parameter>json</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>bool</type><type>null</type></type><parameter>associative</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>depth</parameter><initializer>512</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Récupère une chaîne encodée JSON et la convertit en une variable PHP.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>json</parameter></term>
+     <listitem>
+      <para>
+       La &string; <parameter>json</parameter> à décoder.
+      </para>
+      <para>
+       Cette fonction ne fonctionne qu'avec des chaînes encodées en UTF-8.
+      </para>
+      &json.implementation.superset;
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>associative</parameter></term>
+     <listitem>
+      <para>
+       Lorsque ce paramètre vaut &true;, les objets JSON seront retournés comme
+       tableaux associatifs ; lorsque ce paramètre vaut &false;, les objets JSON
+       seront retournés comme des objets. Lorsque ce paramètre vaut &null;, les objets
+       JSON seront retournés comme es tableaux associatifs ou des objets, suivant
+       si la constante <constant>JSON_OBJECT_AS_ARRAY</constant> a été définie dans
+       le paramètre <parameter>flags</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>depth</parameter></term>
+     <listitem>
+      <para>
+       Définit la profondeur de récursion.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>flags</parameter></term>
+     <listitem>
+      <para>
+       Masque de bit compris de
+       <constant>JSON_BIGINT_AS_STRING</constant>,
+       <constant>JSON_INVALID_UTF8_IGNORE</constant>,
+       <constant>JSON_INVALID_UTF8_SUBSTITUTE</constant>,
+       <constant>JSON_OBJECT_AS_ARRAY</constant>,
+       <constant>JSON_THROW_ON_ERROR</constant>.
+       Le comportement de ces constantes est décrite sur la page
+       des <link linkend="json.constants">constantes JSON</link>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne la valeur encodée dans le paramètre <parameter>json</parameter>
+   dans le type PHP approprié. Les valeurs <literal>true</literal>,
+   <literal>false</literal> et <literal>null</literal>
+   sont retournées respectivement comme &true;, &false; et &null;.
+   &null; est retourné si le paramètre <parameter>json</parameter> n'a pu
+   être décodé ou si les données encodées sont plus profondes que la limite
+   de récursion fournie.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        Le <parameter>flags</parameter>
+        <constant>JSON_THROW_ON_ERROR</constant> a été ajouté.
+       </entry>
+      </row>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        Le paramètre <parameter>associative</parameter> est désormais nullable.
+       </entry>
+      </row>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        Les <parameter>flags</parameter>
+        <constant>JSON_INVALID_UTF8_IGNORE</constant>, et
+        <constant>JSON_INVALID_UTF8_SUBSTITUTE</constant> ont été ajouté.
+       </entry>
+      </row>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Une clé JSON vide ("") peut être encodée dans la propriété d'objet 
+        vide au lieu d'utiliser une clé avec la valeur <literal>_empty_</literal>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>json_decode</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$json = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
+
+var_dump(json_decode($json));
+var_dump(json_decode($json, true));
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(stdClass)#1 (5) {
+    ["a"] => int(1)
+    ["b"] => int(2)
+    ["c"] => int(3)
+    ["d"] => int(4)
+    ["e"] => int(5)
+}
+
+array(5) {
+    ["a"] => int(1)
+    ["b"] => int(2)
+    ["c"] => int(3)
+    ["d"] => int(4)
+    ["e"] => int(5)
+}
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Accès à des propriétés d'objet invalides</title>
+    <simpara>
+     Accéder à des éléments d'un objet qui contiennent des caractères
+     non permis par la convention de nommage de PHP (i.e. le trait d'union)
+     peut être effectué en encapsulant le nom de l'élément avec
+     des crochets et des apostrophes.
+    </simpara>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$json = '{"foo-bar": 12345}';
+
+$obj = json_decode($json);
+print $obj->{'foo-bar'}; // 12345
+
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Erreurs habituelles lors de l'utilisation de la fonction <function>json_decode</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// Les chaînes suivantes sont valides en JavaScript mais pas en JSON
+
+// Le nom et la valeur doivent être entourés de guillemets doubles.
+// Les guillemets simples ne sont pas valides.
+$bad_json = "{ 'bar': 'baz' }";
+json_decode($bad_json); // null
+
+// Le nom doit être entouré de guillemets doubles.
+$bad_json = '{ bar: "baz" }';
+json_decode($bad_json); // null
+
+// La virgule de fin n'est pas autorisée.
+$bad_json = '{ bar: "baz", }';
+json_decode($bad_json); // null
+
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Erreurs avec le paramètre <parameter>depth</parameter></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Encodage des données.
+$json = json_encode(
+    array(
+        1 => array(
+            'English' => array(
+                'One',
+                'January'
+            ),
+            'French' => array(
+                'Une',
+                'Janvier'
+            )
+        )
+    )
+);
+
+// Définition des erreurs
+$constants = get_defined_constants(true);
+$json_errors = array();
+foreach ($constants["json"] as $name => $value) {
+ if (!strncmp($name, "JSON_ERROR_", 11)) {
+  $json_errors[$value] = $name;
+ }
+}
+
+// Affichage des erreurs pour les différentes profondeurs.
+foreach (range(4, 3, -1) as $depth) {
+    var_dump(json_decode($json, true, $depth));
+    echo 'Dernière erreur : ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+array(1) {
+  [1]=>
+  array(2) {
+    ["English"]=>
+    array(2) {
+      [0]=>
+      string(3) "One"
+      [1]=>
+      string(7) "January"
+    }
+    ["French"]=>
+    array(2) {
+      [0]=>
+      string(2) "Un"
+      [1]=>
+      string(7) "Janvier"
+    }
+  }
+}
+Dernière erreur : JSON_ERROR_NONE
+
+NULL
+Dernière erreur : JSON_ERROR_DEPTH
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Exemple avec <function>json_decode</function> et de gros entiers</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$json = '{"number": 12345678901234567890}';
+
+var_dump(json_decode($json));
+var_dump(json_decode($json, false, 512, JSON_BIGINT_AS_STRING));
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(stdClass)#1 (1) {
+  ["number"]=>
+  float(1.2345678901235E+19)
+}
+object(stdClass)#1 (1) {
+  ["number"]=>
+  string(20) "12345678901234567890"
+}
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    La spécification JSON ne fait pas partie de Javascript
+    mais d'un sous-projet de Javascript.
+   </para>
+  </note>
+  <note>
+   <para>
+    Si une erreur survient lors du décodage, la fonction
+    <function>json_last_error</function>
+    (ou <function>json_last_error_msg</function> avec PHP5.5+)
+    pourra être utilisée pour
+    déterminer la nature exacte de l'erreur.
+   </para>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>json_encode</function></member>
+    <member><function>json_last_error</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+ sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

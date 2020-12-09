@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.9 $ -->
+<classentry id="gtk.gtkinvisible">
+ <classmeta>
+  <classtitle>GtkInvisible</classtitle>
+  <classparent>GtkWidget</classparent>
+  <shortdesc>
+   A widget that is not displayed on the screen.
+  </shortdesc>
+  <desc>
+   <para>
+    The GtkInvisible widget is used internally in GTK+, and is
+    probably not very useful for application developers. 
+   </para>
+   <para>
+    It is used for reliable pointer grabs and selection
+    handling in the code for drag-and-drop.
+   </para>
+  </desc>
+ </classmeta>
+
+
+ <constructors>
+  <constructor id="gtk.gtkinvisible.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkInvisible</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new GtkInvisible.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new GtkInvisible.
+    </para>
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkinvisible.constructor.new_for_screen">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>GtkInvisible::new_for_screen</function></funcdef>
+      <paramdef><classname>GdkScreen</classname><parameter>screen</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new GtkInvisible object for a specified screen.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new GtkInvisible object for a specified screen.
+    </para>
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </constructor>
+ </constructors>
+
+
+ <methods>
+  
+
+  <method id="gtk.gtkinvisible.method.set_screen">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_screen</function></funcdef>
+     <paramdef><classname>GdkScreen</classname> <parameter>screen</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the GdkScreen where the invisible object will be displayed.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the GdkScreen where the GtkInvisible object will be displayed.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkInvisible">get_screen</function>
+    </para>
+   </desc>
+  </method>
+ </methods>
+
+</classentry>

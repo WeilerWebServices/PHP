@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE translation SYSTEM "../doc-base/phpbook/phpbook-xsml/translation.dtd">
+
+<translation>
+
+ <intro>
+  The Russian translation of the PHP Documentation is managed
+  by Antony Dovgal. If you would like to help us translate PHP Manual into Russian,
+  please feel free to contact on mailing list doc-ru@lists.php.net. Thank you.
+ </intro>
+
+ <translators>
+  <person name="Alexander Voytsekhovskyy" email="young@php.net" nick="young" vcs="yes" />
+  <person name="Andrey Demenev" email="blindman@php.net" nick="blindman" vcs="yes" />
+  <person name="unknown" email="unknown" nick="shafff" vcs="no" />
+  <person name="Antony Dovgal" email="tony@daylessday.org" nick="tony2001" vcs="yes" />
+  <person name="Shein Alexey" email="shein@php.net" nick="shein" vcs="yes" />
+  <person name="Daniil Reuzhkov" email="daniil.re@gmail.com" nick="daniil" vcs="no" />
+  <person name="Alexander Moskaliov" email="irker@php.net" nick="irker" vcs="yes" />
+  <person name="Evgeniy Syuzev" email="seprize@php.net" nick="seprize" vcs="yes" />
+  <person name="Maxim Chaban" email="mch@php.net" nick="mch" vcs="yes" />
+  <person name="Andrey Bezrukov" email="aur@php.net" nick="aur" vcs="yes" />
+  <person name="Boris Klimenko" email="das@php.net" nick="das" vcs="yes" />
+  <person name="Vinyarchuk Dmitry" email="tmn@php.net" nick="tmn" vcs="yes" />
+  <person name="Boris Fleytlikh" email="bfl@php.net" nick="bfl" vcs="yes" />
+  <person name="Alexey Egorov" email="countzero@php.net" nick="countzero" vcs="yes" /> 
+  <person name="Babikov Yuriy" email="alien@php.net" nick="alien" vcs="yes" />  
+  <person name="Mikhail Baranov" email="northcat@php.net" nick="northcat" vcs="yes" />
+  <person name="Konstantin Yaniv" email="kyaniv@php.net" nick="kyaniv" vcs="yes" />
+  <person name="Andrey Gromov" email="rjhdby@php.net" nick="rjhdby" vcs="yes" />
+  <person name="Alexey Pyltsyn" email="lex@php.net" nick="lex" vcs="yes" />
+  <person name="Sergey Panteleev" email="sergey@php.net" nick="sergey" vcs="yes" />
+ </translators>
+  
+ <work-in-progress>
+ </work-in-progress>
+
+</translation>

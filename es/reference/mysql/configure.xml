@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 341282 Maintainer: seros Status: ready -->
+<!-- Reviewed: no Maintainer: andresdzphp -->
+<section xml:id="mysql.installation" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.install;
+ 
+ <warning>
+  &mysql.alternative.note;
+ </warning>
+ 
+ <para xml:id="mysql.configure">
+  Para compilar, simplemente usar la opción de configuración
+  <option role="configure">--with-mysql[=DIR]</option>
+  donde opcionalmente <literal>[DIR]</literal> apunta al
+  directorio de instalación de MySQL.
+ </para>
+ <para>
+  Aunque esta extensión de MySQL es compatible con MySQL 4.1.0 y superior,
+  no da soporte a las funcionalidades extra que estas versiones proveen.
+  Para ello usar la extensión <link linkend="book.mysqli">MySQLi</link>.
+ </para>
+ <para>
+  Si se quisiera instalar la extensión de MySQL junto con la extensión MySQLi
+  se debe usar la misma libreria de cliente para evitar cualquier conflicto.
+ </para>
+ 
+ <section xml:id="mysql.installation.linux">
+  <title>Instalación en Sistemas Linux</title>
+  <para>
+   Nota: <literal>[DIR]</literal> es la ruta a los ficheros de la biblioteca cliente de
+   MySQL (<emphasis>cabeceras y bibliotecas</emphasis>), los cuales se pueden descargar desde
+   <link xlink:href="&url.mysql;">MySQL</link>.
+  </para>
+  <table>
+   <title>Matriz de soporte en tiempo de compilación de ext/mysql</title>
+   <tgroup cols="5">
+    <thead>
+     <row>
+      <entry>&Version; de PHP</entry>
+      <entry>&Default;</entry>
+      <entry>&ConfigureOptions;: <link linkend="mysqlnd.overview">mysqlnd</link></entry>
+      <entry>&ConfigureOptions;: <literal>libmysqlclient</literal></entry>
+      <entry>&Changelog;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>4.x.x</entry>
+      <entry>libmysqlclient</entry>
+      <entry>&NotAvailable;</entry>
+      <entry><option role="configure">--without-mysql</option> to disable</entry>
+      <entry>MySQL habilitada por omisión, las bibliotecas cliente de MySQL están incluidas</entry>
+     </row>
+     <row>
+      <entry>5.0.x, 5.1.x, 5.2.x</entry>
+      <entry>libmysqlclient</entry>
+      <entry>&NotAvailable;</entry>
+      <entry><option role="configure">--with-mysql=[DIR]</option></entry>
+      <entry>
+       MySQL ya no está habilitada de forma predeterminada, y las bibliotecas cliente de MySQL
+       ya no están integradas
+      </entry>
+     </row>
+     <row>
+      <entry>5.3.x</entry>
+      <entry>libmysqlclient</entry>
+      <entry><option role="configure">--with-mysql=mysqlnd</option></entry>
+      <entry><option role="configure">--with-mysql=[DIR]</option></entry>
+      <entry>mysqlnd ahora está disponible</entry>
+     </row>
+     <row>
+      <entry>5.4.x</entry>
+      <entry>mysqlnd</entry>
+      <entry><option role="configure">--with-mysql</option></entry>
+      <entry><option role="configure">--with-mysql=[DIR]</option></entry>
+      <entry>mysqlnd ahora es el predeterminado</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+ </section>
+ 
+ <section xml:id="mysql.installation.windows">
+  <title>Instalación en sistemas Windows</title>
+  <section xml:id="mysql.installation.windows.php52">
+   <title>PHP 5.0.x, 5.1.x, 5.2.x</title>
+   <para>
+    MySQL ya no está activado por defecto, así la
+    DLL <filename>php_mysql.dll</filename> debe ser habilitada dentro de
+    &php.ini;. Además, PHP necesita acceso a la libreria de cliente de MySQL. Un archivo
+    llamado <filename>libmysql.dll</filename> que está incluido en la distribución
+    de PHP de Windows, y así PHP se comunica con MySQL, este fichero necesita estar
+    disponible en el <envar>PATH</envar> de los sistemas Windows. Para información sobre
+    como hacerlo ver el FAQ titulado
+    "<link linkend="faq.installation.addtopath">Cómo agrego mi directorio de PHP a <envar>PATH</envar>
+    en Windows</link>". Aunque copiando <filename>libmysql.dll</filename> al directorio del
+    sistema de Windows también funcionará (ya que el directorio del sistema está por defecto en
+    el <envar>PATH</envar> del sistema), pero no está recomendado.
+   </para>
+   <para>
+    Como ocurre con cualquier otra extensión de PHP (tal como
+    <filename>php_mysql.dll</filename>), la directiva de PHP
+    <link linkend="ini.extension-dir">extension_dir</link>, debe establecer
+    el directorio donde estan localizada las extensiones de PHP. Ver también el
+    <link linkend="install.windows.manual">Manual de instrucciónes de instalación
+     en Windows</link>. Un ejemplo de valor de extension_dir para PHP 5 es
+    <literal>c:\php\ext</literal>
+   </para>
+   <note>
+    <para>
+     Si al iniciar el servidor web se produce un error similar al siguiente:
+     <literal>"Unable to load dynamic library './php_mysql.dll'"</literal>,
+     esto se debe a que <filename>php_mysql.dll</filename> y/o
+     <filename>libmysql.dll</filename> no puede ser encontrado por el sistema.
+    </para>
+   </note>
+  </section>
+  <section xml:id="mysql.installation.windows.php53">
+   <title>PHP 5.3.0+</title>
+   <para>
+    El <link linkend="mysqlnd.overview">Controlador Nativo de MySQL</link> está habilitado por
+    omisión. Incluya <filename>php_mysql.dll</filename>, pero <filename>libmysql.dll</filename>
+    ya no es necesario o usado.
+   </para>
+  </section>
+ </section>
+ 
+ <section xml:id="mysql.installation.notes">
+  <title>Notas de la instalación de MySQL</title>
+  <warning>
+   <para>
+    Se pueden encontrar errores y problemas de inicio de PHP
+    al cargar esta extensión en conjunción con la extensión recode.
+    Para más información ver la extension
+    <link linkend="ref.recode">recode</link>.
+   </para>
+  </warning>
+  <note>
+   <para>
+    Si fueran necesarios otro juego de caracteres distinto de <emphasis>latin</emphasis> (predeterminado),
+    se ha de instalar externamente (no incluido) libmysqlclient con el soporte para el
+    juego de caracteres compilado.
+   </para>
+  </note>
+ </section>
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

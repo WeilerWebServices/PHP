@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 341137 Maintainer: takagi Status: ready -->
+<!-- CREDITS: hirokawa -->
+ <chapter xml:id="faq.installation" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>インストール</title>
+  <titleabbrev>インストール</titleabbrev>
+
+  <para>
+   このセクションでは PHP のインストール方法に関する一般的な質問を扱います。
+   PHP は、ほとんど全ての OS とウェブサーバーで
+   利用可能です。
+  </para>
+  <para>
+   PHP をインストールするには、<xref linkend="install"/>
+   の指示に従ってください。
+  </para>
+
+  <qandaset>
+   <qandaentry xml:id="faq.installation.apache2">
+    <question>
+     <para>
+      なぜ、Apache 2 のマルチスレッド MPM モードを実運用環境で使用するべきではないのですか?
+     </para>
+    </question>
+    <answer>
+     <para>
+      PHP はグルー(糊)です。このグルーは、多くのサードパーティ製のライブラリを
+      くっつけることによりクールな Web アプリケーションを構築するために使用され、
+      直観的で簡単に習得できる言語インターフェイスにより、一つの整合性のある実体として
+      見せることができます。
+      PHP の柔軟性と力は、プラットフォームの安定性と堅牢性に基づいています。
+      グルーによる結合をするためには、OS や Web サーバー、サードパーティ製のライブラリを
+      必要とします。
+      これらの一つの機能が停止した場合、PHP は問題を特定し、速やかに修正する
+      手段を必要とします。
+      実行スレッドを完全に分離しなかったり、
+      メモリセグメントを完全に分離しなかったり、
+      各リクエストで使用される強力なサンドボックスを有さないことで、
+      基本的なフレームワークをより複雑なものにした場合、
+      PHP のシステムに弱点が生まれます。
+     </para>
+     <para>
+      マルチスレッド MPM を使いたい場合は、
+      PHP が自分のメモリ空間で実行される FastCGI の設定をみてください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.phpini">
+    <question>
+     <para>
+      Unix/Windows: &php.ini; ファイルはどこに置けばよいのですか?
+     </para>
+    </question>
+    <answer>
+     <para>
+      UNIX の場合、デフォルトでは <filename>/usr/local/lib</filename>
+      です。コンパイル時に
+      <link linkend="configure.with-config-file-path">--with-config-file-path</link>
+      オプションを使用してこの場所を変えたいという人も多いでしょう。
+      例えばこのようにすることも出来ます：
+      <programlisting role="shell">
+--with-config-file-path=/etc
+      </programlisting>
+      そしてディストリビューションの <filename>php.ini-development</filename>
+      を <filename>/etc/php.ini</filename> にコピーし、環境に合うように
+      編集してください。
+     </para>
+     <programlisting role="shell">
+--with-config-file-scan-dir=PATH 
+     </programlisting>
+     <para>
+     Windows の場合、&php.ini; のデフォルトパスは Windows ディレクトリになります。
+     Apache ウェブサーバーを使っている場合はまず Apache がインストールされているディレクトリ
+     (例えば <filename>c:\program files\apache group\apache</filename> にある
+     &php.ini; を探そうとします。このため、異なる &php.ini; ファイルを異なるバージョンの
+     Apache ごとに置いておくことができます。
+     </para>
+     <para>
+     <link
+     linkend="configuration.file">設定ファイル</link>の章も参照してください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.nodata">
+    <question>
+     <para>
+      Unix: PHP をインストールしましたが、ファイルをロードするたびに
+      'Document Contains No Data(ページが表示できません)' という
+      メッセージが表示されます。何が起こっているのですか?
+     </para>
+    </question>
+    <answer>
+     <para>
+      これはおそらく PHP に何らかの問題が起こっていてコアダンプしている
+      という状態です。サーバーのエラーログを見てこのケースかどうかチェック
+      してください。そして小さなテストケースで問題を再現させてみてください。
+      もし 'gdb' の使い方が分かるならバグレポートに加えてバックトレースを
+      提供してもらえると開発者が問題の箇所を突き止めるのに
+      非常に役立ちます。もしあなたがPHPをApacheモジュールとして使用している
+      場合は以下のようにします：
+      <itemizedlist>
+       <listitem>
+        <para>
+         httpd を停止します
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         gdb httpd
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         Stop your httpd processes
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         &gt; run -X -f /path/to/httpd.conf
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         ブラウザから問題のある URL にアクセスします
+        </para>
+       </listitem>      
+       <listitem>
+        <para>
+         &gt; run -X -f /path/to/httpd.conf
+        </para>
+       </listitem>      
+       <listitem>
+        <para>
+         もしコアダンプが発生すると gdb が知らせてくれます
+        </para>
+       </listitem>      
+       <listitem>
+        <para>
+         bt とタイプします
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         このバックトレースをバグレポートに含めてください。バグレポートは
+         <link xlink:href="&url.php.bugs;">&url.php.bugs;</link> 
+         から送信してください。
+        </para>
+       </listitem>
+      </itemizedlist>
+     </para>
+     <para>
+     もしそのスクリプトが正規表現関数
+     (<function>preg_match</function> やその類似関数) を使用している場合、
+     PHP と Apache が同じ正規表現のパッケージを使用してコンパイルされているかどうかを確認してください。
+     PHP と Apache 1.3.x を使用している場合は常に確認が必要です。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.processing">
+    <question>
+     <para>
+      Unix: RPM を使って PHP をインストールしたのですが、Apache が PHP のページを
+      処理してくれません。何が起こっているのですか?
+     </para>
+    </question>
+    <answer>
+     <para>
+     あなたが Apache と PHP の両方を RPM でインストールしたとすると、以下に示す
+     内容の一部もしくは全てを &httpd.conf; ファイルに追加するか、コメントを
+      外す必要があります：
+      <programlisting role="apache-conf">
+<![CDATA[
+# Extra Modules
+AddModule mod_php.c
+AddModule mod_perl.c
+
+# Extra Modules
+LoadModule php_module         modules/mod_php.so
+LoadModule php5_module        modules/libphp5.so
+LoadModule perl_module        modules/libperl.so
+]]>
+      </programlisting>
+      そして以下の行：
+      <programlisting role="apache-conf">
+<![CDATA[
+AddType application/x-httpd-php .php
+]]>
+      </programlisting>
+      以上の内容を全体設定、もしくは PHP サポートを追加したいバーチャル
+      ドメインの設定に加えてください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.frontpage">
+    <question>
+     <para>
+      Unix: Apache に FrontPage エクステンションのパッチを当てたら、突然
+      PHP が動作しなくなってしまいました。PHP は Apache の FrontPage
+      エクステンションと共存することはできないのですか?
+     </para>
+    </question>
+    <answer>
+     <para>
+      いいえ。PHP は FrontPage エクステンションと問題なく共存できます。
+      問題は FrontPage エクステンションのパッチが PHP が依存している Apache の
+      構造の一部を変更してしまうことにあります。パッチを当てた後で PHP
+      を再コンパイル('make clean; make' としてください)すれば問題は
+      解決されます。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.blankscreen">
+    <question>
+     <para>
+      Unix/Windows: PHP をインストールしたのですがブラウザから PHP
+      スクリプトにアクセスしても何も表示されません。
+     </para>
+    </question>
+    <answer>
+     <para>
+      ブラウザの「ソースの表示」を実行してください。おそらく PHP の
+      ソースコードが表示されると思います。これはウェブサーバーがスクリプトを
+      PHP に渡していないためスクリプトが実行されていない、ということを
+      意味します。サーバー側の設定のどこかが間違っているはずですので、
+      PHP インストールマニュアルに従って再度入念に設定を確認してみてください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.500error">
+    <question>
+     <para>
+      Unix/Windows: PHP をインストールしたのですがブラウザから PHP
+      スクリプトにアクセスすると Internal Server Error 500 となってしまいます。
+     </para>
+    </question>
+    <answer>
+     <para>
+      ウェブサーバーが PHP を実行するときに何らかの問題が起きています。
+      どんなエラーが起こっているか確認するために、コマンドラインで PHP
+      実行ファイル(Windows では <filename>php.exe</filename>) のある
+      ディレクトリに移動して <literal>php -i</literal> を実行してください。
+      もし PHP の実行時に問題があった場合は適切なエラーメッセージが表示されるので、
+      それを手がかりに次に何をすべきかを知ることができます。画面
+      一杯に HTML(<function>phpinfo</function> 関数の出力)が表示された場合には
+      PHP は問題なく動作していますので、問題はウェブサーバーの設定
+      にあるはずです。再度入念にチェックしてみてください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.undefinedsyms">
+    <question>
+     <para> 
+      PHP をインストールするまではエラーもなく問題なく進んだのですが、
+      Apache を起動させようとすると undefined symbol エラーが発生します。
+      <programlisting role="shell">
+[mybox:user /src/php5] root# apachectl configtest
+ apachectl: /usr/local/apache/bin/httpd Undefined symbols:
+  _compress
+  _uncompress
+      </programlisting>
+     </para>
+    </question>
+    <answer>
+     <para>
+      これは、PHP とは関係なく MySQL クライアントライブラリの問題です。
+      このライブラリのうちある種のものは <option
+      role="configure">--with-zlib</option> を必要とし、
+      他のものは必要としません。この問題は MySQL FAQ でも扱われています。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.cgierror">
+    <question>
+     <para>
+      Windows: PHP をインストールしたのですがブラウザから PHP スクリプト
+      にアクセスすると次のようなエラーが出力されます。
+      <screen>
+<![CDATA[
+cgi error:
+ The specified CGI application misbehaved by not
+ returning a complete set of HTTP headers.
+ The headers it did return are:
+]]>
+      </screen>
+     </para>
+    </question>
+    <answer>
+     <para>
+      このエラーメッセージは PHP が(何らかの理由で)何も出力できなかった
+      ことを意味します。詳細なエラーメッセージを得るためには、
+      コマンドラインから PHP 実行ファイル(Windows では
+      <filename>php.exe</filename>)のあるディレクトリに移動して
+      <command>php -i</command> を実行してください。もし PHP の実行時に問題
+      があった場合は適切なエラーメッセージが表示されるのでそれを
+      手がかりに次に何をすべきかを知ることができます。画面一杯に
+      HTML (<function>phpinfo</function>関数の出力) が表示された場合には
+      PHP は問題なく動作しています。
+     </para>
+     <para>
+      PHP がコマンドラインで動作したなら、再度ブラウザから PHP スクリプトに
+      アクセスしてみてください。もしまだ失敗するようなら以下のいずれかの
+      理由によるものと思われます。
+     </para>
+     <itemizedlist>
+      <listitem>
+       <simpara>
+        PHP スクリプト、
+        <filename>php.exe</filename>、<filename>php5ts.dll</filename>、
+        &php.ini; もしくはロードしようとしている PHP 拡張モジュールの
+        ファイルパーミッションが匿名インターネットユーザー
+        <literal>IUSER_&lt;machinename&gt;</literal> にアクセスできない
+        ものになっている。
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        スクリプトが存在しない(もしくはあなたが在ると思っている場所と
+        ウェブサーバーのルートディレクトリからの相対位置がずれている)。
+        IIS を使用している場合は、Internet Service Manager でスクリプト
+        マッピングを設定するときに「ファイルの存在を確認する」にチェックを
+        することでこのエラーをトラップすることができます。もしスクリプト
+        ファイルが存在しない場合はサーバーが代わりに 404 エラーを返すように
+        なります。これにはもう一つ利点があります。それは IIS が
+        スクリプトファイルの NTLanMan パーミッションに応じて認証を要求する
+        ようになる、ということです。
+       </simpara>
+      </listitem>
+     </itemizedlist>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.phpandiis">
+    <question>
+     <para>
+      Windows: 全ての説明に従っているのに PHP が IIS で動作しません!
+     </para>
+    </question>
+    <answer>
+     <para>
+      PHP スクリプトを実行しようとするあらゆるユーザーが
+      <filename>php.exe</filename> の実行権限を必要としているということを
+      忘れないでください。IIS はインストール時に追加された匿名ユーザーを使用
+      します。このユーザーに対して <filename>php.exe</filename> の実行権限が
+      必要です。また、認証された全てのユーザーに関しても
+      <filename>php.exe</filename> の実行権限が必要です。IIS4 の場合はさらに
+      PHP がスクリプトエンジンであるということを教えてやる必要があります。
+      <link linkend="faq.installation.forceredirect">この FAQ</link>
+      も読んでください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.forceredirect">
+    <question>
+     <para>
+       IIS, PWS, OmniHTTPD, Xitami上でCGIとしてPHPを実行するとき、
+       次のようなエラーが出る:<literal>Security Alert! PHP CGI 
+       cannot be accessed directly.</literal>
+     </para>
+    </question>
+    <answer>
+     <para>
+      <link linkend="ini.cgi.force-redirect">cgi.force_redirect</link>
+      に <literal>0</literal> をセットしてください。デフォルトでは
+      <literal>1</literal> にセットされていますので、そのディレクティブが
+      <literal>;</literal> でコメントアウトされていないことを確認してください。
+      他のディレクティブと同様にこれは &php.ini; 上でセットされます。
+     </para>
+     <para>
+      デフォルトは <literal>1</literal> なので、100% 正しく &php.ini; ファイルが
+      読み込まれているかどうかが重要です。
+      詳細は<link linkend="faq.installation.findphpini">この FAQ</link> を
+      読んでください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.findphpini">
+    <question>
+     <para>
+      &php.ini; が認識され読み込まれていることをどうやって知ることが
+      できますか? 自分の行った変更が反映されてないらしいのですが。
+     </para>
+    </question>
+    <answer>
+     <para>
+      &php.ini; とそれが PHP に読み込まれているかを確認するには
+      <function>phpinfo</function> をコールして最初のほうに
+      表示されている <literal>Configuration File (php.ini)</literal>
+      を見てください。これは PHP が認識している &php.ini; と、それが
+      読み込まれているか否かを示しています。ディレクトリパスだけが
+      表示されている場合は、読み込まれていないということなので、
+      そのディレクトリに &php.ini; を置いてください。
+      &php.ini; が <envar>PATH</envar> にある場合それが読み込まれます。
+     </para>
+     <para>
+      &php.ini; が読み込まれていてかつ PHP をモジュールとして実行
+      している場合、&php.ini; を変更した後で必ず Web サーバーを
+      再起動してください。
+     </para>
+     <para>
+      <function>php_ini_loaded_file</function> も参照ください。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.addtopath">
+    <question>
+     <para>
+      Windows で PHP のディレクトリを <envar>PATH</envar>
+      に追加するにはどうすればいいのですか?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Windows 7, XP, Vista, 2008, 2012 以降では、
+      <itemizedlist>
+       <listitem><para>
+        コントロールパネルのシステムアイコンを選択します（スタート → コントロールパネル）。
+       </para></listitem>
+       <listitem><para>
+        詳細設定タブに移動します。
+      </para></listitem>
+       <listitem><para>
+        「環境変数」ボタンを押します。
+       </para></listitem>
+       <listitem><para>
+        「システム環境変数」欄を見ます。
+       </para></listitem>
+       <listitem><para>
+        Path というエントリを見つけます（スクロールする必要があるかもしれません）。
+       </para></listitem>
+       <listitem><para>
+        Path のエントリをダブルクリックします。
+       </para></listitem>
+       <listitem><para>
+        その最後に ';' と追加し、その後に PHP のディレクトリを追加します
+        （例: <literal>;C:\php</literal>）。
+       </para></listitem>
+       <listitem><para>
+        OK を押します。
+       </para></listitem>
+      </itemizedlist>
+     </para>
+     <para>
+      Windows 98/Me では、<filename>autoexec.bat</filename> を編集する必要があります。
+      <itemizedlist>
+       <listitem><para>
+        メモ帳を開きます（スタート → ファイル名を指定して実行 で、
+        notepad と入力します）。
+       </para></listitem>
+       <listitem><para>
+        <filename>C:\autoexec.bat</filename> ファイルを開きます。
+       </para></listitem>
+       <listitem><para>
+        PATH=C:\WINDOWS;C:\WINDOWS\COMMAND;..... という行を探し、
+        その行の最後に <literal>;C:\php</literal> を追加します。
+       </para></listitem>
+       <listitem><para>
+        ファイルを保存し、コンピュータを再起動します。
+       </para></listitem>
+      </itemizedlist>
+     </para>
+     <note>
+      <simpara>
+       上の作業を行った後は、必ずコンピュータを再起動し、
+       <envar>PATH</envar> の変更が適用されていることを確認しましょう。
+      </simpara>
+     </note>
+     <para>
+      PHP マニュアルでは、これまでファイルを Windows のシステムディレクトリに
+      コピーするよう推奨してきました。なぜなら、このディレクトリ
+      （<filename>C:\Windows</filename>、<filename>C:\WINNT</filename>、など）
+      にはデフォルトでシステムの <envar>PATH</envar> が通っていたからです。ファイルを
+      Windows のシステムディレクトリにコピーすることはずいぶん昔に非推奨と
+      なっており、これはさまざまな問題のもととなりえます。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.phprc">
+    <question>
+     <para>
+      Windows 上の PHP で、&php.ini; を使えるようにするにはどうしたらいいのですか?
+     </para>
+    </question>
+    <answer>
+     <para>
+      いくつかの方法があります。Apache を使用しているのなら、Apache
+      固有のインストール手順（<link
+       linkend="install.windows.legacy.apache1">Apache 1</link>、<link
+       linkend="install.windows.legacy.apache2">Apache 2</link>）を参照ください。
+      それ以外の場合は、環境変数 <varname>PHPRC</varname> を指定する
+      必要があります。
+     </para>
+     <para>
+      Windows では、
+      <itemizedlist>
+       <listitem><para>
+        コントロールパネルのシステムアイコンを選択します（スタート → 設定
+        → コントロールパネル → システム、あるいは
+        単に スタート → コントロールパネル → システム）。
+       </para></listitem>
+       <listitem><para>
+        詳細設定タブに移動します。
+       </para></listitem>
+       <listitem><para>
+        「環境変数」ボタンを押します。
+       </para></listitem>
+       <listitem><para>
+        「システム環境変数」欄を見ます。
+       </para></listitem>
+       <listitem><para>
+         「新規」ボタンを押し、変数名に 'PHPRC' 、変数値に &php.ini; の
+         存在するディレクトリ（例: <literal>C:\php</literal>）を入力します。
+       </para></listitem>
+       <listitem><para>
+        OK を押し、コンピュータを再起動します。
+       </para></listitem>
+      </itemizedlist>
+     </para>
+     <para>
+      Windows 98/Me では、<filename>autoexec.bat</filename> を編集する必要があります。
+      <itemizedlist>
+       <listitem><para>
+        メモ帳を開きます（スタート → ファイル名を指定して実行 で、
+        notepad と入力します）。
+       </para></listitem>
+       <listitem><para>
+        <filename>C:\autoexec.bat</filename> ファイルを開きます。
+       </para></listitem>
+       <listitem><para>
+        ファイルの最後に以下の内容の行を追加します。<literal>set
+         PHPRC=C:\php</literal>（<literal>C:\php</literal> を、実際に
+        &php.ini; が存在するディレクトリに置き換えます）。パスには空白文字を
+        含められないことに注意しましょう。たとえば、もし PHP を
+        <filename>C:\Program Files\PHP</filename> にインストールしたのなら、
+        その代わりに <filename>C:\PROGRA~1\PHP</filename> と入力する必要が
+        あります。
+       </para></listitem>
+       <listitem><para>
+        ファイルを保存し、コンピュータを再起動します。
+       </para></listitem>
+      </itemizedlist>
+     </para>      
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.apache.multiviews">
+    <question>
+     <para>
+      Apache のコンテントネゴシエーション（MultiViews オプション）を
+      PHP で使用することはできますか?
+     </para>
+    </question>
+    <answer>
+     <para>
+      もしリンクする PHP ファイルが拡張子を持っているなら、すべては
+      うまく動作します。この FAQ が対象としているのは、リンクする
+      PHP ファイルが拡張子を持っておらず、拡張子のない URL から PHP
+      ファイルを判別するためにコンテントネゴシエーションを使用する方法です。
+      この場合、<literal>AddType application/x-httpd-php
+      .php</literal> という行を以下のように変更します。
+      <programlisting role="apache-conf">
+<![CDATA[
+AddHandler php5-script php
+AddType text/html php
+]]>
+     </programlisting>
+     この方法は、Apache 1 ではうまく動作しません。なぜなら PHP モジュールが
+     <literal>php-script</literal> をキャッチできないからです。
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.installation.requestmethods">
+    <question>
+     <para>
+      PHP が処理できるリクエストメソッドは GET および POST だけなのですか?
+     </para>
+    </question>
+    <answer>
+     <para>
+      いいえ、それ以外のいかなるメソッド（例: CONNECT）でも扱えます。
+      適切な応答ステータスは、<function>header</function> を使用して送信可能です。
+      GET および POST だけを処理したいなら、Apache の設定を以下のようにします。
+      <programlisting role="apache-conf">
+<![CDATA[
+<LimitExcept GET POST>
+Deny from all
+</LimitExcept>
+]]>
+     </programlisting>
+     </para>
+    </answer>
+   </qandaentry>
+  </qandaset>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

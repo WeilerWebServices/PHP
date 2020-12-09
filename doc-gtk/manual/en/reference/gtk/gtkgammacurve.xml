@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.8 $ -->
+<classentry id="gtk.gtkgammacurve">
+ <classmeta>
+  <classtitle>GtkGammaCurve</classtitle>
+  <classparent>GtkVBox</classparent>
+  <shortdesc>
+   A class for editing Gamma Curves.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkgammacurve.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkGammaCurve</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <fields>
+
+  <field id="gtk.gtkgammacurve.field.curve" type="ro">
+   <fieldname>curve</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkgammacurve.field.gamma" type="ro">
+   <fieldname>gamma</fieldname>
+   <fieldtype>double</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkgammacurve.field.gamma_dialog" type="ro">
+   <fieldname>gamma_dialog</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkgammacurve.field.gamma_text" type="ro">
+   <fieldname>gamma_text</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+  <field id="gtk.gtkgammacurve.field.table" type="ro">
+   <fieldname>table</fieldname>
+   <fieldtype>GtkWidget</fieldtype>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </field>
+
+ </fields>
+
+</classentry>

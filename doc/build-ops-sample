@@ -1,0 +1,11 @@
+#!/bin/sh
+# Please read README.md in the same directory to get more info about filling in this file
+
+PHP=@PHP@
+SVNDIR=@SVNDIR@
+DOCDIR=@DOCDIR@
+DOCWEB=@DOCWEB@
+PHDDIR=@PHDDIR@
+SCRIPTSDIR=@SCRIPTSDIR@
+SQLITEDIR=@SQLITEDIR@
+SRCDIR=@SRCDIR@

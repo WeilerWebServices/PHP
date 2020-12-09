@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 333038 Maintainer: shimooka Status: ready -->
+<refentry xml:id="function.oci-bind-by-name" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>oci_bind_by_name</refname>
+  <refpurpose>Oracle プレースホルダに PHP 変数をバインドする</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>oci_bind_by_name</methodname>
+   <methodparam><type>resource</type><parameter>statement</parameter></methodparam>
+   <methodparam><type>string</type><parameter>bv_name</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter role="reference">variable</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>maxlength</parameter><initializer>-1</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>type</parameter><initializer>SQLT_CHR</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   PHP の変数
+   <parameter>variable</parameter> を Oracle プレースホルダ
+   <parameter>bv_name</parameter> にバインドします。
+   バインドは Oracle データベースのパフォーマンスに影響を及ぼす重要な仕組みで、
+   SQL インジェクション攻撃を防ぐための方法にもなります。
+  </para>
+
+  <para>
+    バインドを使うとデータベースでステートメントのコンテキストを
+    (たとえ別のユーザーやプロセスが実行したものであっても)
+    再利用することができるようになります。
+    バインドによって SQL インジェクションの心配を軽減できる理由は、
+    バインド変数で代入したデータが決して SQL 文の一部と見なされることがないからです。
+    クォートやエスケープは不要です。
+  </para>
+
+  <para>
+    バインドする PHP 変数の中身を変更してステートメントを再実行するときにも、
+    ステートメントをパースしなおしたり変数をバインドしなおしたりする必要はありません。
+  </para>
+
+  <para>
+    Oracle のバインド変数は、データベースに渡す値に使う
+    <literal>IN</literal> 変数と PHP に返される値に使う
+    <literal>OUT</literal> 変数のふたつに大別できます。
+    バインド変数は <literal>IN</literal> あるいは <literal>OUT</literal>
+    のどちらかの形式になります。バインド変数を入力用に使うか出力用に使うかは、
+    実行時に決まります。
+  </para>
+
+  <para>
+    <literal>OUT</literal> 変数を使う場合は
+    <parameter>maxlength</parameter> を指定しなければなりません。
+    これを用いて、返される値を格納するのに必要なメモリを PHP が確保します。
+  </para>
+
+  <para>
+    <literal>IN</literal> 変数の場合も、もし PHP
+    の変数にさまざまな値を格納してステートメントを何度も実行するのであれば
+    <parameter>maxlength</parameter> を設定しておくことを推奨します。
+    そうしないと、最初に渡した PHP の変数の値にあわせて
+    Oracle がデータの長さを切り詰めてしまう可能性があります。
+    最大長がどの程度になるかわからない場合は現在のデータサイズで
+    <function>oci_bind_by_name</function>
+    を再コールしてから <function>oci_execute</function> を実行するようにしましょう。
+    不必要に大きなサイズでバインドすると、
+    データベースのプロセスのメモリ使用量に影響を及ぼします。
+  </para>
+
+  <para>
+    バインドは、Oracle にデータをどのメモリアドレスから読み込むのかを指示します。
+    <literal>IN</literal> 変数の場合、<function>oci_execute</function>
+    がコールされたときにそのメモリアドレスに正しいデータがなければなりません。
+    つまり、バインドされる変数は実行時までスコープ内に残っていなければならないということです。
+    もしそうでなければ、
+    "ORA-01460: unimplemented or unreasonable conversion requested"
+    のような予期せぬエラーが発生します。
+    <literal>OUT</literal> 変数の場合は、PHP の変数に何も値が格納されないといったことになるでしょう。
+  </para>
+
+  <para>
+    繰り返し実行されるステートメントで決して値が変わることのないバインド変数を使っていると、
+    Oracle のオプティマイザが最適な実行プランを選びにくくなる可能性があります。
+    実行に長い時間がかかり、再実行されることもめったにないようなステートメントは、
+    バインドの恩恵を受けられないでしょう。
+    しかし、どちらの場合であっても、文字列を連結して
+    SQL 文を作るよりはバインドを使ったほうが安全です。
+    ユーザーの入力をフィルタリングせずに埋め込んでしまうというリスクをなくせるからです。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>statement</parameter></term>
+     <listitem>
+      <para>
+       有効な OCI8 ステートメント識別子。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>bv_name</parameter></term>
+     <listitem>
+      <para>
+       コロンを先頭につけたバインド変数プレースホルダをステートメント内で使います。
+       コロンは <parameter>bv_name</parameter> では必須ではありません。
+       Oracle はクエスチョンマークをプレースホルダとして使いません。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>variable</parameter></term>
+     <listitem>
+      <para>
+       <parameter>bv_name</parameter> に関連づける PHP の変数。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>maxlength</parameter></term>
+     <listitem>
+      <para>
+       バインド時の最大長。-1 に設定した場合、
+       <parameter>variable</parameter> の現在の長さを最大長として設定します。
+       この場合は、<function>oci_bind_by_name</function> がコールされたときに
+       <parameter>variable</parameter> が存在してデータが格納されている必要があります。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>type</parameter></term>
+     <listitem>
+      <para>
+       Oracle がデータを扱うときのデータ型。デフォルトの
+       <parameter>type</parameter> は
+       <constant>SQLT_CHR</constant> です。
+       Oracle は、可能な場合はこの型とデータベースのカラム
+       (あるいは PL/SQL の変数) の型の間で変換を行います。
+      </para>
+      <para>
+       抽象データ型 (LOB/ROWID/BFILE) をバインドする必要がある場合、まず
+       <function>oci_new_descriptor</function>
+       関数を使用してこれを確保する必要があります。
+       <parameter>length</parameter> は抽象データ型用には
+       使用されず、-1 を設定する必要があります。
+      </para>
+      <para>
+       <parameter>type</parameter> に設定できる値は以下のとおりです。
+       <itemizedlist>
+        <listitem>
+         <para>
+          <constant>SQLT_BFILEE</constant> or <constant>OCI_B_BFILE</constant>
+          <!-- really only single E --> - BFILE 用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_CFILEE</constant> or <constant>OCI_B_CFILEE</constant>
+          - CFILE 用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_CLOB</constant> or <constant>OCI_B_CLOB</constant>
+          - CLOB 用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_BLOB</constant> or <constant>OCI_B_BLOB</constant>
+          - BLOB 用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_RDD</constant> or <constant>OCI_B_ROWID</constant>
+          - ROWID 用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_NTY</constant> or <constant>OCI_B_NTY</constant>
+          - 名前付けされたデータ型用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_INT</constant> or <constant>OCI_B_INT</constant>
+          - integer 用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_CHR</constant> - VARCHAR 用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_BIN</constant> or <constant>OCI_B_BIN</constant>
+          - RAW カラム用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_LNG</constant> - LONG カラム用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_LBI</constant> - LONG RAW カラム用
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_RSET</constant> - カーソル用。
+          <function>oci_new_cursor</function> により、前もって生成されたもの。
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>SQLT_BOL</constant> あるいは <constant>OCI_B_BOL</constant>
+          PL/SQL の BOOLEAN 用 (OCI8 2.0.7 以降と Oracle Database 12c 以降が必要)
+         </para>
+        </listitem>
+       </itemizedlist>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>oci_bind_by_name</function> によるデータの挿入</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// このようなテーブルを作ります
+//   CREATE TABLE mytab (id NUMBER, text VARCHAR2(40));
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
+$stid = oci_parse($conn,"INSERT INTO mytab (id, text) VALUES(:id_bv, :text_bv)");
+
+$id = 1;
+$text = "Data to insert     ";
+oci_bind_by_name($stid, ":id_bv", $id);
+oci_bind_by_name($stid, ":text_bv", $text);
+oci_execute($stid);
+
+// テーブルに入る内容: 1, 'Data to insert     '
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title>一度組み立てたものを複数回実行</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// このようなテーブルを作ります
+//   CREATE TABLE mytab (id NUMBER);
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
+$a = array(1,3,5,7,11);  // 挿入するデータ
+
+$stid = oci_parse($conn, 'INSERT INTO mytab (id) VALUES (:bv)');
+oci_bind_by_name($stid, ':bv', $v, 20);
+foreach ($a as $v) {
+    $r = oci_execute($stid, OCI_DEFAULT);  // 自動コミットはしません
+}
+oci_commit($conn); // すべてをここでコミットします
+
+// テーブルには次の 5 行が含まれます: 1, 3, 5, 7, 11
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title><function>foreach</function> ループでのバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
+$sql = 'SELECT * FROM departments WHERE department_name = :dname AND location_id = :loc';
+$stid = oci_parse($conn, $sql);
+
+$ba = array(':dname' => 'IT Support', ':loc' => 1700);
+
+foreach ($ba as $key => $val) {
+
+    // oci_bind_by_name($stid, $key, $val) ではうまくいきません。
+    // これは、すべてのプレースホルダを同じ内容にバインドしてしまうからです。
+    // $val ではなく、データの実際の位置を表す $ba[$key] を使いましょう。
+    oci_bind_by_name($stid, $key, $ba[$key]);
+}
+
+oci_execute($stid);
+$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+foreach ($row as $item) {
+    print $item."<br>\n";
+}
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title>WHERE 句でのバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect("hr", "hrpwd", "localhost/XE");
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
+$sql = 'SELECT last_name FROM employees WHERE department_id = :didbv ORDER BY last_name';
+$stid = oci_parse($conn, $sql);
+$didbv = 60;
+oci_bind_by_name($stid, ':didbv', $didbv);
+oci_execute($stid);
+while (($row = oci_fetch_array($stid, OCI_ASSOC)) != false) {
+    echo $row['LAST_NAME'] ."<br>\n";
+}
+
+// 出力は
+//    Austin
+//    Ernst
+//    Hunold
+//    Lorentz
+//    Pataballa
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title>LIKE 句でのバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
+// 'South' からはじまるすべての都市を探します
+$stid = oci_parse($conn, "SELECT city FROM locations WHERE city LIKE :bv");
+$city = 'South%';  // '%' は SQL でのワイルドカードです
+oci_bind_by_name($stid, ":bv", $city);
+oci_execute($stid);
+oci_fetch_all($stid, $res);
+
+foreach ($res['CITY'] as $c) {
+    print $c . "<br>\n";
+}
+// 出力は
+//   South Brunswick
+//   South San Francisco
+//   Southlake
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title>REGEXP_LIKE でのバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
+// 'ing' を含むすべての都市を探します
+$stid = oci_parse($conn, "SELECT city FROM locations WHERE REGEXP_LIKE(city, :bv)");
+$city = '.*ing.*';
+oci_bind_by_name($stid, ":bv", $city);
+oci_execute($stid);
+oci_fetch_all($stid, $res);
+
+foreach ($res['CITY'] as $c) {
+    print $c . "<br>\n";
+}
+// 出力は
+//   Beijing
+//   Singapore
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+    IN 句の中の条件数が少なくて固定なのであれば、個々にバインド変数を割り当てればいいでしょう。
+    実行時に不明な値は NULL が設定されます。
+    こうすればひとつのステートメントをすべてのユーザーで使い回すことができ、
+    Oracle の DB キャッシュの効率を最大化させることができます。
+  </para>
+
+  <para>
+   <example>
+    <title>IN 句での複数の値のバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
+$sql = 'SELECT last_name FROM employees WHERE employee_id in (:e1, :e2, :e3)';
+$stid = oci_parse($conn, $sql);
+$mye1 = 103;
+$mye2 = 104;
+$mye3 = NULL; // pretend we were not given this value
+oci_bind_by_name($stid, ':e1', $mye1);
+oci_bind_by_name($stid, ':e2', $mye2);
+oci_bind_by_name($stid, ':e3', $mye3);
+oci_execute($stid);
+oci_fetch_all($stid, $res);
+foreach ($res['LAST_NAME'] as $name) {
+    print $name ."<br>\n";
+}
+
+// 出力は
+//   Ernst
+//   Hunold
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title>クエリが返す ROWID のバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// このようなテーブルを作ります
+//   CREATE TABLE mytab (id NUMBER, salary NUMBER, name VARCHAR2(40));
+//   INSERT INTO mytab (id, salary, name) VALUES (1, 100, 'Chris');
+//   COMMIT;
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
+$stid = oci_parse($conn, 'SELECT ROWID, name FROM mytab WHERE id = :id_bv FOR UPDATE');
+$id = 1;
+oci_bind_by_name($stid, ':id_bv', $id);
+oci_execute($stid);
+$row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+$rid = $row['ROWID'];
+$name = $row['NAME'];
+
+// 名前を大文字に変換してそれを保存します
+$name = strtoupper($name);
+$stid = oci_parse($conn, 'UPDATE mytab SET name = :n_bv WHERE ROWID = :r_bv');
+oci_bind_by_name($stid, ':n_bv', $name);
+oci_bind_by_name($stid, ':r_bv', $rid, -1, OCI_B_ROWID);
+oci_execute($stid);
+
+// テーブルに入る内容: 1, 100, CHRIS
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title>INSERT での ROWID のバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// この例では id と name を挿入し、それから salary を更新します
+// このようなテーブルを作ります
+//   CREATE TABLE mytab (id NUMBER, salary NUMBER, name VARCHAR2(40));
+//
+// Based on original ROWID example by thies at thieso dot net (980221)
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
+$sql = "INSERT INTO mytab (id, name) VALUES(:id_bv, :name_bv)
+        RETURNING ROWID INTO :rid";
+
+$ins_stid = oci_parse($conn, $sql);
+
+$rowid = oci_new_descriptor($conn, OCI_D_ROWID);
+oci_bind_by_name($ins_stid, ":id_bv",   $id,    10);
+oci_bind_by_name($ins_stid, ":name_bv", $name,  32);
+oci_bind_by_name($ins_stid, ":rid",     $rowid, -1, OCI_B_ROWID);
+
+$sql = "UPDATE mytab SET salary = :salary WHERE ROWID = :rid";
+$upd_stid = oci_parse($conn, $sql);
+oci_bind_by_name($upd_stid, ":rid", $rowid, -1, OCI_B_ROWID);
+oci_bind_by_name($upd_stid, ":salary", $salary,   32);
+
+// 挿入する id と name
+$data = array(1111 => "Larry",
+              2222 => "Bill",
+              3333 => "Jim");
+
+// それぞれの salary
+$salary = 10000;
+
+// 挿入し、その後すぐに各行を更新します
+foreach ($data as $id => $name) {
+    oci_execute($ins_stid);
+    oci_execute($upd_stid);
+}
+
+$rowid->free();
+oci_free_statement($upd_stid);
+oci_free_statement($ins_stid);
+
+// 新しい行を表示します
+$stid = oci_parse($conn, "SELECT * FROM mytab");
+oci_execute($stid);
+while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    var_dump($row);
+}
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title>PL/SQL ストアドファンクションでのバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+//  PHP プログラムを実行する前に、ストアドファンクションを
+//  SQL*Plus あるいは SQL Developer で作ります
+//
+//  CREATE OR REPLACE FUNCTION myfunc(p IN NUMBER) RETURN NUMBER AS
+//  BEGIN
+//      RETURN p * 3;
+//  END;
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message']), E_USER_ERROR);
+}
+
+$p = 8;
+
+$stid = oci_parse($conn, 'begin :r := myfunc(:p); end;');
+oci_bind_by_name($stid, ':p', $p);
+
+// 返り値は OUT 変数に格納されます。デフォルトの型は文字列型なので、
+// length が 40 ということは最大で 40 まで返される可能性があるということです
+oci_bind_by_name($stid, ':r', $r, 40);
+
+oci_execute($stid);
+
+print "$r\n";   // 24 と表示します
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+  <example>
+   <title>PL/SQL ストアドプロシージャでのパラメータのバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+//  PHP プログラムを実行する前に、ストアドプロシージャを
+//  SQL*Plus あるいは SQL Developer で作ります
+//
+//  CREATE OR REPLACE PROCEDURE myproc(p1 IN NUMBER, p2 OUT NUMBER) AS
+//  BEGIN
+//      p2 := p1 * 2;
+//  END;
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message']), E_USER_ERROR);
+}
+
+$p1 = 8;
+
+$stid = oci_parse($conn, 'begin myproc(:p1, :p2); end;');
+oci_bind_by_name($stid, ':p1', $p1);
+
+// プロシージャの 2 番目のパラメータは OUT 変数です。デフォルトの型は文字列型なので、
+// length が 40 ということは最大で 40 まで返される可能性があるということです
+oci_bind_by_name($stid, ':p2', $p2, 40);
+
+oci_execute($stid);
+
+print "$p2\n";   // 16 と表示します
+
+oci_free_statement($stid);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <para>
+  <example>
+   <title>CLOB 列のバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// 実行する前にテーブルを作成します。
+//     CREATE TABLE mytab (mykey NUMBER, myclob CLOB);
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message']), E_USER_ERROR);
+}
+
+$mykey = 12343;  // この例のための任意のキー
+
+$sql = "INSERT INTO mytab (mykey, myclob)
+        VALUES (:mykey, EMPTY_CLOB())
+        RETURNING myclob INTO :myclob";
+
+$stid = oci_parse($conn, $sql);
+$clob = oci_new_descriptor($conn, OCI_D_LOB);
+oci_bind_by_name($stid, ":mykey", $mykey, 5);
+oci_bind_by_name($stid, ":myclob", $clob, -1, OCI_B_CLOB);
+oci_execute($stid, OCI_DEFAULT);
+$clob->save("A very long string");
+
+oci_commit($conn);
+
+// CLOB データを取得します
+
+$query = 'SELECT myclob FROM mytab WHERE mykey = :mykey';
+
+$stid = oci_parse ($conn, $query);
+oci_bind_by_name($stid, ":mykey", $mykey, 5);
+oci_execute($stid);
+
+print '<table border="1">';
+while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_LOBS)) {
+    print '<tr><td>'.$row['MYCLOB'].'</td></tr>';
+    // ループ内で、大きなサイズの変数を解放してから次のフェッチに進めます。
+    // これで、PHP のピークメモリ利用量を抑えます。
+    unset($row);
+}
+print '</table>';
+
+?>
+]]>
+   </programlisting>
+  </example>
+  </para>
+
+  <para>
+  <example>
+   <title>PL/SQL の BOOLEAN のバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$conn = oci_connect('hr', 'welcome', 'localhost/XE');
+if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message']), E_USER_ERROR);
+}
+
+$plsql = 
+  "begin
+    :output1 := true;
+    :output2 := false;
+   end;";
+
+$s = oci_parse($c, $plsql);
+oci_bind_by_name($s, ':output1', $output1, -1, OCI_B_BOL);
+oci_bind_by_name($s, ':output2', $output2, -1, OCI_B_BOL);
+oci_execute($s);
+var_dump($output1);  // true
+var_dump($output2);  // false
+
+?>
+]]>
+   </programlisting>
+  </example>
+  </para>
+
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    クォートは不要なので、<link
+     linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link> や
+    <function>addslashes</function> を
+    <function>oci_bind_by_name</function> と同時に使わないでください。
+    自動的に追加されたクォートはデータベースの中にそのまま書き込まれてしまいます。
+    <function>oci_bind_by_name</function>
+    はデータをそのままの形で追加し、クォートやエスケープ文字の除去は行わないからです。
+   </para>
+  </warning>
+  <note>
+   <para>
+    <literal>WHERE</literal> 句の中の
+    <literal>CHAR</literal> 型のカラムに文字列をバインドするときには、
+    Oracle における <literal>CHAR</literal> 型のカラムの比較が
+    スペースで埋めた (固定長形式で) 行われることを覚えておきましょう。
+    <literal>WHERE</literal> 句を期待通りに動作させるには、
+    PHP の変数側でもスペースを追加してカラムの幅と同じにしておく必要があります。
+   </para>
+  </note>
+  <note>
+   <para>
+     PHP の <parameter>variable</parameter> 引数は参照渡しです。
+     ループの形式によっては期待通りの動きをしないこともあります。
+   </para>
+   <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+foreach ($myarray as $key => $value)  {
+    oci_bind_by_name($stid, $key, $value);
+}
+?>
+]]>
+     </programlisting>
+   </informalexample>
+   <para>
+     これは、それぞれのキーに対して $value の指す場所をバインドします。
+     つまり、すべてのバインド変数の値は
+     ループの最後の処理で $value が指す値となります。
+     期待通りに動かすには、次のようにします。
+   </para>
+   <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+foreach ($myarray as $key => $value) {
+    oci_bind_by_name($stid, $key, $myarray[$key]);
+}
+?>
+]]>
+     </programlisting>
+   </informalexample>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>oci_bind_array_by_name</function></member>
+    <member><function>oci_parse</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

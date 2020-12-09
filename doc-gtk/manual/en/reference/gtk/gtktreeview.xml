@@ -1,0 +1,1855 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.20 $ -->
+<classentry id="gtk.gtktreeview">
+ <classmeta>
+  <classtitle>GtkTreeView</classtitle>
+  <classparent>GtkContainer</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtktreeview.png" frame="no"/>
+  <shortdesc>
+   A widget for displaying both trees and lists.
+  </shortdesc>
+  <desc>
+   <para>
+    A GtkTreeView can display both list and tree structures. To display a list,
+    pass a <classname>GtkListStore</classname> object to the constructor or
+    <function class="GtkTreeView">set_model</function>. For a tree, use a
+    <classname>GtkTreeStore</classname> object. Basically any object of
+    a class that implements the <classname>GtkTreeModel</classname> interface
+    is suitable.
+   </para>
+   <para>
+    After creating the view and setting the model, you need to create some
+    <classname>GtkTreeViewColumn</classname>s and add them to the view with
+    <function class="GtkTreeView">append_column</function>. The column widgets
+    themselves need some <classname>GtkCellRenderer</classname>s that actually
+    draw and display the data of the model.
+   </para>
+   <para>
+    To obtain the selected rows of the view, get the view's
+    <classname>GtkTreeSelection</classname> object that manages the selection
+    by using <function class="GtkTreeView">get_selection</function>.
+    If you want to track if it changes, connect its
+    <signalname class="GtkTreeSelection">changed</signalname>
+    signal.
+   </para>
+  </desc>
+ </classmeta>
+
+
+ <constructors>
+  <constructor id="gtk.gtktreeview.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkTreeView</function></funcdef>
+    <paramdef><classname>GtkTreeModel</classname> <parameter><optional>model</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Create a new tree view.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new <classname>GtkTreeView</classname>, optionally with a data store. If you
+     don't set a it on construction, you can use
+     <function class="GtkTreeView">set_model</function> after.
+    </para>
+    <example>
+     <title>GtkTreeview with sortable columns and some data</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtktreeview/constructor.phpw" parse="text">
+       <xi:fallback>FIXME:MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </constructor>
+ </constructors>
+
+
+ <methods>
+  <method id="gtk.gtktreeview.method.append_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>append_column</function></funcdef>
+     <paramdef><classname>GtkTreeViewColumn</classname> <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Appends a column to the view.
+   </shortdesc>
+   <desc>
+    <para>
+     Appends a column at the end (i.e. the most right place) of the view.
+    </para>
+    <example>
+     <title>Appending a column to a tree view</title>
+     <programlisting role="php"><![CDATA[
+$renderer = new GtkCellRendererText();
+$column = new GtkTreeViewColumn('Title', $renderer, 'text', 0);
+$treeview->append_column($column);
+]]></programlisting>
+    </example>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_column</function>,
+     <function class="GtkTreeView">insert_column</function>,
+     <function class="GtkTreeView">remove_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.collapse_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>collapse_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Collapses all nodes.
+   </shortdesc>
+   <desc>
+    <para>
+     Recursively collapses all visible, expanded nodes in the tree view.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">collapse_row</function>,
+     <function class="GtkTreeView">expand_all</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.collapse_row">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>collapse_row</function></funcdef>
+     <paramdef>array <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Collapses a given row.
+   </shortdesc>
+   <desc>
+    <para>
+     Collapses the row at the given <parameter>path</parameter>
+     (hides its child rows, if they exist).
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">collapse_all</function>,
+     <function class="GtkTreeView">expand_row</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.columns_autosize">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>columns_autosize</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Resizes all columns to their optimal width.
+   </shortdesc>
+   <desc>
+    <para>
+     Resizes all columns to their optimal width.
+     Only works after the treeview has been realized.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.create_row_drag_icon">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>create_row_drag_icon</function></funcdef>
+     <paramdef>array <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a GdkPixmap representation of the row
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a <classname>GdkPixmap</classname> representation of the row at
+     <parameter>path</parameter>. This image is used for a drag icon.
+    </para>
+   </desc>
+  </method>
+
+  
+
+  
+
+  <method id="gtk.gtktreeview.method.expand_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>expand_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Recursively expands all nodes in the tree view.
+   </shortdesc>
+   <desc>
+    <para>
+     Recursively expands all nodes in the tree view.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">expand_row</function>,
+     <function class="GtkTreeView">collapse_all</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.expand_row">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>expand_row</function></funcdef>
+     
+     <paramdef><parameter>path</parameter></paramdef>
+     <paramdef><parameter>open_all</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Opens the row so its children are visible.
+   </shortdesc>
+   <desc>
+    <para>
+     Opens the row so its children are visible.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">expand_all</function>,
+     <function class="GtkTreeView">collapse_row</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.expand_to_path">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>expand_to_path</function></funcdef>
+     
+     <paramdef><parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Expands the row to a path.
+   </shortdesc>
+   <desc>
+    <para>
+     Expands the row at path. This will also expand all parent
+     rows of path as necessary.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_background_area">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_background_area</function></funcdef>
+     
+     
+     
+     
+     <paramdef><parameter>path</parameter></paramdef>
+     <paramdef><classname>GtkTreeViewColumn</classname> <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+<!-- FIXME -->
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_bin_window">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GdkWindow</classname> <function>get_bin_window</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the window that the view renders to.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the window that tree_view renders to. This is used primarily 
+     to compare to event-&gt;window to confirm that the event on tree view is on 
+     the right window.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_cell_area">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_cell_area</function></funcdef>
+     
+     
+     
+     
+     <paramdef><parameter>path</parameter></paramdef>
+     <paramdef><classname>GtkTreeViewColumn</classname> <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+<!-- FIXME -->
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkTreeViewColumn</classname> <function>get_column</function></funcdef>
+     <paramdef>int <parameter>n</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the GtkTreeViewColumn at the given position
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the GtkTreeViewColumn at the given position.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">append_column</function>,
+     <function class="GtkTreeView">insert_column</function>,
+     <function class="GtkTreeView">remove_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_columns">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>get_columns</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+<!-- FIXME: not implemented -->
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_cursor">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_cursor</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the current path and focus column.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns an array with the current path and the
+     <classname>GtkTreeViewColumn</classname> that are active at the moment.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_cursor</function>
+    </para>
+   </desc>
+  </method>
+
+  
+
+  
+
+  <method id="gtk.gtktreeview.method.get_enable_search">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_enable_search</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Whether or not the tree allows interactive searching.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether or not the tree allows interactive searching.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_enable_search</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_expander_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkTreeViewColumn <function>get_expander_column</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the column that is the current expander column.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the column that is the current expander column. 
+     This column has the expander arrow drawn next to it.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_expander_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_fixed_height_mode">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_fixed_height_mode</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Whether fixed height mode is turned on or not.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether fixed height mode is turned on for the tree view.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_fixed_height_mode</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_hadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkAdjustment</classname> <function>get_hadjustment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+     Gets the GtkAdjustment for the horizontal aspect.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the <classname>GtkAdjustment</classname> currently being used
+     for the horizontal aspect.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_hadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_headers_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_headers_visible</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    If the headers on the view are visible.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns true if the headers in the view are visible.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_headers_visible</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_hover_expand">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_hover_expand</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Whether hover expansion mode is turned on.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether hover expansion mode is turned on for the view.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_hover_expand</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_hover_selection">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_hover_selection</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Whether hover selection mode is turned on.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns whether hover selection mode is turned on for the view.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_hover_selection</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_model">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkTreeModel</classname> <function>get_model</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the model used.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the tree/list model used to hold the data.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_model</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_path_at_pos">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>array <function>get_path_at_pos</function></funcdef>
+     <paramdef>int <parameter>x</parameter></paramdef>
+     <paramdef>int <parameter>y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the tree path at a pixel position.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the tree path at the given pixel position. The coordinates
+     have to be widget coordinates.
+    </para>
+    <para>
+     The returned array has four elements:
+     <itemizedlist>
+      <listitem>
+       array of the row at the position
+      </listitem>
+      <listitem>
+       <classname>GtkTreeViewColumn</classname>
+      </listitem>
+      <listitem>
+       <literal>cell_x</literal>
+      </listitem>
+      <listitem>
+       <literal>cell_y</literal>
+      </listitem>
+     </itemizedlist>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_reorderable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_reorderable</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Whether the user can reorder rows via drag-and-drop.
+   </shortdesc>
+   <desc>
+    <para>
+      Retrieves whether the user can reorder the tree via drag-and-drop.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_reorderable</function>
+    </para>
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtktreeview.method.get_rules_hint">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_rules_hint</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the rules_hint setting.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the setting set by
+     <function class="GtkTreeView">set_rules_hint</function>.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_rules_hint</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_search_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_search_column</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the column id used for searches.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the column id used for searches.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_search_column</function>
+    </para>
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtktreeview.method.get_selection">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkTreeSelection</classname> <function>get_selection</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the selection object associated with the view.
+   </shortdesc>
+   <desc>
+    <para>
+     This method returns the <classname>GtkTreeSelection</classname> object
+     associated with the view. The selection object itself contains
+     all the data about a selection, be it just a single row, or multiple
+     rows that are selected.
+    </para>
+    <para>
+     Always keep in mind that the view, not the underlying model, has a
+     selection! That means that different views of the same model can have
+     different selections.
+    </para>
+    <example>
+     <title>Using GtkTreeSelection</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtktreeview/selection.phpw" parse="text">
+       <xi:fallback>FIXME:MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_vadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkAdjustment <function>get_vadjustment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">set_vadjustment</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_visible_rect">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_visible_rect</function></funcdef>
+     <paramdef>GdkRectangle <parameter>visible_rect</parameter></paramdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.insert_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>insert_column</function></funcdef>
+     <paramdef><classname>GtkTreeViewColumn</classname> <parameter>column</parameter></paramdef>
+     <paramdef>int <parameter>position</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">append_column</function>, 
+     <function class="GtkTreeView">get_column</function>, 
+     <function class="GtkTreeView">remove_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.insert_column_with_data_func">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>insert_column_with_data_func</function></funcdef>
+     
+     <paramdef>int <parameter>position</parameter></paramdef>
+     <paramdef>string <parameter>title</parameter></paramdef>
+     <paramdef><classname>GtkCellRenderer</classname> <parameter>cellrenderer</parameter></paramdef>
+     <paramdef>callback <parameter>callback</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Inserts a column at the given position with a data function assigned.
+   </shortdesc>
+   <desc>
+    <para>
+     This method inserts a new column into a <classname>GtkTreeView</classname>
+     at the given position with a given name. In contrast to
+     <function class="GtkTreeView">insert_column</function> and
+     <function class="GtkTreeView">append_column</function> this method creates
+     the column object internally and allows you to specify a data function,
+     which is called everytime a cell in the model for this column changed and
+     needs to be rendered.
+    </para>
+    <para>
+     The provided callback function receives the following parameters to act on them:
+     <itemizedlist>
+      <listitem>
+       <classname>GtkTreeViewColumn</classname> The column object created by the
+       <function class="GtkTreeView">insert_column_with_data_func</function>
+       call.
+      </listitem>
+      <listitem>
+       <classname>GtkCellRenderer</classname> The cell renderer used to display
+       this cell.
+      </listitem>
+      <listitem>
+       <classname>GtkTreeModel</classname> The model rendered by the tree view.
+      </listitem>
+      <listitem>
+       <classname>GtkTreeIter</classname> The tree row affected by the change.
+      </listitem>
+     </itemizedlist>
+     Inside the data function you most propably want to change the
+     <classname>GtkCellRenderer</classname>, which is responsible for
+     displaying.
+    </para>
+    <example>
+     <title>Using <function class="GtkTreeView">insert_column_with_data_func</function></title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtktreeview/insert_column_with_data_func.phpw" parse="text">
+       <xi:fallback>FIXME:MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+   <desc>
+
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtktreeview.method.move_column_after">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>move_column_after</function></funcdef>
+     <paramdef>GtkTreeViewColumn <parameter>column</parameter></paramdef>
+     <paramdef>GtkTreeViewColumn <parameter>base_column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.remove_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>remove_column</function></funcdef>
+     <paramdef>GtkTreeViewColumn <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">append_column</function>, 
+     <function class="GtkTreeView">get_column</function>, 
+     <function class="GtkTreeView">insert_column</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.row_activated">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>row_activated</function></funcdef>
+     
+     <paramdef><parameter>path</parameter></paramdef>
+     <paramdef><classname>GtkTreeViewColumn</classname> <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.row_expanded">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>row_expanded</function></funcdef>
+     
+     <paramdef><parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.scroll_to_cell">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>scroll_to_cell</function></funcdef>
+     
+     <paramdef><parameter>path</parameter></paramdef>
+     <paramdef><classname>GtkTreeViewColumn</classname> <parameter><optional>column</optional></parameter></paramdef>
+     <paramdef><parameter><optional>use_align</optional></parameter></paramdef>
+     <paramdef><parameter><optional>row_align</optional></parameter></paramdef>
+     <paramdef><parameter><optional>col_align</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.scroll_to_point">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>scroll_to_point</function></funcdef>
+     <paramdef>int <parameter>tree_x</parameter></paramdef>
+     <paramdef>int <parameter>tree_y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_column_drag_function">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_drag_function</function></funcdef>
+     
+     <paramdef><parameter>callback</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_cursor">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_cursor</function></funcdef>
+     
+     <paramdef><parameter>path</parameter></paramdef>
+     <paramdef><classname>GtkTreeViewColumn</classname> <parameter><optional>focus_column</optional></parameter></paramdef>
+     <paramdef><parameter><optional>start_editing</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_cursor</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_cursor_on_cell">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_cursor_on_cell</function></funcdef>
+     
+     <paramdef><parameter>path</parameter></paramdef>
+     <paramdef><classname>GtkTreeViewColumn</classname> <parameter><optional>focus_column</optional></parameter></paramdef>
+     <paramdef><classname>GtkCellRenderer</classname> <parameter><optional>focus_cell</optional></parameter></paramdef>
+     <paramdef><parameter><optional>start_editing</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtktreeview.method.set_drag_dest_row">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_drag_dest_row</function></funcdef>
+     
+     <paramdef><parameter>path</parameter></paramdef>
+     <paramdef><parameter>pos</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_drag_dest_row</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_enable_search">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_enable_search</function></funcdef>
+     <paramdef>bool <parameter>enable_search</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets whether or not interactive search is enabled for the view.
+   </shortdesc>
+   <desc>
+   <para>
+    Sets whether or not interactive search (also called typeahead find) is 
+    enabled for the view. If interactive search is enable, an entry box will 
+    appear if a user begins typing while the view has focus. The selection for
+    the view will move to a row matching what the user types.
+   </para>
+   <para>
+    Even if interactive search is turned off, the user can still initiate a
+    search using the "start-interactive-search" key binding.
+   </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_enable_search</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_expander_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_expander_column</function></funcdef>
+     <paramdef>GtkTreeViewColumn <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_expander_column</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_fixed_height_mode">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_fixed_height_mode</function></funcdef>
+     <paramdef>bool <parameter>enable</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_fixed_height_mode</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_hadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_hadjustment</function></funcdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>adjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the GtkAdjustment for the current horizontal aspect.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the GtkAdjustment for the current horizontal aspect.
+    </para>
+    <para>
+     Under normal circumstances you don't need this method if you
+     use a <classname>GtkScrolledWindow</classname> and
+     <function class="GtkContainer">add</function> the view to it.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_hadjustment</function>,
+     <function class="GtkTreeView">set_vadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_headers_clickable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_headers_clickable</function></funcdef>
+     <paramdef>bool <parameter>active</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_headers_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_headers_visible</function></funcdef>
+     <paramdef>bool <parameter>headers_visible</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_headers_visible</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_hover_expand">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_hover_expand</function></funcdef>
+     <paramdef>bool <parameter>expand</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_hover_expand</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_hover_selection">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_hover_selection</function></funcdef>
+     <paramdef>bool <parameter>hover</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_hover_selection</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_model">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_model</function></funcdef>
+     <paramdef><classname>GtkTreeModel</classname> <parameter>model</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the model for the view.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the model for the view. If the view already has a model set, it
+     will remove it before setting the new model. If model is
+     <literal>null</literal>, then it will unset the old model.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_model</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_reorderable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_reorderable</function></funcdef>
+     <paramdef>bool <parameter>reorderable</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Allow/disallow reordering of model rows.
+   </shortdesc>
+   <desc>
+    <para>
+     This function is a convenience function to allow you to reorder models
+     that support the <literal>GtkDragSourceIface</literal> and the
+     <literal>GtkDragDestIface</literal>. Both
+     <classname>GtkTreeStore</classname> and
+     <classname>GtkListStore</classname> support these. If
+     <parameter>reorderable</parameter> is <literal>true</literal>, then the
+     user can reorder the model by dragging and dropping rows. The developer
+     can listen to these changes by connecting to the model's
+     <signalname class="GtkTreeModel">row-inserted</signalname> and
+     <signalname class="GtkTreeModel">row-deleted</signalname> signals.
+    </para>
+    <para>
+     This function does not give you any degree of control over the order -
+     any reordering is allowed. If more control is needed, you should probably
+     handle drag and drop manually.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_reorderable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_row_separator_func">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_row_separator_func</function></funcdef>
+     
+     <paramdef><parameter>callback</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_row_separator_func</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_rules_hint">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_rules_hint</function></funcdef>
+     <paramdef>bool <parameter>setting</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_rules_hint</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_search_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_search_column</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the column of the interactive search.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets column as the column where the interactive search code should
+     search in. Additionally, turns on interactive searching.
+    </para>
+    <note>
+     <para>
+      The column refers to a column of the model.
+     </para>
+    </note>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_search_column</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_search_equal_func">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_search_equal_func</function></funcdef>
+     
+     <paramdef><parameter>callback</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_search_equal_func</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_vadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_vadjustment</function></funcdef>
+     <paramdef><classname>GtkAdjustment</classname> <parameter>adjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the GtkAdjustment for the current vertical aspect.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the GtkAdjustment for the current vertical aspect.
+    </para>
+    <para>
+     Under normal circumstances you don't need this method if you
+     use a <classname>GtkScrolledWindow</classname> and
+     <function class="GtkContainer">add</function> the view to it.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkTreeView">get_vadjustment</function>,
+     <function class="GtkTreeView">set_hadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.tree_to_widget_coords">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>tree_to_widget_coords</function></funcdef>
+     
+     <paramdef><parameter>tx</parameter></paramdef>
+     <paramdef><parameter>ty</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.unset_rows_drag_dest">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unset_rows_drag_dest</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.unset_rows_drag_source">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unset_rows_drag_source</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.widget_to_tree_coords">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>widget_to_tree_coords</function></funcdef>
+     
+     <paramdef><parameter>wx</parameter></paramdef>
+     <paramdef><parameter>wy</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+   <method id="gtk.gtktreeview.method.enable_model_drag_dest">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>enable_model_drag_dest</function></funcdef>
+     <paramdef><parameter>targets</parameter></paramdef>
+     <paramdef><parameter>actions</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.enable_model_drag_source">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>enable_model_drag_source</function></funcdef>
+     <paramdef><parameter>sbmask</parameter></paramdef>
+     <paramdef><parameter>targets</parameter></paramdef>
+     <paramdef><parameter>actions</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_dest_row_at_pos">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_dest_row_at_pos</function></funcdef>
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_drag_dest_row">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_drag_dest_row</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_enable_tree_lines">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_enable_tree_lines</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_grid_lines">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_grid_lines</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_headers_clickable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_headers_clickable</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_rubber_banding">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_rubber_banding</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_search_entry">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_search_entry</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.get_visible_range">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>get_visible_range</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_enable_tree_lines">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_enable_tree_lines</function></funcdef>
+     <paramdef><parameter>enabled</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_grid_lines">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_grid_lines</function></funcdef>
+     <paramdef><parameter>grid_lines</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_rubber_banding">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_rubber_banding</function></funcdef>
+     <paramdef><parameter>enable</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+  <method id="gtk.gtktreeview.method.set_search_entry">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_search_entry</function></funcdef>
+     <paramdef><classname>GtkEntry</classname> <parameter><optional>entry</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+   </desc>
+  </method>
+
+</methods>
+
+ <signals>
+
+  <signal id="gtk.gtktreeview.signal.columns-changed">
+   <signalname>columns-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.cursor-changed">
+   <signalname>cursor-changed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.expand-collapse-cursor-row">
+   <signalname>expand-collapse-cursor-row</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+     <paramdef>bool <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>bool <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>bool <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.move-cursor">
+   <signalname>move-cursor</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+     <paramdef>GtkMovementStep <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.row-activated">
+   <signalname>row-activated</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+     <paramdef>array <parameter>path</parameter></paramdef>
+     <paramdef>GtkTreeViewColumn <parameter>column</parameter></paramdef>
+     <paramdef>array <parameter>userdata</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Signal emmitted when a row in a GtkTreeView is double-clicked.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.row-collapsed">
+   <signalname>row-collapsed</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+     <paramdef><!-- was:GtkTreeIter -->XXX <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef><!-- was:GtkTreePath -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.row-expanded">
+   <signalname>row-expanded</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+     <paramdef><!-- was:GtkTreeIter -->XXX <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef><!-- was:GtkTreePath -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.select-all">
+   <signalname>select-all</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.select-cursor-parent">
+   <signalname>select-cursor-parent</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.select-cursor-row">
+   <signalname>select-cursor-row</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+     <paramdef>bool <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.set-scroll-adjustments">
+   <signalname>set-scroll-adjustments</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+     <paramdef>GtkAdjustment <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>GtkAdjustment <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.start-interactive-search">
+   <signalname>start-interactive-search</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.test-collapse-row">
+   <signalname>test-collapse-row</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+     <paramdef><!-- was:GtkTreeIter -->XXX <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef><!-- was:GtkTreePath -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.test-expand-row">
+   <signalname>test-expand-row</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+     <paramdef><!-- was:GtkTreeIter -->XXX <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef><!-- was:GtkTreePath -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.toggle-cursor-row">
+   <signalname>toggle-cursor-row</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtktreeview.signal.unselect-all">
+   <signalname>unselect-all</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkTreeView <parameter>treeview</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

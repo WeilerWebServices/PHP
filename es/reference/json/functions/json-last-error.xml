@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 341024 Maintainer: seros Status: ready -->
+
+<!-- Reviewed: no -->
+<refentry xml:id="function.json-last-error" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>json_last_error</refname>
+  <refpurpose>Devuelve el último error ocurrido</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>json_last_error</methodname>
+   <void />
+  </methodsynopsis>
+  <para>
+   Devuelve el último error (si existe) que ocurrió durante la última codificación/decodificación JSON.
+  </para>
+ </refsect1> 
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Devuelve un integer, que puede ser una de las siguientes constantes: 
+  </para>
+  <table>
+   <title>Códigos de error de JSON</title>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>Constante</entry>
+      <entry>Significado</entry>
+      <entry>Disponibilidad</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry><constant>JSON_ERROR_NONE</constant></entry>
+      <entry>No ocurrió ningún error</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_DEPTH</constant></entry>
+      <entry>Se ha excedido la profundidad máxima de la pila</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_STATE_MISMATCH</constant></entry>
+      <entry>JSON con formato incorrecto o inválido</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_CTRL_CHAR</constant></entry>
+      <entry>Error del carácter de control, posiblemente se ha codificado de forma incorrecta</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_SYNTAX</constant></entry>
+      <entry>Error de sintaxis</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_UTF8</constant></entry>
+      <entry>Caracteres UTF-8 mal formados, posiblemente codificados de forma incorrecta</entry>
+      <entry>PHP 5.3.3</entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_RECURSION</constant></entry>
+      <entry>Una o más referencias recursivas en el valor a codificar</entry>
+      <entry>PHP 5.5.0</entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_INF_OR_NAN</constant></entry>
+      <entry>
+       Uno o más valores
+       <link linkend="language.types.float.nan"><constant>NAN</constant></link>
+       o <link linkend="function.is-infinite"><constant>INF</constant></link>
+       en el valor a codificar
+      </entry>
+      <entry>PHP 5.5.0</entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_UNSUPPORTED_TYPE</constant></entry>
+      <entry>Se proporcionó un valor de un tipo que no se puede codificar</entry>
+      <entry>PHP 5.5.0</entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_INVALID_PROPERTY_NAME</constant></entry>
+      <entry>Se dio un nombre de una propiedad que no puede ser codificada</entry>
+      <entry>PHP 7.0.0</entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_UTF16</constant></entry>
+      <entry>Caracteres UTF-16 malformados, posiblemente codificados de forma incorrecta</entry>
+      <entry>PHP 7.0.0</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Ejemplo de <function>json_last_error</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Un string json válido
+$json[] = '{"Organización": "Equipo de documentación PHP"}';
+
+// Un string json no válido que causa un error de sintaxis, en este caso, se ha
+// usado ' en vez de " para entrecomillar
+$json[] = "{'Organización': 'Equipo de documentación PHP'}";
+
+
+foreach($json as $string) {
+    echo 'Decodificando: ' . $string;
+    json_decode($string);
+
+    switch(json_last_error()) {
+        case JSON_ERROR_NONE:
+            echo ' - Sin errores';
+        break;
+        case JSON_ERROR_DEPTH:
+            echo ' - Excedido tamaño máximo de la pila';
+        break;
+        case JSON_ERROR_STATE_MISMATCH:
+            echo ' - Desbordamiento de buffer o los modos no coinciden';
+        break;
+        case JSON_ERROR_CTRL_CHAR:
+            echo ' - Encontrado carácter de control no esperado';
+        break;
+        case JSON_ERROR_SYNTAX:
+            echo ' - Error de sintaxis, JSON mal formado';
+        break;
+        case JSON_ERROR_UTF8:
+            echo ' - Caracteres UTF-8 malformados, posiblemente codificados de forma incorrecta';
+        break;
+        default:
+            echo ' - Error desconocido';
+        break;
+    }
+
+    echo PHP_EOL;
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Decoding: {"Organización": "Equipo de documentación PHP"} - Sin errores
+Decoding: {'Organización': 'Equipo de documentación PHP'} - Error de sintaxis, JSON mal formado
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>json_last_error</function> en <function>json_encode</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Secuencia inválida UTF8
+$text = "\xB1\x31";
+
+$json  = json_encode($text);
+$error = json_last_error();
+
+var_dump($json, $error === JSON_ERROR_UTF8);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+string(4) "null"
+bool(true)
+]]>
+    </screen>
+   </example>
+  </para>  
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>json_last_error_msg</function></member>
+    <member><function>json_decode</function></member>
+    <member><function>json_encode</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

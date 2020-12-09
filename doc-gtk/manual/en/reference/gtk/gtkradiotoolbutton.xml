@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.7 $ -->
+<classentry id="gtk.gtkradiotoolbutton">
+ <classmeta>
+  <classtitle>GtkRadioToolButton</classtitle>
+  <classparent>GtkToggleToolButton</classparent>
+  <shortdesc>
+   A toolbar toggle button of which only one in the group may be active.
+  </shortdesc>
+  <desc>
+   <para>
+    A toolbar button that can be in one of two states; on and off.
+    Only one button in the group may be on/active.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+  <constructor id="gtk.gtkradiotoolbutton.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkRadioToolButton</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkradiotoolbutton.constructor.new_from_stock">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkRadioToolButton::new_from_stock</function></funcdef>
+    <paramdef>string <parameter>stock_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkradiotoolbutton.constructor.new_from_widget">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkRadioToolButton::new_from_widget</function></funcdef>
+    <paramdef>GtkRadioToolButton <parameter>group</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkradiotoolbutton.constructor.new_with_stock_from_widget">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkRadioToolButton::new_with_stock_from_widget</function></funcdef>
+    <paramdef>GtkRadioToolButton <parameter>group</parameter></paramdef>
+    <paramdef>string <parameter>stock_id</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+ </constructors>
+
+ <methods>
+  <method id="gtk.gtkradiotoolbutton.method.get_group">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkRadioToolButton</classname> <function>get_group</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the button group.
+   </shortdesc>
+   <desc>
+    <para>
+     Returns the radio tool button that acts as group leader.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkRadioToolButton">set_group</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkradiotoolbutton.method.set_group">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_group</function></funcdef>
+     <paramdef><classname>GtkRadioToolButton</classname> <parameter>group</parameter></paramdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the tool button acting as group leader.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the group leader.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkRadioToolButton">get_group</function>
+    </para>
+   </desc>
+  </method>
+ </methods>
+
+</classentry>

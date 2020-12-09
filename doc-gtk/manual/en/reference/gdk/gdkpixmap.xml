@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision: 1.5 $ -->
+<classentry id="gdk.gdkpixmap">
+ <classmeta>
+  <classtitle>GdkPixmap</classtitle>
+  <classparent>GdkDrawable</classparent>
+  <shortdesc>
+   An opaque structure representing an offscreen drawable.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gdk.gdkpixmap.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GdkPixmap</function></funcdef>
+    <paramdef>GdkWindow <parameter>drawable</parameter></paramdef>
+    <paramdef>int <parameter>width</parameter></paramdef>
+    <paramdef>int <parameter>height</parameter></paramdef>
+    <paramdef>int <parameter><optional>depth = -1</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+  <constructor id="gdk.gdkpixmap.constructor.create_from_xpm">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GdkPixmap <function>create_from_xpm</function></funcdef>
+     <paramdef>string <parameter>path</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+  <constructor id="gdk.gdkpixmap.constructor.create_from_xpm_data">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GdkPixmap <function>create_from_xpm_data</function></funcdef>
+     <paramdef>array <parameter>data</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+ </constructors>
+
+</classentry>

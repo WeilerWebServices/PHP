@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 347090 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.xml-parse-into-struct">
+ <refnamediv>
+  <refname>xml_parse_into_struct</refname>
+  <refpurpose>Analyse une structure XML</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>xml_parse_into_struct</methodname>
+   <methodparam><type>resource</type><parameter>parser</parameter></methodparam>
+   <methodparam><type>string</type><parameter>data</parameter></methodparam>
+   <methodparam><type>array</type><parameter role="reference">values</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter role="reference">index</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Cette fonction analyse la chaîne
+   XML <parameter>data</parameter> et le place dans deux tableaux :
+   le premier <parameter>index</parameter> contient des pointeurs
+   sur la position des valeurs correspondantes dans le tableau
+   <parameter>values</parameter>. Ces deux paramètres sont
+   passés par références.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>parser</parameter></term>
+     <listitem>
+      <para>
+       Une référence à une analyseur XML.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>data</parameter></term>
+     <listitem>
+      <para>
+       Une &string; contenant les données XML.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>values</parameter></term>
+     <listitem>
+      <para>
+       Un tableau contenant les valeurs des données XML.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>index</parameter></term>
+     <listitem>
+      <para>
+       Un tableau contenant les pointeurs vers les valeurs
+       appropriées dans le paramètre $values.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <function>xml_parse_into_struct</function> retourne 0 si une
+   erreur survient et 1 en cas de succès. Ce n'est pas la même chose que &false;
+   et &true;, soyez prudent avec les opérateurs comme ===.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   Ci-dessous, vous trouverez un exemple qui illustre la structure
+   des deux tableaux générés par la fonction. On utilise une balise
+   simple <literal>note</literal>, placée dans une autre balise
+   <literal>para</literal>. On analyse le tout, et on
+   affiche la structure générée :
+   <example>
+    <title>Exemple avec <function>xml_parse_into_struct</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$simple = "<para><note>simple note</note></para>";
+$p = xml_parser_create();
+xml_parse_into_struct($p, $simple, $vals, $index);
+xml_parser_free($p);
+echo "Index array\n";
+print_r($index);
+echo "\nVals array\n";
+print_r($vals);
+?>
+]]>
+    </programlisting>
+    <para>
+     Affichera :
+    </para>
+    <screen>
+<![CDATA[
+Index array
+Array
+(
+    [PARA] => Array
+        (
+            [0] => 0
+            [1] => 2
+        )
+
+    [NOTE] => Array
+        (
+            [0] => 1
+        )
+
+)
+
+Vals array
+Array
+(
+    [0] => Array
+        (
+            [tag] => PARA
+            [type] => open
+            [level] => 1
+        )
+
+    [1] => Array
+        (
+            [tag] => NOTE
+            [type] => complete
+            [level] => 2
+            [value] => simple note
+        )
+
+    [2] => Array
+        (
+            [tag] => PARA
+            [type] => close
+            [level] => 1
+        )
+
+)
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   L'analyse événementielle (comme celle de expat), peut se
+   révéler complexe lorsque le document XML est complexe.
+   <function>xml_parse_into_struct</function> ne génère pas
+   d'objet de type DOM, mais il génère plutôt des
+   structures qui peuvent être parcourues à la façon d'un arbre.
+   Considérons le fichier suivant, qui représente une petite base
+   de données XML :
+   <example>
+    <title>moldb.xml - Petite base de données moléculaires</title>
+    <programlisting role="xml">
+<![CDATA[
+<?xml version="1.0"?>
+<moldb>
+
+  <molecule>
+      <name>Alanine</name>
+      <symbol>ala</symbol>
+      <code>A</code>
+      <type>hydrophobic</type>
+  </molecule>
+
+  <molecule>
+      <name>Lysine</name>
+      <symbol>lys</symbol>
+      <code>K</code>
+      <type>charged</type>
+  </molecule>
+
+</moldb>
+]]>
+    </programlisting>
+   </example>
+   Et maintenant, un code qui analyse le document, et génère les
+   objets ad hoc :
+   <example>
+    <title>
+     parsemoldb.php : Analyse moldb.xml et crée un tableau
+     d'objets moléculaires
+    </title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class AminoAcid {
+    var $name;  // nom aa
+    var $symbol;    // symbole à trois lettres
+    var $code;  // code à une lettre
+    var $type;  // hydrophobique, chargé ou neutre
+
+    function __construct ($aa) {
+        foreach ($aa as $k=>$v)
+            $this->$k = $aa[$k];
+    }
+}
+
+function readDatabase($filename) {
+    // lit la base de données xml des acides aminés 
+    $data = implode("",file($filename));
+    $parser = xml_parser_create();
+    xml_parser_set_option($parser,XML_OPTION_CASE_FOLDING,0);
+    xml_parser_set_option($parser,XML_OPTION_SKIP_WHITE,1);
+    xml_parse_into_struct($parser,$data,$values,$tags);
+    xml_parser_free($parser);
+
+    // boucle à travers les structures
+    foreach ($tags as $key=>$val) {
+        if ($key == "molecule") {
+            $molranges = $val;
+            // each contiguous pair of array entries are the 
+            // lower and upper range for each molecule definition
+            for ($i=0; $i < count($molranges); $i+=2) {
+                $offset = $molranges[$i] + 1;
+                $len = $molranges[$i + 1] - $offset;
+                $tdb[] = parseMol(array_slice($values, $offset, $len));
+            }
+        } else {
+            continue;
+        }
+    }
+    return $tdb;
+}
+
+function parseMol($mvalues) {
+    for ($i=0; $i < count($mvalues); $i++)
+        $mol[$mvalues[$i]["tag"]] = $mvalues[$i]["value"];
+    return new AminoAcid($mol);
+}
+
+$db = readDatabase("moldb.xml");
+echo "** Base d'objets AminoAcid :\n";
+print_r($db);
+
+?>
+]]>
+    </programlisting>
+   </example>
+   Après exécution de <filename>parsemoldb.php</filename>, la variable
+   <varname>$db</varname> contient un tableau d'objets
+   <classname>AminoAcid</classname>, et l'affichage le confirme :
+   <informalexample>
+    <screen>
+<![CDATA[
+** Base d'objets AminoAcid :
+Array
+(
+    [0] => aminoacid Object
+        (
+            [name] => Alanine
+            [symbol] => ala
+            [code] => A
+            [type] => hydrophobic
+        )
+
+    [1] => aminoacid Object
+        (
+            [name] => Lysine
+            [symbol] => lys
+            [code] => K
+            [type] => charged
+        )
+
+)
+]]>
+    </screen>
+   </informalexample>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

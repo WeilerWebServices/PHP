@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 330157 Maintainer: behzat Status: ready -->
+<refentry xml:id="dateinterval.construct" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>DateInterval::__construct</refname>
+  <refpurpose>Yeni bir <classname>DateInterval</classname> nesnesi oluşturur
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <constructorsynopsis role="oop">
+   <modifier>public</modifier> <methodname>DateInterval::__construct</methodname>
+   <methodparam><type>string</type><parameter>zaman_aralığı</parameter></methodparam>
+  </constructorsynopsis>
+  <para>
+   Yeni bir <classname>DateInterval</classname> nesnesi oluşturur.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>zaman_aralığı</parameter></term>
+     <listitem>
+      <para>
+       Dizge türünde zaman aralığı belirtimi.
+      </para>
+      <para>
+       Zaman aralığını (<quote>period</quote>) belirtmek için biçem
+       <literal>P</literal> harfiyle başlar, ardından süreyi belirten bir
+       tamsayı değer gelir. Süre zaman bileşenleri içeriyorsa bunların önüne
+       <literal>T</literal> harfi getirilir..
+      </para>
+      <para>
+       <table>
+        <title>
+         <parameter>zaman_aralığı</parameter> Belirteçleri
+        </title>
+        <tgroup cols="2">
+         <thead>
+          <row>
+           <entry>Belirteç</entry>
+           <entry>Açıklama</entry>
+          </row>
+         </thead>
+         <tbody>
+          <row>
+           <entry><literal>Y</literal></entry>
+           <entry>Yıl</entry>
+          </row>
+          <row>
+           <entry><literal>M</literal></entry>
+           <entry>Ay</entry>
+          </row>
+          <row>
+           <entry><literal>D</literal></entry>
+           <entry>Gün</entry>
+          </row>
+          <row>
+           <entry><literal>W</literal></entry>
+           <entry>
+            Hafta. Gün sayısına dönüştürmek için D harfiyle birlikte
+            belirtilebilir.
+           </entry>
+          </row>
+          <row>
+           <entry><literal>H</literal></entry>
+           <entry>Saat</entry>
+          </row>
+          <row>
+           <entry><literal>M</literal></entry>
+           <entry>Dakika</entry>
+          </row>
+          <row>
+           <entry><literal>S</literal></entry>
+           <entry>saniye</entry>
+          </row>
+         </tbody>
+        </tgroup>
+       </table>
+      </para>
+      <para>
+       Burada bazı basit örneklere yer verilmiştir.
+       İki gün: <literal>P2D</literal>.
+       İki saniye: <literal>PT2S</literal>.
+       Altı yıl, 5 dakika: <literal>P6YT5M</literal>.
+      </para>
+      <note>
+       <para>
+        Birimler belirtilirken en büyük ölçekli birim solda en küçük ölçekli
+        birim sağda kalacak şekilde veri girilir. Dolayısıyla, örneğin, aylar
+        yıllardan sonra, günlerden önce yer alır. Bur yıl dört gün
+        <literal>P4D1Y</literal> değil <literal>P1Y4D</literal> olarak ifade
+        edilir.
+       </para>
+      </note>
+      <para>
+       Belirtim bir tarih saat olarak da gösterilebilir. Örneğin, bir yıl dört
+       gün <literal>P0001-00-04T00:00:00</literal> olarak gösterilebilir. Fakat
+       bu biçemde belirtilen değerler birime tanınan azami değeri aşmamalıdır
+       (örneğin <literal>25</literal> saat geçersizdir).
+      </para>
+      <para>
+       Bu biçemler <link xlink:href="&url.iso-8601.duration;">ISO 8601 süre
+       belirtimi</link>ne dayanır.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   <parameter>zaman_aralığı</parameter> bir zaman aralığına çözümlenemediğinde
+   bir <classname>Exception</classname> yavrular.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$interval = new DateInterval('P2Y4DT6H8M');
+var_dump($interval);
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
+<![CDATA[
+object(DateInterval)#1 (8) {
+  ["y"]=>
+  int(2)
+  ["m"]=>
+  int(0)
+  ["d"]=>
+  int(4)
+  ["h"]=>
+  int(6)
+  ["i"]=>
+  int(8)
+  ["s"]=>
+  int(0)
+  ["invert"]=>
+  int(0)
+  ["days"]=>
+  bool(false)
+}
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>DateInterval::format</function></member>
+    <member><function>DateTime::add</function></member>
+    <member><function>DateTime::sub</function></member>
+    <member><function>DateTime::diff</function></member>
+   </simplelist>
+   </para>
+  </refsect1>
+</refentry>
+

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 327173 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+ <chapter xml:id="faq.mailinglist" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Listes de diffusions</title>
+  <titleabbrev>Listes de diffusion</titleabbrev>
+
+   <para>
+    Cette section traite des questions à propos de la communication avec la communauté PHP.
+    Le meilleur moyen est l'utilisation des listes de diffusion.
+   </para>
+
+  <qandaset>
+   <qandaentry xml:id="faq.mailinglist.isthere">
+    <question>
+     <para>Existe-t-il des listes de diffusion PHP ?</para>
+    </question>
+    <answer>
+     <para>
+      Bien sûr ! Il y a beaucoup de listes de diffusion traitant de beaucoup de sujets.
+      Une liste des listes de diffusion les plus communes peut être trouvée sur cette
+      <link xlink:href="&url.php.mailing-lists;">page</link>.
+     </para>
+     <para>
+      La liste de diffusion la plus générale est la liste <literal>php-general</literal>.
+      Pour s'y inscrire, envoyez un courriel vide à 
+      <link xlink:href="mailto:&url.ml.general.subscribe;">&url.ml.general.subscribe;</link>.
+      Pour se déinscrire, envoyez un courriel vide à
+      <link xlink:href="mailto:&url.ml.general.unsubscribe;">&url.ml.general.unsubscribe;</link>.
+     </para>
+     <para>
+      Vous pouvez également vous inscrire et vous désinscrire en utilisant
+      l'interface web sur cette <link xlink:href="&url.php.mailing-lists;">page</link>;
+      les instructions pour se désinscrire sont également présentes en bas
+      de chaque courriel de la liste.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.mailinglist.others">
+    <question>
+     <para>Y a-t-il d'autres communautés ?</para>
+    </question>
+    <answer>
+     <para>
+      Il y a énormément de communautés PHP à travers le monde, et nous avons une liste
+      de la plupart des ressources (ainsi que des informations pour en connaître
+      d'autres) sur notre page de <link xlink:href="&url.php.support;">support</link>.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.mailinglist.myown">
+    <question>
+     <para>Puis-je mettre en place ma propre liste de diffusion PHP ?</para>
+    </question>
+    <answer>
+     <para>
+      Absolument ! En fait, nous ne faisons pas que l'autoriser, mais nous l'encourageons !
+      Le fait d'aider les autres en partageant ses compétences et son expérience de PHP
+      aide dans le développement de la communauté PHP mais aussi dans le language
+      en tant que tel.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.mailinglist.subscribing">
+    <question>
+     <para>
+      Aidez-moi ! Je ne peux visiblement pas m'inscrire à une / me désinscrire d'une 
+      des listes de diffusion !
+     </para>
+    </question>
+    <answer>
+     <para>
+      Si vous avez des problèmes pour l'inscription/la désinscription depuis la liste de diffusion
+      <literal>php-general</literal>, cela peut être dû au fait que le logiciel de listes de diffusion
+      n'arrive pas à traiter correctement la liste de diffusion à utiliser.
+      Si votre adresse e-mail est <literal>joeblow@example.com</literal>,
+      vous pouvez envoyer une requête d'inscription à 
+      <literal>php-general-subscribe-joeblow=example.com@lists.php.net</literal>,
+      ou une requête de désinscription à 
+      <literal>php-general-unsubscribe-joeblow=example.com@lists.php.net</literal>.
+      Utilisez la même méthode avec les autres listes de diffusion.
+     </para>
+     <para>
+      La plupart du temps, lorsque les utilisateurs rencontrent des problèmes
+      pour se désinscrire d'une liste de diffusion PHP, c'est à cause des
+      courriels redirigés. Par exemple, si votre adresse est danbrown@example.com,
+      mais que vous vous êtes inscrit en utilisant la redirection
+      php-lists@example.com et ensuite, vous redirigez la liste vers
+      danbrown@example.com, le fait de tenter de se désinscrire en utilisant
+      danbrown@example.com ne fonctionnera pas. À la place, vous devez vous
+      désinscrire en utilisant l'adresse recevant les courriels de la liste -
+      dans notre exemple, php-lists@example.com.
+     </para>
+    </answer>
+   </qandaentry>
+
+   <qandaentry xml:id="faq.mailinglist.archive">
+    <question>
+     <para>Y a-t-il une archive des listes de diffusion quelque part ?</para>
+    </question>
+    <answer>
+     <para>
+      Oui, vous pouvez trouver la liste des sites proposant des archives
+      sur la page des
+      <link xlink:href="&url.php.mailing-lists;">listes de diffusion</link>.
+      Vous pouvez également trouver plusieurs sites qui archivent ou publient
+      le contenu de nos listes de diffusion en utilisant votre moteur de
+      recherche Internet préféré, en cherchant, par exemple, la chaîne
+      "php mailing list archives".
+     </para>
+     <para>
+      Tous les messages de nos listes de diffusion sont également archivés
+      dans des newsgroup. Vous pouvez accéder à ces serveurs sur <link
+      xlink:href="&url.php.news;">&url.php.news;</link> avec un client adapté.
+      Il y a également une interface web expérimentale pour ces serveurs à l'adresse
+      <link
+      xlink:href="&url.php.newsweb;">&url.php.newsweb;</link>
+     </para>
+    </answer>
+   </qandaentry>
+  
+   <qandaentry xml:id="faq.mailinglist.question">
+    <question>
+     <para>Que puis-je demander sur les listes de diffusion ?</para>
+    </question>
+    <answer>
+     <para>
+      PHP devient de plus en plus populaire chaque jour, augmentant ainsi
+      le trafic sur la liste de diffusion <literal>php-general</literal> qui accueille
+      de 75 à 200 messages chaque jour. Aussi, c'est dans l'intérêt de tous que d'utiliser
+      la liste de diffusion en dernier ressort, lorsque vous avez déjà épuisé toutes les
+      autres voies.
+     </para>
+     <para>
+      Avant de poster sur cette liste, merci de lire la FAQ (Foire Aux Questions) afin
+      de voir si vous n'y trouvez pas de l'aide. S'il n'y a rien concernant votre problème,
+      essayez dans les archives de la liste de diffusion (voir précédemment).
+      Si vous avez des problèmes pour l'installation ou la configuration de PHP,
+      lisez toute la documentation s'y rapportant, ainsi que les fichiers <literal>README</literal>.
+      Si vous ne trouvez toujours pas de réponse à votre problème, vous
+      êtes le bienvenu sur la liste de diffusion.
+     </para>
+     <para>
+      Afin d'avoir la meilleure réponse à votre question (et pour éviter d'agacer
+      les développeurs), assurez-vous de poser votre question sur la liste de diffusion
+      appropriée. Par exemple, si vous avez des difficultés à installer PHP, vous
+      devez poser votre question sur la liste de diffusion <literal>php-install</literal>.
+      Attention : certaines listes ont des noms similaires, mais des usages totalement
+      différents ; une question vis à vis des scripts PHP sous Windows doit être
+      dirigée vers la liste des utilisateurs PHP sous Windows, et <emphasis>non</emphasis>
+      vers la liste interne Windows.
+     </para>
+     <para>
+      Avant de poser une question, vous devriez lire l'article intitulé 
+      "<link xlink:href="&url.smart.questions;">Comment poser une
+      question de la meilleur façon</link>" ; c'est une bonne idée, pour tout le monde.
+     </para>
+    </answer>
+   </qandaentry>
+   
+   <qandaentry xml:id="faq.mailinglist.guideline">
+    <question>
+     <para>Quelle information devrais-je inclure lors de l'écriture de mon message à la 
+     liste de diffusion ?</para>
+    </question>
+    <answer>
+     <para>
+      Les messages comme "Je n'arrive pas à faire fonctionner PHP !! Aidez-moi !!
+      Qu'est-ce qu'il ne va pas ??" sont totalement inutiles, pour tous.
+      Si vous avez des problèmes pour faire fonctionner PHP, vous devez inclure
+      le système sur lequel le problème survient, quelle version de PHP vous tentez
+      de faire fonctionner, sous quelle forme vous l'avez installée (précompilé,
+      Git, RPMs, etc.), qu'est-ce que vous avez fait pour le moment, l'endroit où vous
+      êtes coincé et quel est le message d'erreur.
+     </para>
+     <para>
+      Cela est valable pour n'importe quel type de problème. Vous devez inclure les informations
+      sur ce que vous avez fait, où vous êtes coincé, ce que vous cherché à faire et, si possible,
+      le message d'erreur obtenu. Si vous avez un problème avec votre code source, vous
+      devez également inclure la portion de code qui ne fonctionne pas. N'incluez que le code
+      nécessaire à la compréhension du problème ! Si vous incluez tout le code, votre message
+      sera difficile à lire et, à cause de cela, beaucoup de personnes passeront sans même le lire.
+      Si vous n'êtes pas sûr sur la quantité d'informations à inclure à votre message, 
+      il est préférable d'en mettre trop que pas assez et préparez-vous à fournir d'autres
+      informations.
+     </para>
+     <para>
+      Un autre point important à ne pas oublier est de résumer votre problème
+      dans l'objet du message. Un objet qui ressemble à "Aidez-moi !!!!" ou "Quel est le souci ici ?" sera
+      ignoré par la majorité des lecteurs.
+     </para>
+     <para>
+      Et pour finir, vous êtes encouragé à lire l'article sur 
+      "<link xlink:href="&url.smart.questions;">Comment poser une question de la meilleur
+      façon</link>", ce qui sera une aide énorme pour tous, et tout spécialement pour vous.
+     </para>
+    </answer>
+   </qandaentry>
+  </qandaset>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

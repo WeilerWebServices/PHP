@@ -1,0 +1,1485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.14 $ -->
+<classentry id="gtk.gtkclist">
+ <classmeta>
+  <classtitle>GtkCList</classtitle>
+  <classparent>GtkContainer</classparent>
+  <shortdesc>
+   DEPRECATED. A multi-columned scrolling list widget.
+  </shortdesc>
+  <desc>
+   <para>
+    The <classname>GtkCList</classname> widget is a useful multi-columned
+    scrolling list. It can display data in nicely aligned vertical columns,
+    with titles at the top of the list. 
+   </para>
+   <note>
+    &deprecated.class;
+    Use <classname>GtkTreeView</classname> instead.
+   </note>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkclist.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkCList</function></funcdef>
+    <paramdef>int <parameter><optional>columns = 1</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Creates a new <classname>GtkCList</classname> object.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  
+
+  <method id="gtk.gtkclist.method.clear">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>clear</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Removes all the rows.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.column_title_active">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>column_title_active</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the specified column to become selectable.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.column_title_passive">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>column_title_passive</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Causes the specified column title button to not respond to 
+    events. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.column_titles_active">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>column_titles_active</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Causes all column title buttons to become active.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.column_titles_hide">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>column_titles_hide</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Hides the column titles.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.column_titles_passive">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>column_titles_passive</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Causes all column title buttons to become passive.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.column_titles_show">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>column_titles_show</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Makes the column titles visible.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.columns_autosize">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>columns_autosize</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Auto-sizes all columns in the CList and returns the total 
+    width of the CList.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkclist.method.freeze">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>freeze</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Causes the <classname>GtkCList</classname> to stop updating 
+    its visuals.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.get_cell_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkStyle <function>get_cell_style</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Gets the current style of the specified cell.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">set_cell_style</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.get_cell_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkCellType <function>get_cell_type</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Checks the type of cell at the location specified.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.get_column_title">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_column_title</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED.  Returns the title of the specified column.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">set_column_title</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.get_column_widget">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkWidget <function>get_column_widget</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets a widget to be used as the specified column's title.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">set_column_widget</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.get_hadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkAdjustment <function>get_hadjustment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Gets the <classname>GtkAdjustment</classname> currently being 
+    used for the horizontal aspect.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">set_hadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  
+
+  
+
+  
+
+  <method id="gtk.gtkclist.method.get_row_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkStyle <function>get_row_style</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Gets the style set for the specified row. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">set_row_style</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.get_selectable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>get_selectable</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Gets whether the specified row is selectable or not. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">set_selectable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.get_selection_info">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>get_selection_info</function></funcdef>
+     
+     <paramdef><parameter>x</parameter></paramdef>
+     <paramdef><parameter>y</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Gets the row and column at the specified pixel position in 
+    the CList. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkclist.method.get_vadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkAdjustment <function>get_vadjustment</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Gets the <classname>GtkAdjustment</classname> currently being 
+    used for the vertical aspect.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">set_vadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkclist.method.moveto">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>moveto</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>double <parameter>row_align</parameter></paramdef>
+     <paramdef>double <parameter>col_align</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Tells the CList widget to visually move to the specified row 
+    and column. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.optimal_column_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>int <function>optimal_column_width</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Gets the required width in pixels that is needed to show 
+    everything in the specified column. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">set_column_width</function>
+    </para>
+   </desc>
+  </method>
+
+  
+
+  
+
+  <method id="gtk.gtkclist.method.row_is_visible">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>GtkVisibility <function>row_is_visible</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Checks if the specified row is visible. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.row_move">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>row_move</function></funcdef>
+     <paramdef>int <parameter>source_row</parameter></paramdef>
+     <paramdef>int <parameter>dest_row</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Allows you to move a row from one position to another in the 
+    list. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.select_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>select_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Selects all rows in the CList.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">unselect_all</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.select_row">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>select_row</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Selects the specified row.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">unselect_row</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_auto_sort">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_auto_sort</function></funcdef>
+     <paramdef>bool <parameter>auto_sort</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Turns on or off auto sort of the GtkCList.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_background">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_background</function></funcdef>
+     
+     <paramdef><parameter>row</parameter></paramdef>
+     <paramdef><classname>GdkColor</classname> <parameter>color</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the background color for the specified row.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_button_actions">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_button_actions</function></funcdef>
+     <paramdef>int <parameter>button</parameter></paramdef>
+     <paramdef>int <parameter>button_actions</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the action(s) that the specified mouse button will have 
+    on the list. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_cell_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_cell_style</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>GtkStyle <parameter>style</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the style for the specified cell.
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkCList">get_cell_style</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_column_auto_resize">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_auto_resize</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>bool <parameter>auto_resize</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Lets you specify whether a column should be automatically 
+    resized by the widget when data is added or removed.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_column_justification">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_justification</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>GtkJustification <parameter>justification</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the justification to be used for all text in the 
+    specified column.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_column_max_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_max_width</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>int <parameter>max_width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Causes the column specified to have a maximum width.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_column_min_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_min_width</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>int <parameter>min_width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Causes the column specified to have a minimum width.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_column_resizeable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_resizeable</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>bool <parameter>resizeable</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Lets you specify whether a specified column should be 
+    resizeable by the user.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_column_title">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_title</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>string <parameter>title</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Set the title of the specified column.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">get_column_title</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_column_visibility">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_visibility</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>bool <parameter>visible</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Allows you to set whether a specified column in the GtkCList 
+    should be hidden or shown.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_column_widget">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_widget</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>GtkWidget <parameter>widget</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets a widget to be used as the specified column's title.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">get_column_widget</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_column_width">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_column_width</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>int <parameter>width</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Causes the column specified to be set to a specified width.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">optimal_column_width</function>
+    </para>
+   </desc>
+  </method>
+
+  
+
+  <method id="gtk.gtkclist.method.set_foreground">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_foreground</function></funcdef>
+     
+     <paramdef><parameter>row</parameter></paramdef>
+     <paramdef><classname>GdkColor</classname> <parameter>color</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the foreground color for the specified row.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_hadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_hadjustment</function></funcdef>
+     <paramdef>GtkAdjustment <parameter>adjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the <classname>GtkAdjustment</classname> to be	used for 
+    the horizontal aspect.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">get_hadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_pixmap">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_pixmap</function></funcdef>
+     
+     <paramdef><parameter>row</parameter></paramdef>
+     <paramdef><parameter>column</parameter></paramdef>
+     <paramdef><classname>GdkPixmap</classname> <parameter>pixmap</parameter></paramdef>
+     <paramdef><parameter><optional>mask</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets a pixmap for the specified cell.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">get_pixmap</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_pixtext">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_pixtext</function></funcdef>
+     
+     <paramdef><parameter>row</parameter></paramdef>
+     <paramdef><parameter>column</parameter></paramdef>
+     <paramdef><parameter>text</parameter></paramdef>
+     <paramdef><parameter>spacing</parameter></paramdef>
+     <paramdef><classname>GdkPixmap</classname> <parameter>pixmap</parameter></paramdef>
+     <paramdef><parameter>mask</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets text and a pixmap/bitmap on the specified cell.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">get_pixtext</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_reorderable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_reorderable</function></funcdef>
+     <paramdef>bool <parameter>reorderable</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets whether the CList's rows are re-orderable using 
+    drag-and-drop.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  
+
+  
+
+  <method id="gtk.gtkclist.method.set_row_height">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_row_height</function></funcdef>
+     <paramdef>int <parameter>height</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Causes the GtkCList to have a specified height for its rows.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_row_style">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_row_style</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>GtkStyle <parameter>style</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the style for all cells in the specified row.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">get_row_style</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_selectable">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_selectable</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>bool <parameter>selectable</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets whether the specified row is selectable or not.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">get_selectable</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_selection_mode">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_selection_mode</function></funcdef>
+     <paramdef>GtkSelectionMode <parameter>mode</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the selection mode for the specified CList.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_shadow_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_shadow_type</function></funcdef>
+     <paramdef>GtkShadowType <parameter>type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Set the outer border (shadow) of the widget 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_shift">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_shift</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>int <parameter>vertical</parameter></paramdef>
+     <paramdef>int <parameter>horizontal</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the vertical and horizontal shift of the specified cell.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_sort_column">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_sort_column</function></funcdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the sort column of the CList
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_sort_type">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_sort_type</function></funcdef>
+     <paramdef>GtkSortType <parameter>sort_type</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the sort type of the GtkClist.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_text</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+     <paramdef>string <parameter>text</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the displayed text in the specified cell.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">get_text</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_use_drag_icons">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_use_drag_icons</function></funcdef>
+     <paramdef>bool <parameter>use_icons</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Determines whether the <classname>GtkCList</classname> should 
+    use icons when doing drag-and-drop operations.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.set_vadjustment">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_vadjustment</function></funcdef>
+     <paramdef>GtkAdjustment <parameter>adjustment</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sets the <classname>GtkAdjustment</classname> to be	used for 
+    the vertical aspect.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">get_vadjustment</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.sort">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>sort</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Sorts the CList.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.swap_rows">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>swap_rows</function></funcdef>
+     <paramdef>int <parameter>row1</parameter></paramdef>
+     <paramdef>int <parameter>row2</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Swaps the two specified rows with each other.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <fieldname class="GtkCList">rows</fieldname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.thaw">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>thaw</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Causes the specified <classname>GtkCList</classname> to allow 
+    visual updates. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.undo_selection">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>undo_selection</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Undoes the last selection for an "extended selection mode" 
+    list. 
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <fieldname class="GtkCList">selection</fieldname>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.unselect_all">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unselect_all</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Unselects all rows in the list.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">select_all</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkclist.method.unselect_row">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>unselect_row</function></funcdef>
+     <paramdef>int <parameter>row</parameter></paramdef>
+     <paramdef>int <parameter>column</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    DEPRECATED. Unselects the specified row.
+   </shortdesc>
+   <desc>
+    &deprecated.method;
+    <para>
+     &seealso;
+     <function class="GtkCList">select_row</function>
+    </para>
+   </desc>
+  </method>
+
+ <method id="gtk.gtkclist.method.remove_row">
+    <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>remove_row</function></funcdef>
+     <paramdef><parameter>row</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  </methods>
+
+ <fields>
+
+  <field id="gtk.gtkclist.field.columns" type="ro">
+   <fieldname>columns</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+    &deprecated.property;
+   </desc>
+  </field>
+
+  <field id="gtk.gtkclist.field.focus_row" type="ro">
+   <fieldname>focus_row</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+    &deprecated.property;
+   </desc>
+  </field>
+
+  <field id="gtk.gtkclist.field.rows" type="ro">
+   <fieldname>rows</fieldname>
+   <fieldtype>int</fieldtype>
+   <shortdesc>
+       
+   </shortdesc>
+   <desc>
+    &deprecated.property;
+    <para>
+     &seealso;
+     <function class="GtkCList">swap_rows</function>
+    </para>
+   </desc>
+  </field>
+
+  <field id="gtk.gtkclist.field.selection" type="ro">
+   <fieldname>selection</fieldname>
+   <fieldtype/>
+   <shortdesc>
+       
+   </shortdesc>
+   <desc>
+    &deprecated.property;
+    <para>
+     &seealso;
+     <function class="GtkCList">undo_selection</function>
+    </para>
+   </desc>
+  </field>
+
+ </fields>
+
+ <signals>
+
+  <signal id="gtk.gtkclist.signal.abort-column-resize">
+   <signalname>abort-column-resize</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+	   Emitted when a column resize is aborted.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.click-column">
+   <signalname>click-column</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when a column title is clicked.
+			</shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.end-selection">
+   <signalname>end-selection</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when a selection ends in a multiple selection CList.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.extend-selection">
+   <signalname>extend-selection</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+     <paramdef>GtkScrollType <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>double <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>bool <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the selection is extended.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.resize-column">
+   <signalname>resize-column</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    This signal is emitted when a column is resized. 
+			</shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.row-move">
+   <signalname>row-move</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when a row is moved.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.scroll-horizontal">
+   <signalname>scroll-horizontal</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+     <paramdef>GtkScrollType <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>double <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the CList is scrolled horizontally.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.scroll-vertical">
+   <signalname>scroll-vertical</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+     <paramdef>GtkScrollType <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>double <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the CList is scrolled vertically. 
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.select-all">
+   <signalname>select-all</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when all the rows are selected in a CList.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.select-row">
+   <signalname>select-row</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the user selects a row in the list.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.set-scroll-adjustments">
+   <signalname>set-scroll-adjustments</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+     <paramdef>GtkAdjustment <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>GtkAdjustment <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.start-selection">
+   <signalname>start-selection</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when a drag-selection is started in a multiple-selection CList.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.toggle-add-mode">
+   <signalname>toggle-add-mode</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when "add mode" is toggled.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.toggle-focus-row">
+   <signalname>toggle-focus-row</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when a row's "focus" is toggled.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.undo-selection">
+   <signalname>undo-selection</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when an undo selection occurs in the CList.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.unselect-all">
+   <signalname>unselect-all</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when all rows are unselected in a CList.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkclist.signal.unselect-row">
+   <signalname>unselect-row</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkCList <parameter>clist</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef>int <parameter>UNKNOWN</parameter></paramdef>
+     <paramdef><!-- was: GdkEvent -->XXX <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Emitted when the user unselects a row in the list.
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

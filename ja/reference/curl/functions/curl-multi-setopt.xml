@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 347375 Maintainer: takagi Status: ready -->
+<!-- Credits: mumumu -->
+
+<refentry xml:id="function.curl-multi-setopt" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>curl_multi_setopt</refname>
+  <refpurpose>cURL マルチハンドル用のオプションを設定する</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>curl_multi_setopt</methodname>
+   <methodparam><type>resource</type><parameter>mh</parameter></methodparam>
+   <methodparam><type>int</type><parameter>option</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>value</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+
+  </para>
+
+  &warn.undocumented.func;
+
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <variablelist>
+   <varlistentry>
+    <term><parameter>mh</parameter></term>
+    <listitem>
+     <para>
+      
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry>
+    <term><parameter>option</parameter></term>
+    <listitem>
+     <para>
+      <constant>CURLMOPT_*</constant> 定数のいずれか。
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry>
+    <term><parameter>value</parameter></term>
+    <listitem>
+      <para>
+       <parameter>option</parameter> に設定する値。
+      </para>
+      <para>
+       <parameter>value</parameter> には <type>int</type> 型の値を指定しなければいけません。
+       <parameter>option</parameter> パラメータの値によって、それぞれ次のようになります。
+       <informaltable>
+        <tgroup cols="3">
+         <thead>
+          <row>
+           <entry valign="top">オプション</entry>
+           <entry valign="top"><parameter>value</parameter> の設定値</entry>
+          </row>
+         </thead>
+         <tbody>
+          <row>
+           <entry valign="top"><constant>CURLMOPT_PIPELINING</constant></entry>
+           <entry valign="top">
+            1 を渡せば有効に、そして 0 を渡せば無効になります。
+            マルチハンドルでのパイプライン化を有効にすると、このハンドルによる転送で、
+            可能な限り HTTP パイプライン化を試みます。
+            つまり、二番目のリクエストを追加したときに既存の接続が使える場合は、
+            既存の接続に「パイプ」でつなぎます。
+            cURL 7.43.0 以降では、この値はビットマスクですが、
+            2 を渡すと、既存の HTTP/2 接続上での新しい転送で、
+            可能な限り多重化を試みます。
+            3 を渡すと、パイプライン化と多重化を互いに独立して行うよう
+            cURL に指示します。
+            cURL 7.62.0 以降は、パイプライン化のbitを設定しても効果はありません。
+           </entry>
+          </row>
+          <row>
+           <entry valign="top"><constant>CURLMOPT_MAXCONNECTS</constant></entry>
+           <entry valign="top">
+            同時に開く接続の最大数を指定します。これを libcurl がキャッシュします。
+            デフォルトのサイズは、
+            <function>curl_multi_add_handle</function> で追加したハンドル数の四倍に収まるように拡大されます。
+            キャッシュがいっぱいになると、キャッシュ内で一番古い接続を閉じ、
+            開いている接続の数が増えないようにします。
+           </entry>
+          </row>
+          <row>
+           <entry valign="top"><constant>CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE</constant></entry>
+           <entry valign="top">
+            パイプライン化のチャンク長の閾値をバイト単位で指定します。
+           </entry>
+          </row>
+          <row>
+           <entry valign="top"><constant>CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE</constant></entry>
+           <entry valign="top">
+            パイプライン化のペナルティの閾値をバイト単位で指定します。
+           </entry>
+          </row>
+          <row>
+           <entry valign="top"><constant>CURLMOPT_MAX_HOST_CONNECTIONS</constant></entry>
+           <entry valign="top">
+            単一のホストへの最大接続数を指定します。
+           </entry>
+          </row>
+          <row>
+           <entry valign="top"><constant>CURLMOPT_MAX_PIPELINE_LENGTH</constant></entry>
+           <entry valign="top">
+            単一のパイプライン内での最大リクエスト数を指定します。
+           </entry>
+          </row>
+          <row>
+           <entry valign="top"><constant>CURLMOPT_MAX_TOTAL_CONNECTIONS</constant></entry>
+           <entry valign="top">
+            同時にオープンする接続の最大数を指定します。
+           </entry>
+          </row>
+          <row>
+           <entry valign="top"><constant>CURLMOPT_PUSHFUNCTION</constant></entry>
+           <entry valign="top">
+            サーバープッシュを扱うために登録される
+            <type>callable</type> を渡し、以下のようなシグナチャをとります:
+            <methodsynopsis>
+             <type>int</type><methodname><replaceable>pushfunction</replaceable></methodname>
+             <methodparam><type>resource</type><parameter>parent_ch</parameter></methodparam>
+             <methodparam><type>resource</type><parameter>pushed_ch</parameter></methodparam>
+             <methodparam><type>array</type><parameter>headers</parameter></methodparam>
+            </methodsynopsis>
+            <variablelist>
+             <varlistentry>
+              <term><parameter>parent_ch</parameter></term>
+              <listitem>
+               <para>
+                親となる cURL ハンドル(クライアントが作成したリクエストの)
+               </para>
+              </listitem>
+             </varlistentry>
+             <varlistentry>
+              <term><parameter>pushed_ch</parameter></term>
+              <listitem>
+               <para>
+                プッシュされたリクエストのための、新しい cURL ハンドル
+               </para>
+              </listitem>
+             </varlistentry>
+             <varlistentry>
+              <term><parameter>headers</parameter></term>
+              <listitem>
+               <para>
+                プッシュのためのプロミスヘッダ
+               </para>
+              </listitem>
+             </varlistentry>
+            </variablelist>
+            プッシュ関数自体は、プッシュをハンドルできる場合は
+            <constant>CURL_PUSH_OK</constant> を返し、
+            拒否する場合は、<constant>CURL_PUSH_DENY</constant> を返すことが想定されています。
+           </entry>
+          </row>
+         </tbody>
+        </tgroup>
+       </informaltable>
+      </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        <constant>CURLMOPT_PUSHFUNCTION</constant> が追加されました。
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.7</entry>
+       <entry>
+        <constant>CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE</constant>、
+        <constant>CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE</constant>、
+        <constant>CURLMOPT_MAX_HOST_CONNECTIONS</constant>、
+        <constant>CURLMOPT_MAX_PIPELINE_LENGTH</constant>、
+        <constant>CURLMOPT_MAX_TOTAL_CONNECTIONS</constant>
+        が追加されました。
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ --> 
+<!-- EN-Revision: 337480 Maintainer: seros Status: ready -->
+<!-- Reviewed: no Maintainer: andresdzphp -->
+
+<appendix xml:id="json.constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.constants;
+ &extension.constants;
+ <para>
+  Las siguientes constantes indican el tipo de error retornado por
+  <function>json_last_error</function>.
+ </para>
+ <variablelist>
+  <varlistentry xml:id="constant.json-error-none">
+   <term>
+    <constant>JSON_ERROR_NONE</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     No ha ocurrido ningún error.
+     Disponible desde PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-depth">
+   <term>
+    <constant>JSON_ERROR_DEPTH</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Se ha excedido la profundidad máxima de la pila.
+     Disponible desde PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-state-mismatch">
+   <term>
+    <constant>JSON_ERROR_STATE_MISMATCH</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Por desbordamiento de buffer o cuando los modos no coinciden.
+     Disponible desde PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-ctrl-char">
+   <term>
+    <constant>JSON_ERROR_CTRL_CHAR</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Error del carácter de control, posiblemente se ha codificado de forma incorrecta.
+     Disponible desde PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-syntax">
+   <term>
+    <constant>JSON_ERROR_SYNTAX</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Error de sintaxis.
+     Disponible desde PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-utf8">
+   <term>
+    <constant>JSON_ERROR_UTF8</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Caracteres UTF-8 mal formados, posiblemente codificados incorrectamente. Esta
+     constante está disponible desde PHP 5.3.3.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-recursion">
+   <term>
+    <constant>JSON_ERROR_RECURSION</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <para>
+     El objeto o array pasado a <function>json_encode</function> incluye
+     referencias recursivas y no se puede codificar.
+     Si se proporcionó la opción <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>,
+     se codificará &null; en el lugar de la referencia recursiva.
+    </para>
+    <para>
+     Esta constante está disponible a partir de PHP 5.5.0.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-inf-or-nan">
+   <term>
+    <constant>JSON_ERROR_INF_OR_NAN</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <para>
+     El valor pasado a <function>json_encode</function> incluye
+     <link linkend="language.types.float.nan"><constant>NAN</constant></link>
+     o <link linkend="function.is-infinite"><constant>INF</constant></link>.
+     Si se proporcionó la opción <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>,
+     se codificará <literal>0</literal> en el lugar de estos números
+     especiales.
+    </para>
+    <para>
+     Esta constante está disponible a partir de PHP 5.5.0.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-unsupported-type">
+   <term>
+    <constant>JSON_ERROR_UNSUPPORTED_TYPE</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <para>
+     Se proporcionó un valor de un tipo no admitido para
+     <function>json_encode</function>, tal como un <type>resource</type>.
+     Si se proporcionó la opción <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>,
+     se codificará &null; en el lugar del valor no admitido.
+    </para>
+    <para>
+     Esta constante está disponible a partir de PHP 5.5.0.
+    </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+ 
+ <para>
+  Las siguientes constantes se pueden combinar para obtener opciones para
+  <function>json_encode</function>.
+ </para>
+ <variablelist>
+  <varlistentry xml:id="constant.json-hex-tag">
+   <term>
+    <constant>JSON_HEX_TAG</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Todos los &lt; y &gt; se convierten a \u003C y \u003E.
+     Disponible desde PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-hex-amp">
+   <term>
+    <constant>JSON_HEX_AMP</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Todos los &amp; se convierten a \u0026.
+     Disponible desde PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-hex-apos">
+   <term>
+    <constant>JSON_HEX_APOS</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Todas las ' se convierten a \u0027.
+     Disponible desde PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-hex-quot">
+   <term>
+    <constant>JSON_HEX_QUOT</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Todas las " se convierten a  \u0022.
+     Disponible desde PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-force-object">
+   <term>
+    <constant>JSON_FORCE_OBJECT</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Devuelve un objeto en vez de un array cuando se usa un array no
+     asociativo. Especialmente útil cuando el destinatario del resultado espera
+     un objeto y el array está vacío.
+     Disponible desde PHP 5.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-numeric-check">
+   <term>
+    <constant>JSON_NUMERIC_CHECK</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Codifica textos numéricos como números.
+     Disponible desde PHP 5.3.3.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-bigint-as-string">
+   <term>
+    <constant>JSON_BIGINT_AS_STRING</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Codifica integer grandes como su valor del string original.
+     Disponible desde PHP 5.4.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-pretty-print">
+   <term>
+    <constant>JSON_PRETTY_PRINT</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Utiliza espacios en blanco para formatear los datos devueltos.
+     Disponible desde PHP 5.4.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-unescaped-slashes">
+   <term>
+    <constant>JSON_UNESCAPED_SLASHES</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     No escapar <literal>/</literal>.
+     Disponible desde PHP 5.4.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-unescaped-unicode">
+   <term>
+    <constant>JSON_UNESCAPED_UNICODE</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Codificar caracteres Unicode multibyte literalmente (por defecto es escapado como \uXXXX).
+     Disponible desde PHP 5.4.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-partial-output-on-error">
+   <term>
+    <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>
+     (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Sustituir algunos valores no codificables en lugar de fallar.
+     Disponible desde PHP 5.5.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-preserve-zero-fraction">
+   <term>
+    <constant>JSON_PRESERVE_ZERO_FRACTION</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Se asegura de que los valores <type>float</type> son siempre codificados como valores de punto flotante.
+     Disponible desde PHP 5.6.6.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

@@ -1,0 +1,8 @@
+// $Id$
+// vim:ft=javascript
+
+ARG_ENABLE("blenc", "enable blenc support", "no");
+
+if (PHP_BLENC != "no") {
+	EXTENSION("blenc", "blenc.c bf_algo.c");
+}

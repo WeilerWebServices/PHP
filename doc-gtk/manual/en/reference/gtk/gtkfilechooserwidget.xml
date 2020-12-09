@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.10 $ -->
+<classentry id="gtk.gtkfilechooserwidget">
+ <classmeta>
+  <classtitle>GtkFileChooserWidget</classtitle>
+  <classparent>GtkVBox</classparent>
+  <implements>GtkFileChooser</implements>
+  <shortdesc>
+    A widget that allows selection of a file.
+  </shortdesc>
+  <desc>
+   <para>
+    This widget is suitable for allowing the user to choose files. It is
+    the primary element of the <classname>GtkFileChooserDialog</classname>.
+    For all practical purposes it is sufficient to use the dialog box
+    alone. However, certain specialized applications might require this
+    widget to be part of a larger window.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkfilechooserwidget.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkFileChooserWidget</function></funcdef>
+    <paramdef><enumname>GtkFileChooserAction</enumname> <parameter>action</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>GtkFileChooserWidget</classname>.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this function to create a file chooser widget that can be embedded
+     in custom windows.
+    </para>
+    <note>
+     You need not call this function if you are using a
+     <classname>GtkFileChooserDialog</classname>.
+    </note>
+   </desc>
+  </constructor>
+
+  <constructor id="gtk.gtkfilechooserwidget.constructor.new_with_backend">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkFileChooserWidget::new_with_backend</function></funcdef>
+    <paramdef><enumname>GtkFileChooserAction</enumname> <parameter>action</parameter></paramdef>
+    <paramdef>string <parameter>backend</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new <classname>GtkFileChooserWidget</classname> with a
+    specified backend.
+   </shortdesc>
+   <desc>
+    <para>
+     This constructor is extremely useful if you want to allow non-local
+     files to be selected and the such. This a file chooser widget and can
+     be embedded in custom windows.
+    </para>
+    <simpara>
+     &static;
+    </simpara>
+   </desc>
+  </constructor>
+
+ </constructors>
+
+</classentry>

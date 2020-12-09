@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351135 Maintainer: hirokawa Status: ready -->
+<!-- Credits: mumumu -->
+<refentry xml:id="function.imap-sort" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>imap_sort</refname>
+  <refpurpose>メッセージヘッダの配列をソートする</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>array</type><type>false</type></type><methodname>imap_sort</methodname>
+   <methodparam><type>resource</type><parameter>imap_stream</parameter></methodparam>
+   <methodparam><type>int</type><parameter>criteria</parameter></methodparam>
+   <methodparam><type>int</type><parameter>reverse</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>options</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>search_criteria</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>charset</parameter><initializer>&null;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   指定したパラメータにより取得したメッセージ番号をソートします。
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    &imap.imap-stream.description;
+    <varlistentry>
+     <term><parameter>criteria</parameter></term>
+     <listitem>
+      <para>
+       criteria は、次のどれかとします (ひとつのみ)。
+       <itemizedlist>
+        <listitem>
+         <simpara>
+          <constant>SORTDATE</constant> - メッセージの日付
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORTARRIVAL</constant> - 到着日付
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORTFROM</constant> - 最初の From アドレスのメールボックス
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORTSUBJECT</constant> - メッセージ Subject
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORTTO</constant> - 最初の To アドレスのメールボックス
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORTCC</constant> - 最初の cc アドレスのメールボックス
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORTSIZE</constant> - メッセージのサイズ（バイト単位）
+         </simpara>
+        </listitem>
+       </itemizedlist>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>reverse</parameter></term>
+     <listitem>
+      <para>
+       これを 1 にすると、逆順にソートします。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>options</parameter></term>
+     <listitem>
+      <para>
+       <parameter>options</parameter> はビットマスクで、以下の組み合わせとなります。
+       <itemizedlist>
+        <listitem>
+         <simpara>
+          <constant>SE_UID</constant> - シーケンス番号の代わりに UID を返す
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SE_NOPREFETCH</constant> - 検索したメッセージを事前取得しない
+         </simpara>
+        </listitem>
+       </itemizedlist>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>search_criteria</parameter></term>
+     <listitem>
+      <para>
+       IMAP2 フォーマットの検索条件文字列。詳細は
+       <function>imap_search</function> を参照ください。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>charset</parameter></term>
+     <listitem>
+      <para>
+       文字列の検索の際に使う MIME 文字セット。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   指定したパラメータでソートしたメッセージ番号の配列を返します。
+   &return.falseforfailure;
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

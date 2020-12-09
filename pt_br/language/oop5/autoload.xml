@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 338943 Maintainer: fabioluciano Status: ready --><!-- CREDITS: felipe, amandavale, machado, fabioluciano -->
+ <sect1 xml:id="language.oop5.autoload" xmlns="http://docbook.org/ns/docbook">
+  <title>Autoloading Classes</title>
+  <para>
+   Muitos desenvolvedores ao desenvolver aplicações orientadas a objeto criam
+   um arquivo PHP para cada definição de classe. Um dos maiores contratempos é
+   ter de escrever uma longa lista de includes no início de cada script(um
+   para cada classe).
+  </para>
+  <para>
+   No PHP 5 isso não é mais necessário. A função
+   <function>spl_autoload_register</function>
+   registra qualquer número de autoloaders, permitindo que classes e interfaces sejam automaticamente carregadas
+   se elas não ainda não foram definidas. Ao registrar autoloaders, o PHP têm uma última chance
+   de carregar classes e interfaces antes que falhem com um erro.
+  </para>
+  <tip>
+   <para>
+    Embora a função <function>__autoload</function> também pode ser utilizada para
+    carregar automaticamente classes e interfaces, é preferível a utilização da função
+    <function>spl_autoload_register</function>.
+    Por que é uma alternativa mais flexível (permitindo que vários autoloaders sejam
+    especificados na aplicação, assim como bibliotecas de terceiros). Por esta razão, o uso da função
+    <function>__autoload</function> é desencorajado e pode se tornar
+    obsoleta em versões futuras.
+   </para>
+  </tip>
+  <note>
+   <para>
+    Antes do PHP 5.3.0 exceções disparadas na função <function>__autoload</function>
+    não eram capturadas no bloco
+    <link linkend="language.exceptions">catch</link> e resultavam em um
+    erro fatal. Do PHP 5.3.0 em diante, isso é possível sendo que se uma exceção customizada
+    é disparada, então a classe da exceção customizada se tornará disponível.
+    A função <function>__autoload</function> deve ser usada recursivamente para carregar a
+    classe de exceção customizada.
+   </para>
+  </note>
+  <note>
+   <para>
+    Autoloading não é disponível usando PHP em
+    <link linkend="features.commandline">modo interativo</link> CLI.
+   </para>
+  </note>
+  <note>
+   <para>
+    Se o nome da classe é usado por exemplo em <function>call_user_func</function> então
+    ela pode conter alguns caracteres perigosos como <literal>../</literal>.
+    É recomendado não usar entrada de usuário nestas funções ou pelo menos verificar
+    a entrada em <function>__autoload</function>.
+   </para>
+  </note>
+  <para>
+   <example>
+    <title>Exemplo de Autoload</title>
+    <para>
+     Esse exemplo tenta carregar as classes <literal>MyClass1</literal>
+     e <literal>MyClass2</literal> dos arquivos <filename>MyClass1.php</filename>
+     e <filename>MyClass2.php</filename> respectivamente.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+spl_autoload_register(function ($class_name) {
+    include $class_name . '.php';
+});
+
+$obj  = new MyClass1();
+$obj2 = new MyClass2();
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Outro exemplo de Autoload</title>
+    <para>
+     Este exemplo tenta carregar a interface <literal>ITest</literal>.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+spl_autoload_register(function ($name) {
+    var_dump($name);
+});
+
+class Foo implements ITest {
+}
+
+/*
+string(5) "ITest"
+
+Fatal error: Interface 'ITest' not found in ...
+*/
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Autoload com manipulação de exceções no PHP 5.3.0+</title>
+    <para>
+     Este exemplo lançará uma exceção e demonstrará o bloco try/catch.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+spl_autoload_register(function ($name) {
+    echo "Want to load $name.\n";
+    throw new Exception("Unable to load $name.");
+});
+
+try {
+    $obj = new NonLoadableClass();
+} catch (Exception $e) {
+    echo $e->getMessage(), "\n";
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Want to load NonLoadableClass.
+Unable to load NonLoadableClass.
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Autoload com manipulação de exceções no PHP 5.3.0+ - Faltando exceção customizada.</title>
+    <para>
+     Este exemplo dispara uma exceção para uma exceção customizada não carregável.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+spl_autoload_register(function ($name) {
+    echo "Want to load $name.\n";
+    throw new MissingException("Unable to load $name.");
+});
+
+try {
+    $obj = new NonLoadableClass();
+} catch (Exception $e) {
+    echo $e->getMessage(), "\n";
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Want to load NonLoadableClass.
+Want to load MissingException.
+
+Fatal error: Class 'MissingException' not found in testMissingException.php on line 4
+]]>
+    </screen>
+   </example>
+  </para>
+
+  <simplesect role="seealso">
+   &reftitle.seealso;
+   <para>
+    <simplelist>
+     <member><function>unserialize</function></member>
+     <member><link linkend="unserialize-callback-func">unserialize_callback_func</link></member>
+     <member><function>spl_autoload_register</function></member>
+     <member><function>spl_autoload</function></member>
+     <member><function>__autoload</function></member>
+    </simplelist>
+   </para>
+  </simplesect>
+
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

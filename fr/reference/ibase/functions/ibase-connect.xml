@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 336936 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.ibase-connect">
+ <refnamediv>
+  <refname>ibase_connect</refname>
+  <refpurpose>Ouvre une connexion à une base de données</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>ibase_connect</methodname>
+   <methodparam choice="opt"><type>string</type><parameter>database</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>username</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>password</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>charset</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>buffers</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>dialect</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>role</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>sync</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Ouvre une connexion à une base de données Firebird/InterBase.
+  </para>
+  <para>
+   Si un deuxième appel est fait avec <function>ibase_connect</function>, en
+   passant les mêmes arguments, une nouvelle connexion ne sera pas ouverte,
+   mais la connexion déjà ouverte sera retournée. La connexion
+   sera fermée dès que le script se termine, à moins qu'elle
+   ne soit fermée explicitement avec <function>ibase_close</function>,
+   durant le script.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>database</parameter></term>
+     <listitem>
+      <para>
+       <parameter>database</parameter> doit être un chemin
+       valide jusqu'à un fichier de base de données sur le serveur sur
+       lequel il réside. Si le serveur est distant, il faut le préfixer
+       avec un nom d'hôte 'hostname:' (TCP/IP), 'hostname/port:'
+       (TCP/IP avec un serveur interbase sur un port TCP personalisé), '//hostname/'
+       (NetBEUI) en fonction du protocole de communication utilisé.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>username</parameter></term>
+     <listitem>
+      <para>
+       Le nom d'utilisateur. Peut être défini avec la directive
+       <literal>ibase.default_user</literal> du fichier &php.ini;.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>password</parameter></term>
+     <listitem>
+      <para>
+       Le mot de passe correspondant à l'utilisateur <parameter>username</parameter>.
+       Peut être défini avec la directive
+       <literal>ibase.default_password</literal> du fichier &php.ini;.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>charset</parameter></term>
+     <listitem>
+      <para>
+       <parameter>charset</parameter> est le jeu de caractères par défaut
+       pour la base de données.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>buffers</parameter></term>
+     <listitem>
+      <para>
+       <parameter>buffers</parameter> est le nombre de buffer de base à
+       allouer pour le cache serveur. S'il est passé à 0 ou
+       omis, le serveur le choisira de lui-même.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>dialect</parameter></term>
+     <listitem>
+      <para>
+       <parameter>dialect</parameter>
+       sélectionne le dialecte SQL pour les requêtes exécutées
+       avec cette connexion et, par défaut, il utilise le meilleur dialecte
+       disponible.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>role</parameter></term>
+     <listitem>
+      <para>
+       Ne fonctionne qu'avec InterBase 5 et supérieur.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>sync</parameter></term>
+     <listitem>
+      <para>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retourne un identifiant de connexion Firebird/InterBase en cas de succès,
+   ou &false; si une erreur survient.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Si vous avez quelques erreurs comme <literal>"arithmetic exception, numeric overflow,
+   or string truncation. Cannot transliterate character between character
+   sets"</literal> (cela se produit lorsque vous tentez d'utiliser quelques caractères accentués) lorsque
+   vous utilisez <function>ibase_connect</function>
+   et après <function>ibase_query</function>, vous devez spécifier un jeu de caractères
+   correct (i.e. <literal>ISO8859_1</literal> ou votre jeu de caractères courant).
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>ibase_connect</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$host = 'localhost:/path/to/your.gdb';
+
+$dbh = ibase_connect($host, $username, $password);
+$stmt = 'SELECT * FROM tblname';
+$sth = ibase_query($dbh, $stmt);
+while ($row = ibase_fetch_object($sth)) {
+    echo $row->email, "\n";
+}
+ibase_free_result($sth);
+ibase_close($dbh);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>ibase_pconnect</function></member>
+    <member><function>ibase_close</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

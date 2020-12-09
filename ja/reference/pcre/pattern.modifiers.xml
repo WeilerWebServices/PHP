@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 348780 Maintainer: takagi Status: ready -->
+<!-- Credits: hirokawa,haruki,mumumu -->
+<article xml:id="reference.pcre.pattern.modifiers" xmlns="http://docbook.org/ns/docbook">
+ <title>パターン修飾子</title>
+ <titleabbrev>正規表現パターンに使用可能な修飾子</titleabbrev>
+    <para>
+     現在使用可能な PCRE 修飾子の一覧を以下に示します。
+     括弧の中の名前は、これらの修飾子に関する PCRE 内部の名前です。
+     修飾子中での空白文字および改行は無視されます。他の文字はエラーになります。
+    </para>
+    <para>
+     <blockquote>
+      <variablelist>
+       <varlistentry>
+        <term><emphasis>i</emphasis> (<literal>PCRE_CASELESS</literal>)</term>
+        <listitem>
+         <simpara>
+         この修飾子を設定すると、パターンの中の文字は
+         大文字にも小文字にもマッチします。
+         </simpara>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><emphasis>m</emphasis> (<literal>PCRE_MULTILINE</literal>)</term>
+        <listitem>
+         <simpara>
+          デフォルトで、PCRE は、検索対象文字列を（実際には複数行からなる
+          場合でも）単一の行からなるとして処理します。
+          「行頭」メタ文字 (^) は、対象文字列の最初にしかマッチしません。
+          一方、「行末」メタ文字 ($) は、文字列の最後、または
+          （<emphasis>D</emphasis> 修飾子が設定されていない場合）
+          最後にある改行記号の前のみにしかマッチしません。
+          この動作は Perl と同じです。
+         </simpara>
+         <simpara>
+          この修飾子を設定すると、「行頭」および「行末」メタ文字は
+          対象文字列において、文字列の最初と最後に加えて、
+          各改行の直前と直後にそれぞれマッチします。
+          この動作は、Perl の /m 修飾子と同じです。
+          対象文字列の中に "\n" 文字がない場合や、
+          またはパターンに ^ または $ がない場合は、
+          この修飾子を設定しても意味はありません。
+         </simpara>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><emphasis>s</emphasis> (<literal>PCRE_DOTALL</literal>)</term>
+        <listitem>
+         <simpara>
+          この修飾子を設定すると、パターン中のドットメタ文字は
+          改行を含む全ての文字にマッチします。
+          これを設定しない場合は、改行にはマッチしません。
+          この修飾子は、Perl の /s 修飾子と同じです。
+          [^a] のような否定の文字クラスは、
+          この修飾子の設定によらず、常に改行文字にマッチします。
+         </simpara>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><emphasis>x</emphasis> (<literal>PCRE_EXTENDED</literal>)</term>
+        <listitem>
+         <simpara>
+          この修飾子を設定すると、エスケープするか
+          文字クラスの内部を除き、
+          パターンの空白文字は完全に無視されます。
+          文字クラスの外にあって、かつエスケープされていない # 
+          と次の改行文字の間の文字も無視されます。
+          この動作は、Perl の /x 修飾子と同じであり、複雑なパターンの内部に
+          コメントを記述することが可能となります。
+          しかし、この修飾子は、データ文字にのみ適用されることに注意
+          してください。空白文字をパターンの特殊文字の並びの中、
+          例えば条件付きサブパターン (?( の内部に置くことはできません。 
+         </simpara>
+        </listitem>
+       </varlistentry>
+       <varlistentry xml:id="reference.pcre.pattern.modifiers.eval">
+        <term><emphasis>e</emphasis> (<literal>PREG_REPLACE_EVAL</literal>)</term>
+        <listitem>
+       &warn.deprecated.feature-5-5-0.removed-7-0-0;
+         <simpara>
+          この非推奨の修飾子を設定すると、<function>preg_replace</function>
+          は、置換文字列において後方参照に関する通常の置換を行った後、
+          PHP コードとして評価し、検索文字列を置換するためにその結果を
+          使用します。
+          置換された後方参照においては、
+          単引用符や二重引用符、バックスラッシュ (<literal>\</literal>)および NULL 文字は
+          バックスラッシュでエスケープされます。
+         </simpara>
+       <caution>
+        <para>
+         マッチした後方参照ごとに <function>addslashes</function> が実行されてから、
+         置換を行います。つまり、クォートした文字列として後方参照を利用した場合、
+         エスケープした文字がリテラルに変換されます。
+         しかし、エスケープされた文字については、通常は変換されず、
+         スラッシュが残ったままになります。
+         そのため、この修飾子はとても複雑なものになってしまいます。
+        </para>
+       </caution>
+       <caution>
+        <para>
+         <parameter>replacement</parameter> が PHP のコードとして妥当な文字列であることを確認しましょう。
+         そうでない場合は、
+         <function>preg_replace</function> を含む行で PHP のパースエラーが発生します。
+        </para>
+       </caution>
+       <caution>
+        <para>
+         この修飾子を使うことは<emphasis>おすすめしません</emphasis>。
+         リモートから実行可能な脆弱性を作ってしまいがちだからです。
+         これを防ぐには、<function>preg_replace_callback</function>
+         関数を代わりに使うべきです:
+        </para>
+        <informalexample>
+         <programlisting role="php">
+<![CDATA[
+<?php
+$html = $_POST['html'];
+
+// 見出しを大文字にします
+$html = preg_replace(
+    '(<h([1-6])>(.*?)</h\1>)e',
+    '"<h$1>" . strtoupper("$2") . "</h$1>"',
+    $html
+);
+]]>
+         </programlisting>
+        </informalexample>
+        <para>
+         このサンプルが
+         <function>preg_replace</function> と <literal>e</literal> 修飾子を使って書かれている場合、
+         攻撃するのは簡単で、
+         <literal>&lt;h1&gt;{${eval($_GET[php_code])}}&lt;/h1&gt;</literal>
+         のような文字列を渡すだけで攻略できます。
+         攻撃者は任意の PHP コードを実行でき、
+         サーバーに対するほぼ完全なアクセス権を与えることになってしまいます。
+        </para>
+       </caution>
+       <note>
+        <para>
+         この修飾子を使用するのは、<function>preg_replace</function>のみです。
+         他の PCRE 関数では無視されます。
+        </para>
+       </note>
+      </listitem>
+     </varlistentry>
+     <varlistentry>
+        <term><emphasis>A</emphasis> (<literal>PCRE_ANCHORED</literal>)</term>
+        <listitem>
+         <simpara>
+          この修飾子を設定すると、パターンは強制的に固定 (anchored) となります。
+          つまり、検索対象文字列の先頭でのみマッチするように制限されます。
+          パターン自体の中に適当な指定を行うことでも同様の効果を得ることが可能です。
+          Perl ではパターン中に指定する方法しか使用できません。
+         </simpara>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><emphasis>D</emphasis> (<literal>PCRE_DOLLAR_ENDONLY</literal>)</term>
+        <listitem>
+         <simpara>
+          この修飾子を設定すると、パターン内のドルメタ文字は、検索対象文字列の
+          終わりにのみマッチします。この修飾子を設定しない場合、ドル記号は、
+          検索対象文字列の最後の文字が改行文字であれば、その直前にもマッチします。
+          この修飾子は、<emphasis>m</emphasis> を設定している場合に無視されます。
+          Perl には、この修飾子に等価なものはありません。
+         </simpara>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><emphasis>S</emphasis></term>
+        <listitem>
+         <simpara>
+          あるパターンを複数回使用する場合は、マッチングにかかる時間を
+          高速化することを目的として、パターンの分析に幾分か時間をかけても
+          良いでしょう。この修飾子を設定すると、追加のパターン分析が
+          行われます。現在、パターン分析は、最初の文字が単一ではなく、
+          かつ固定でないパターンに対してのみ有用です。
+         </simpara>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><emphasis>U</emphasis> (<literal>PCRE_UNGREEDY</literal>)</term>
+        <listitem>
+         <simpara>
+          この修飾子を設定すると、量指定子の「貪欲さ」が反転します。
+          つまり、量指定子は、デフォルトで貪欲でなく、
+          疑問符を後ろに付けてはじめて貪欲になるようになります。
+          この修飾子は Perl 互換では有りません。
+          同様の設定は、(<literal>?U</literal>) 修飾子を <link 
+          linkend="regexp.reference.internal-options">パターン内で設定</link>
+          するか、（<literal>.*?</literal> のように）量指定子の後に疑問符を
+          付けるかすることで行うこともできます。
+         </simpara>
+       <note>
+        <para>
+         通常は、非貪欲モードでは <link
+         linkend="ini.pcre.backtrack-limit">pcre.backtrack_limit</link>
+         文字を超えるマッチができません。
+        </para>
+       </note>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><emphasis>X</emphasis> (<literal>PCRE_EXTRA</literal>)</term>
+        <listitem>
+         <simpara>
+          この修正子は、Perl 非互換な PCRE の機能を有効にします。
+          パターン内で後ろに文字が続くバックスラッシュで特別な意味がないものは、
+          将来的な拡張の際の互換性の維持のため、エラーになります。
+          デフォルトでは、Perl のように文字が後ろに続くバックスラッシュ
+          で特に意味がないものは、リテラルとして処理されます。
+          この修飾子により制御される機能は、現在の所、これだけです。
+       </simpara>
+      </listitem>
+     </varlistentry>
+     <varlistentry>
+      <term><emphasis>J</emphasis> (<literal>PCRE_INFO_JCHANGED</literal>)</term>
+      <listitem>
+       <simpara>
+        (?J) 内部オプションは、ローカルのオプション <literal>PCRE_DUPNAMES</literal> の設定を変更します。
+        サブパターンで重複した名前を使用できるようになります。
+        7.2.0 以降、<literal>J</literal> も同様に修飾子としてサポートされます。
+         </simpara>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><emphasis>u</emphasis> (<literal>PCRE_UTF8</literal>)</term>
+        <listitem>
+         <simpara>
+          この修正子は、Perl 非互換な PCRE の機能を有効にします。パターンと対象文字列は、
+          UTF-8 として処理されます。
+          無効な対象文字列を preg_* 関数に渡しても、何もマッチしません。
+          無効なパターンを渡すと、E_WARNING レベルのエラーが発生します。
+          5オクテットおよび6オクテットの UTF-8 シーケンスは、PHP 5.3.4 以降
+          (PCRE 7.3 2007-08-28 以降) では無効とみなされます。
+          以前のバージョンでは、これらも UTF-8 として有効だとみなされていました。
+         </simpara>
+        </listitem>
+       </varlistentry>
+      </variablelist>
+     </blockquote>
+    </para>
+</article>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

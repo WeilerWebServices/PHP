@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.9 $ -->
+<classentry id="gtk.gtkmenushell">
+ <classmeta>
+  <classtitle>GtkMenuShell</classtitle>
+  <classparent>GtkContainer</classparent>
+  <shortdesc>
+   A base class for menu widgets.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <methods>
+
+  <method id="gtk.gtkmenushell.method.activate_item">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>activate_item</function></funcdef>
+     <paramdef>GtkWidget <parameter>menu_item</parameter></paramdef>
+     <paramdef>bool <parameter>force_deactivate</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkMenuShell">select_item</function>
+    </para>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenushell.method.append">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>append</function></funcdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenushell.method.cancel">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>cancel</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenushell.method.deactivate">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>deactivate</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenushell.method.deselect">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>deselect</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenushell.method.insert">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>insert</function></funcdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+     <paramdef>int <parameter>position</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenushell.method.prepend">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>prepend</function></funcdef>
+     <paramdef>GtkWidget <parameter>child</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenushell.method.select_first">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>select_first</function></funcdef>
+     <paramdef>bool <parameter>search_sensitive</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </method>
+
+  <method id="gtk.gtkmenushell.method.select_item">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>select_item</function></funcdef>
+     <paramdef>GtkWidget <parameter>menu_item</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+    <para>
+     &seealso;
+     <function class="GtkMenuShell">activate_item</function>
+    </para>
+
+   </desc>
+  </method>
+
+ </methods>
+
+ <signals>
+
+  <signal id="gtk.gtkmenushell.signal.activate-current">
+   <signalname>activate-current</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkMenuShell <parameter>menushell</parameter></paramdef>
+     <paramdef>bool <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkmenushell.signal.cancel">
+   <signalname>cancel</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkMenuShell <parameter>menushell</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkmenushell.signal.cycle-focus">
+   <signalname>cycle-focus</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkMenuShell <parameter>menushell</parameter></paramdef>
+     <paramdef>GtkDirectionType <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkmenushell.signal.deactivate">
+   <signalname>deactivate</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkMenuShell <parameter>menushell</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkmenushell.signal.move-current">
+   <signalname>move-current</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkMenuShell <parameter>menushell</parameter></paramdef>
+     <paramdef>GtkMenuDirectionType <parameter>UNKNOWN</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+  <signal id="gtk.gtkmenushell.signal.selection-done">
+   <signalname>selection-done</signalname>
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <cbfunction>callback</cbfunction></funcdef>
+     <paramdef>GtkMenuShell <parameter>menushell</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </signal>
+  
+ </signals>
+
+</classentry>

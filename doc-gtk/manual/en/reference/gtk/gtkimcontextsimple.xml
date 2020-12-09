@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.5 $ -->
+<classentry id="gtk.gtkimcontextsimple">
+ <classmeta>
+  <classtitle>GtkIMContextSimple</classtitle>
+  <classparent>GtkIMContext</classparent>
+  <shortdesc>
+   An input method context supporting table-based input methods.
+  </shortdesc>
+  <desc>
+
+  </desc>
+ </classmeta>
+
+ <constructors>
+
+  <constructor id="gtk.gtkimcontextsimple.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkIMContextSimple</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+
+   </shortdesc>
+   <desc>
+
+   </desc>
+  </constructor>
+
+ </constructors>
+
+ <methods>
+
+  
+
+ </methods>
+
+</classentry>

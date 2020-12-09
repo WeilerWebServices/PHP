@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 336766 Maintainer: nilgun Status: ready -->
+<!-- CREDITS: haluk -->
+<refentry xml:id="arrayaccess.offsetset" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>ArrayAccess::offsetSet</refname>
+  <refpurpose>Belirtilen konuma bir değer atar</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>abstract</modifier> <modifier>public</modifier> <type>void</type><methodname>ArrayAccess::offsetSet</methodname>
+   <methodparam><type>mixed</type><parameter>konum</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>değer</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Belirtilen konuma belirtilen değer atanır.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>konum</parameter></term>
+     <listitem>
+      <para>
+       Değerin atanacağı konum.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>değer</parameter></term>
+     <listitem>
+      <para>
+       Atanacak değer.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.void;
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Aşağıdaki örnekte olduğu gibi, başka bir değer mümkün değilse
+    <parameter>konum</parameter> değiştirgesine &null; atanır.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$arrayaccess[] = "ilk değer";
+$arrayaccess[] = "ikinci değer";
+print_r($arrayaccess);
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+Array
+(
+    [0] => ilk değer
+    [1] => ikinci değer
+)
+]]>
+     </screen>
+    </informalexample>
+   </para>
+  </note>
+
+  <note>
+    <para>
+      Bu işlev gönderimli atamalarda çağrılmaz, aksi takdirde 
+      <classname>ArrayAccess</classname> ile dizi boyularında yapılan dolaylı 
+      değişiklikler aşırı yüklemeye yol açar.
+      Dolaylı değişiklik, boyutu doğrudan değiştirerek değil, bir alt boyutu 
+      veya alt özelliği değiştirerek ya da dizi boyutunu gönderimli olarak 
+      başka bir değişkene atayarak yapılır. Bunun için 
+      <function>ArrayAccess::offsetGet</function> çağrılır. İşlem sadece 
+      yöntem gönderimli değer döndürürse başarılı olur ki, bu da PHP 5.3.4 
+      ve sonrasını gerektirir.
+    </para>
+  </note>
+</refsect1>
+
+<!--
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>ArrayAccess::offsetSet</function> example</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+/* ... */
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+...
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><methodname>Classname::Method</methodname></member>
+   </simplelist>
+  </para>
+ </refsect1>
+-->
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

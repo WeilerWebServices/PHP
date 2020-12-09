@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 331908 Maintainer: alien Status: ready -->
+<!-- Reviewed: yes Maintainer: sergey -->
+<!-- $Revision$ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="imagickpixel.getcolorvalue">
+ <refnamediv>
+  <refname>ImagickPixel::getColorValue</refname>
+  <refpurpose>Возвращает нормализованное значение цвета канала</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>float</type><methodname>ImagickPixel::getColorValue</methodname>
+   <methodparam><type>int</type><parameter>color</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Возвращает значение указанного цвета канала, как дробное число между 0 и 1.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>color</parameter></term>
+     <listitem>
+      <para>
+       Цвет, для которого получается значение, заданный одной из констант Imagick. Это RGB цвет,
+       CMYK цвет, альфа канал или прозрачность (Imagick::COLOR_BLUE, Imagick::COLOR_MAGENTA);
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Значение канала, в виде нормализованного дробного числа, в случае возникновения ошибки
+   будет выброшено исключение ImagickPixelException.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>Imagick::getColorValue</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+    
+$color = new ImagickPixel('rgba(90%, 20%, 20%, 0.75)');
+
+echo "Значение альфа канала ".$color->getColorValue(Imagick::COLOR_ALPHA).PHP_EOL;
+echo "".PHP_EOL;
+echo "Значение красного канала ".$color->getColorValue(Imagick::COLOR_RED).PHP_EOL;
+echo "Значение зеленого канала ".$color->getColorValue(Imagick::COLOR_GREEN).PHP_EOL;
+echo "Значение синего канала ".$color->getColorValue(Imagick::COLOR_BLUE).PHP_EOL;
+echo "".PHP_EOL;
+echo "Значение голубого канала ".$color->getColorValue(Imagick::COLOR_CYAN).PHP_EOL;
+echo "Значение пурпурного канала ".$color->getColorValue(Imagick::COLOR_MAGENTA).PHP_EOL;
+echo "Значение желтого канала ".$color->getColorValue(Imagick::COLOR_YELLOW).PHP_EOL;
+echo "Значение черного канала ".$color->getColorValue(Imagick::COLOR_BLACK).PHP_EOL;
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Значение альфа канала 0.74999618524453
+
+Значение красного канала 0.90000762951095
+Значение зеленого канала 0.2
+Значение синего канала 0.2
+
+Значение голубого канала 0.90000762951095
+Значение пурпурного канала 0.2
+Значение желтого канала 0.2
+Значение черного канала 0
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 341611 Maintainer: takagi Status: ready -->
+<!-- CREDITS: hirokawa -->
+
+<chapter xml:id="image.examples" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.examples;
+ <section xml:id="image.examples-png">
+  <title>PHP による PNG の生成</title>
+  <para>
+   <example>
+    <title>PHP による PNG の生成</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+header("Content-type: image/png");
+$string = $_GET['text'];
+$im     = imagecreatefrompng("images/button1.png");
+$orange = imagecolorallocate($im, 220, 210, 60);
+$px     = (imagesx($im) - 7.5 * strlen($string)) / 2;
+imagestring($im, 3, $px, 9, $string, $orange);
+imagepng($im);
+imagedestroy($im);
+
+?>
+]]>
+    </programlisting>
+   </example>
+   この例のスクリプトは、<literal>&lt;img src=&quot;button.php?text&quot;&gt;</literal>
+   のようなタグが書かれたページからコールされるものです。
+   上の <filename>button.php</filename> スクリプトは、この <literal>&quot;text&quot;</literal>
+   文字列を引数とし、
+   基本画像 <literal>&quot;images/button1.png&quot;</literal>
+   の上にこの文字列を重ねて描いた後、その画像を出力します。
+   この方法を使うと、ボタンのテキストが変わるたびに新たなボタンを作り直す羽目になることを回避できます。
+   この方法により、動的に画像ボタンを生成できるのです。
+  </para>
+ </section>
+ <section xml:id="image.examples-watermark">
+  <title>アルファチャネルを使用した、画像へのすかしの追加</title>
+  <para>
+   <example>
+    <title>アルファチャネルを使用した、画像へのすかしの追加</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// スタンプと、それをすかしとして適用する写真を読み込みます
+$stamp = imagecreatefrompng('stamp.png');
+$im = imagecreatefromjpeg('photo.jpeg');
+
+// スタンプの余白を設定し、スタンプ画像の幅と高さを取得します
+$marge_right = 10;
+$marge_bottom = 10;
+$sx = imagesx($stamp);
+$sy = imagesy($stamp);
+
+// スタンプ画像を写真の上にコピーします。余白の値と
+// 写真の幅を元にスタンプの位置を決定します
+imagecopy($im, $stamp, imagesx($im) - $sx - $marge_right, imagesy($im) - $sy - $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp));
+
+// 出力し、メモリを開放します
+header('Content-type: image/png');
+imagepng($im);
+imagedestroy($im);
+?>
+]]>
+    </programlisting>
+    <mediaobject>
+     <alt>アルファチャネルを使用した、画像へのすかしの追加</alt>
+     <imageobject>
+      <imagedata fileref="en/reference/image/figures/watermarks.png" />
+     </imageobject>
+    </mediaobject>
+   </example>
+   この例は、すかしやスタンプを写真あるいは著作権つき画像に追加するための一般的な方法です。
+   スタンプ画像内のアルファチャネルのテキストはアンチエイリアス処理されることに注意しましょう。
+   画像をコピーしてもこれは残り続けます。
+  </para>
+ </section>
+ <section xml:id="image.examples.merged-watermark">
+  <title><function>imagecopymerge</function> による半透明なすかしの作成</title>
+  <para>
+   <example>
+    <title><function>imagecopymerge</function> による半透明なすかしの作成</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// スタンプと、それをすかしとして適用する写真を読み込みます
+$im = imagecreatefromjpeg('photo.jpeg');
+
+// まず、スタンプ画像を GD で作成します
+$stamp = imagecreatetruecolor(100, 70);
+imagefilledrectangle($stamp, 0, 0, 99, 69, 0x0000FF);
+imagefilledrectangle($stamp, 9, 9, 90, 60, 0xFFFFFF);
+imagestring($stamp, 5, 20, 20, 'libGD', 0x0000FF);
+imagestring($stamp, 3, 20, 40, '(c) 2007-9', 0x0000FF);
+
+// スタンプの余白を設定し、スタンプ画像の幅と高さを取得します
+$marge_right = 10;
+$marge_bottom = 10;
+$sx = imagesx($stamp);
+$sy = imagesy($stamp);
+
+// スタンプを、50% の不透明度で写真に重ねます
+imagecopymerge($im, $stamp, imagesx($im) - $sx - $marge_right, imagesy($im) - $sy - $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp), 50);
+
+// 画像をファイルに保存し、メモリを開放します
+imagepng($im, 'photo_stamp.png');
+imagedestroy($im);
+
+?>
+]]>
+    </programlisting>
+    <mediaobject>
+     <alt>imagecopymerge() による半透明なすかしの作成</alt>
+     <imageobject>
+      <imagedata fileref="en/reference/image/figures/watermark-merged.png" />
+     </imageobject>
+    </mediaobject>
+   </example>
+   この例は、<function>imagecopymerge</function>
+   を使ってスタンプを元画像にかぶせます。
+   これを使うと、スタンプの不透明度を設定することができます。
+   今回の例では 50% の不透明度に設定しています。
+   この半透明のすかしを用いる方法は、著作権つきの画像を保護するのに便利です。
+   すかしをとるのは非常に難しく、またもとの画像の見栄えも損ねません。
+  </para>
+ </section>
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

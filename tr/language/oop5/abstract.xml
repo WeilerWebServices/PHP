@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 332727 Maintainer: nilgun Status: ready -->
+<!-- CREDITS: tpug, sezer -->
+ <sect1 xml:id="language.oop5.abstract" xmlns="http://docbook.org/ns/docbook">
+  <title>Sınıf Soyutlama</title>
+
+  <para>
+    PHP 5, soyut sınıf ve yöntemlerin kullanımını mümkün kılmıştır. Soyut
+    olarak tanımlanmış bir sınıf örneklenemeyebilir ve en az bir soyut yöntem 
+    içeren bir sınıf da soyut olmalıdır. Soyut olarak tanımlanmış yöntemler o 
+    yöntemlerin imzasıdırlar, gerçeklemenin bütününü temsil edemezler.
+  </para>
+
+  <para>
+    Soyut bir sınıftan kalıtsal özellikler devralınırken, ebeveyn sınıf
+    bildiriminde soyut olarak bildirilmiş tüm yöntemlerin çocuk sınıf
+    tarafından da tanımlanması gerekir. Ek olarak, bu yöntemlerin aynı (ya da
+    daha az sınırlı) <link linkend="language.oop5.visibility"
+    >görünürlükle</link> tanımlanması gerekir. Örneğin, soyut yöntem
+    <code>protected</code> olarak tanımlanmışsa, işlev gerçeklenimi
+    <code>private</code> değil, <code>protected</code> ya da
+    <code>public</code> olarak tanımlanmalıdır. Bundan başka, yöntemlerin 
+    imzaları da eşleşmelidir, örneğin gerekli değiştirgelerin tür ipuçları 
+    ve sayıları aynı olmalıdır. Örneğin bir çocuk sınıf seçimlik bir 
+    değiştirge tanımlarken soyut yöntem bunu yapmıyorsa bir imza uyumsuzluğu 
+    yoktur. PHP5.4'te bu kuruculara da uygulanır. PHP 5.4 öncesinde kurucu 
+    imzaları farklı olabilirdi.
+  </para>
+
+  <example>
+   <title>- Soyut sınıf örneği</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+abstract class SoyutSınıf
+{
+    // Genişletilen sınıfı bu yöntemi tanımlamaya zorla
+    abstract protected function değeriAl();
+    abstract protected function önekDeğeri($önek);
+
+    // Ortak yöntem
+    public function yazdır() {
+        print $this->değeriAl() . "\n";
+    }
+}
+
+class SomutSınıf1 extends SoyutSınıf
+{
+    protected function değeriAl() {
+        return "SomutSınıf1";
+    }
+
+    public function önekDeğeri($önek) {
+        return "{$önek}SomutSınıf1";
+    }
+}
+
+class SomutSınıf2 extends SoyutSınıf
+{
+    public function değeriAl() {
+        return "SomutSınıf2";
+    }
+
+    public function önekDeğeri($önek) {
+        return "{$önek}SomutSınıf2";
+    }
+}
+
+$class1 = new SomutSınıf1;
+$class1->yazdır();
+echo $class1->önekDeğeri('FOO_') ."\n";
+
+$class2 = new SomutSınıf2;
+$class2->yazdır();
+echo $class2->önekDeğeri('FOO_') ."\n";
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+SomutSınıf1
+FOO_SomutSınıf1
+SomutSınıf2
+FOO_SomutSınıf2
+]]>
+   </screen>
+  </example>
+  <example>
+   <title>Soyut sınıf örneği</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+abstract class AbstractClass
+{
+    // Soyut sınıfımız sadece gerekli değiştirgeleri tanımlamalı
+    abstract protected function prefixName($name);
+
+}
+
+class ConcreteClass extends AbstractClass
+{
+
+    // Çocuk sınıfımız seçimlik değiştirgeleri tanımlamalı 
+    // ebeveynin imzasındakileri değil
+    public function prefixName($name, $separator = ".") {
+        if ($name == "Pacman") {
+            $prefix = "Mr";
+        } elseif ($name == "Pacwoman") {
+            $prefix = "Mrs";
+        } else {
+            $prefix = "";
+        }
+        return "{$prefix}{$separator} {$name}";
+    }
+}
+
+$class = new ConcreteClass;
+echo $class->prefixName("Pacman"), "\n";
+echo $class->prefixName("Pacwoman"), "\n";
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+Mr. Pacman
+Mrs. Pacwoman
+]]>
+   </screen>
+  </example>
+
+  <para>
+    Kullanıcı tanımlı sınıfları veya 'abstract' isimli işlevleri olmayan eski
+    kodun bir değişikliğe gerek duyulmadan çalışabilmesi gerekir.
+  </para>
+ </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

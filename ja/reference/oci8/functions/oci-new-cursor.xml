@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 333046 Maintainer: shimooka Status: ready -->
+<refentry xml:id="function.oci-new-cursor" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>oci_new_cursor</refname>
+  <refpurpose>新規カーソル (ステートメントハンドル) を割り当て、それを返す</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>oci_new_cursor</methodname>
+   <methodparam><type>resource</type><parameter>connection</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   指定された接続に新規カーソルを割り当てます。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>connection</parameter></term>
+     <listitem>
+      <para>
+       <function>oci_connect</function> あるいは <function>oci_pconnect</function>
+       が返す Oracle 接続 ID。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   新しいステートメントハンドル、あるいはエラー時に &false; を返します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Oracle ストアドプロシージャにおける REF CURSOR のバインド</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// 以下のプロシージャを用意します
+//   create or replace procedure myproc(myrc out sys_refcursor) as
+//   begin
+//     open myrc for select first_name from employees;
+//   end;
+
+$conn = oci_connect("hr", "hrpwd", "localhost/XE");
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
+$curs = oci_new_cursor($conn);
+$stid = oci_parse($conn, "begin myproc(:cursbv); end;");
+oci_bind_by_name($stid, ":cursbv", $curs, -1, OCI_B_CURSOR);
+oci_execute($stid);
+
+oci_execute($curs);  // REF CURSOR を、ステートメント ID のように利用します
+while (($row = oci_fetch_array($curs, OCI_ASSOC+OCI_RETURN_NULLS)) != false) {
+    echo $row['FIRST_NAME'] . "<br />\n";
+}
+
+oci_free_statement($stid);
+oci_free_statement($curs);
+oci_close($conn);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    PHP バージョン 5.0.0 以前では、代わりに
+    <function>ocinewcursor</function>
+    を使用しなければなりません。
+    まだこの名前を使用することができ、下位互換性のため
+    <function>oci_new_cursor</function> への別名として残されていますが、
+    推奨されません。
+   </para>
+  </note>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

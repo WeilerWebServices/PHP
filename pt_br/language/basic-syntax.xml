@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 348031 Maintainer: ae Status: ready --><!-- CREDITS: fabioluciano, geekcom -->
+ <chapter xml:id="language.basic-syntax" xmlns="http://docbook.org/ns/docbook">
+  <title>Sintaxe Básica</title>
+  <sect1 xml:id="language.basic-syntax.phptags">
+   <title>Tags PHP</title>
+   <para>
+    Quando o PHP interpreta um arquivo ele procura pelas tags de abertura e fechamento,
+    <literal>&lt;?php</literal> e <literal>?&gt;</literal>, que dizem ao PHP para
+    iniciar ou parar a interpretação do código entre elas. A interpretação desta maneira,
+    permite o PHP ser incluído em vários tipos de documentos, pois tudo
+    que está fora destas tags é ignorado pelo
+    interpretador do PHP.
+   </para>
+
+   <para>
+    PHP inclui uma tag curta echo <literal>&lt;?=</literal> que é uma
+    forma abreviada mais verbosa para<code>&lt;?php echo</code>.
+   </para>
+
+   <para>
+    O PHP também permite a tag curta <literal>&lt;?</literal> (cujo uso é
+    desencorajado pois essa opção está disponível somente quando habilitada na diretiva
+    <link linkend="ini.short-open-tag">short_open_tag</link> no arquivo de configuração &php.ini;,
+    ou quando o PHP tiver sido compilado com a opção
+    <option>--enable-short-tags</option>).
+   </para>
+   <para>
+    Se um arquivo for código PHP puro, é preferível omitir a tag de fechamento
+    no final do arquivo. Prevenindo a existência de espaços ou linhas em branco
+    após a tag, que podem causar efeitos indesejáveis,
+    por que o PHP iniciará o buffer de saída quando não existir intenção do
+    programador de enviar alguma saída neste ponto do script.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+echo "Hello world";
+
+// ... mais código
+
+echo "última instrução";
+
+// o script termina aqui, sem tag de fechamento PHP
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <para>
+    <table>
+     &reftitle.changelog;
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>&Version;</entry>
+        <entry>&Description;</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>7.0.0</entry>
+         <entry>
+          As tags ASP <code>&lt;%</code>, <code>%&gt;</code>,
+          <code>&lt;%=</code> e a script tag
+          <code>&lt;script language="php"&gt;</code> foram removidos do PHP.
+         </entry>
+       </row>
+       <row>
+        <entry>5.4.0</entry>
+         <entry>
+          A tag &lt;?= sempre está disponível, independente da configuração short_open_tag ini.
+         </entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+   </para>
+  </sect1>
+  <sect1 xml:id="language.basic-syntax.phpmode">
+   <title>Escapando o HTML</title>
+   <para>
+    Tudo o que estiver fora das tags PHP é ignorado pelo
+    interpretador, o que permite arquivos PHP de conteúdo misto. Permite que o PHP
+    seja incluído dentro de documentos HTML, para, por exemplo, a criação de templates.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<p>Isto vai ser ignorado pelo PHP e exibido peçp navegador.</p>
+<?php echo 'Enquanto isto vai ser interpretado.'; ?>
+<p>Isto também vai ser ignorado pelo PHP e exibido pelo navegador.</p>
+]]>
+     </programlisting>
+    </informalexample>
+    Isso funcionará porque quando o interpretador do PHP encontra ?&gt;, a tag
+    de fechamento, ele simplesmente começa a repassar qualquer coisa que encontre (exceto um fim de linha
+    imediato, ver a seção sobre
+    <link linkend="language.basic-syntax.instruction-separation">separação de instruções</link>),
+    até que ele encontre outra tag de abertura a não ser que esteja no meio de uma instrução condicional,
+    onde então o interpretador vai determinar o resultado
+    da condicional e assim decidir qual caminho tomar.
+    Veja no próximo exemplo.
+   </para>
+   <para>
+    Utilizando estruturas avançadas
+    <example>
+     <title>Escape avançado usando condições</title>
+     <programlisting role="php">
+<![CDATA[
+<?php if ($expression == true): ?>
+  Isto irá aparecer se a expressão for verdadeira.
+<?php else: ?>
+  Senão isso que aparecerá.
+<?php endif; ?>
+]]>
+     </programlisting>
+    </example>
+    Nesse exemplo o PHP irá escapar os blocos em que a condição não seja satisfeita, mesmo
+    que o trecho de código esteja fora das tags de abertura/fechamento do PHP,
+    pois o interpretador do PHP, irá pular os conteúdos de blocos que
+    não possuem uma condição que não foi satisfeita.
+   </para>
+   <para>
+    Para impressão de grandes blocos de texto, sair do modo de interpretação do PHP é
+    geralmente mais eficiente que enviar todo o texto através das funções
+    <function>echo</function> ou <function>print</function>.
+   </para>
+   <para>
+    No PHP 5 existem cinco diferentes pares de tags de abertura e fechamento
+    disponíveis, dependendo de como o interpretador estiver configurado. Dois deles,
+    <code>&lt;?php ?&gt;</code> e
+    <code>&lt;script language="php"&gt; &lt;/script&gt;</code> estão sempre
+    disponíveis. Também a tag curta de echo <code>&lt;?= ?&gt;</code>,
+    que está sempre disponível desde o PHP 5.4.0.
+   </para>
+   <para>
+    As outras duas opções são as tags curtas e tags estilo <productname>ASP</productname>.
+    Assim, embora algumas pessoas achem as tags curtas e
+    <productname>ASP</productname> convenientes, são menos
+    portáveis, e geralmente não recomendadas.
+    <note>
+     <para>
+      Também note que se estiver incluindo o PHP dentro de XML ou XHTML,
+      será necessário o uso das tags &lt;?php ?&gt; para aderência
+      aos padrões.
+     </para>
+    </note>
+   </para>
+   <para>
+    O PHP 7 removeu o suporte a tags <productname>ASP</productname> e
+    <code>&lt;script language="php"&gt;</code>. Assim, é recomendado
+    utilizar apenas <code>&lt;?php ?&gt;</code> e <code>&lt;?= ?&gt;</code> ao
+    se escrever códigos PHP com maior compatibilidade.
+   </para>
+   <para>
+    <example>
+     <title>Abrindo e Fechando as Tags do PHP</title>
+     <programlisting role="php">
+<![CDATA[
+1.  <?php echo 'se você quer servir documentos XHTML ou XML,
+                escreva assim'; ?>
+
+2.  Você pode utilizar também a tag curta de echo para <?= 'imprimir isso' ?>.
+    Ela sempre está disponível do PHP 5.4.0 em diante, e é equivalente a
+    <?php echo 'imprimir isso' ?>.
+
+3.  <? echo 'esse código entre tags curtas somente funcionará '.
+            'se short_open_tag estiver habititado'; ?>
+
+4.  <script language="php">
+        echo 'alguns editores (como o FrontPage) não
+              suportam processar instruções com tags assim';
+    </script>
+    Esta sintaxe foi removida no PHP 7.0.0.
+
+5.  <% echo 'Você também pode utilizar tags no estilo ASP'; %>
+    <%= $variable; %> é um atalho para <% echo $variable; %>
+    Essas duas sintaxes também foram removidas no PHP 7.0.0.
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Tags curtas (exemplo três) estão disponíveis apenas quando são habilitadas
+    pela configuração <link linkend="ini.short-open-tag">short_open_tag</link>
+    no arquivo &php.ini;, ou se o PHP foi configurado com
+    a opção <option>--enable-short-tags</option>.
+   </para>
+   <para>
+    Tags <productname>ASP</productname> (exemplo cinco)
+    estão disponíveis somente quando
+    habilitadas através da diretiva de configuração
+    <link linkend="ini.asp-tags">asp_tags</link> no arquivo &php.ini;, e foram removidas no PHP 7.0.0.
+   </para>
+   <para>
+    <note>
+     <para>
+      O uso de tags curtas deve ser evitado ao desenvolver aplicações
+      ou bibliotecas que serão redistribuídas, ou usadas em
+      servidores PHP que não estão sobre o seu controle, porque as tags curtas
+      podem não ser suportadas no servidor em questão. Para código portável,
+      redistribuível, tenha certeza de não usar tags curtas.
+     </para>
+    </note>
+    <note>
+     <para>
+      No PHP 5.2 e anteriores, o interpretador não permitia a tag de abertura
+      <literal>&lt;?php</literal> ser a única coisa em um arquivo.
+      Isto foi permitido a partir do PHP 5.3, desde que haja um ou mais caracteres em
+      branco depois da tag de abertura.
+     </para>
+    </note>
+    <note>
+     <para>
+      A partir do PHP 5.4, a tag curta <literal>&lt;?=</literal> sempre é reconhecida e
+      válida, independente da configuração <link linkend="ini.short-open-tag">short_open_tag</link>.
+     </para>
+    </note>
+   </para>
+  </sect1>
+  <sect1 xml:id="language.basic-syntax.instruction-separation">
+   <title>Separação de instruções</title>
+   <para>
+    Como no C ou Perl, o PHP requer que as instruções sejam terminadas
+    com um ponto-e-vírgula ao final de cada comando. A tag de fechamento de
+    um bloco de código PHP automaticamente implica em um ponto-e-vírgula; você
+    não precisa ter um ponto-e-vírgula terminando a última linha de um
+    bloco PHP. A tag de fechamento do bloco irá incluir uma nova linha logo após, se
+    estiver presente.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+    echo 'Isto é um teste';
+?>
+
+<?php echo 'Isto é um teste' ?>
+
+<?php echo 'Nós omitimos a última tag de fechamento';
+]]>
+     </programlisting>
+    </informalexample>
+    <note>
+     <para>
+      A tag de fechamento de um bloco PHP ao final de um arquivo é opcional,
+      e em alguns casos omiti-la é útil ao utilizar <function>include</function>
+      ou <function>require</function>, assim espaços em branco indesejados não
+      irão aparecer ao final dos arquivos, e ainda, será capaz de adicionar
+      cabeçalhos a resposta. Também é útil se usar o buffer
+      de saída, e você não gostaria de um espaço em branco indesejado
+      ao final das partes geradas por arquivos incluídos.
+     </para>
+    </note>
+   </para>
+  </sect1>
+  <sect1 xml:id="language.basic-syntax.comments">
+   <title>Comentários</title>
+   <para>
+    O PHP suporta comentários no estilo 'C', 'C++' e do Unix shell (estilo Perl). Por exemplo:
+
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+    echo 'Isto é um teste'; // Estilo de comentário de uma linha em  c++
+    /* Este é um comentário de múltiplas linhas
+       ainda outra linha de comentário */
+    echo 'Isto é ainda outro teste';
+    echo 'Um teste final'; # Este é um comentário de uma linha no estilo shell
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <simpara>
+    Os comentários de estilo "uma linha" apenas comentam até o final da linha
+    ou do bloco PHP de código corrente, o que chegar primeiro.
+    Isto significa que o código HTML após <literal>// ... ?&gt;</literal>
+    ou <literal># ...  ?&gt;</literal> SERÁ impresso:
+    ?&gt; interrompe o modo PHP e retorna para o modo HTML, e
+    <literal>//</literal> ou <literal>#</literal> não podem influenciar isto.
+    Se a diretiva de configuração <link linkend="ini.asp-tags">asp_tags</link>
+    estiver habilitada, se comportará da mesma maneira que <literal>// %&gt;</literal> e
+    <literal># %&gt;</literal>.
+    Entretanto, a tag <literal>&lt;/script&gt;</literal> não interrompe o modo PHP
+    em um comentário de uma linha.
+   </simpara>
+   <para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<h1>Isto é um <?php # echo 'simples';?> exemplo.</h1>
+<p>O cabeçalho acima irá dizer 'Isto é um exemplo'.</p>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <simpara>
+    Comentários no estilo 'C' terminam ao primeiro <literal>*/</literal> encontrado.
+    Tenha certeza de não aninhar comentários no estilo 'C'. É fácil fazer este
+    equívoco se estiver tentando comentar grandes blocos de código.
+   </simpara>
+   <para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+ /*
+    echo 'Isto é um teste'; /* Este comentário irá causar um problema */
+ */
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect1>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

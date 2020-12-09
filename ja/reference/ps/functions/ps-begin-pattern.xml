@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351135 Maintainer: takagi Status: ready -->
+<refentry xml:id="function.ps-begin-pattern" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>ps_begin_pattern</refname>
+  <refpurpose>新しいパターンを開始する</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>int</type><type>false</type></type><methodname>ps_begin_pattern</methodname>
+   <methodparam><type>resource</type><parameter>psdoc</parameter></methodparam>
+   <methodparam><type>float</type><parameter>width</parameter></methodparam>
+   <methodparam><type>float</type><parameter>height</parameter></methodparam>
+   <methodparam><type>float</type><parameter>xstep</parameter></methodparam>
+   <methodparam><type>float</type><parameter>ystep</parameter></methodparam>
+   <methodparam><type>int</type><parameter>painttype</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   新しいパターンを開始します。パターンとは、
+   領域を塗りつぶすための描画データを含むページのようなものです。
+   <function>ps_setcolor</function> をコールする際に
+   <literal>pattern</literal> に色空間を指定すると、
+   これは色のように使用されます。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>psdoc</parameter></term>
+     <listitem>
+      <para>
+       <function>ps_new</function> が返す、postscript
+       ファイルのリソース ID。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>width</parameter></term>
+     <listitem>
+      <para>
+       ピクセル単位のパターンの幅。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>height</parameter></term>
+     <listitem>
+      <para>
+       ピクセル単位のパターンの高さ。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>x-step</parameter></term>
+     <listitem>
+      <para>
+       パターンを水平方向に並べる際のピクセル単位の間隔。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>y-step</parameter></term>
+     <listitem>
+      <para>
+       パターンを垂直方向に並べる際のピクセル単位の間隔。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>painttype</parameter></term>
+     <listitem>
+      <para>
+       1 あるいは 2 でなければなりません。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+    パターンの ID を返します。&return.falseforfailure;。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>パターンの作成および使用</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$ps = ps_new();
+
+if (!ps_open_file($ps, "pattern.ps")) {
+  print "PostScript ファイルをオープンできません\n";
+  exit;
+}
+
+ps_set_parameter($ps, "warning", "true");
+ps_set_info($ps, "Creator", "pattern.php");
+ps_set_info($ps, "Author", "Uwe Steinmann");
+ps_set_info($ps, "Title", "Pattern example");
+
+
+$pspattern = ps_begin_pattern($ps, 10.0, 10.0, 10.0, 10.0, 1);
+ps_setlinewidth($ps, 0.2);
+ps_setcolor($ps, "stroke", "rgb", 0.0, 0.0, 1.0, 0.0);
+ps_moveto($ps, 0, 0);
+ps_lineto($ps, 7, 7);
+ps_stroke($ps);
+ps_moveto($ps, 0, 7);
+ps_lineto($ps, 7, 0);
+ps_stroke($ps);
+ps_end_pattern($ps);
+
+ps_begin_page($ps, 596, 842);
+ps_setcolor($ps, "both", "pattern", $pspattern, 0.0, 0.0, 0.0);
+ps_rect($ps, 50, 400, 200, 200);
+ps_fill($ps);
+ps_end_page($ps);
+
+ps_close($ps);
+ps_delete($ps);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>ps_end_pattern</function></member>
+    <member><function>ps_setcolor</function></member>
+    <member><function>ps_shading_pattern</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

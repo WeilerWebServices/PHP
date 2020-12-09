@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 350871 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no -->
+
+<refentry xml:id="function.passthru" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>passthru</refname>
+  <refpurpose>Exécute un programme externe et affiche le résultat brut</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>void</type><methodname>passthru</methodname>
+   <methodparam><type>string</type><parameter>command</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter role="reference">return_var</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>passthru</function> est similaire à la fonction 
+   <function>exec</function> car les deux exécutent la commande 
+   <parameter>command</parameter>. Si l'argument 
+   <parameter>return_var</parameter> est présent,
+   le code de statut de réponse UNIX y sera placé. Cette fonction 
+   devrait être préférée aux commandes <function>exec</function> 
+   ou <function>system</function> lorsque le résultat attendu est de type 
+   binaire, et doit être passé tel quel à un navigateur.
+   Une utilisation classique de cette fonction est l'exécution
+   de l'utilitaire pbmplus qui peut retourner une image. En fixant
+   le résultat du contenu (Content-Type) à <literal>image/gif</literal> 
+   puis en appelant pbmplus pour obtenir une image gif, vous pouvez 
+   créer des scripts PHP qui retournent des images.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>command</parameter></term>
+     <listitem>
+      <para>
+       La commande à exécuter.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>return_var</parameter></term>
+     <listitem>
+      <para>
+       Si l'argument <parameter>return_var</parameter> est
+       présent, le statut retourné par la commande Unix sera placé
+       dans cette variable.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.void;
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &warn.escapeshell;
+  &note.exec-bg;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>exec</function></member>
+    <member><function>system</function></member>
+    <member><function>popen</function></member>
+    <member><function>escapeshellcmd</function></member>
+    <member><link linkend="language.operators.execution">les guillemets obliques</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

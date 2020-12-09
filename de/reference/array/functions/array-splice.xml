@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 347729 Maintainer: gerdtsteltner Status: ready -->
+<refentry xml:id="function.array-splice" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>array_splice</refname>
+  <refpurpose>
+   Entfernt einen Teil eines Arrays und ersetzt ihn durch etwas
+   anderes
+  </refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>array_splice</methodname>
+   <methodparam><type>array</type><parameter role="reference">input</parameter></methodparam>
+   <methodparam><type>int</type><parameter>offset</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>length</parameter><initializer>count($input)</initializer></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>replacement</parameter><initializer>array()</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Entfernt die durch <parameter>offset</parameter> und
+   <parameter>length</parameter> angegebenen Elemente aus dem Array
+   <parameter>input</parameter>, und ersetzt diese durch die Elemente
+   des Arrays <parameter>replacement</parameter>, wenn angegeben.
+  </para>
+  <note>
+   <para>
+    Numerische Schlüssel in
+    <parameter>input</parameter> werden nicht erhalten.
+   </para>
+  </note>
+  <note>
+   <simpara>
+    Wenn <parameter>replacement</parameter> kein Array ist, wird es in
+    ein Array <link linkend="language.types.array.casting">umgewandelt</link>
+    (dies entspricht <code>(array) $parameter</code>). Dies kann zu
+    unerwartetem Verhalten führen, wenn <parameter>replacement</parameter>
+    ein Objekt oder &null; ist.
+   </simpara>
+  </note>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>input</parameter></term>
+     <listitem>
+      <para>
+       Das Eingabe-Array.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>offset</parameter></term>
+     <listitem>
+      <para>
+       Ist <parameter>offset</parameter> positiv, beginnt der zu
+       entfernende Bereich bei diesem Offset vom Anfang des Arrays
+       <parameter>input</parameter>.
+      </para>
+      <para>
+       Ist <parameter>offset</parameter>
+       negativ, beginnt der zu entfernende Bereich so viele Elemente
+       vor dem Ende des Arrays <parameter>input</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>length</parameter></term>
+     <listitem>
+      <para>
+       Ist <parameter>length</parameter> nicht angegeben, wird alles
+       von <parameter>offset</parameter> bis zum Ende des Arrays
+       entfernt.
+      </para>
+      <para>
+       Ist <parameter>length</parameter> angegeben und
+       positiv, werden so viele Elemente entfernt.
+      </para>
+      <para>
+       Ist <parameter>length</parameter> angegeben und negativ, so ist das
+       Ende des entfernten Bereichs so viele Elemente vor dem Ende des
+       Array.
+      </para>
+      <para>
+       Wenn <parameter>length</parameter> angegeben und 0 ist, werden
+       keine Elemente entfernt.
+      </para>
+      <tip>
+       <para>
+        Um alles von <parameter>offset</parameter> bis zum
+        Ende des Arrays zu entfernen, wenn
+        <parameter>replacement</parameter> ebenfalls angegeben ist,
+        verwenden Sie <code>count($input)</code> als
+        <parameter>length</parameter>.
+       </para>
+      </tip>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>replacement</parameter></term>
+     <listitem>
+      <para>
+       Ist das Array <parameter>replacement</parameter> angegeben,
+       werden die entfernten Elemente durch die Elemente dieses Arrays
+       ersetzt.
+      </para>
+      <para>
+       Sind <parameter>offset</parameter> und
+       <parameter>length</parameter> so angegeben, dass nichts entfernt
+       wird, werden die Elemente von <parameter>replacement</parameter>
+       an der von <parameter>offset</parameter> spezifizierten Stelle
+       eingefügt.
+      </para>
+      <note>
+       <para>
+        Schlüssel werden bei der Ersetzung nicht erhalten.
+       </para>
+      </note>
+      <para>
+       Wenn <parameter>replacement</parameter> nur aus einem Element
+       besteht, ist es nicht notwendig, <literal>array()</literal> oder eckige Klammern
+       anzugeben, sofern das Element nicht selbst ein Array, ein Objekt
+       oder &null; ist.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Gibt ein Array zurück, das aus den ausgeschnittenen Elementen
+   besteht.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>array_splice</function>-Beispiele</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$input = array("rot", "grün", "blau", "gelb");
+array_splice($input, 2);
+var_dump($input);
+
+$input = array("rot", "grün", "blau", "gelb");
+array_splice($input, 1, -1);
+var_dump($input);
+
+$input = array("rot", "grün", "blau", "gelb");
+array_splice($input, 1, count($input), "orange");
+var_dump($input);
+
+$input = array("rot", "grün", "blau", "gelb");
+array_splice($input, -1, 1, array("schwarz", "braun"));
+var_dump($input);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+array(2) {
+  [0]=>
+  string(3) "rot"
+  [1]=>
+  string(5) "grün"
+}
+array(2) {
+  [0]=>
+  string(3) "rot"
+  [1]=>
+  string(4) "gelb"
+}
+array(2) {
+  [0]=>
+  string(3) "rot"
+  [1]=>
+  string(6) "orange"
+}
+array(5) {
+  [0]=>
+  string(3) "rot"
+  [1]=>
+  string(5) "grün"
+  [2]=>
+  string(4) "blau"
+  [3]=>
+  string(7) "schwarz"
+  [4]=>
+  string(5) "braun"
+}
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>array_splice</function>-Beispiele zu gleichwertigen Anweisungen</title>
+    <para>
+     Die folgenden Anweisungen sind gleichwertig:
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// füge zwei Elemente an $input an
+array_push($input, $x, $y);
+array_splice($input, count($input), 0, array($x, $y));
+
+// entferne das letzte Element von $input
+array_pop($input);
+array_splice($input, -1);
+
+// entferne das erste Element von $input
+array_shift($input);
+array_splice($input, 0, 1);
+
+// füge ein Element am Anfang von $input ein
+array_unshift($input, $x, $y);
+array_splice($input, 0, 0, array($x, $y));
+
+// ersetze den Wert von $input am Index $x
+$input[$x] = $y; // für Arrays, bei denen der Schlüssel dem Offset entspricht
+array_splice($input, $x, 1, $y);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>array_merge</function></member>
+    <member><function>array_slice</function></member>
+    <member><function>unset</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

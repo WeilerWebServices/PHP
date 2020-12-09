@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 345637 $ -->
+<!-- EN-Revision: 345637 Maintainer: mumumu Status: ready -->
+
+<refentry xml:id="mysql-xdevapi-collection.addorreplaceone" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>Collection::addOrReplaceOne</refname>
+  <refpurpose>コレクションのドキュメントを追加または置換する</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>mysql_xdevapi\Result</type><methodname>mysql_xdevapi\Collection::addOrReplaceOne</methodname>
+   <methodparam><type>string</type><parameter>id</parameter></methodparam>
+   <methodparam><type>string</type><parameter>doc</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   新しいドキュメントを追加するか、既に存在する場合は置換します。
+  </para>
+  <para>
+   このメソッドには、複数のシナリオがあります:
+  </para>
+  <itemizedlist>
+   <listitem>
+    <para>
+      _id やユニークキーの値がコレクション中のどのドキュメントとも衝突する場合、
+      ドキュメントは追加されます。
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+      id がどのドキュメントともマッチしないものの、
+      ひとつ以上のユニークキーの値がコレクション中のドキュメントと衝突する場合、
+      エラーが発生します。
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     id が既に存在するドキュメントにマッチし、ユニークキーもコレクションに定義されていない場合、
+     ドキュメントは置き換えられます。
+   </para>
+   </listitem>
+   <listitem>
+    <para>
+      id が既に存在するドキュメントにマッチする場合、
+      または 同じドキュメントの全てのユニークキーのうちいずれかとマッチし
+      id がコレクション中のドキュメントと衝突しない場合、
+      そのドキュメントは置き換えられます。
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+      id が既に存在するドキュメントとマッチし、
+      ひとつ以上のユニークキーが異なるドキュメントにマッチする場合、
+      エラーが発生します。
+    </para>
+   </listitem>
+  </itemizedlist>
+
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <variablelist>
+   <varlistentry>
+    <term><parameter>id</parameter></term>
+    <listitem>
+     <para>
+      フィルタid。この id または、
+      ユニークインデックスを持つ他のフィールドが既にコレクションに存在している場合は、
+      それにマッチするドキュメントを更新します。
+     </para>
+     <para>
+      デフォルトでは、この id はレコードが追加された時に自動的に MySQL サーバが生成します。
+      そして、フィールド名 '_id' で参照されます。
+    </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry>
+    <term><parameter>doc</parameter></term>
+    <listitem>
+     <para>
+      追加または置き換えるドキュメント。JSON文字列です。
+     </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Result オブジェクト
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <example>
+   <title><function>mysql_xdevapi\Collection::addOrReplaceOne</function> の例</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$session = mysql_xdevapi\getSession("mysqlx://user:password@localhost");
+$session->sql("DROP DATABASE IF EXISTS addressbook")->execute();
+$session->sql("CREATE DATABASE addressbook")->execute();
+
+$schema = $session->getSchema("addressbook");
+$create = $schema->createCollection("people");
+
+$collection = $schema->getCollection("people");
+
+// add() を使う場合
+$result = $collection->add('{"name": "Wilma", "age": 23, "job": "Teacher"}')->execute();
+
+// addOrReplaceOne() を使う場合
+// 注意: ここでは、既知の _id 値を渡しています
+$result = $collection->addOrReplaceOne('00005b6b53610000000000000056', '{"name": "Fred",  "age": 21, "job": "Construction"}');
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

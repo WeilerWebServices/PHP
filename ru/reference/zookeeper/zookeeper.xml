@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: rjhdby Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+
+<phpdoc:classref xml:id="class.zookeeper"
+xmlns:phpdoc="http://php.net/ns/phpdoc"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+xmlns="http://docbook.org/ns/docbook">
+ <title>Класс Zookeeper</title>
+ <titleabbrev>Zookeeper</titleabbrev>
+ 
+ <partintro>
+  
+  <!-- {{{ Zookeeper intro -->
+  <section xml:id="zookeeper.intro">
+   &reftitle.intro;
+   <para>
+    Представляет сессию ZooKeeper.
+   </para>
+  </section>
+  <!-- }}} -->
+  
+  <section xml:id="zookeeper.synopsis">
+   &reftitle.classsynopsis;
+   
+   <!-- {{{ Synopsis -->
+   <classsynopsis>
+    <ooclass><classname>Zookeeper</classname></ooclass>
+    
+    <!-- {{{ Class synopsis -->
+    <classsynopsisinfo>
+     <ooclass>
+      <classname>Zookeeper</classname>
+     </ooclass>
+     
+    </classsynopsisinfo>
+    <!-- }}} -->
+    
+    <!-- {{{ Class methods -->
+    <classsynopsisinfo role="comment">&Methods;</classsynopsisinfo>
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.zookeeper')/db:refentry/db:refsect1[@role='description']/descendant::db:constructorsynopsis[not(@role='procedural')])">
+     <xi:fallback />
+    </xi:include>
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.zookeeper')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[not(@role='procedural')])">
+     <xi:fallback />
+    </xi:include>
+    <!-- }}} -->
+    
+    <!-- {{{ Class constants -->
+    <classsynopsisinfo role="comment">&Constants;</classsynopsisinfo>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.perm-read">PERM_READ</varname>
+     <initializer>1</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.perm-write">PERM_WRITE</varname>
+     <initializer>2</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.perm-create">PERM_CREATE</varname>
+     <initializer>4</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.perm-delete">PERM_DELETE</varname>
+     <initializer>8</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.perm-admin">PERM_ADMIN</varname>
+     <initializer>16</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.perm-all">PERM_ALL</varname>
+     <initializer>31</initializer>
+    </fieldsynopsis>
+    
+    <fieldsynopsis>
+     <modifier>const</modifier>
+         <type>int</type>
+         <varname linkend="zookeeper.class.constants.ephemeral">EPHEMERAL</varname>
+         <initializer>1</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.sequence">SEQUENCE</varname>
+     <initializer>2</initializer>
+    </fieldsynopsis>
+    
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.log-level-error">LOG_LEVEL_ERROR</varname>
+     <initializer>1</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.log-level-warn">LOG_LEVEL_WARN</varname>
+     <initializer>2</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.log-level-info">LOG_LEVEL_INFO</varname>
+     <initializer>3</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.log-level-debug">LOG_LEVEL_DEBUG</varname>
+     <initializer>4</initializer>
+    </fieldsynopsis>
+    
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.expired-session-state">EXPIRED_SESSION_STATE</varname>
+     <initializer>-112</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.auth-failed-state">AUTH_FAILED_STATE</varname>
+     <initializer>-113</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.connecting-state">CONNECTING_STATE</varname>
+     <initializer>1</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.associating-state">ASSOCIATING_STATE</varname>
+     <initializer>2</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.connected-state">CONNECTED_STATE</varname>
+     <initializer>3</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.readonly-state">READONLY_STATE</varname>
+     <initializer>5</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.notconnected-state">NOTCONNECTED_STATE</varname>
+     <initializer>999</initializer>
+    </fieldsynopsis>
+    
+    <fieldsynopsis>
+     <modifier>const</modifier>
+      <type>int</type>
+      <varname linkend="zookeeper.class.constants.created-event">CREATED_EVENT</varname>
+      <initializer>1</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.deleted-event">DELETED_EVENT</varname>
+     <initializer>2</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.changed-event">CHANGED_EVENT</varname>
+     <initializer>3</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.child-event">CHILD_EVENT</varname>
+     <initializer>4</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.session-event">SESSION_EVENT</varname>
+     <initializer>-1</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.notwatching-event">NOTWATCHING_EVENT</varname>
+     <initializer>-2</initializer>
+    </fieldsynopsis>
+    
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.systemerror">SYSTEMERROR</varname>
+     <initializer>-1</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.runtimeinconsistency">RUNTIMEINCONSISTENCY</varname>
+     <initializer>-2</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.datainconsistency">DATAINCONSISTENCY</varname>
+     <initializer>-3</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.connectionloss">CONNECTIONLOSS</varname>
+     <initializer>-4</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.marshallingerror">MARSHALLINGERROR</varname>
+     <initializer>-5</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.unimplemented">UNIMPLEMENTED</varname>
+     <initializer>-6</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.operationtimeout">OPERATIONTIMEOUT</varname>
+     <initializer>-7</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.badarguments">BADARGUMENTS</varname>
+     <initializer>-8</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.invalidstate">INVALIDSTATE</varname>
+     <initializer>-9</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.newconfignoquorum">NEWCONFIGNOQUORUM</varname>
+     <initializer>-13</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.reconfiginprogress">RECONFIGINPROGRESS</varname>
+     <initializer>-14</initializer>
+    </fieldsynopsis>
+    
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.ok">OK</varname>
+     <initializer>0</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.apierror">APIERROR</varname>
+     <initializer>-100</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.nonode">NONODE</varname>
+     <initializer>-101</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.noauth">NOAUTH</varname>
+     <initializer>-102</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.badversion">BADVERSION</varname>
+     <initializer>-103</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.nochildrenforephemerals">NOCHILDRENFOREPHEMERALS</varname>
+     <initializer>-108</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.nodeexists">NODEEXISTS</varname>
+     <initializer>-110</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.notempty">NOTEMPTY</varname>
+     <initializer>-111</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.sessionexpired">SESSIONEXPIRED</varname>
+     <initializer>-112</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.invalidcallback">INVALIDCALLBACK</varname>
+     <initializer>-113</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.invalidacl">INVALIDACL</varname>
+     <initializer>-114</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.authfailed">AUTHFAILED</varname>
+     <initializer>-115</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.closing">CLOSING</varname>
+     <initializer>-116</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.nothing">NOTHING</varname>
+     <initializer>-117</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.sessionmoved">SESSIONMOVED</varname>
+     <initializer>-118</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.notreadonly">NOTREADONLY</varname>
+     <initializer>-119</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.ephemeralonlocalsession">EPHEMERALONLOCALSESSION</varname>
+     <initializer>-120</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.nowatcher">NOWATCHER</varname>
+     <initializer>-121</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="zookeeper.class.constants.reconfigdisabled">RECONFIGDISABLED</varname>
+     <initializer>-122</initializer>
+    </fieldsynopsis>
+    <!-- }}} -->
+    
+   </classsynopsis>
+   <!-- }}} -->
+   
+  </section>
+  
+  <!-- {{{ Constants -->
+  <section xml:id="zookeeper.class.constants">
+   &reftitle.constants;
+   
+   <!-- {{{ Constants Permissions -->
+   <section xml:id="zookeeper.class.constants.perms">
+    <title>Разрешения <acronym>ZooKeeper</acronym></title>
+    <variablelist>
+     
+     <varlistentry xml:id="zookeeper.class.constants.perm-read">
+      <term><constant>Zookeeper::PERM_READ</constant></term>
+      <listitem>
+       <para>Можно читать значение узла и список дочерних узлов</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.perm-write">
+      <term><constant>Zookeeper::PERM_WRITE</constant></term>
+      <listitem>
+       <para>Можно устанавливать значение узла</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.perm-create">
+      <term><constant>Zookeeper::PERM_CREATE</constant></term>
+      <listitem>
+       <para>Можно создавать дочерние элементы</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.perm-delete">
+      <term><constant>Zookeeper::PERM_DELETE</constant></term>
+      <listitem>
+       <para>Можно удалять дочерние элементы</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.perm-admin">
+      <term><constant>Zookeeper::PERM_ADMIN</constant></term>
+      <listitem>
+       <para>Можно запускать set_acl()</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.perm-all">
+      <term><constant>Zookeeper::PERM_ALL</constant></term>
+      <listitem>
+       <para>Можно использовать все вышеуказанные флаги вместе</para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </section>
+   <!-- }}} -->
+   
+   <!-- {{{ Constants Create Flags -->
+   <section xml:id="zookeeper.class.constants.create-flags">
+    <title>Флаги создания <acronym>ZooKeeper</acronym></title>
+    <variablelist>
+     
+     <varlistentry xml:id="zookeeper.class.constants.ephemeral">
+      <term><constant>Zookeeper::EPHEMERAL</constant></term>
+      <listitem>
+       <para>Если установлен флаг Zookeeper::EPHEMERAL, узел будет автоматически удален
+        по завершению клиентской сессии.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.sequence">
+      <term><constant>Zookeeper::SEQUENCE</constant></term>
+      <listitem>
+       <para>Если установлен флаг Zookeeper::SEQUENCE, к имени пути будет добавляться
+        уникальный номер из монотонно возрастающей последовательности. Номер из 
+        последовательности всегда имеет фиксированную длину в 10 цифр, дополненную 
+        лидирующими нулями по необходимости.</para>
+      </listitem>
+     </varlistentry>
+    </variablelist>
+   </section>
+   <!-- }}} -->
+   
+   <!-- {{{ Constants Log Levels -->
+   <section xml:id="zookeeper.class.constants.log-levels">
+    <title>Уровень логирования <acronym>ZooKeeper</acronym></title>
+    <variablelist>
+     
+     <varlistentry xml:id="zookeeper.class.constants.log-level-error">
+      <term><constant>Zookeeper::LOG_LEVEL_ERROR</constant></term>
+      <listitem>
+       <para>Выводить только сообщения об ошибках</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.log-level-warn">
+      <term><constant>Zookeeper::LOG_LEVEL_WARN</constant></term>
+      <listitem>
+       <para>Выводить ошибки и предупреждения</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.log-level-info">
+      <term><constant>Zookeeper::LOG_LEVEL_INFO</constant></term>
+      <listitem>
+       <para>Выводить большие сообщения о действиях помимо ошибок и предупреждений</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.log-level-debug">
+      <term><constant>Zookeeper::LOG_LEVEL_DEBUG</constant></term>
+      <listitem>
+       <para>Выводить все</para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </section>
+   <!-- }}} -->
+   
+   <!-- {{{ Constants States -->
+   <section xml:id="zookeeper.class.constants.states">
+    <title>Состояния <acronym>ZooKeeper</acronym></title>
+    <variablelist>
+     
+     <varlistentry xml:id="zookeeper.class.constants.expired-session-state">
+      <term><constant>Zookeeper::EXPIRED_SESSION_STATE</constant></term>
+      <listitem>
+       <para>Соединение установлено, но сессия истекла</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.auth-failed-state">
+      <term><constant>Zookeeper::AUTH_FAILED_STATE</constant></term>
+      <listitem>
+       <para>Соединение установлено, но аутентификация неудачная</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.connecting-state">
+      <term><constant>Zookeeper::CONNECTING_STATE</constant></term>
+      <listitem>
+       <para>Устанавливается соединение</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.associating-state">
+      <term><constant>Zookeeper::ASSOCIATING_STATE</constant></term>
+      <listitem>
+       <para>Ассоциирование</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.connected-state">
+      <term><constant>Zookeeper::CONNECTED_STATE</constant></term>
+      <listitem>
+       <para>Соединение установлено</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.readonly-state">
+      <term><constant>Zookeeper::READONLY_STATE</constant></term>
+      <listitem>
+       <para>TODO: помогите нам улучшить это расширение</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.notconnected-state">
+      <term><constant>Zookeeper::NOTCONNECTED_STATE</constant></term>
+      <listitem>
+       <para>Соединение не установлено</para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </section>
+   <!-- }}} -->
+   
+   <!-- {{{ Constants Watch Types -->
+   <section xml:id="zookeeper.class.constants.watch-types">
+    <title>Типы событий <acronym>ZooKeeper</acronym></title>
+    <variablelist>
+     
+     <varlistentry xml:id="zookeeper.class.constants.created-event">
+      <term><constant>Zookeeper::CREATED_EVENT</constant></term>
+      <listitem>
+       <para>Узел был создан</para>
+       <para>Генерируется только путем наблюдения за несуществующими узлами. Эти 
+        наблюдатели задаются с помощью Zookeeper::exists.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.deleted-event">
+      <term><constant>Zookeeper::DELETED_EVENT</constant></term>
+      <listitem>
+       <para>Узел был удален</para>
+       <para>Генерируется только путем наблюдения за узлами. Эти 
+        наблюдатели задаются с помощью Zookeeper::exists и Zookeeper::get.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.changed-event">
+      <term><constant>Zookeeper::CHANGED_EVENT</constant></term>
+      <listitem>
+       <para>Узел был изменен</para>
+       <para>Генерируется только путем наблюдения за узлами. Эти 
+        наблюдатели задаются с помощью Zookeeper::exists и Zookeeper::get.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.child-event">
+      <term><constant>Zookeeper::CHILD_EVENT</constant></term>
+      <listitem>
+       <para>Произошло изменение в списке дочерних узлов</para>
+       <para>Генерируется только путем наблюдения за списком дочерних узлов. Эти 
+        наблюдатели задаются с помощью Zookeeper::getChildren.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.session-event">
+      <term><constant>Zookeeper::SESSION_EVENT</constant></term>
+      <listitem>
+       <para>Сессия была потеряна</para>
+       <para>Генерируется когда коиент потерял соединение с сервером, либо 
+        инициировал пересоединение.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.notwatching-event">
+      <term><constant>Zookeeper::NOTWATCHING_EVENT</constant></term>
+      <listitem>
+       <para>Наблюдатель был удален</para>
+       <para>Генерируется сервером по разным причинам, например связанным с ограничением
+        ресурса, и говорит о том, что дальнейшее наблюдение за узлом невозможно.</para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </section>
+   <!-- }}} -->
+   
+   <!-- {{{ Constants System and Server-side Errors -->
+   <section xml:id="zookeeper.class.constants.system-n-server-side-errors">
+    <title>Системные ошибки и ошибки на стороне сервера <acronym>ZooKeeper</acronym></title>
+    <variablelist>
+     <varlistentry xml:id="zookeeper.class.constants.systemerror">
+      <term><constant>Zookeeper::SYSTEMERROR</constant></term>
+      <listitem>
+       <para>Никогда не выбрасывается сервером и может использоваться только для
+        ограничения диапазона кодов ошибок. Все ошибки большие этой, но меньшие
+        Zookeeper::APIERROR, являются системными ошибками.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.runtimeinconsistency">
+      <term><constant>Zookeeper::RUNTIMEINCONSISTENCY</constant></term>
+      <listitem>
+       <para>Обнаружена несогласованность во время выполнения.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.datainconsistency">
+      <term><constant>Zookeeper::DATAINCONSISTENCY</constant></term>
+      <listitem>
+       <para>Обнаружена несогласованность данных.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.connectionloss">
+      <term><constant>Zookeeper::CONNECTIONLOSS</constant></term>
+      <listitem>
+       <para>Потеряно соединение с сервером.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.marshallingerror">
+      <term><constant>Zookeeper::MARSHALLINGERROR</constant></term>
+      <listitem>
+       <para>Ошибка при маршалинге и демаршалинге данных.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.unimplemented">
+      <term><constant>Zookeeper::UNIMPLEMENTED</constant></term>
+      <listitem>
+       <para>Операция не реализована.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.operationtimeout">
+      <term><constant>Zookeeper::OPERATIONTIMEOUT</constant></term>
+      <listitem>
+       <para>Превышение времени ожидания операции.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.badarguments">
+      <term><constant>Zookeeper::BADARGUMENTS</constant></term>
+      <listitem>
+       <para>Некорректный аргумент.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.invalidstate">
+      <term><constant>Zookeeper::INVALIDSTATE</constant></term>
+      <listitem>
+       <para>Некорректный статус zhandle.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.newconfignoquorum">
+      <term><constant>Zookeeper::NEWCONFIGNOQUORUM</constant></term>
+      <listitem>
+       <para>Кворум новой конфигурации не подключен и не синхронизирован с лидером 
+        последней подтвержденной конфигурации. Попробуйте запустить переконфигурацию
+        после подключения и синхронизации новых серверов.</para>
+       <para>Доступно с версии ZooKeeper 3.5.0</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.reconfiginprogress">
+      <term><constant>Zookeeper::RECONFIGINPROGRESS</constant></term>
+      <listitem>
+       <para>Запрос переконфигурации во время работы другого процесса переконфигурации.
+        В данный момент не поддерживается. Попробуйте повторить позже.</para>
+       <para>Доступно с версии ZooKeeper 3.5.0</para>
+      </listitem>
+     </varlistentry>
+    </variablelist>
+   </section>
+   <!-- }}} -->
+   
+   <!-- {{{ Constants API Errors -->
+   <section xml:id="zookeeper.class.constants.api-errors">
+    <title><acronym>ZooKeeper</acronym> API Errors</title>
+    <variablelist>
+     <varlistentry xml:id="zookeeper.class.constants.ok">
+      <term><constant>Zookeeper::OK</constant></term>
+      <listitem>
+       <para>Все хорошо.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.apierror">
+      <term><constant>Zookeeper::APIERROR</constant></term>
+      <listitem>
+       <para>Никогда не выбрасывается сервером и может использоваться только для
+        ограничения диапазона кодов ошибок. Все ошибки большие этой, являются ошибками
+        API (значения меньшие данного означают системные ошибки).</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.nonode">
+      <term><constant>Zookeeper::NONODE</constant></term>
+      <listitem>
+       <para>Узел отсутствует.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.noauth">
+      <term><constant>Zookeeper::NOAUTH</constant></term>
+      <listitem>
+       <para>Отсутствует аутентификация.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.badversion">
+      <term><constant>Zookeeper::BADVERSION</constant></term>
+      <listitem>
+       <para>Конфликт версий.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.nochildrenforephemerals">
+      <term><constant>Zookeeper::NOCHILDRENFOREPHEMERALS</constant></term>
+      <listitem>
+       <para>Эфемерные узлы не должны иметь потомков.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.nodeexists">
+      <term><constant>Zookeeper::NODEEXISTS</constant></term>
+      <listitem>
+       <para>Узел уже существует.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.notempty">
+      <term><constant>Zookeeper::NOTEMPTY</constant></term>
+      <listitem>
+       <para>Узел имеет потомков.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.sessionexpired">
+      <term><constant>Zookeeper::SESSIONEXPIRED</constant></term>
+      <listitem>
+       <para>Срок действия сессии истек.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.invalidcallback">
+      <term><constant>Zookeeper::INVALIDCALLBACK</constant></term>
+      <listitem>
+       <para>Задана некорректная функция обратного вызова.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.invalidacl">
+      <term><constant>Zookeeper::INVALIDACL</constant></term>
+      <listitem>
+       <para>Задан некорректный ACL.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.authfailed">
+      <term><constant>Zookeeper::AUTHFAILED</constant></term>
+      <listitem>
+       <para>Неудачная аутентификация клиента.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.closing">
+      <term><constant>Zookeeper::CLOSING</constant></term>
+      <listitem>
+       <para>ZooKeeper закрывается.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.nothing">
+      <term><constant>Zookeeper::NOTHING</constant></term>
+      <listitem>
+       <para>(не ошибка) Никакакого ответа от сервера для обработки.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.sessionmoved">
+      <term><constant>Zookeeper::SESSIONMOVED</constant></term>
+      <listitem>
+       <para>Сессия перемещена на другой сервер, таким образом операция проигнорирована.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.notreadonly">
+      <term><constant>Zookeeper::NOTREADONLY</constant></term>
+      <listitem>
+       <para>Запрос изменения статуса отправлен на сервер с режимом "только чтение".</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.ephemeralonlocalsession">
+      <term><constant>Zookeeper::EPHEMERALONLOCALSESSION</constant></term>
+      <listitem>
+       <para>Попытка создать эфемерный узел в локальной сессии.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.nowatcher">
+      <term><constant>Zookeeper::NOWATCHER</constant></term>
+      <listitem>
+       <para>Невозможно найти наблюдателя.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="zookeeper.class.constants.reconfigdisabled">
+      <term><constant>Zookeeper::RECONFIGDISABLED</constant></term>
+      <listitem>
+       <para>Попытка произвести операцию переконфигурации в случае если она запрещена.</para>
+      </listitem>
+     </varlistentry>
+    </variablelist>
+   </section>
+   <!-- }}} -->
+   
+  </section>
+  
+  <!-- }}} -->
+  
+ </partintro>
+ 
+ &reference.zookeeper.entities.zookeeper;
+ 
+</phpdoc:classref>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

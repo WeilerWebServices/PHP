@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 297028 Maintainer: benjamin Status: ready -->
+<!-- Reviewed: not --> 
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.join">
+ <refnamediv>
+  <refname>join</refname>
+  <refpurpose>&Alias; <function>implode</function></refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description"> &reftitle.description; <simpara> &info.function.alias;
+    <function>implode</function>. </simpara>
+ </refsect1>
+
+</refentry>

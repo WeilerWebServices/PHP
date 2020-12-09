@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: yannick Status: ready -->
+<!-- Reviewed: no Maintainer: yannick -->
+
+<appendix xml:id="zip.constants" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.constants;
+ &extension.constants;
+
+  <para>
+   <classname>ZipArchive</classname> utilise des constantes de classe.
+   Il y a trois types de constantes :
+   les options (préfixées par <literal>FL_</literal>),
+   les erreurs (préfixées par <literal>ER_</literal>)
+   ou les modes (sans préfixe).
+  </para>
+
+ <variablelist>
+  <varlistentry xml:id="ziparchive.constants.create">
+   <term>
+    <constant>ZipArchive::CREATE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Crée l'archive si elle n'existe pas.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.overwrite">
+   <term>
+    <constant>ZipArchive::OVERWRITE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Si l'archivage existe, ignorer son contenu actuel. En d'autres termes, 
+     gérer de la même manière qu'une archive vide.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ziparchive.constants.excl">
+   <term>
+    <constant>ZipArchive::EXCL</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur si l'archive existe déjà.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ziparchive.constants.rdonly">
+   <term>
+    <constant>ZipArchive::RDONLY</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Ouvre l'archive en mode lecture seule.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.17.1, respectivement,
+     si compilé contre libzip ≥ 1.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ziparchive.constants.checkcons">
+   <term>
+    <constant>ZipArchive::CHECKCONS</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Effectue des analyses supplémentaires de cohérence et émet une erreur
+     si elles échouent.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-nocase">
+   <term>
+    <constant>ZipArchive::FL_NOCASE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Ignore la casse sur le nom.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-nodir">
+   <term>
+    <constant>ZipArchive::FL_NODIR</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Ignore le composant dossier.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-compressed">
+   <term>
+    <constant>ZipArchive::FL_COMPRESSED</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Lit les données compressées.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-unchanged">
+   <term>
+    <constant>ZipArchive::FL_UNCHANGED</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Utilise les données originales, en ignorant les modifications.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-recompress">
+   <term>
+    <constant>ZipArchive::FL_RECOMPRESS</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Force la recompression des données.
+     Disponible à partir de PHP 8.0.0 et PECL zip 1.18.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-encrypted">
+   <term>
+    <constant>ZipArchive::FL_ENCRYPTED</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Lit les données chiffrées (implique FL_COMPRESSED).
+     Disponible à partir de PHP 8.0.0 et PECL zip 1.18.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-overwrite">
+   <term>
+    <constant>ZipArchive::FL_OVERWRITE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Si un fichier avec ce nom existe, le réécrire (remplacer).
+     Disponible à partir de PHP 8.0.0 et PECL zip 1.18.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-local">
+   <term>
+    <constant>ZipArchive::FL_LOCAL</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Dans l'en-tête local.
+     Disponible à partir de PHP 8.0.0 et PECL zip 1.18.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-central">
+   <term>
+    <constant>ZipArchive::ZIP_FL_CENTRAL</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Dans le dossier central.
+     Disponible à partir de PHP 8.0.0 et PECL zip 1.18.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+
+  <varlistentry xml:id="ziparchive.constants.fl-enc-guess">
+   <term>
+    <constant>ZipArchive::FL_ENC_GUESS</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Devine l'encodage de la chaîne (par défaut). Disponible à partir de PHP 7.0.8.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-enc-raw">
+   <term>
+    <constant>ZipArchive::FL_ENC_RAW</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Récupère la chaîne non modifiée. Disponible à partir de PHP 7.0.8.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-enc-strict">
+   <term>
+    <constant>ZipArchive::FL_ENC_STRICT</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Suit les spécifications strictement. Disponible à partir de PHP 7.0.8.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-enc-utf8">
+   <term>
+    <constant>ZipArchive::FL_ENC_UTF_8</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     La chaîne est encodée UTF-8. Disponible à partir de PHP 7.0.8.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.fl-enc-cp437">
+   <term>
+    <constant>ZipArchive::FL_ENC_CP437</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     La chaîne est encodée CP437. Disponible à partir de PHP 7.0.8.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ziparchive.constants.cm-default">
+   <term>
+    <constant>ZipArchive::CM_DEFAULT</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Meilleur compression ou stockage.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-store">
+   <term>
+    <constant>ZipArchive::CM_STORE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Stocké (non-compressé).
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-shrink">
+   <term>
+    <constant>ZipArchive::CM_SHRINK</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Retrait.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-reduce-1">
+   <term>
+    <constant>ZipArchive::CM_REDUCE_1</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Réduit de facteur 1.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-reduce-2">
+   <term>
+    <constant>ZipArchive::CM_REDUCE_2</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Réduit de facteur 2.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-reduce-3">
+   <term>
+    <constant>ZipArchive::CM_REDUCE_3</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Réduit de facteur 3.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-reduce-4">
+   <term>
+    <constant>ZipArchive::CM_REDUCE_4</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Réduit de facteur 4.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-implode">
+   <term>
+    <constant>ZipArchive::CM_IMPLODE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Réunit.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-deflate">
+   <term>
+    <constant>ZipArchive::CM_DEFLATE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Compression.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-deflate64">
+   <term>
+    <constant>ZipArchive::CM_DEFLATE64</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Compression 64.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-pkware-implode">
+   <term>
+    <constant>ZipArchive::CM_PKWARE_IMPLODE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Réunit PKWARE.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-bzip2">
+   <term>
+    <constant>ZipArchive::CM_BZIP2</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Algorithme BZIP2.
+    </simpara>
+   </listitem>
+  </varlistentry>  <varlistentry xml:id="ziparchive.constants.cm-lzma">
+   <term>
+    <constant>ZipArchive::CM_LZMA</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     LZMA algorithm
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-lzma2">
+   <term>
+    <constant>ZipArchive::CM_LZMA2</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Algorithme LZMA2.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.0, respectivement,
+     si compilé avec la bibliothèque libzip ≥ 1.6.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-zstd">
+   <term>
+    <constant>ZipArchive::CM_ZSTD</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Algorithme Zstandard.
+     Disponible à partir de PHP 8.0.0 et PECL zip 1.19.1, respectivement,
+     si compilé avec la bibliothèque libzip ≥ 1.8.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.cm-xz">
+   <term>
+    <constant>ZipArchive::CM_XZ</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Algorithme XZ.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.1, respectivement,
+     si compilé avec la bibliothèque libzip ≥ 1.6.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="ziparchive.constants.er-ok">
+   <term>
+    <constant>ZipArchive::ER_OK</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Aucune erreur.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-multidisk">
+   <term>
+    <constant>ZipArchive::ER_MULTIDISK</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Archives ZIP multidisques non supportées.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-rename">
+   <term>
+    <constant>ZipArchive::ER_RENAME</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Échec du changement de nom du fichier temporaire.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-close">
+   <term>
+    <constant>ZipArchive::ER_CLOSE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Échec de la fermeture de l'archive ZIP.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-seek">
+   <term>
+    <constant>ZipArchive::ER_SEEK</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur de pointeur.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-read">
+   <term>
+    <constant>ZipArchive::ER_READ</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur de lecture.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ziparchive.constants.er-write">
+   <term>
+    <constant>ZipArchive::ER_WRITE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur d'écriture.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-crc">
+   <term>
+    <constant>ZipArchive::ER_CRC</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur CRC.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-zipclosed">
+   <term>
+    <constant>ZipArchive::ER_ZIPCLOSED</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Archive ZIP fermée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-noent">
+   <term>
+    <constant>ZipArchive::ER_NOENT</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Le fichier n'existe pas.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-exists">
+   <term>
+    <constant>ZipArchive::ER_EXISTS</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Le fichier existe déjà.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-open">
+   <term>
+    <constant>ZipArchive::ER_OPEN</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Impossible d'ouvrir le fichier.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-tmpopen">
+   <term>
+    <constant>ZipArchive::ER_TMPOPEN</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Échec lors de la création du fichier temporaire.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-zlib">
+   <term>
+    <constant>ZipArchive::ER_ZLIB</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur Zlib.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ziparchive.constants.er-memory">
+   <term>
+    <constant>ZipArchive::ER_MEMORY</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Échec d'allocation mémoire.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ziparchive.constants.er-changed">
+   <term>
+    <constant>ZipArchive::ER_CHANGED</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     L'entrée a été modifiée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ziparchive.constants.er-compnotsupp">
+   <term>
+    <constant>ZipArchive::ER_COMPNOTSUPP</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Méthode de compression non supportée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-eof">
+   <term>
+    <constant>ZipArchive::ER_EOF</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     EOF prématuré.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-inval">
+   <term>
+    <constant>ZipArchive::ER_INVAL</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Argument invalide.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-nozip">
+   <term>
+    <constant>ZipArchive::ER_NOZIP</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Ce n'est pas une archive ZIP.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-internal">
+   <term>
+    <constant>ZipArchive::ER_INTERNAL</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     erreur interne
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-incons">
+   <term>
+    <constant>ZipArchive::ER_INCONS</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Archive ZIP incohérente.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-remove">
+   <term>
+    <constant>ZipArchive::ER_REMOVE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Impossible d'effacer le fichier.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-deleted">
+   <term>
+    <constant>ZipArchive::ER_DELETED</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     L'entrée a été supprimée.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-encrnotsupp">
+   <term>
+    <constant>ZipArchive::ER_ENCRNOTSUPP</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Méthode de cryptage non supporté.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.1, respectivement.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-rdonly">
+   <term>
+    <constant>ZipArchive::ER_RDONLY</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Opération non supporté.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.1, respectivement.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-nopasswd">
+   <term>
+    <constant>ZipArchive::ER_NOPASSWD</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Aucun mot de passe fourni.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.1, respectivement.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-wrongpasswd">
+   <term>
+    <constant>ZipArchive::ER_WRONGPASSWD</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Mauvais mot de passe fourni.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.1, respectivement.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-opnotsupp">
+   <term>
+    <constant>ZipArchive::ZIP_ER_OPNOTSUPP</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Archive en lecture seule.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.1, respectivement
+     si compilé avec la bibliothèque libzip ≥ 1.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-inuse">
+   <term>
+    <constant>ZipArchive::ZIP_ER_INUSE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     La ressource est toujours en cours d'utilisation.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.1, respectivement
+     si compilé avec la bibliothèque libzip ≥ 1.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-tell">
+   <term>
+    <constant>ZipArchive::ZIP_ER_TELL</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Erreur dite.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.1, respectivement
+     si compilé avec la bibliothèque libzip ≥ 1.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-compressed-data">
+   <term>
+    <constant>ZipArchive::ZIP_ER_COMPRESSED_DATA</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Données compressées invalides.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.1, respectivement
+     si compilé avec la bibliothèque libzip ≥ 1.6.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.er-cancelled">
+   <term>
+    <constant>ZipArchive::ER_CANCELLED</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Annulation de l'opération.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.1, respectivement
+     si compilé avec la bibliothèque libzip ≥ 1.6.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+  <varlistentry xml:id="ziparchive.constants.em-none">
+   <term>
+    <constant>ZipArchive::EM_NONE</constant> (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Aucun chiffrement. Disponible à partir de PHP 7.2.0 et PECL zip 1.14.0,
+     respectivement.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.em-trad-pkware">
+   <term>
+    <constant>ZipArchive::EM_TRAD_PKWARE</constant> (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Chiffrement PKWARE traditionel. Disponible à partir de PHP 8.0.0 et
+     PECL zip 1.19.0, respectivement.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.em-aez-128">
+   <term>
+    <constant>ZipArchive::EM_AES_128</constant> (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Chiffrement AES 128. Disponible à partir de PHP 7.2.0 et PECL zip 1.14.0,
+     respectivement, si compilé contre libzip ≥ 1.2.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.em-aez-192">
+   <term>
+    <constant>ZipArchive::EM_AES_192</constant> (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Chiffrement AES 192. Disponible à partir de PHP 7.2.0 et PECL zip 1.14.0,
+     respectivement, si compilé contre libzip ≥ 1.2.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.em-aes256">
+   <term>
+    <constant>ZipArchive::EM_AES_256</constant> (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Chiffrement AES 256. Disponible à partir de PHP 7.2.0 et PECL zip 1.14.0,
+     respectivement, si compilé contre libzip ≥ 1.2.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.em-unkwown">
+   <term>
+    <constant>ZipArchive::EM_UNKNOWN</constant> (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Algorithme de chiffrement inconnue. Disponible à partir de PHP 8.0.0 et
+     PECL zip 1.19.0, respectivement.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ziparchive.constants.libzip-version">
+   <term>
+    <constant>ZipArchive::LIBZIP_VERSION</constant> (&string;)
+   </term>
+   <listitem>
+    <simpara>
+     Version de la bibliothèque Zip.
+     Disponible à partir de PHP 7.4.3 et PECL zip 1.16.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  
+ </variablelist>
+  <variablelist xml:id="ziparchive.constants.opsys">
+  <title>Système d'exploitation, constantes pour les attributs étendus</title>
+  <varlistentry xml:id="ziparchive.constants.opsys.default">
+   <term>
+    <constant>ZipArchive::OPSYS_DOS</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_AMIGA</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_OPENVMS</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_UNIX</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_VM_CMS</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_ATARI_ST</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_OS_2</constant> (<type>int</type>;)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_MACINTOSH</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_Z_SYSTEM</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_CPM</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_WINDOWS_NTFS</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_MVS</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_VSE</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_ACORN_RISC</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_VFAT</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_ALTERNATE_MVS</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_BEOS</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_TANDEM</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_OS_400</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_OS_X</constant> (<type>int</type>)
+   </term>
+   <term>
+    <constant>ZipArchive::OPSYS_DEFAULT</constant> (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     À partir de PHP 5.6.0, PECL zip 1.12.4
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

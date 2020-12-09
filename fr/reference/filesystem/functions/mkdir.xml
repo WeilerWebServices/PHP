@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 350871 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.mkdir">
+ <refnamediv>
+  <refname>mkdir</refname>
+  <refpurpose>Crée un dossier</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>mkdir</methodname>
+   <methodparam><type>string</type><parameter>pathname</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>mode</parameter><initializer>0777</initializer></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>recursive</parameter><initializer>&false;</initializer></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>context</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Tente de créer un dossier.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>pathname</parameter></term>
+     <listitem>
+      <para>
+       Le chemin du dossier.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>mode</parameter></term>
+     <listitem>
+      <para>
+       Le mode par défaut est le mode 0777, ce qui correspond au maximum de
+       droits possible. Pour plus d'informations sur les modes, lisez en
+       détail la documentation de la fonction <function>chmod</function>.
+      </para>
+      <note>
+       <para>
+        <parameter>mode</parameter> est ignoré sous Windows.
+       </para>
+      </note>
+      <para>
+       Notez que vous aurez à préciser le mode en base octale,
+       ce qui signifie que vous aurez probablement un 0 comme premier chiffre.
+       Le mode sera aussi modifié par le umask courant, que vous pouvez
+       modifier avec la fonction <function>umask</function>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>recursive</parameter></term>
+     <listitem>
+      <para>
+       Permet la création de répertoires imbriqués spécifiés dans le 
+       <parameter>pathname</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>context</parameter></term>
+     <listitem>
+      &note.context-support;
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemple avec <function>mkdir</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+mkdir("/path/to/my/dir", 0700);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>mkdir</function> utilisant le paramètre <parameter>recursive</parameter> </title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Structure de répertoire désirée
+$structure = './depth1/depth2/depth3/';
+
+// Pour créer une stucture imbriquée, le paramètre $recursive 
+// doit être spécifié.
+
+if (!mkdir($structure, 0777, true)) {
+    die('Echec lors de la création des répertoires...');
+}
+
+// ...
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>  
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Emet une alerte de niveau <constant>E_WARNING</constant> si le dossier
+   existe déjà.
+  </para>
+  <para>
+   Emet une alerte de niveau <constant>E_WARNING</constant> si les permissions
+   empéchent la création du dossier.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>is_dir</function></member>
+    <member><function>rmdir</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

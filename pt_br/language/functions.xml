@@ -1,0 +1,1926 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 349700 Maintainer: ae Status: ready --><!-- CREDITS: fabioluciano, ae, geekcom -->
+<chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook">
+  <title>Funções</title>
+
+  <sect1 xml:id="functions.user-defined">
+   <title>Funções definidas pelo usuário</title>
+
+   <para>
+    Uma função pode ser definida usando a seguinte sintaxe:
+   </para>
+   <para>
+    <example>
+     <title>Pseudo-código de demonstração de uma função</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function foo ($arg_1, $arg_2, /* ..., */ $arg_n)
+{
+    echo "Exemplo de função.\n";
+    return $valor_retornado;
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+
+   <simpara>
+    Qualquer código PHP válido pode aparecer dentro de uma função, mesmo outras funções
+    e definições de <link linkend="language.oop5.basic.class">classes</link>.
+
+   </simpara>
+   <para>
+    Nomes de funções seguem as mesmas regras que outros rótulo no PHP. Um
+    nome de função válido começa com uma letra ou um sublinhado, seguido,
+    seguido por qualquer número de letras, números ou sublinhado. Com uma expressão
+    regular, seria expressado com:
+    <code>^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$</code>.
+   </para>
+    &tip.userlandnaming;
+   <simpara>
+    As funções não precisam ser criadas antes de serem referenciadas,
+    <emphasis>exceto</emphasis> quando uma função é condicionalmente definida
+    como mostrado nos dois exemplos abaixo.
+   </simpara>
+   <para>
+    Quando uma função é definida condicionalmente como nos dois
+    exemplos abaixo, sua definição precisa ser processada <emphasis>antes</emphasis>
+    de ser chamada.
+   </para>
+   <para>
+    <example>
+     <title>Funções definidas condicionalmente</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$makefoo = true;
+
+/* Nos nao podemos chamar foo() daqui
+   porque ela ainda não existe,
+   mas nos podemos chamar bar() */
+
+bar();
+
+if ($makefoo) {
+  function foo()
+  {
+    echo "Eu não existo até que o programa passe por aqui.\n";
+  }
+}
+
+/* Agora nos podemos chamar foo()
+   porque $makefoo foi avaliado como true */
+
+if ($makefoo) foo();
+
+function bar()
+{
+  echo "Eu existo imediatamente desde o programa começar.\n";
+}
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    <example>
+     <title>Funções dentro de funções</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function foo()
+{
+  function bar()
+  {
+    echo "Eu não existo até foo() ser chamada.\n";
+  }
+}
+
+/* Nós não podemos chamar bar() ainda
+   porque ela ainda não foi definida. */
+
+foo();
+
+/* Agora nós podemos chamar bar(),
+   porque o processamento de foo()
+   tornou a primeira acessivel */
+
+bar();
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Todas as funções e classes no PHP tem escopo global - elas podem
+    ser chamadas fora de uma função mesmo que tenham sido definidas dentro e vice-versa.
+   </para>
+   <simpara>
+    O PHP não suporta sobrecarga de funções, e também não é possível cancelar ou
+    alterar a definição de funções previamente declaradas.
+   </simpara>
+   <note>
+    <simpara>
+     Nomes de funções são case-insensitive para caracteres ASCII <literal>A</literal> até <literal>Z</literal>, mas é melhor chamar
+     as funções da mesma forma que elas aparecem nas declarações.
+    </simpara>
+   </note>
+   <simpara>
+    Ambos <link linkend="functions.variable-arg-list">número variável de argumentos
+    </link> e <link linkend="functions.arguments.default">argumentos
+    padrões</link> são suportados em funções. veja também as referencias
+    das funções
+    <function>func_num_args</function>,
+    <function>func_get_arg</function> e
+    <function>func_get_args</function> para mais informações.
+   </simpara>
+
+   <para>
+    É possível chamar funções recursivas no PHP.
+    <example>
+     <title>Funções Recursivas</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function recursion($a)
+{
+    if ($a < 20) {
+        echo "$a\n";
+        recursion($a + 1);
+    }
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   <note>
+    <simpara>
+     Chamadas recursivas a funções/métodos acima de 100-200 níveis podem
+     exaurir a pilha e causar o término do script. Especificamente,
+     recursão infinita é considerada um erro de programação.
+    </simpara>
+   </note>
+   </para>
+
+</sect1>
+
+  <sect1 xml:id="functions.arguments">
+   <title>Argumentos de funções</title>
+
+   <simpara>
+    Informações podem ser passadas para funções através da lista de argumentos, que é uma
+    lista de expressões delimitados por vírgulas. Os argumentos são avaliados
+    da esquerda para a direita.
+   </simpara>
+
+   <para>
+    O PHP suporta a passagem de argumentos por valor (o padrão), <link
+    linkend="functions.arguments.by-reference">passagem por
+    referência</link>, e <link
+    linkend="functions.arguments.default">valores padrões de
+    argumentos</link>. <link linkend="functions.variable-arg-list">lista de argumentos de
+    tamanho variável</link> também são suportadas.
+   </para>
+   <para>
+    <example>
+     <title>Passando arrays para funções</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function takes_array($input)
+{
+    echo "$input[0] + $input[1] = ", $input[0]+$input[1];
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <sect2 xml:id="functions.arguments.by-reference">
+    <title>Fazendo argumentos serem passados por referência</title>
+
+    <simpara>
+     Por padrão, argumentos de função são passados por valor (de forma que se
+     você mudar o valor do parâmetro dentro da função, ele não é alterado fora
+     da função). Para permitir que uma função modifique os
+     seus argumentos, eles devem ser passados por referência.
+    </simpara>
+    <para>
+     Para ter um argumento para uma função sempre passado por referência, adicione
+     antes dele um "e comercial" (&amp;) ao nome do argumento na definição da função:
+    </para>
+    <para>
+     <example>
+      <title>Passando parâmetros de função por referência</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function add_some_extra(&$string)
+{
+    $string .= ' e alguma coisa mais.';
+}
+$str = 'Isto é uma string,';
+add_some_extra($str);
+echo $str;    // imprime 'Isto é uma string, e alguma coisa mais.'
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+   </sect2>
+   <sect2 xml:id="functions.arguments.default">
+    <title>Valores padrão de argumentos</title>
+
+    <para>
+     Uma função pode definir valores padrão no estilo C++ para argumentos escalares, como
+     a seguir:
+    </para>
+    <para>
+     <example>
+      <title>Utilizando parâmetros padrão em funções</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function makecoffee($type = "cappuccino")
+{
+    return "Fazendo uma xícara de café $type.\n";
+}
+echo makecoffee();
+echo makecoffee(null);
+echo makecoffee("espresso");
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Fazendo uma xícara de café cappuccino.
+Fazendo uma xícara de café .
+Fazendo uma xícara de café espresso.
+]]>
+      </screen>
+     </example>
+    </para>
+    <para>
+     O PHP também permite o uso def <type>array</type>s e do tipo especial &null;
+     como valores padrões, por exemplo:
+    </para>
+    <para>
+     <example>
+      <title>Usando tipos não escalares como valores padrões</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function makecoffee($types = array("cappuccino"), $coffeeMaker = NULL)
+{
+    $device = is_null($coffeeMaker) ? "hands" : $coffeeMaker;
+    return "Making a cup of ".join(", ", $types)." with $device.\n";
+}
+echo makecoffee();
+echo makecoffee(array("cappuccino", "lavazza"), "teapot");
+?>
+]]>
+      </programlisting>
+     </example>
+
+    </para>
+    <simpara>
+     O valor padrão precisa ser uma expressão constante, não (por
+     exemplo) uma variável, um membro de classe ou uma chamada de função.
+    </simpara>
+    <para>
+     Note que usando argumentos padrão, qualquer padrão deve vir após
+     os argumentos sem padrão: caso contrário, as coisas não funcionarão
+     como esperado. Considere o seguinte trecho de código:
+    </para>
+    <para>
+     <example>
+      <title>Uso incorreto de parâmetros padrão de função</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function iogurtera ($tipo = "azeda", $sabor)
+{
+    return "Fazendo uma taça de $sabor $tipo.\n";
+}
+
+echo iogurtera ("framboesa");   // não funciona como esperado
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Warning: Missing argument 2 in call to makeyogurt() in
+/usr/local/etc/httpd/htdocs/phptest/functest.html on line 41
+Fazendo uma taça de framboesa.
+]]>
+      </screen>
+     </example>
+    </para>
+    <para>
+     Agora, compare o que está acima com este:
+    </para>
+    <para>
+     <example>
+      <title>Uso correto de parâmetros padrão de função</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function iogurtera ($sabor, $tipo = "azeda")
+{
+    return "Fazendo uma taça de $sabor $tipo.\n";
+}
+
+echo iogurtera ("framboesa");   // funciona
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Fazendo uma taça de framboesa azeda.
+]]>
+      </screen>
+     </example>
+    </para>
+    <note>
+     <simpara>
+      A partir do PHP 5, os valores padrões são passados por referência.
+     </simpara>
+    </note>
+   </sect2>
+
+   <sect2 xml:id="functions.arguments.type-declaration">
+    <title>Declarações de tipo</title>
+
+    <note>
+     <para>
+      Declaração de tipos também era conhecida como type hints no PHP 5.
+     </para>
+    </note>
+
+    <para>
+     Declarações de tipo permitem que funções requiram que parâmetros sejam de certos tipos ao chamá-los.
+     Se o valor informado no parâmetro tiver um tipo
+     incorreto então um erro é gerado: no PHP 5 será um erro fatal recuperável,
+     enquanto que no PHP 7 irá lançar uma exceção
+     <classname>TypeError</classname>
+    </para>
+
+    <para>
+     Para declarar o tipo o seu nome deve ser adicionado antes no nome
+     do parâmetro. A declaração pode ser feita para aceitar &null; se
+     o valor default do parâmetro for configurado também para &null;.
+    </para>
+
+    <sect3 xml:id="functions.arguments.type-declaration.types">
+     <title>Tipos válidos</title>
+     <informaltable>
+      <tgroup cols="3">
+       <thead>
+        <row>
+         <entry>Tipo</entry>
+         <entry>Descrição</entry>
+         <entry>Versão PHP Mínima</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>Classe/interface</entry>
+         <entry>
+          O parâmetro precisa ser um &instanceof; da classe ou interface
+          informada.
+         </entry>
+         <entry>PHP 5.0.0</entry>
+        </row>
+        <row>
+         <entry><literal>self</literal></entry>
+         <entry>
+          O parâmetro precisa ser um &instanceof; da mesma classe do método
+          onde a função está definida. Somente pode ser utilizado em métodos de classe
+          e instância.
+         </entry>
+         <entry>PHP 5.0.0</entry>
+        </row>
+        <row>
+         <entry><type>array</type></entry>
+         <entry>
+          O parâmetro precisa ser um <type>array</type>.
+         </entry>
+         <entry>PHP 5.1.0</entry>
+        </row>
+        <row>
+         <entry><type>callable</type></entry>
+         <entry>
+          O parâmetro precisa ser um <type>callable</type> válido.
+         </entry>
+         <entry>PHP 5.4.0</entry>
+        </row>
+        <row>
+         <entry><type>bool</type></entry>
+         <entry>
+          O parâmetro precisa ser um valor <type>boolean</type>.
+         </entry>
+         <entry>PHP 7.0.0</entry>
+        </row>
+        <row>
+         <entry><type>float</type></entry>
+         <entry>
+          O parâmetro precisa ser um número <type>float</type>.
+         </entry>
+         <entry>PHP 7.0.0</entry>
+        </row>
+        <row>
+         <entry><type>int</type></entry>
+         <entry>
+          O parâmetro precisa ser um número <type>integer</type>.
+         </entry>
+         <entry>PHP 7.0.0</entry>
+        </row>
+        <row>
+         <entry><type>string</type></entry>
+         <entry>
+          O parâmetro precisa ser uma <type>string</type>.
+         </entry>
+         <entry>PHP 7.0.0</entry>
+        </row>
+        <row>
+         <entry><literal>iterable</literal></entry>
+         <entry>
+           O parâmetro precisa ser um <type>array</type> ou um &instanceof; <classname>Traversable</classname>.
+         </entry>
+         <entry>PHP 7.1.0</entry>
+        </row>
+        <row>
+         <entry><literal>object</literal></entry>
+         <entry>
+          O parâmetro precisa ser um <type>object</type>.
+         </entry>
+         <entry>PHP 7.2.0</entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </informaltable>
+
+     <warning>
+      <para>
+       Apelidos para os tipos escalares acima não são suportados. Apelidos serão
+       tradados como nomes de classe ou interface. Por exemplo, utilizar
+       <literal>boolean</literal> como parâmetro ou tipo de retorno irá requerer
+       um argumento ou retorno que seja um &instanceof; de uma classe ou
+       interface <literal>boolean</literal>, em vez do tipo
+       <type>bool</type>:
+      </para>
+      <para>
+       <example>
+        <programlisting role="php">
+ <![CDATA[
+ <?php
+ function test(boolean $param) {}
+ test(true);
+ ?>
+ ]]>
+        </programlisting>
+        &example.outputs;
+        <screen>
+ <![CDATA[
+ Fatal error: Uncaught TypeError: Argument 1 passed to test() must be an instance of boolean, boolean given, called in - on line 1 and defined in -:1
+ ]]>
+        </screen>
+       </example>
+      </para>
+     </warning>
+    </sect3>
+
+    <sect3 xml:id="functions.arguments.type-declaration.examples">
+     &reftitle.examples;
+     <example>
+      <title>Declaração de tipos em classes</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class C {}
+class D extends C {}
+
+// This doesn't extend C.
+class E {}
+
+function f(C $c) {
+    echo get_class($c)."\n";
+}
+
+f(new C);
+f(new D);
+f(new E);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+C
+D
+
+Fatal error: Uncaught TypeError: Argument 1 passed to f() must be an instance of C, instance of E given, called in - on line 14 and defined in -:8
+Stack trace:
+#0 -(14): f(Object(E))
+#1 {main}
+  thrown in - on line 8
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Declaração de tipos em interfaces</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+interface I { public function f(); }
+class C implements I { public function f() {} }
+
+// This doesn't implement I.
+class E {}
+
+function f(I $i) {
+    echo get_class($i)."\n";
+}
+
+f(new C);
+f(new E);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+C
+
+Fatal error: Uncaught TypeError: Argument 1 passed to f() must implement interface I, instance of E given, called in - on line 13 and defined in -:8
+Stack trace:
+#0 -(13): f(Object(E))
+#1 {main}
+  thrown in - on line 8
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Passando parâmetros tipados por referência</title>
+      <simpara>
+       Os tipos declarados de parâmetros de referência são verificados na entrada da função, mas
+       não no retorno função, assim, depois que a função tiver retornado, o
+       tipo de argumento pode ter mudado.
+      </simpara>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function array_baz(array &$param)
+{
+    $param = 1;
+}
+$var = [];
+array_baz($var);
+var_dump($var);
+array_baz($var);
+?>
+]]>
+      </programlisting>
+      &example.outputs.similar;
+      <screen>
+<![CDATA[
+int(1)
+
+Fatal error: Uncaught TypeError: Argument 1 passed to array_baz() must be of the type array, int given, called in %s on line %d
+]]>
+      </screen>
+     </example>
+     <example>
+      <title>Declaração de tipos nulificáveis</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class C {}
+
+function f(C $c = null) {
+    var_dump($c);
+}
+
+f(new C);
+f(null);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+object(C)#1 (0) {
+}
+NULL
+]]>
+      </screen>
+     </example>
+    </sect3>
+
+    <sect3 xml:id="functions.arguments.type-declaration.strict">
+     <title>Tipagem estrita</title>
+
+     <para>
+      Por padrão, se possível, o PHP irá converter o tipo incorreto no tipo escalar
+      esperado. Por exemplo, uma função que passa um parâmetro <type>integer</type>
+      onde se espera uma <type>string</type>
+      receberá o valor com o tipo <type>string</type>.
+     </para>
+
+     <para>
+      É possível habilitar o modo estrito arquivo a arquivo. No modo estrito
+      somente uma variável do exato tipo especificado na declaração será
+      aceito, ou uma exceção <classname>TypeError</classname> será lançada. A
+      única exceção é o tipo <type>integer</type> que poderá ser entregue a uma
+      função esperando um <type>float</type>. Chamadas a funções de dentro
+      de funções internas não serão afetadas pelas declarações
+      <literal>strict_types</literal>
+     </para>
+
+     <para>
+      Para habilitar o modo estrito, utilize a instrução &declare; com a definição
+      <literal>strict_types</literal>:
+     </para>
+
+     <caution>
+      <para>
+       Habilitar o modo estrito também afetará
+       <link linkend="functions.returning-values.type-declaration">as declarações de tipo de retorno</link>.
+      </para>
+     </caution>
+
+     <note>
+      <para>
+       A tipagem estrita se aplica a chamadas feitas
+       <emphasis>a partir</emphasis> do arquivo em que a tipagem estrita foi habilitada, não
+       necessariamente às funções declaradas com tipos. Se um arquivo sem tipagem
+       estrita tentar fazer uma chamada a uma função com tipagem
+       estrita, a preferência do chamador (tipagem fraca) será
+       respeitada, e o valor será possivelmente convertido.
+      </para>
+     </note>
+
+     <note>
+      <para>
+       A tipagem estrita somente ocorre para declarações de tipo escalar,
+       e portanto requer PHP 7.0.0 ou posterior, dado que declarações
+       escalares foram acrescentadas nessa versão.
+      </para>
+     </note>
+
+     <example>
+      <title>Tipagem estrita</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+declare(strict_types=1);
+
+function sum(int $a, int $b) {
+    return $a + $b;
+}
+
+var_dump(sum(1, 2));
+var_dump(sum(1.5, 2.5));
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+int(3)
+
+Fatal error: Uncaught TypeError: Argument 1 passed to sum() must be of the type integer, float given, called in - on line 9 and defined in -:4
+Stack trace:
+#0 -(9): sum(1.5, 2.5)
+#1 {main}
+  thrown in - on line 4
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Tipagem fraca</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function sum(int $a, int $b) {
+    return $a + $b;
+}
+
+var_dump(sum(1, 2));
+
+// These will be coerced to integers: note the output below!
+var_dump(sum(1.5, 2.5));
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+int(3)
+int(3)
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Catching <classname>TypeError</classname></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+declare(strict_types=1);
+
+function sum(int $a, int $b) {
+    return $a + $b;
+}
+
+try {
+    var_dump(sum(1, 2));
+    var_dump(sum(1.5, 2.5));
+} catch (TypeError $e) {
+    echo 'Error: '.$e->getMessage();
+}
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+int(3)
+Error: Argument 1 passed to sum() must be of the type integer, float given, called in - on line 10
+]]>
+      </screen>
+     </example>
+    </sect3>
+   </sect2>
+   <sect2 xml:id="functions.variable-arg-list">
+    <title>Número variável de argumentos</title>
+
+    <simpara>
+     O PHP tem suporte para um número variável de argumentos nas funções
+     definidas pelo usuário. Isso é implementado usando o token
+     <literal>...</literal> a partir do PHP 5.6, e usando as funções
+     <function>func_num_args</function>,
+     <function>func_get_arg</function>, e
+     <function>func_get_args</function> a partir do PHP 5.5.
+    </simpara>
+
+    <sect3 xml:id="functions.variable-arg-list.new">
+     <title><literal>...</literal> no PHP 5.6+</title>
+
+     <para>
+      A partir do PHP 5.6 é possível incluir o indicador de lista de argumentos
+      <literal>...</literal> para informar que a função aceita um
+      número variável de argumentos. Os argumentos serão passados na forma
+      de um array. Por exemplo.
+
+      <example>
+       <title>Utilizando <literal>...</literal> para acessar argumentos variáveis</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+function sum(...$numbers) {
+    $acc = 0;
+    foreach ($numbers as $n) {
+        $acc += $n;
+    }
+    return $acc;
+}
+
+echo sum(1, 2, 3, 4);
+?>
+]]>
+       </programlisting>
+       &example.outputs;
+       <screen>
+<![CDATA[
+10
+]]>
+       </screen>
+      </example>
+     </para>
+
+     <para>
+      Você também pode utilizar <literal>...</literal> quando chamando funções para
+      transformar uma variável <type>array</type>, <classname>Traversable</classname> ou
+      literal em uma lista de argumentos.
+
+      <example>
+       <title>Utilizando <literal>...</literal> para fornecer argumentos</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+function add($a, $b) {
+    return $a + $b;
+}
+
+echo add(...[1, 2])."\n";
+
+$a = [1, 2];
+echo add(...$a);
+?>
+]]>
+       </programlisting>
+       &example.outputs;
+       <screen>
+<![CDATA[
+3
+3
+]]>
+       </screen>
+      </example>
+     </para>
+
+     <para>
+      Você pode especificar argumentos posicionais antes do indicador.
+      <literal>...</literal>. Nesse caso comente os argumentos finais,
+      que não pareiem com um argumento posicional, serão adicionados ao
+      array gerado por <literal>...</literal>.
+     </para>
+
+     <para>
+      É também possível adicionar um
+      <link linkend="language.oop5.typehinting">type hint</link> antes do indicador
+      <literal>...</literal>. Se presente então todos os argumentos
+      capturados por <literal>...</literal> deverão ser objetos da classe informada.
+
+      <example>
+       <title>Argumentos variáveis com type hint</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+function total_intervals($unit, DateInterval ...$intervals) {
+    $time = 0;
+    foreach ($intervals as $interval) {
+        $time += $interval->$unit;
+    }
+    return $time;
+}
+
+$a = new DateInterval('P1D');
+$b = new DateInterval('P2D');
+echo total_intervals('d', $a, $b).' days';
+
+// This will fail, since null isn't a DateInterval object.
+echo total_intervals('d', null);
+?>
+]]>
+       </programlisting>
+       &example.outputs;
+       <screen>
+<![CDATA[
+3 days
+Catchable fatal error: Argument 2 passed to total_intervals() must be an instance of DateInterval, null given, called in - on line 14 and defined in - on line 2
+]]>
+       </screen>
+      </example>
+     </para>
+
+     <para>
+      Finalmente, você também pode passar argumentos variáveis
+      <link linkend="functions.arguments.by-reference">por referência</link> ao
+      prefixar <literal>...</literal> com um
+      <literal>&amp;</literal>.
+     </para>
+    </sect3>
+
+    <sect3 xml:id="functions.variable-arg-list.old">
+     <title>Versões anteriores do PHP</title>
+
+     <para>
+      Funções com argumentos variáveis não precisam de sintaxe específica.
+      No entanto o acesso aos argumentos da função precisam utilizar.
+      <function>func_num_args</function>, <function>func_get_arg</function>
+      e <function>func_get_args</function>.
+     </para>
+
+     <para>
+      O primeiro exemplo acima seria implementado no PHP 5.5 e anteriores
+      assim:
+
+      <example>
+       <title>Acessando argumentos variáveis no PHP 5.5 e anteriores</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+function sum() {
+    $acc = 0;
+    foreach (func_get_args() as $n) {
+        $acc += $n;
+    }
+    return $acc;
+}
+
+echo sum(1, 2, 3, 4);
+?>
+]]>
+       </programlisting>
+       &example.outputs;
+       <screen>
+<![CDATA[
+10
+]]>
+       </screen>
+      </example>
+     </para>
+    </sect3>
+
+   </sect2>
+  </sect1>
+
+  <sect1 xml:id="functions.returning-values">
+   <title>Retornando valores</title>
+
+   <para>
+    Valores podem ser retornados utilizando a instrução opcional return. Qualquer
+    tipo pode ser retornado, incluindo arrays e objetos. Isto faz com que
+    as função termine sua execução imediatamente e passa o controle de volta para
+    a linha de onde ela foi chamada. Veja a documentação da função <function>return</function>
+    para maiores informações.
+   </para>
+
+   <note>
+    <para>
+     Se <function>return</function> for omitido então o valor &null; será
+     retornado.
+    </para>
+   </note>
+
+   <sect2>
+    <title>Use of return</title>
+   <para>
+    <example>
+     <title>O uso de <function>return</function></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function quadrado ($num)
+{
+    return $num * $num;
+}
+echo quadrado (4);   // imprime '16'.
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+
+   <para>
+    Você não pode retornar múltiplos valores a partir de uma função, mas
+    resultados similares podem ser obtidos retornando um array.
+   </para>
+   <para>
+    <example>
+     <title>Retornando um array para devolver vários valores</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function numeros_pequenos()
+{
+    return array (0, 1, 2);
+}
+list ($zero, $um, $dois) = numeros_pequenos();
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Para retornar uma referência de uma função, use o operador de referência &amp;
+    em ambas a declaração da função e quando definindo o valor para a
+    variável.
+   </para>
+   <para>
+    <example>
+     <title>Retornando uma referência de uma função</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function &retorna_referencia()
+{
+    return $alguma_referencia;
+}
+
+$nova_referencia =& retorna_referencia();
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <simpara>
+    Para mais detalhes sobre referências, leia a seção <link
+    linkend="language.references">Referências</link>.
+   </simpara>
+  </sect2>
+
+  <sect2 xml:id="functions.returning-values.type-declaration">
+   <title>Declaração de tipo de retorno</title>
+
+   <para>
+    O PHP 7 acrescenta suporte a declaração de tipo de retorno. Similar à
+    <link linkend="functions.arguments.type-declaration">declaração de tipagem de argumentos</link>,
+    declaração de tipo de retorno especifica o tipo do valor que será
+    retornado de uma função. Os mesmos
+    <link linkend="functions.arguments.type-declaration.types">tipos</link>
+    que estão disponíveis para declaração de argumentos estão
+    disponíveis para tipagem de retornos.
+   </para>
+
+   <para>
+    <link linkend="functions.arguments.type-declaration.strict">A tipagem estrita</link>
+    também afeta a tipagem de retorno. No modo padrão (tripagem fraca)
+    o valores retornados serão convertidos para o tipo correto caso não enquadrem
+    no tipo informado. No modo de tipagem forte os valores retornados precisam
+    ser o tipo correto ou uma exceção <classname>TypeError</classname> será lançada.
+   </para>
+
+   <para>
+    A partir do PHP 7.1.0, os valores de retorno podem ser marcados como anuláveis prefixando o
+    sinal de interrogação (<literal>?</literal>) a frente do tipo. Isto significa que
+    a função retorna o tipo especificado ou &null;.
+   </para>
+
+   <note>
+    <para>
+     Quando sobrescrevendo um método, o novo método precisa coincidir com
+     a tipagem de retorno do método anterior. Se o método sobrescrito não
+     define uma tipagem de tipo, então o novo método precisa espelhar isso.
+    </para>
+   </note>
+
+   <sect3 xml:id="functions.returning-values.type-declaration.examples">
+    &reftitle.examples;
+
+    <example>
+     <title>Declaração de tipo de retorno</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function sum($a, $b): float {
+    return $a + $b;
+}
+
+// Note que um float será retornado.
+var_dump(sum(1, 2));
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+float(3)
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Modo estrito em ação</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+declare(strict_types=1);
+
+function sum($a, $b): int {
+    return $a + $b;
+}
+
+var_dump(sum(1, 2));
+var_dump(sum(1, 2.5));
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+int(3)
+
+Fatal error: Uncaught TypeError: Return value of sum() must be of the type integer, float returned in - on line 5 in -:5
+Stack trace:
+#0 -(9): sum(1, 2.5)
+#1 {main}
+  thrown in - on line 5
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Returning an object</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class C {}
+
+function getC(): C {
+    return new C;
+}
+
+var_dump(getC());
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+object(C)#1 (0) {
+}
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Declaração de tipo de retorno anulável (a partir do PHP 7.1.0)</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function get_item(): ?string {
+    if (isset($_GET['item'])) {
+        return $_GET['item'];
+    } else {
+        return null;
+    }
+}
+?>
+]]>
+      </programlisting>
+     </example>
+    </sect3>
+   </sect2>
+  </sect1>
+
+  <sect1 xml:id="functions.variable-functions">
+   <title>Funções variáveis</title>
+
+   <para>
+    O PHP suporta o conceito de funções variáveis. Isto significa que se
+    um nome de variável tem parênteses no final dela, o PHP procurará
+    uma função com o mesmo nome, qualquer que seja a avaliação da variável,
+    e tentará executá-la. Entre outras coisas, isto pode
+    ser usado para implementar callbacks, tabelas de função e assim por diante.
+   </para>
+   <para>
+    Funções variáveis não funcionam com construtores de linguagem como
+    <function>echo</function>, <function>print</function>,
+    <function>unset</function>, <function>isset</function>,
+    <function>empty</function>, <function>include</function>,
+    <function>require</function> e outras assim. Utilize uma função de wrapper
+    para usar quaisquer um destes construtores como uma função variável.
+   </para>
+   <para>
+    <example>
+     <title>Exemplo de funções variáveis</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function foo() {
+    echo "Chamou foo()<br>\n";
+}
+
+function bar($arg = '')
+{
+    echo "Chamou bar(); com argumento '$arg'.<br />\n";
+}
+
+// Essa eh uma funcao wrapper para echo()
+function echoit($string)
+{
+    echo $string;
+}
+
+$func = 'foo';
+$func();        // Chama foo()
+
+$func = 'bar';
+$func('test');  // Chama bar()
+
+$func = 'echoit';
+$func('test');  // Chama echoit()
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Um método de um objeto também pode ser chamado com a sintaxe de funções variáveis.
+    <example>
+     <title>Exemplo de chamada de um método variável</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    function MetodoVariavel()
+    {
+        $name = 'Bar';
+        $this->$name(); // Isto chama o método Bar()
+    }
+
+    function Bar()
+    {
+        echo "Bar foi chamada!";
+    }
+}
+
+$foo = new Foo();
+$funcname = "MetodoVariavel";
+$foo->$funcname();  // Isto chama $foo->MetodoVariavel()
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Quando chamando métodos estáticos, uma chamada de função tem preferência que uma propriedade estática.
+    <example>
+     <title>Método variávei com propriedades estáticas</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    static $variable = 'static property';
+    static function Variable()
+    {
+        echo 'Method Variable called';
+    }
+}
+
+echo Foo::$variable; // This prints 'static property'. It does need a $variable in this scope.
+$variable = "Variable";
+Foo::$variable();  // This calls $foo->Variable() reading $variable in this scope.
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+     A partir do PHP 5.4.0, você pode guardar qualquer <type>callable</type> numa variável.
+    <example>
+     <title>Callables complexos</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    static function bar()
+    {
+        echo "bar\n";
+    }
+    function baz()
+    {
+        echo "baz\n";
+    }
+}
+
+$func = array("Foo", "bar");
+$func(); // prints "bar"
+$func = array(new Foo, "baz");
+$func(); // prints "baz"
+$func = "Foo::bar";
+$func(); // prints "bar" a partir PHP 7.0.0; anteriormente lança um erro fatal
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+
+   <para>
+    Veja também <function>is_callable</function>, <function>call_user_func</function>,
+    <link linkend="language.variables.variable">
+    variáveis variáveis</link> e <function>function_exists</function>.
+   </para>
+
+   <sect2 role="changelog">
+    &reftitle.changelog;
+    <para>
+     <informaltable>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>&Version;</entry>
+         <entry>&Description;</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>7.0.0</entry>
+         <entry>
+          'ClassName::methodName' é permitido função variável.
+         </entry>
+        </row>
+        <row>
+         <entry>5.4.0</entry>
+         <entry>
+          Arrays são callables, também permitidos como função variável.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </informaltable>
+    </para>
+   </sect2>
+  </sect1>
+
+  <sect1 xml:id="functions.internal">
+   <title>Funções internas (built-in)</title>
+
+   <para>
+    O PHP vem por padrão com muitas funções e contrutores. Também existem
+    funções que necessitam que uma extensão específica esteja compilada, se não
+    erros fatais "undefined function" (função não definida) irão aparecer. Por exemplo, para usar
+    as funções <link linkend="ref.image">image</link> como
+    <function>imagecreatetruecolor</function>, o PHP deve ser compilado com suporte
+    <productname>GD</productname>. Ou, para usar
+    <function>mysqli_connect</function>, PHP deve ser compilado com suporte
+    <link linkend="book.mysqli">MySQLi</link>. Existem muitas funções do núcleo
+    que são incluídas em cada versão do PHP, como
+    <link linkend="ref.strings">string</link> e
+    <link linkend="ref.var">variable</link>. Uma chamada a
+    <function>phpinfo</function> ou
+    <function>get_loaded_extensions</function> irá mostrar quais extensões estão
+    carregadas no PHP. Note também que várias extensões são ativadas por padrão e que
+    o manual do PHP é dividido por extensão. Veja
+    <link linkend="configuration">configuração</link>,
+    <link linkend="install">instalação</link>, e os capítulos
+    individuais das extensões para como configurar o PHP.
+   </para>
+   <para>
+    A leitura e entendimento de um protótipo de função é explicado na
+    seção do manual entitulada
+    <link linkend="about.prototypes">como ler uma definição de função</link>.
+    É importante perceber o que a função retorna ou se a função trabalha
+    diretamente no valor passado como argumento. Por exemplo,
+    <function>str_replace</function> irá retornar a string modificada enquanto
+    <function>usort</function> trabalha na própria variável passada no
+    argumento. Cada página do manual também contém informações específicas de cada
+    função, como: parâmetros da função, mudanças de comportamento,
+    valores de retorno tanto para sucesso e erros, como outras informações disponíveis.
+    O conhecimento destas diferenças importantes é crucial para escrever corretamente seu código PHP.
+   </para>
+   <note>
+    <simpara>
+     Se os parâmetros dados a uma função não forem o que ela espera, como
+     passar um <type>array</type> aonde uma <type>string</type> é esperada,
+     o valor de retorno da função é indefinido. Neste caso provavelmente
+     irá retornar &null; mas isto é apenas uma convenção, e
+     você não pode depender disso.
+    </simpara>
+   </note>
+   <para>
+    Veja também <function>function_exists</function>,
+    <link linkend="funcref">a referência de funções</link>,
+    <function>get_extension_funcs</function> e
+    <function>dl</function>.
+   </para>
+  </sect1>
+
+  <sect1 xml:id="functions.anonymous">
+   <title>Funções anônimas</title>
+
+   <simpara>
+    Funções anônimas, também conhecidas como <literal>closures</literal>, permitem a criação
+    de funções que não tem o nome especificado. Elas são mais úteis
+    como o valor de parâmetros <link linkend="language.types.callback">callback</link>,
+    mas podem tem vários outros usos.
+   </simpara>
+   <simpara>
+    Funções anônimas são implementadas utilizando a classe
+    <link linkend="class.closure"><classname>Closure</classname></link>
+   </simpara>
+
+   <example>
+    <title>Exemplo de Função Anônima</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo preg_replace_callback('~-([a-z])~', function ($match) {
+    return strtoupper($match[1]);
+}, 'hello-world');
+// outputs helloWorld
+?>
+]]>
+    </programlisting>
+   </example>
+
+   <simpara>
+    Closures também podem ser utilizadas como valores de variáveis; o PHP automaticamente
+    converte expressões assim em instancias da classe interna
+    <classname>Closure</classname>. Definindo um closure
+    a uma variável usa a mesma sintaxe que qualquer outra definição, incluindo
+    o ponto-e-vírgula:
+   </simpara>
+
+   <example>
+    <title>Exemplo de como definir uma função anônima para uma variável</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$greet = function($name)
+{
+    printf("Hello %s\r\n", $name);
+};
+
+$greet('World');
+$greet('PHP');
+?>
+]]>
+    </programlisting>
+   </example>
+
+   <simpara>
+    Closures também podem herdar variáveis do escopo pai. Essas 
+    variáveis precisam ser referenciadas utilizando a instrução<literal>use</literal>.
+    A partir do PHP 7.1, essas variáveis não devem incluir &link.superglobals;,
+    <varname>$this</varname>, ou variáveis com o mesmo nome como um parâmetro.
+   </simpara>
+
+   <example>
+    <title>Herdando variáveis do escopo anterior</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$message = 'hello';
+
+// Sem "use"
+$example = function () {
+    var_dump($message);
+};
+$example();
+
+// Inherit $message
+$example = function () use ($message) {
+    var_dump($message);
+};
+$example();
+
+// Herdando valor da variável quando a função é definina,
+// não quando é chamada
+$message = 'world';
+$example();
+
+// Reseta mensagem
+$message = 'hello';
+
+// Herdando por referência
+$example = function () use (&$message) {
+    var_dump($message);
+};
+$example();
+
+// O valor modificado no escopo pai
+// reflete quando a função é chamada
+$message = 'world';
+$example();
+
+// Closures também aceitam argumentos normais
+$example = function ($arg) use ($message) {
+    var_dump($arg . ' ' . $message);
+};
+$example("hello");
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Notice: Undefined variable: message in /example.php on line 6
+NULL
+string(5) "hello"
+string(5) "hello"
+string(5) "hello"
+string(5) "world"
+string(11) "hello world"
+]]>
+    </screen>
+   </example>
+
+   <simpara>
+    Herdar variáveis do escopo pai <emphasis>não</emphasis>
+    é o mesmo que usar variáveis globais.
+    Variáveis globais existem no escopo global, o qual é o mesmo não
+    importa a função sendo executada. O escopo pai de um closure é a função
+    no qual o closure foi declarado (não necessáriamente a função apartir do
+    qual ele foi chamado). Veja o exemplo a seguir:
+   </simpara>
+
+   <example>
+    <title>Closures e escopo</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Um exemplo básico de carrinho de compras que contém uma lista de produtos
+// e a quantidade de cada produto. Inclui um método que
+// calcula o preço total dos itens no carrinho utilizando uma
+// closure como callback.
+class Cart
+{
+    const PRICE_BUTTER  = 1.00;
+    const PRICE_MILK    = 3.00;
+    const PRICE_EGGS    = 6.95;
+
+    protected $products = array();
+
+    public function add($product, $quantity)
+    {
+        $this->products[$product] = $quantity;
+    }
+
+    public function getQuantity($product)
+    {
+        return isset($this->products[$product]) ? $this->products[$product] :
+               FALSE;
+    }
+
+    public function getTotal($tax)
+    {
+        $total = 0.00;
+
+        $callback =
+            function ($quantity, $product) use ($tax, &$total)
+            {
+                $pricePerItem = constant(__CLASS__ . "::PRICE_" .
+                    strtoupper($product));
+                $total += ($pricePerItem * $quantity) * ($tax + 1.0);
+            };
+
+        array_walk($this->products, $callback);
+        return round($total, 2);;
+    }
+}
+
+$my_cart = new Cart;
+
+// Add some items to the cart
+$my_cart->add('butter', 1);
+$my_cart->add('milk', 3);
+$my_cart->add('eggs', 6);
+
+// Print the total with a 5% sales tax.
+print $my_cart->getTotal(0.05) . "\n";
+// The result is 54.29
+?>
+]]>
+    </programlisting>
+   </example>
+
+   <example>
+    <title>Vinculação automática do <literal>$this</literal></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class Test
+{
+    public function testing()
+    {
+        return function() {
+            var_dump($this);
+        };
+    }
+}
+
+$object = new Test;
+$function = $object->testing();
+$function();
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(Test)#1 (0) {
+}
+]]>
+    </screen>
+    &example.outputs.53;
+    <screen>
+<![CDATA[
+Notice: Undefined variable: this in script.php on line 8
+NULL]]>
+    </screen>
+   </example>
+
+   <para>
+    A partir do PHP 5.4.0, ao ser declarada no contexto de uma classe, a classe corrente é
+    automaticamente vinculada a ela, tornando <literal>$this</literal> disponível
+    dentro do escopo da função. Se essa vinculação automática da classe
+    corrente não for o comportamento esperado,
+    <link linkend="functions.anonymous-functions.static">funções anônimas estáticas</link>
+    podem ser utilizadas.
+   </para>
+
+   <sect2 xml:id="functions.anonymous-functions.static">
+    <title>Funções anônimas estáticas</title>
+    <para>
+     A partir do PHP 5.4, funções anônimas podem ser declaradas estaticamente. Evita
+     que a classe corrente seja automaticamente vinculada a
+     ela. Objetos também podem não serão vinculadas a ela em tempo de execução.
+    </para>
+    <para>
+     <example>
+      <title>Tentando utilizar o <literal>$this</literal> de dentro de uma função anônima estática</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+class Foo
+{
+    function __construct()
+    {
+        $func = static function() {
+            var_dump($this);
+        };
+        $func();
+    }
+};
+new Foo();
+
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Notice: Undefined variable: this in %s on line %d
+NULL
+]]>
+      </screen>
+     </example>
+    </para>
+
+    <para>
+     <example>
+      <title>Tentando vincular um objeto a uma função anônima estática</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$func = static function() {
+    // function body
+};
+$func = $func->bindTo(new StdClass);
+$func();
+
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Warning: Cannot bind an instance to a static closure in /in/sLLS9 on line 5
+]]>
+      </screen>
+     </example>
+    </para>
+   </sect2>
+
+   <sect2 role="changelog">
+    &reftitle.changelog;
+    <para>
+     <informaltable>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>&Version;</entry>
+         <entry>&Description;</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>7.1.0</entry>
+         <entry>
+          Funções anônimas podem não incluir &link.superglobals;,
+          <varname>$this</varname>, ou qualquer variável com o mesmo nome como um
+          parâmetro.
+         </entry>
+        </row>
+        <row>
+         <entry>5.4.0</entry>
+         <entry>
+          <varname>$this</varname> pode ser utilizado em funções anônimas,
+          bem como ser declarada estaticamente.
+         </entry>
+        </row>
+        <row>
+         <entry>5.3.0</entry>
+         <entry>
+          Funções anônimas disponibilizadas.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </informaltable>
+    </para>
+   </sect2>
+
+   <sect2 role="notes">
+    &reftitle.notes;
+    <note>
+     <simpara>
+      É possível utilizar <function>func_num_args</function>,
+      <function>func_get_arg</function> e <function>func_get_args</function>
+      dentro de closures.
+     </simpara>
+    </note>
+   </sect2>
+
+  </sect1>
+  <sect1 xml:id="functions.arrow">
+   <title>Arrow Functions</title>
+
+   <simpara>
+    Arrow functions foram introduzidos a partir do PHP 7.4 como uma sintaxe mais concisa para
+    <link linkend="functions.anonymous">funções anônimas</link>.
+   </simpara>
+   <simpara>
+    Funções anônimas e arrow functions são implementadas usando a classe
+    <link linkend="class.closure"><classname>Closure</classname></link>.
+   </simpara>
+
+   <simpara>
+    Arrow functions tem a forma básica
+    <code>fn (argument_list) =&gt; expr</code>.
+   </simpara>
+
+   <simpara>
+    Arrow functions possuem a mesmas características das
+    <link linkend="functions.anonymous">funções anônimas</link>,
+    exceto que o uso de variáveis do escopo pai é sempre automático.
+   </simpara>
+
+   <simpara>
+    Quando uma variável usada na expressão é definida no escopo pai
+    ele será implicitamente capturado por valor.
+    No exemplo a seguir, as funções <varname>$fn1</varname> e
+    <varname>$fn2</varname>comportam-se da mesma maneira.
+   </simpara>
+
+   <para>
+    <example>
+    <title>Arrow functions capturam variáveis por valor automaticamente</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$y = 1;
+
+$fn1 = fn($x) => $x + $y;
+// equivalent to using $y by value:
+$fn2 = function ($x) use ($y) {
+    return $x + $y;
+};
+
+var_export($fn1(3));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+4
+]]>
+    </screen>
+   </example>
+   </para>
+   <simpara>
+    Isso também funciona se as arrow de functions estiverem aninhadas:
+   </simpara>
+   <para>
+    <example>
+     <title>Arrow functions capturam variáveis por valor automaticamente, mesmo quando aninhadas</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$z = 1;
+$fn = fn($x) => fn($y) => $x * $y + $z;
+// Outputs 51
+var_export($fn(5)(10));
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <simpara>
+    Da mesma forma que funções anônimas,
+    a sintaxe das arrow functions permitem assinaturas de função arbitrária,
+    incluindo parâmetros e tipos de retorno, valores padrão, variadics,
+    bem como por referência passando e retornando.
+    Todos os exemplos válidos de arrow functions:
+   </simpara>
+   <para>
+    <example>
+     <title>Examplos de arrow functions</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+fn(array $x) => $x;
+static fn(): int => $x;
+fn($x = 42) => $x;
+fn(&$x) => $x;
+fn&($x) => $x;
+fn($x, ...$rest) => $rest;
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <simpara>
+    Arrow functions usam vinculação de variável por valor.
+    Isso é aproximadamente equivalente a realizar um <code>use($x)</code> para cada
+    variável <varname>$x</varname> usada dentro da arrow function.
+    Uma passagem de variável por valor, significa que não é possível modificar quaisquer valores
+    do escopo externo.
+    <link linkend="functions.anonymous">Funções anônimas</link>
+    podem ser usadas em vez disso para passagem de variável por referência.
+   </simpara>
+   <para>
+    <example>
+     <title>Valores do escopo externo não podem ser modificados por arrow functions</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$x = 1;
+$fn = fn() => $x++; // Has no effect
+$fn();
+var_export($x);  // Outputs 1
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+
+   <sect2 role="changelog">
+    &reftitle.changelog;
+    <para>
+     <informaltable>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>&Version;</entry>
+         <entry>&Description;</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>7.4.0</entry>
+         <entry>
+          Arrow functions tornou-se disponível.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </informaltable>
+    </para>
+   </sect2>
+
+   <sect2 role="notes">
+    &reftitle.notes;
+    <note>
+     <simpara>
+      É possível usar <function>func_num_args</function>,
+      <function>func_get_arg</function>, e <function>func_get_args</function>
+      de dentro de uma arrow functions.
+     </simpara>
+    </note>
+   </sect2>
+  </sect1>
+
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 303894 Maintainer: samesch Status: ready -->
+<refentry xml:id='function.session-cache-expire' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>session_cache_expire</refname>
+  <refpurpose>Liefert die aktuelle Cache-Verfallszeit</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>session_cache_expire</methodname>
+   <methodparam choice="opt"><type>string</type><parameter>new_cache_expire</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>session_cache_expire</function> gibt die aktuelle Einstellung von
+   <literal>session.cache_expire</literal> zurück.
+  </para>
+  <para>
+   Die Cache-Verfallszeit wird zu Beginn einer Anfrage auf den standardmäßigen
+   Wert von 180, der in <link
+   linkend="ini.session.cache-expire">session.cache_expire</link> gespeichert
+   ist, zurückgesetzt. Folglich müssen Sie
+   <function>session_cache_expire</function> bei jeder Anfrage (und vor dem
+   Aufruf von <function>session_start</function>) aufrufen.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>new_cache_expire</parameter></term>
+     <listitem>
+      <para>
+       Wenn <parameter>new_cache_expire</parameter> angegeben wurde, wird die
+       aktuelle cache_expire durch <parameter>new_cache_expire</parameter>
+       ersetzt.
+      </para>
+      <para>
+       <note>
+        <simpara>
+         Das Setzen von <parameter>new_cache_expire</parameter> bewirkt nur
+         dann etwas, wenn <literal>session.cache_limiter</literal> auf einen
+         <emphasis>anderen</emphasis> Wert als <literal>nocache</literal>
+         gesetzt ist.
+        </simpara>
+       </note>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Gibt die aktuelle Einstellung von <literal>session.cache_expire</literal>
+   zurück. Der zurückgegebene Wert wird in Minuten angegeben und ist
+   standardmäßig auf 180 gesetzt.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>session_cache_expire</function> Beispiel</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+/* setzen der Cacheverwaltung auf 'private' */
+
+session_cache_limiter('private');
+$cache_limiter = session_cache_limiter();
+
+/* setzen der Cache-Verfallszeit auf 30 Minuten */
+session_cache_expire(30);
+$cache_expire = session_cache_expire();
+
+/* starten der Session */
+
+session_start();
+
+echo "Die Cacheverwaltung ist jetzt auf $cache_limiter gesetzt<br />";
+echo "Die Session wird für $cache_expire Minuten im Cache gespeichert";
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><link linkend="ini.session.cache-expire">session.cache_expire</link></member>
+    <member><link linkend="ini.session.cache-limiter">session.cache_limiter</link></member>
+    <member><function>session_cache_limiter</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

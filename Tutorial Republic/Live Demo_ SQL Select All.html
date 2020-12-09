@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Live Demo: SQL Select All</title>
+	<meta name="description" content="Try and test SQL queries or statements online in a simple and easy way using our free SQL editor and see the results in real-time." />
+		    <meta charset="UTF-8" />
+	<meta property="og:title" content="SQL Example - Tutorial Republic" />
+    <meta property="og:description" content="View the live demo as well as try and test this example using online SQL editor." />
+	<meta property="fb:admins" content="100001054961582" />
+	<meta property="fb:app_id" content="1404574483159557" />
+	<meta property="og:image" content="/lib/images/signature.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link type="image/x-icon" href="/favicon.ico" rel="shortcut icon" />
+	<link rel="stylesheet" href="lib/bin/css/codemirror.css" />
+    <link rel="stylesheet" href="/lib/icomoon/style.css">
+	<link rel="stylesheet" href="lib/bin/css/custom-1.6.css" />
+	<link rel="stylesheet" href="lib/bin/css/sql-editor.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="lib/bin/js/codemirror.js"></script>
+	<script src="lib/bin/js/jquery.websql.min.js"></script>
+	<script src="lib/bin/js/websql.min.js"></script>
+	<script>
+		//resize
+		var fixed = 140;
+		function setHeight(h) {
+			var hgt = h - fixed;
+			var fheight = hgt + "px";
+			$(".CodeMirror-scroll").height(150);
+			$(".output-area, #preview").height(hgt-158);
+			$(".status-box").height(hgt-16)
+		}
+		$(document).ready(function() {
+			setHeight($(window).height());
+			
+			//show hide right pane
+			$(".hide-db-pane").click(function(){
+				$(this).hide();
+				$(".show-db-pane").show();
+				$("#db-pane").hide();
+				$("#top-pane, #bottom-pane").css("full-screen");
+			});
+			$(".show-db-pane").click(function () {
+				$(this).hide();
+				$(".hide-db-pane").show();
+				$("#db-pane").show();
+				$("#top-pane, #bottom-pane").removeClass("full-screen");
+			});
+		});
+		
+		$(window).resize(function() {
+			$(window).bind("resize", function(){ 
+				setHeight($(window).height());
+			});
+		});
+		$(window).trigger('resize');
+	</script>
+	<script src="lib/bin/mode/sql.js"></script>
+	<script src="lib/bin/js/active-line.js"></script>
+	<style>
+		.CodeMirror{font-size: 15px;line-height: normal;font-family: consolas,monospace;background: url("lib/images/gutter-bg.gif") repeat-y -26px 0 transparent;}
+		.CodeMirror-activeline-background {background: #e8f2ff !important;}
+		.CodeMirror-scroll{overflow:auto;}
+		.control-bar .buttons a:first-child{margin-right: 10px;}
+		#carbonads{border: none !important;}
+	</style>
+	<!--Google Analytics-->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-40117907-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-40117907-1');
+</script>	<!--End:Google Analytics-->
+</head>
+<body>
+
+    <form action="lib/bin/view.php" method="post" target="preview" name="myForm" id="myForm" class="codelab">
+        <table>
+            <tr>
+                <td class="header-wrapper" colspan="2">
+                    <div class="header clearfix">
+                        <div class="logo">
+							<img src="lib/images/codelab-logo.svg" alt="CodeLab" />
+						</div>
+                        <div class="control-bar">
+                            <div class="buttons">
+								<a class="btn" id="execute-btn">Execute Query</a>
+								<a class="btn" id="restore-btn">Restore Database</a>
+                            </div>
+                        </div>
+						<div class="top-ad-box">
+            				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Responsive Leaderboard -->
+<ins class="adsbygoogle"
+     style="display:block;width:100%;height:90px"
+     data-ad-client="ca-pub-9107540490929984"
+     data-ad-slot="4302666817"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>							<div id="carbon-block"></div>
+<script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CE7D6K3M&placement=wwwtutorialrepubliccom";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+    var cssLink = document.createElement("link");
+    cssLink.rel = "stylesheet";
+    cssLink.href = "/lib/styles/carbon.css";
+    (document.getElementsByTagName("head")[0]).appendChild(cssLink);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>						</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table class="frame-box">
+                        <tr>
+                            <td id="top-pane">
+			      				<div class="outer-area">									
+									<span class="show-db-pane">&nbsp;</span>                                	
+									<div class="inner-area">
+										<input type="hidden" id="current-code" name="current-code" />
+                                		<textarea id="commands">
+SELECT * FROM employees;                                		</textarea>
+									</div>
+			      				</div>
+                            </td>                            
+                        </tr>
+						<tr>
+							<td id="bottom-pane">                               
+                                <div class="outer-wrapper">                                    
+									<div class="output-area" id="output">
+										<div id="preview" class="preview">	
+                                        	<div class="hint-text">
+												<p>Click the <strong>Execute Query</strong> button to execute the above SQL statement and see the result.</p>
+												<p>The panel on the right side displays the current status of the database, and it will reflect the changes you make.</p>
+												<p>The database created in your browser using the <strong>Web SQL</strong> technology, and it contains sample tables that will help you practice with SQL.</p>
+												<p>Feel free to experiment with the tables using any SQL statement. Some statement, however, may not work due to lack of support.</p>
+												<p>You can restore the database at any time by clicking the <strong>Restore Database</strong> button.</p>
+											</div>	
+											<div class="error-msg">
+                                                <p>Our SQL Editor uses <b>Web SQL</b> technology to store and access data on the client side.</p>
+                                                <p>WebSQL stores data locally, on the user's browsers. Therefore, each user can have their own database.</p>
+                                                <p>WebSQL is only supported in <b>Chrome</b>, <b>Safari</b>, and <b>Opera</b>. Open the URL of this page in any of these browsers to make the most of it.</p>
+                                                <p><img src="../../../lib/images/editor-support.png" alt="" /></p>
+                                            </div>									
+											<table class="table table-bordered">
+												<thead></thead>
+												<tbody></tbody>
+											</table>
+										</div>                                        
+                                    </div>
+                                </div>
+                            </td>
+						</tr>
+                    </table>
+                </td>
+				<td id="db-pane" class="db-status">
+					<span class="hide-db-pane">&nbsp;</span>
+					<div class="status-box">
+						<h4 class="db-name">Database: demo</h4>
+						<table class="table" id="db-tables">
+							<thead>
+								<tr>
+									<th>Table</th>
+									<th class="text-right">Rows</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>					
+				</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="codelab-footer clearfix">
+                        <div class="editor-hint" title="Editor Hint"></div>
+                        <div class="social-widget-wrapper">
+							<!-- Social widget -->
+                                                        <p class="social-link">Share this example with 
+                                <a id="facebook-share-btn" href="https://facebook.com/sharer.php?u=https://www.tutorialrepublic.com%2Fcodelab.php%3Ftopic%3Dsql%26file%3Dselect-all" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600,top=150, left='+((screen.width/2)-300));return false;">Facebook</a>, 
+                                <a id="twitter-share-btn" href="https://twitter.com/share?text=SQL+Example%3A+See+live+demo+at+-+&amp;url=https://www.tutorialrepublic.com%2Fcodelab.php%3Ftopic%3Dsql%26file%3Dselect-all" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600,top=150, left='+((screen.width/2)-300));return false;">Twitter</a>, 
+                                <a id="google-share-btn" href="https://plus.google.com/share?url=https://www.tutorialrepublic.com%2Fcodelab.php%3Ftopic%3Dsql%26file%3Dselect-all" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=438,width=600,top=150, left='+((screen.width/2)-300));return false;">Google +</a>. Please give us a 
+                                <a id="facebook-like-btn" href="/like.php" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=250,width=600,top=150, left='+((screen.width/2)-300));return false;">Like</a>, if you find it helpful.
+                            </p>
+                            <!-- End:Social widget -->
+                        </div>
+						<a href="/codelab.php?topic=html&amp;file=hello-world" class="switch-mode">Switch to HTML Mode</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html>
+

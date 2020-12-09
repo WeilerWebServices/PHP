@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 350653 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+<refentry xml:id="function.date" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>date</refname>
+  <refpurpose>Форматирует вывод системной даты/времени</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>date</methodname>
+   <methodparam><type>string</type><parameter>format</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>timestamp</parameter><initializer>time()</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Возвращает строку, отформатированную в соответствии с указанным шаблоном
+   <parameter>format</parameter>. Используется метка времени, заданная аргументом
+   <parameter>timestamp</parameter>, или текущее системное время, если
+   <parameter>timestamp</parameter> не задан. Таким образом,
+   <parameter>timestamp</parameter> является необязательным и по умолчанию равен
+   значению, возвращаемому функцией <function>time</function>.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <variablelist>
+   <varlistentry>
+    <term><parameter>format</parameter></term>
+    <listitem>
+     <para>
+      Принятый формат <function>DateTimeInterface::format</function>.
+     </para>
+    </listitem>
+    </varlistentry>
+    
+    &date.timestamp.description;
+    
+  </variablelist>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Возвращает отформатированную строку с датой. При передаче нечислового
+   значения в качестве параметра <parameter>timestamp</parameter> будет возвращено
+   &false; и вызвана ошибка уровня <constant>E_WARNING</constant>.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="errors">
+  &reftitle.errors;
+  
+  &date.timezone.errors.description;
+  
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Примеры использования функции <function>date</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// установка временной зоны по умолчанию. Доступно с PHP 5.1
+date_default_timezone_set('UTC');
+
+
+// выведет примерно следующее: Monday
+echo date("l");
+
+// выведет примерно следующее: Monday 8th of August 2005 03:12:46 PM
+echo date('l jS \of F Y h:i:s A');
+
+// выведет: July 1, 2000 is on a Saturday
+echo "July 1, 2000 is on a " . date("l", mktime(0, 0, 0, 7, 1, 2000));
+
+/* пример использования константы в качестве форматирующего параметра */
+// выведет примерно следующее: Mon, 15 Aug 2005 15:12:46 UTC
+echo date(DATE_RFC822);
+
+// выведет примерно следующее: 2000-07-01T00:00:00+00:00
+echo date(DATE_ATOM, mktime(0, 0, 0, 7, 1, 2000));
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Чтобы запретить распознавание символа как форматирующего, следует экранировать
+   его с помощью обратного слэша. Если экранированный символ также является форматирующей 
+   последовательностью, то следует экранировать его повторно.
+   <example>
+    <title>Экранирование символов в функции <function>date</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// выведет примерно следующее: Wednesday the 15th
+echo date('l \t\h\e jS');
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Для вывода прошедших и будущих дат удобно использовать функции <function>date</function>
+   и <function>mktime</function>.
+   <example>
+    <title>Пример совместного использования функций <function>date</function> и <function>mktime</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$tomorrow  = mktime(0, 0, 0, date("m")  , date("d")+1, date("Y"));
+$lastmonth = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));
+$nextyear  = mktime(0, 0, 0, date("m"),   date("d"),   date("Y")+1);
+?>
+]]>
+    </programlisting>
+   </example>
+   <note>
+    <para>
+     Данный способ более надежен, чем простое вычитание и прибавление секунд к метке
+     времени, поскольку позволяет при необходимости гибко осуществить переход на 
+     летнее/зимнее время.
+    </para>
+   </note>
+  </para>
+  <para>
+   Ещё несколько примеров использования функции <function>date</function>. Важно отметить,
+   что следует экранировать все символы, которые необходимо оставить без изменений. Это
+   справедливо и для тех символов, которые в текущей версии PHP не распознаются как
+   форматирующие, поскольку это может быть введено в следующих версиях. Для экранировании
+   управляющих последовательностей (например, \n) следует использовать одинарные кавычки.
+   <example>
+    <title>Форматирование с использованием <function>date</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Предположим, что текущей датой является 10 марта 2001, 5:16:18 вечера,
+// и мы находимся во временной зоне Mountain Standard Time (MST)
+
+$today = date("F j, Y, g:i a");                 // March 10, 2001, 5:16 pm
+$today = date("m.d.y");                         // 03.10.01
+$today = date("j, n, Y");                       // 10, 3, 2001
+$today = date("Ymd");                           // 20010310
+$today = date('h-i-s, j-m-y, it is w Day');     // 05-16-18, 10-03-01, 1631 1618 6 Satpm01
+$today = date('\i\t \i\s \t\h\e jS \d\a\y.');   // it is the 10th day.
+$today = date("D M j G:i:s T Y");               // Sat Mar 10 17:16:18 MST 2001
+$today = date('H:m:s \m \i\s\ \m\o\n\t\h');     // 17:03:18 m is month
+$today = date("H:i:s");                         // 17:16:18
+$today = date("Y-m-d H:i:s");                   // 2001-03-10 17:16:18 (формат MySQL DATETIME)
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Для форматирования дат на других языках используйте вместо <function>date</function>
+   функции <function>setlocale</function> и <function>strftime</function>.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Для получения метки времени из строкового представления даты можно воспользоваться
+    функцией <function>strtotime</function>. Кроме того, некоторые базы данных имеют
+    собственные функции для преобразования внутреннего представления даты в метку времени
+    (например, функция MySQL <link xlink:href="&url.mysql.docs.date;">UNIX_TIMESTAMP</link>).
+   </para>
+  </note>
+  <tip>
+   <para>
+    Начиная с PHP 5.1, временную метку начала запроса
+    можно получить из поля <varname>$_SERVER['REQUEST_TIME']</varname>.
+   </para>
+  </tip>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>gmdate</function></member>
+    <member><function>idate</function></member>
+    <member><function>getdate</function></member>
+    <member><function>getlastmod</function></member>
+    <member><function>mktime</function></member>
+    <member><function>strftime</function></member>
+    <member><function>time</function></member>
+    <member><function>DateTimeImmutable::__construct</function></member>
+    <member><link linkend="datetime.constants.types">Предопределенные константы даты и времени</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

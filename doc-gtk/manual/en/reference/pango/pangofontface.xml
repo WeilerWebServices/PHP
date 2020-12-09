@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision: 1.4 $ -->
+<classentry id="pango.pangofontface">
+ <classmeta>
+  <classtitle>PangoFontFace</classtitle>
+  <classparent>GObject</classparent>
+  <shortdesc>
+    An object that represents a group of fonts with varying sizes.
+  </shortdesc>
+  <desc>
+    A <classname>PangoFontFace</classname> object represents a group of fonts
+    with the same family, weight, slant, stretch and width but varying sizes. A
+    list of font faces can be retrieved from a
+    <classname>PangoFontFamily</classname> object using the
+    <function class="PangoFontFamily">list_faces</function> method.
+  </desc>
+ </classmeta>
+
+ <methods>
+
+  <method id="pango.pangofontface.method.describe">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef> <function>describe</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns a <classname>PangoFontDescription</classname> object.
+   </shortdesc>
+   <desc>
+    This method returns a <classname>PangoFontDescription</classname> object
+    with the family, style, variant, weight and stretch information entered. The
+    size will be unset.
+   </desc>
+  </method>
+
+  <method id="pango.pangofontface.method.get_face_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_face_name</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns the name of the font face.
+   </shortdesc>
+   <desc>
+    This method returns a string representing this font face. The name is unique
+    among all faces in the family and is suitable for displaying to users.
+   </desc>
+  </method>
+
+  <method id="pango.pangofontface.method.list_sizes">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>list_sizes</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Returns a list of available font sizes.
+   </shortdesc>
+   <desc>
+    Returns a list of available font face sizes in pango units.
+   </desc>
+  </method>
+
+ </methods>
+
+</classentry>
+

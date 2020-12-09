@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.8 $ -->
+<classentry id="gtk.gtkimagemenuitem">
+ <classmeta>
+  <classtitle>GtkImageMenuItem</classtitle>
+  <classparent>GtkMenuItem</classparent>
+  <classimage fileref="&directory.images;/reference/gtk/gtkimagemenuitem.png"/>
+  <shortdesc>
+   A menu item with an icon.
+  </shortdesc>
+  <desc>
+   <para>
+    This is essentially a <classname>GtkMenuItem</classname> which has an
+    icon displayed next to the text label.
+   </para>
+   <para>
+    These items are frequently used for menu items like New, Open or Save.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+  <constructor id="gtk.gtkimagemenuitem.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkImageMenuItem</function></funcdef>
+    <paramdef>string <parameter><optional>label</optional></parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new menu item with an icon.
+   </shortdesc>
+   <desc>
+    <para>
+     Use the constructor to generate a new menu item with an icon. You may
+     pass a string as the label, or a
+     <link linkend="gtk.enum.stockitems">stock id</link>, if you want to use
+     the existing stock icons.
+    </para>
+    <para>
+     You may even precede a character of the label with an
+     <literal>_</literal> to indicate the mnemonic for the menu item.
+    </para>
+    <example>
+     <title>Creating image menu items</title>
+     <programlisting role="php">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="&directory.examples;/reference/gtk/gtkseparatormenuitem/constructor.phpw" parse="text">
+       <xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback>
+      </xi:include>
+     </programlisting>
+    </example>
+   </desc>
+  </constructor>
+ </constructors>
+
+
+ <methods>
+  <method id="gtk.gtkimagemenuitem.method.get_image">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GtkWidget</classname> <function>get_image</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the widget set as the image for the menu item.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to retrieve the image widget currently associated with the
+     menu item.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkImageMenuItem">set_image</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkimagemenuitem.method.set_image">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_image</function></funcdef>
+     <paramdef><classname>GtkWidget</classname> <parameter>image</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the image widget for the menu item.
+   </shortdesc>
+   <desc>
+    <para>
+     Use this method to set the image for the menu item to the specified
+     widget.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkImageMenuItem">get_image</function>
+    </para>
+   </desc>
+  </method>
+ </methods>
+
+</classentry>

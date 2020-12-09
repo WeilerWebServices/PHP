@@ -1,0 +1,27 @@
+#! /bin/sh
+
+cd /local/Web/sites/downloads.php.net || exit 1
+
+for dir in *; do
+  if test -d $dir; then
+    cd $dir
+    rm -f .new.md5 .new.index
+    echo "<html><body><ul>" > .new.index
+    touch .new.md5
+    for i in *.zip *.bz2 *.gz *.xz; do
+      if test -r "$i"; then
+        hash=`/sbin/md5 "$i"`
+        time=`stat -f "%Sm" -t "%Y-%m-%d %H:%M %z" $i`
+        size=`du -sh $i | awk '{print $1}'`
+        echo "<li><a href='$i'>$i</a> ($time) - $size<br />$hash</li>" >> .new.index
+        echo $hash >> .new.md5
+      fi
+    done
+    echo "</ul></body></html>" >> .new.index
+
+    /usr/sbin/chown $dir .new.md5 .new.index
+    mv .new.index index.html
+    mv .new.md5 md5sums.txt
+    cd ..
+  fi
+done

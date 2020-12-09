@@ -1,0 +1,42 @@
+<?php
+	$presentationDir = 'presentations';
+	$baseDir = '/';
+	$showScript = 'show.php';  // In case you want to ForceType a shorter one
+	$helpPage = 'help.php';
+	$baseFontSize = '12pt';
+	$flashFontScale = 18;
+	$pdfFontScale = 12;
+	$pdfResourceFile = '/usr/share/fonts/pdflib/pdflib.upr';
+	$pdf_font = "Times-Roman";  // Look in your pdfResourceFile for more options
+	$pdf_font_bold = "Times-Bold";
+	$pdf_example_font = "Courier";
+	$jsKeyboard = true; // enable javascript handling of keyboard events
+	$topic_cols = 3; // number of topic columns on front page
+	
+    // language/locale for PRES2 messages, available: en, es
+    // do not use es_ES or other variation, set the equivalencies 
+    // in the function _init_gettext() in messages.php
+    define('PRES2_LOCALE', 'en');
+    define('PRES2_LOCALEDIR', 'locale');
+    define('PRES2_USE_GETTEXT', false);
+
+
+// Convert em font sizing to flash font sizes
+function flash_fixsize($ht) {
+	global $flashFontScale;
+
+	if(strstr($ht,'em')) {
+		$ht = ((float)$ht*$flashFontScale);
+	} 
+	return $ht;
+}
+
+function pdf_fixsize($ht) {
+	global $pdfFontScale;
+
+	if(strstr($ht,'em')) {
+		$ht = ((float)$ht*$pdfFontScale);
+	} 
+	return $ht;
+}
+?>

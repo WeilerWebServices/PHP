@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes Maintainer: mikaelkael -->
+
+<sect1 xml:id="language.types.boolean">
+ <title>Booléen</title>
+
+ <simpara>
+  C'est le type le plus simple. Un <type>booléen</type> représente une valeur de vérité.
+  Il peut valoir &true; ou &false;.
+ </simpara>
+
+ <sect2 xml:id="language.types.boolean.syntax">
+  <title>Syntaxe</title>
+  <para>
+   Pour spécifier un &boolean; littéral, utilisez la constante &true; ou
+   &false;. Les deux sont insensibles à la casse.
+  </para>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$foo = true; // assigne la valeur TRUE à $foo
+?>
+]]>
+   </programlisting>
+  </informalexample>
+
+  <para>
+   Typiquement, le résultat d'un <link linkend="language.operators">opérateur</link>
+   qui retourne un &boolean;, passé ensuite à une
+   <link linkend="language.control-structures">structure de contrôle</link>.
+  </para>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+// == est un opérateur qui teste
+// l'égalité et retourne un booléen
+if ($action == "show_version") {
+    echo "La version est 1.23";
+}
+
+// ceci n'est pas nécessaire...
+if ($show_separators == TRUE) {
+    echo "<hr>\n";
+}
+
+// ...à la place, vous pouvez utiliser, avec la même signification :
+if ($show_separators) {
+    echo "<hr>\n";
+}
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </sect2>
+
+ <sect2 xml:id="language.types.boolean.casting">
+  <title>Conversion en booléen</title>
+
+  <simpara>
+   Pour convertir explicitement une valeur en &boolean;, utilisez
+   <literal>(bool)</literal> ou <literal>(boolean)</literal>. Cependant,
+   dans la plupart des cas, le transtypage n'est pas nécessaire, sachant
+   qu'une valeur sera automatiquement convertie si un opérateur, une fonction
+   ou une structure de contrôle demandent un argument de type
+   <type>booléen</type>.
+  </simpara>
+
+  <simpara>
+   Voir aussi le <link linkend="language.types.type-juggling">transtypage</link>.
+  </simpara>
+  <para>
+   Lors d'une conversion en &boolean;, les valeurs suivantes sont
+   considérées comme &false; :
+  </para>
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     le <link linkend="language.types.boolean">booléen</link> &false;, lui-même
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     les <link linkend="language.types.integer">entier</link>s 0 et -0 (zéro)
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     les <link linkend="language.types.float">nombres à virgule flottante</link> 0.0 et -0.0 (zéro)
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     la <link linkend="language.types.string">chaîne</link> vide, et la
+     <link linkend="language.types.string">chaîne</link> "0"
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     un <link linkend="language.types.array">tableau</link> avec aucun élément
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     le type spécial <link linkend="language.types.null">NULL</link> (incluant
+     les variables non définies)
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     les objets <link linkend="ref.simplexml">SimpleXML</link> créés depuis des balises vides
+    </simpara>
+   </listitem>
+  </itemizedlist>
+
+  <para>
+   Toutes les autres valeurs sont considérées comme &true; (y compris toutes les
+   <link linkend="language.types.resource">ressources</link> et <constant>NAN</constant>).
+  </para>
+
+  <warning>
+   <simpara>
+    <literal>-1</literal> est considéré comme &true;, comme tous les nombres
+    différents de zéro (négatifs ou positifs) !
+   </simpara>
+  </warning>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+var_dump((bool) "");        // bool(false)
+var_dump((bool) 1);         // bool(true)
+var_dump((bool) -2);        // bool(true)
+var_dump((bool) "foo");     // bool(true)
+var_dump((bool) 2.3e5);     // bool(true)
+var_dump((bool) array(12)); // bool(true)
+var_dump((bool) array());   // bool(false)
+var_dump((bool) "false");   // bool(true)
+?>
+]]>
+   </programlisting>
+  </informalexample>
+
+ </sect2>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

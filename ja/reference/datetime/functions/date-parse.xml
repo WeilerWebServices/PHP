@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351135 Maintainer: takagi Status: ready -->
+<!-- Credits: mumumu -->
+<refentry xml:id="function.date-parse" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>date_parse</refname>
+  <refpurpose>指定した日付/時刻の詳細な情報を連想配列で返す</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>array</type><type>false</type></type><methodname>date_parse</methodname>
+   <methodparam><type>string</type><parameter>datetime</parameter></methodparam>
+  </methodsynopsis>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>datetime</parameter></term>
+     <listitem>
+      <para>
+       <function>DateTimeImmutable::__construct</function> が理解できる書式の日付/時刻。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   成功した場合に日付/時刻情報を含む配列、&return.falseforfailure;。
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   日付/時刻フォーマットにエラーがある場合は、
+   'errors' 要素にエラーメッセージが格納されます。
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.2.0</entry>
+      <entry>
+       返される配列の <literal>zone</literal> 要素が、
+       分ではなく秒を表すようになり、
+       符号が逆になりました。
+       たとえば、
+       <literal>-120</literal> は <literal>7200</literal> を表すようになります。
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>date_parse</function> の例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+print_r(date_parse("2006-12-12 10:00:00.5"));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Array
+(
+    [year] => 2006
+    [month] => 12
+    [day] => 12
+    [hour] => 10
+    [minute] => 0
+    [second] => 0
+    [fraction] => 0.5
+    [warning_count] => 0
+    [warnings] => Array()
+    [error_count] => 0
+    [errors] => Array()
+    [is_localtime] => 
+)
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <link linkend="datetime.formats.relative">相対的な書式</link> は
+   絶対的な書式のパース結果に影響を及ぼさず、別途
+   "relative" 要素にまとめられます。
+   <example>
+    <title><function>date_parse</function> での相対的な書式の使用例</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+print_r(date_parse("2006-12-12 10:00:00.5 +1 week +1 hour"));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Array
+(
+    [year] => 2006
+    [month] => 12
+    [day] => 12
+    [hour] => 10
+    [minute] => 0
+    [second] => 0
+    [fraction] => 0.5
+    [warning_count] => 0
+    [warnings] => Array
+        (
+        )
+
+    [error_count] => 0
+    [errors] => Array
+        (
+        )
+
+    [is_localtime] =>
+    [relative] => Array
+        (
+            [year] => 0
+            [month] => 0
+            [day] => 7
+            [hour] => 1
+            [minute] => 0
+            [second] => 0
+        )
+
+)]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>checkdate</function></member>
+    <member><function>getdate</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

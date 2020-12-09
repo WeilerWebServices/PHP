@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 329281 Maintainer: ktretyak Status: ready -->
+<!-- $Revision$ -->
+<sect1 xml:id="language.types.float" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Дробний (Float)</title>
+
+ <para>
+  Дробне число - число з плаваючою точкою (також відоме як "floats", "doubles", чи "real")
+  може записуватись з використанням будь-якого з наступних синтаксисів:
+ </para>
+
+ <informalexample>
+  <programlisting role="php">
+<![CDATA[
+<?php
+$a = 1.234; 
+$b = 1.2e3; 
+$c = 7E-10;
+?>
+]]>
+  </programlisting>
+ </informalexample>
+
+ <para>
+  Формально:
+ </para>
+
+ <informalexample>
+  <programlisting>
+<![CDATA[
+LNUM          [0-9]+
+DNUM          ([0-9]*[\.]{LNUM}) | ({LNUM}[\.][0-9]*)
+EXPONENT_DNUM [+-]?(({LNUM} | {DNUM}) [eE][+-]? {LNUM})
+]]>
+  </programlisting>
+ </informalexample>
+
+ <para>
+  Розмір дробного (float) залежить від платформи, хоча максимальне значення,
+  за звичай, рівне ~1.8e308 з точністю заокругленою до 14 десяткових цифр (при
+  64-бітах використовується формат IEEE).
+ </para>
+
+ <warning xml:id="warn.float-precision">
+  <title>Точність дробного типу</title>
+
+  <para>
+   Числа з плаваючою точкою мають обмежену точність. Хоча це залежить від операційної
+   системи, зазвичай PHP використовує формат подвійної точності IEEE 754, який
+   дає максимальну відносну похибку заокруглення порядка 1.11e-16. Не
+   елементарні арифметичні операції можуть давати більшу похибку, що, звичайно ж,
+   необхідно враховувати, бо збільшення кількості операцій при обрахунку
+   підсилює цей ефект.
+  </para>
+  
+  <para>
+   Окрім того, раціональні числа, які представлені саме як числа з плаваючою
+   точкою з основою 10, такі як <literal>0.1</literal> чи
+   <literal>0.7</literal>, не мають точного представлення у вигляді чисел з
+   плаваючою точкою з основою 2, незалежно від розміру мантіси (для довідки: PHP
+   використовує основу 2 для внутрішніх обрахунків). Отже, вони не можуть бути
+   конвертовані в їхні внутрішні відповідники з основою 2, без невеликих втрат
+   точності. Ця особливість може призводити до заплутаних результатів:
+   наприклад, <literal>floor((0.1+0.7)*10)</literal> за звичай буде повертати
+   <literal>7</literal>, а не очікуване <literal>8</literal>, оскільки
+   внутрішнє представлення буде приблизно таким
+   <literal>7.9999999999999991118...</literal>.
+  </para>
+
+  <para>
+   Так що ніколи не довіряйте дробним числам до останньої цифри, та не порівнюйте
+   їх безпосередньо. Якщо необхідна висока точність, можна
+   скористатись <link linkend="ref.bc">функціями з довільною матиматичною
+   точністю</link> та функціями <link linkend="ref.gmp">gmp</link>.
+  </para>
+  
+  <para>
+   "Просте" пояснення можна продивитись тут
+   <link xlink:href="&url.floating.point.guide;">floating point guide</link>.
+  </para>
+ </warning>
+
+ <sect2 xml:id="language.types.float.casting">
+  <title>Конвертація до дробного (float)</title>
+  
+  <para>
+   Щоб отримати інформацію про перетворення рядків (<type>string</type>) в
+   дробні числа (float), прогляньте
+   <link linkend="language.types.string.conversion">Перетворення рядків в
+   числа</link>. Для значень інших типів, спочатку виконується конвертація до
+   цілочисельного (<type>integer</type>), а потім вже до дробного значення
+   (<type>float</type>). Прогляньте
+   <link linkend="language.types.integer.casting">Конвертація до
+   цілочисельного</link>, щоб отримати детальнішу інформацію. Починаючи з PHP 5,
+   видається повідомлення про помилку при конвертації об'єкта
+   (<type>object</type>) до дробного числа (<type>float</type>).
+  </para>
+
+ </sect2>
+
+ <sect2 xml:id="language.types.float.comparison">
+  <title>Порівняння дробного (float)</title>
+
+  <para>
+   Як записано вгорі в застережені, перевірка на рівність дробних значень є
+   проблематичною, в зв'язку зі специфікою їх внутрішнього представлення. Тим
+   не менше, існують способи здійснювати порівняння дробних значень обходячи
+   згадані обмеження.
+  </para>
+
+  <para>
+   Щоб перевірити дробне значення на рівність, використовується верхня межа
+   відносної похибки для заокруглення. Це значення відоме як машинний нуль
+   (чи машинний епсілон, або ж міра заокруглення), та є найменшою різницею, що
+    приймається при розрахунках.
+  </para>
+  
+  <informalexample>
+   <simpara>
+    <varname>$a</varname> та <varname>$b</varname> є рівними з точністю до 5-ти
+    цифр після коми.
+   </simpara>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$a = 1.23456789;
+$b = 1.23456780;
+$машинний_нуль = 0.00001;
+
+if(abs($a-$b) < $машинний_нуль) {
+    echo "$a не рівне $b";
+}
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </sect2>
+ 
+ <sect2 xml:id="language.types.float.nan">
+  <title>NaN</title>
+  <para>
+   Деякі числові операції можуть мати результат зі значенням представленим
+   через константу <constant>NAN</constant>. Такі результати представляють
+   невизначені або невідображувані значення чисел з плаваючою точкою.
+   Будь-які м'які чи строгі порівняння цих значень з іншими значеннями,
+   включаючи їх самих, будуть мати в результаті хибне значення (&false;).
+  </para>
+  <para>
+   Оскільки <constant>NAN</constant> представляє собою число з будь-якими
+   значеннями, <constant>NAN</constant> не можна порівнювати з іншими
+   значеннями, включаючи їх самих. Визначити наявність в результаті значення
+   NAN можна за допомогою функції <function>is_nan</function>.
+  </para>
+ </sect2>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,1352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 351365 Maintainer: pastore Status: ready -->
+<!-- CREDITS: spisto -->
+ <chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook">
+  <title>Funzioni</title>
+
+  <sect1 xml:id="functions.user-defined">
+   <title>Funzioni definite dall'utente</title>
+ 
+   <para>
+    Una funzione può essere definita usando la seguente sintassi:
+   </para>
+   <para>
+    <example>
+     <title>Pseudo codice per dimostrare l'uso delle funzioni</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function foo($arg_1, $arg_2, /* ..., */ $arg_n)
+{
+    echo "Funzione di esempio.\n";
+    return $retval;
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   
+   <simpara>
+    All'interno di una funzione può apparire qualunque codice PHP valido, persino altre
+    funzioni e definizioni di
+    <link linkend="language.oop5.basic.class">classe</link>.
+   </simpara>
+   <para>
+    I nomi di funzione seguono le stesse regole delle altre etichette PHP. Un
+    nome di funzione valido comincia con una lettera o un underscore, seguito
+    da un qualsiasi numero di lettere, numeri o underscore. Come espressione
+    regolare, questo viene rappresentato così:
+    <code>^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$</code>.
+   </para>
+   &tip.userlandnaming;
+   <simpara>
+    Le funzioni devono essere definite prima di essere referenziate
+    <emphasis>tranne</emphasis> quando una funzione è definita condizionalmente come
+    illustrato nei due esempi seguenti.
+   </simpara>
+   <para>
+    Quando una funzione è definita in modo condizionale, come illustrato
+    nei seguenti esempi, occorre che ne venga processata <emphasis>prima</emphasis> la definizione
+    poi venga chiamata la funzione stessa.
+   </para>
+   <para>
+    <example>
+     <title>Funzioni condizionali</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$makefoo = true;
+
+/* Qui non possiamo chiamare foo()
+   poiché non esiste ancora,
+   ma possiamo chiamare bar() */
+
+bar();
+
+if ($makefoo) {
+  function foo()
+  {
+    echo "Io non esisto sino a quando il programma non mi raggiunge.\n";
+  }
+}
+
+/* Ora possiamo chiamare foo()
+   poiché $makefoo vale true */
+
+if ($makefoo) foo();
+
+function bar()
+{
+  echo "Io esco immediatamente dopo l'avvio del programma.\n";
+}
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    <example>
+     <title>Funzioni dentro a funzioni</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function foo() 
+{
+  function bar() 
+  {
+    echo "Io non esiste fino a quando non si esegue foo().\n";
+  }
+}
+
+/* Non possiamo chiamare bar()
+   poiché non esiste ancora. */
+
+foo();
+
+/* Ora si può eseguire bar(),
+   l'elaborazione di foo()
+   l'ha resa accessibile. */
+
+bar();
+
+?>  
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Tutte le funzioni e le classi, in PHP, hanno visibilità globale - possono
+    essere chiamate dall'esterno di una funzione anche se sono definite all'interno di questa e vice-versa.
+   </para>
+   <simpara>
+    PHP non supporta l'overloading di funzioni, non è possibile
+    indefinire o ridefinire funzioni precedentemente dichiarate.
+   </simpara>
+   <note>
+    <simpara>
+     I nomi delle funzioni non distinguono tra maiuscolo e minuscolo per i caratteri ASCII da <literal>A</literal> a <literal>Z</literal>, ma, solitamente, è
+     buona norma richiamare le funzioni nel modo con cui sono state definite.
+    </simpara>
+   </note>   
+   <simpara>
+    Sia <link linkend="functions.variable-arg-list">un numero variabile di
+    argomenti</link> che <link linkend="functions.arguments.default">gli argomenti
+    di default</link> sono ammessi nelle funzioni. Vedere anche i riferimenti
+    alle funzioni
+    <function>func_num_args</function>,
+    <function>func_get_arg</function> e
+    <function>func_get_args</function> per maggiori informazioni.
+   </simpara>
+   
+   <para>
+    In PHP è possibile utilizzare le chiamate a funzioni ricorsive.
+    <example>
+     <title>Funzioni ricorsive</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function recursion($a)
+{
+    if ($a < 20) {
+        echo "$a\n";
+        recursion($a + 1);
+    }
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   <note>
+    <simpara>
+     Funzioni/metodi ricorsivi con oltre 100-200 livelli di ricorsione possono
+     riempire lo stack e causare la terminazione dello script corrente. In particolare,
+     la ricorsione infinita è considerata un errore di programmazione.
+    </simpara>
+   </note>
+   </para>
+
+  </sect1>
+ 
+  <sect1 xml:id="functions.arguments">
+   <title>Argomenti delle funzioni</title>
+ 
+   <simpara>
+    L'informazione può essere passata alle funzioni tramite la lista degli argomenti,
+    che sono liste di espressioni delimitati dalla virgola. Gli argomenti sono
+    valutati da sinistra a destra.
+   </simpara> 
+
+   <para>
+    PHP supporta il passaggio di argomenti per valore (comportamento di default), <link
+    linkend="functions.arguments.by-reference">il passaggio
+    per riferimento</link>, e <link
+    linkend="functions.arguments.default">i valori di default
+    degli argomenti</link>. Le <link linkend="functions.variable-arg-list">liste di argomenti
+    di lunghezza varabile</link> sono ugualmente supportate.
+   </para>
+   <para>
+    <example>
+     <title>Passaggio di array a funzioni</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function prende_array($input)
+{
+    echo "$input[0] + $input[1] = ", $input[0]+$input[1];
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <sect2 xml:id="functions.arguments.by-reference">
+    <title>Passare argomenti per riferimento</title>
+ 
+    <simpara>
+     Di default, gli argomenti della funzione sono passati per valore (così se
+     cambiate il valore dell'argomento all'interno della funzione , esso non
+     cambierà fuori della funzione). Se volete permettere ad una
+     funzione di modificare i suoi argomenti, dovete passarli per riferimento.
+    </simpara>
+    <para>
+     Se volete che una argomento sia passato sempre per riferimento ad una funzione,
+     dovete anteporre un ampersand (&amp;) al nome dell'argomento nella definizione della funzione:
+    </para>
+    <para>
+     <example>
+      <title>Passaggio di parametri per riferimento</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function aggiungi_qualcosa(&$string)
+{
+    $string .= 'e qualche altra cosa.';
+}
+$str = 'Questa è una stringa, ';
+aggiungi_qualcosa($str);
+echo $str;    // l'output sarà 'Questa è una stringa, e qualche altra cosa.'
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+   </sect2>
+   <sect2 xml:id="functions.arguments.default">
+    <title>Valori predefiniti degli argomenti</title>
+ 
+    <para>
+     Una funzione può definire valori predefiniti in stile C++ per
+     argomenti scalari come segue:
+    </para>
+    <para>
+     <example>
+      <title>Utilizzo dei parametri default in una funzione</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function fare_il_caffe($tipo = "cappuccino")
+{
+    return "Sto facendo una tazza di $tipo.\n";
+}
+echo fare_il_caffe();
+echo fare_il_caffe(null);
+echo fare_il_caffe("espresso");
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Sto facendo una tazza di cappuccino.
+Sto facendo una tazza di.
+Sto facendo una tazza di espresso.
+]]>
+      </screen>
+     </example>
+    </para>
+    <para>
+     Anche il PHP permette di utilizzare <type>array</type> ed il tipo speciale &null;
+     come valore di default, ad esempio:
+    </para>
+    <para>
+     <example>
+      <title>Utilizzo di tipi non scalari come valori di default</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function makecoffee($types = array("cappuccino"), $coffeeMaker = NULL)
+{
+    $device = is_null($coffeeMaker) ? "hands" : $coffeeMaker;
+    return "Making a cup of ".join(", ", $types)." with $device.\n";
+}
+echo makecoffee();
+echo makecoffee(array("cappuccino", "lavazza"), "teapot");
+?>
+]]>
+      </programlisting>
+     </example>
+    
+    </para>
+    <simpara>
+     Il valore predefinito deve essere un'espressione costante, non (per
+     esempio) una variabile, un membro di classe o una chiamata ad una funzione.
+    </simpara>
+    <para>
+     Da notare che quando vengono usati argomenti predefiniti, qualunque argomento predefinito dovrebbe essere
+     a destra degli argomenti non-predefiniti; diversamente, le cose
+     non funzioneranno come ci si aspetti. Si consideri il seguente frammento di codice:
+    </para>
+    <para>
+     <example>
+      <title>Utilizzo incorretto degli argomenti di default</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function fare_lo_yogurt($tipo = "yogurt", $gusto)
+{
+    return "Fare una vaschetta di $tipo a $gusto.\n";
+}
+
+echo fare_lo_yogurt("fragola");   // non funziona come si aspetta
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Warning: Missing argument 2 in call to fare_lo_yogurt() in 
+/usr/local/etc/httpd/htdocs/phptest/functest.html on line 41
+Fare una vaschetta di fragola a.
+]]>
+      </screen>
+     </example>
+    </para>
+    <para>
+     Ora, si confronti il codice di sopra con questo:
+    </para>
+    <para>
+     <example>
+      <title>Utilizzo corretto degli argomenti di default</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function fare_lo_yogurt($gusto, $tipo = "yogurt")
+{
+    return "Fare una vaschetta di $tipo a $gusto.\n";
+}
+
+echo fare_lo_yogurt("fragola");   // funziona come si aspetta
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Fare una vaschetta di yogurt a fragola.
+]]>
+      </screen>
+     </example>
+    </para>
+    <note>
+     <simpara>
+      I parametri che sono passati per riferimento possono avere un valore di default.
+     </simpara>
+    </note>
+   </sect2>
+
+   <sect2 xml:id="functions.variable-arg-list">
+    <title>Liste di argomenti a lunghezza variabile</title>
+
+    <simpara>
+     PHP ha il supporto per le liste di argomenti a lunghezza variabile nelle
+     funzioni definite dall'utente utilizzando il
+     token <literal>...</literal>.
+    </simpara>
+    
+    <note>
+     <simpara>
+      È anche possibile ottenere argomenti di lunghezza variabile utilizzando
+      le funzioni <function>func_num_args</function>,
+      <function>func_get_arg</function>, e
+      <function>func_get_args</function>.
+      Questa tecnica è sconsigliata poiché era utilizzata prima dell'introduzione
+      del token <literal>...</literal>.
+     </simpara>
+    </note>
+
+    <para>
+     Le liste dei parametri possono includere il token
+     <literal>...</literal> per denotare che la funzione accetta un
+     numero variabile di parametri. I parametri saranno passati nella
+     variabile data come un array; per esempio:
+
+     <example>
+      <title>Utilizzo di <literal>...</literal> per accedere ai parametri variabili</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function sum(...$numbers) {
+    $acc = 0;
+    foreach ($numbers as $n) {
+        $acc += $n;
+    }
+    return $acc;
+}
+
+echo sum(1, 2, 3, 4);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+10
+]]>
+      </screen>
+     </example>
+    </para>
+
+    <para>
+     Si può anche usare <literal>...</literal> quando vengono chiamate funzioni per spacchettare
+     un <type>array</type> o una variabile <classname>Traversable</classname> o
+     literal all'interno della lista degli argomenti:
+
+     <example>
+      <title>Uso di <literal>...</literal> per fornire parametri</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function add($a, $b) {
+    return $a + $b;
+}
+
+echo add(...[1, 2])."\n";
+
+$a = [1, 2];
+echo add(...$a);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+3
+3
+]]>
+      </screen>
+     </example>
+    </para>
+
+    <para>
+     Si possono specificare parametri con posizione normale prima del
+     token <literal>...</literal>. In questo caso, solo i parametri seguenti
+     che non corrispondono ad un parametro posizionale saranno aggiunti all'array
+     generato da <literal>...</literal>.
+    </para>
+
+    <para>
+     È anche possibile aggiungere una
+     <link linkend="language.types.declarations">dichiarazione di tipo</link> prima del
+     token <literal>...</literal>. Se questa è presente, allora tutti i parametri
+     catturati da <literal>...</literal> devono essere oggetti della classe suggerita.
+
+     <example>
+      <title>Parametri variabili con tipo dichiarato</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function total_intervals($unit, DateInterval ...$intervals) {
+    $time = 0;
+    foreach ($intervals as $interval) {
+        $time += $interval->$unit;
+    }
+    return $time;
+}
+
+$a = new DateInterval('P1D');
+$b = new DateInterval('P2D');
+echo total_intervals('d', $a, $b).' days';
+
+// Questo fallirà, dato che null non è un oggetto DateInterval.
+echo total_intervals('d', null);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+3 days
+Catchable fatal error: Argument 2 passed to total_intervals() must be an instance of DateInterval, null given, called in - on line 14 and defined in - on line 2
+]]>
+      </screen>
+     </example>
+    </para>
+
+    <para>
+     Infine, si possono anche passare parametri variabili
+     <link linkend="functions.arguments.by-reference">per riferimento</link>
+     anteponendo <literal>...</literal> con un ampersand
+     (<literal>&amp;</literal>).
+    </para>
+
+    <sect3 xml:id="functions.variable-arg-list.old">
+     <title>Versioni precedenti di PHP</title>
+
+     <para>
+      Non è richiesta una sintassi speciale per annotare che una funzione è variadica;
+      tuttavia per accedere ai parametri della funzione bisogna usare
+      <function>func_num_args</function>, <function>func_get_arg</function>
+      e <function>func_get_args</function>.
+     </para>
+
+     <para>
+      Il primo esempio di sopra sarebbe implementato come segue in vecchie versioni di PHP:
+
+      <example>
+       <title>Accesso ai parametri variabili in vecchie versioni di PHP</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+function sum() {
+    $acc = 0;
+    foreach (func_get_args() as $n) {
+        $acc += $n;
+    }
+    return $acc;
+}
+
+echo sum(1, 2, 3, 4);
+?>
+]]>
+       </programlisting>
+       &example.outputs;
+       <screen>
+<![CDATA[
+10
+]]>
+       </screen>
+      </example>
+     </para>
+    </sect3>
+
+   </sect2>
+  </sect1>
+ 
+  <sect1 xml:id="functions.returning-values">
+   <title>Valori restituiti</title>
+ 
+   <para>
+    I valori vengono restituiti usando l'istruzione opzionale return. Può
+    essere restituito qualsiasi tipo, incluse liste ed oggetti. Ciò provoca
+    l'interruzione dell'esecuzione della funzione immediatamente e la restituzione del controllo
+    alla linea da cui è stata chiamata. Vedere <function>return</function>
+    per maggiori informazioni.
+   </para>
+
+   <note>
+    <para>
+     Se <function>return</function> è omesso, verrà restituito il 
+     valore &null;.
+    </para>
+   </note>
+
+   <sect2>
+    <title>Uso di return</title>
+    <para>
+     <example>
+      <title>Uso di <function>return</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function quadrato ($num)
+{
+    return $num * $num;
+}
+echo quadrato(4);   // L'output è '16'.
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+
+    <para>
+     Una funzione non può restituire valori multipli, ma risultati simili possono essere
+     ottenuti restituendo un array.
+    </para>
+    <para>
+    <example>
+     <title>Restituzione di un array per ottenere più valori</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function numeri_piccoli()
+{
+    return array (0, 1, 2);
+}
+list ($zero, $uno, $due) = numeri_piccoli();
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     Per restituire un riferimento da una funzione, è necessario usare l'operatore di passaggio per riferimento &amp; in
+     entrambe le dichiarazioni di funzioni e quando viene assegnato il valore restituito ad una
+     variabile:
+    </para>
+    <para>
+     <example>
+      <title>Restituzione di un riferimento da una funzione</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function &restituisce_riferimento()
+{
+    return $un_riferimento;
+}
+
+$nuovo_riferimento =& restituisce_riferimento();
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <simpara>
+     Per maggiori informazioni sui riferimenti, consultare i<link
+     linkend="language.references">Riferimenti Spiegati</link>.
+    </simpara>
+   </sect2>
+  </sect1>
+ 
+  <sect1 xml:id="functions.variable-functions">
+   <title>Funzioni variabili</title>
+
+   <para>
+    PHP supporta il concetto di funzioni variabili. Ciò significa che se
+    un nome di variabile ha le parentesi accodate ad esso, PHP cercherà
+    una funzione con lo stesso nome del valore della
+    variabile, e cercherà di eseguirla. Tra le altre cose, ciò puo essere
+    usato per implementare delle callbacks, tabelle di funzioni e così via.
+   </para>
+   <para>
+    Le funzioni variabili non funzionano con costrutti di linguaggio come
+    <function>echo</function>, <function>print</function>,
+    <function>unset</function>, <function>isset</function>,
+    <function>empty</function>, <function>include</function>,
+    <function>require</function> e simili. Occorre costruire
+    una propria funzione per utilizzare questi costrutti come variabili per funzioni.
+   </para>
+   <para>
+    <example>
+     <title>Esempio di funzioni variabili</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function foo() {
+    echo "In foo()<br />\n";
+}
+
+function bar($arg = '')
+{
+    echo "In bar(); l'argomento era '$arg'.<br />\n";
+}
+
+// Questa è la funzione per usare echo
+function echoit($string)
+{
+    echo $string;
+}
+
+$func = 'foo';
+$func();        // questa chiama foo()
+
+$func = 'bar';
+$func('test');  // questa chiama bar()
+
+$func = 'echoit';
+$func('test');  // questa chiama echoit()
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Tramite le funzioni variabili si possono eseguire anche metodi di oggetti.
+    <example>
+     <title>Esempio di un metodo variabile</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    function Variable()
+    {
+        $name = 'Bar';
+        $this->$name(); // Questo esegue il metodo Bar()
+    }
+    
+    function Bar()
+    {
+        echo "This is Bar";
+    }
+}
+
+$foo = new Foo();
+$funcname = "Variable";
+$foo->$funcname();  // Questo esegue $foo->Variable()
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Quando si chiamano dei metodi statici, la chiamata a funzione ha la precedenza sull'operatore di proprietà statica:
+    <example>
+     <title>Esempio di metodo variabile con proprietà statiche</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    static $variable = 'static property';
+    static function Variable()
+    {
+        echo 'Method Variable called';
+    }
+}
+
+echo Foo::$variable; // Questo stampa 'static property'. Non ha bisogno di una $variable in questo ambito.
+$variable = "Variable";
+Foo::$variable();  // Questo chiama $foo->Variable() leggendo $variable da questo ambito.
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    <example>
+     <title>Callable complesse</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    static function bar()
+    {
+        echo "bar\n";
+    }
+    function baz()
+    {
+        echo "baz\n";
+    }
+}
+
+$func = array("Foo", "bar");
+$func(); // stampa "bar"
+$func = array(new Foo, "baz");
+$func(); // stampa "baz"
+$func = "Foo::bar";
+$func(); // stampa "bar"
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+
+   <sect2 role="seealso">
+    &reftitle.seealso;
+    <para>
+     <simplelist>
+      <member><function>is_callable</function></member>
+      <member><function>call_user_func</function></member>
+      <member><function>function_exists</function></member>
+      <member><link linkend="language.variables.variable">varabili di variabile</link></member>
+     </simplelist>
+    </para>
+   </sect2>
+  </sect1>
+  
+  <sect1 xml:id="functions.internal">
+   <title>Funzioni interne (built-in)</title>
+   
+   <para>
+    Il PHP possiede diverse funzioni e costrutti standard. Esistono, inoltre,
+    funzioni che richiedono la compila di specifici moduli del PHP, altrimenti
+    si ottiene l'errore "undefined function" errors.  Ad esempio, per utilizzare
+    le funzioni <link linkend="ref.image">image</link>, tipo
+    <function>imagecreatetruecolor</function>, occorre che il PHP sia compilato
+    con il supporto <productname>GD</productname>. Oppure, per 
+    utilizzare <function>mysqli_connect</function> occorre
+    che il PHP sia compilato con il supporto per <link linkend="ref.mysqli">MySQL</link>.
+    Esistono anche diverse funzioni di base incluse in ogni versione
+    del PHP tipo le funzioni <link linkend="ref.strings">stringa</link> e
+    <link linkend="ref.var">per variabili</link>. L'esecuzione di
+    <function>phpinfo</function> o di
+    <function>get_loaded_extensions</function> visualizzerà quali
+    moduli sono caricati nel PHP. Inoltre si noti che diverse estensioni sono
+    abilitate per default e che il manule PHP è suddiviso per estensione.
+    Vedere i capitoli <link linkend="configuration">configurazione</link>,
+    <link linkend="install">installazione</link>, ed i capitoli
+    dei singoli moduli per avere maggiori dettagli su come configurare il PHP.
+   </para>
+   <para>
+    Come leggere e comprendere il prototipo di una funzione è spiegato
+    nella sezione del manuale intitolata
+    <link linkend="about.prototypes">come leggere la definizione di una funzione</link>.
+    E' importante comprendere che cosa restituisce una funzione o se una funzione
+    lavora direttamente sui dati passati. Ad esempio
+    <function>str_replace</function> restituisce la stringa modificata, mentre
+    <function>usort</function> lavora sulla variabile
+    passata. Ciascuna pagina del manuale fornisce informazioni specifiche per ogni
+    funzione tipo notizie sui parametri, modifiche di funzionamento,
+    valori restituiti in caso di successo o di errore, ed altre informazioni disponibili.
+    La conoscenza di queste differenze importanti è cruciale per la scrittura di codice PHP corretto.
+   </para>
+   <note>
+    <simpara>
+     Se i parametri passati ad una funzioni non sono quelli attesi, come per esempio
+     passare un <type>array</type> quando è attesa una <type>string</type>,
+     il valore di ritorno della funziona è indefinito. In questo caso restituirà
+     probabilmente &null; ma questa è solo una convenzione, e non ci si può fare
+     affidamento.
+    </simpara>
+   </note>
+
+   <sect2 role="seealso">
+    &reftitle.seealso;
+    <para>
+     <simplelist>
+      <member><function>function_exists</function></member>
+      <member><link linkend="funcref">the function reference</link></member>
+      <member><function>get_extension_funcs</function></member>
+      <member><function>dl</function></member>
+     </simplelist>
+    </para>
+   </sect2>
+  </sect1>
+  
+  <sect1 xml:id="functions.anonymous">
+   <title>Funzioni anonime</title>
+
+   <simpara>
+    Le funzioni anonime, chiamate anche chiusure o <literal>closures</literal>, permettono la
+    creazione di funzioni che non possiedono un nome. Sono molto utili come 
+    valore dei parametri <type>callable</type>,
+    ma hanno molti altri utilizzi.
+   </simpara>
+   <simpara>
+    Le funzioni anonime sono implementate usando la classe <link linkend="class.closure">
+    <classname>Closure</classname></link>.
+   </simpara>
+
+   <example>
+    <title>Esempio di funzione anonima</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo preg_replace_callback('~-([a-z])~', function ($match) {
+    return strtoupper($match[1]);
+}, 'hello-world');
+// stampa helloWorld
+?>
+]]>
+    </programlisting>
+   </example>
+
+   <simpara>
+    Le chiusure possono essere usate anche come valore di una variabile; il PHP converte
+    automaticamente queste espressioni in istanze della
+    classe interna <classname>Closure</classname>. L'assegnazione di una chiusura a
+    una variabile usa la stessa sintassi di un qualsiasi altro assegnazione, incluso il 
+   punto e virgola alla fine:
+   </simpara>
+
+   <example>
+    <title>Esempio di assegnazione di funzione anonima</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$greet = function($name)
+{
+    printf("Hello %s\r\n", $name);
+};
+
+$greet('World');
+$greet('PHP');
+?>
+]]>
+    </programlisting>
+   </example>
+   
+   <simpara>
+    Le chiusure possono anche ereditare le variabili dal contesto del genitore. Ognuna di queste
+    variabili deve essere passata al costrutto del linguaggio <literal>use</literal>.
+    Da PHP 7.1, queste variabili non devono includere &link.superglobals;,
+    <varname>$this</varname>, o variabili con lo stesso nome di un parametro.
+    </simpara>
+
+   <example>
+    <title>Ereditare variabili dal contesto del genitore</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$message = 'hello';
+
+// Nessun "use"
+$example = function () {
+    var_dump($message);
+};
+$example();
+
+// Eredita $message
+$example = function () use ($message) {
+    var_dump($message);
+};
+$example();
+
+// Il valore della variabile ereditata è da quando la funzione
+// è definita, non quando chiamata
+$message = 'world';
+$example();
+
+// Resetta il messaggio
+$message = 'hello';
+
+// Eredita per riferimento
+$example = function () use (&$message) {
+    var_dump($message);
+};
+$example();
+
+// Il valore cambiato nel contesto del genitore
+// è riflesso all'interno della chiamata della funzione
+$message = 'world';
+$example();
+
+// Le closure possono anche accettare argomenti regolari
+$example = function ($arg) use ($message) {
+    var_dump($arg . ' ' . $message);
+};
+$example("hello");
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Notice: Undefined variable: message in /example.php on line 6
+NULL
+string(5) "hello"
+string(5) "hello"
+string(5) "hello"
+string(5) "world"
+string(11) "hello world"
+]]>
+    </screen>
+   </example>
+
+   <simpara>
+    Ereditare le variabili dall'ambito genitore <emphasis>non</emphasis>
+    è la stessa cosa che usare variabili globali.
+    Le variabili globali esistono nell'ambito globale, che è lo stesso, indipendentemente
+    da quale funzione è in esecuzione. L'ambito genitore di una chiusura è la
+    funzione nella quale la chiusura è stata dichiarata (non necessariamente la funzione da
+    cui è stata chiamata). Si veda l'esempio seguente:
+   </simpara>
+
+   <example>
+    <title>Chiusure e ambiti di visibilità</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Un semplice paniere che contiene una lista di prodotti aggiunti
+// e la quantità di ciascun prodotto. Include un metodo che
+// calcola il prezzo totale degli articoli nel paniere utilizzando
+// una chiusura come callback.
+class Cart
+{
+    const PRICE_BUTTER  = 1.00;
+    const PRICE_MILK    = 3.00;
+    const PRICE_EGGS    = 6.95;
+
+    protected $products = array();
+    
+    public function add($product, $quantity)
+    {
+        $this->products[$product] = $quantity;
+    }
+    
+    public function getQuantity($product)
+    {
+        return isset($this->products[$product]) ? $this->products[$product] :
+               FALSE;
+    }
+    
+    public function getTotal($tax)
+    {
+        $total = 0.00;
+        
+        $callback =
+            function ($quantity, $product) use ($tax, &$total)
+            {
+                $pricePerItem = constant(__CLASS__ . "::PRICE_" .
+                    strtoupper($product));
+                $total += ($pricePerItem * $quantity) * ($tax + 1.0);
+            };
+        
+        array_walk($this->products, $callback);
+        return round($total, 2);
+    }
+}
+
+$my_cart = new Cart;
+
+// Aggiunta di un elemento nel paniere
+$my_cart->add('butter', 1);
+$my_cart->add('milk', 3);
+$my_cart->add('eggs', 6);
+
+// Stampa del totale con una tassa aggiuntiva del 5%.
+print $my_cart->getTotal(0.05) . "\n";
+// The result is 54.29
+?>
+]]>
+    </programlisting>
+   </example>
+
+   <example>
+    <title>Binding automatico di <literal>$this</literal></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class Test
+{
+    public function testing()
+    {
+        return function() {
+            var_dump($this);
+        };
+    }
+}
+
+$object = new Test;
+$function = $object->testing();
+$function();
+    
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(Test)#1 (0) {
+}
+]]>
+    </screen>
+   </example>
+
+   <para>
+    Quando dichiarata all'interno del contesto di una classe, la classe corrente è
+    automaticamente legata ad essa, rendendo <literal>$this</literal> disponibile
+    all'interno dello scope di una funzione. Se questo binding automatico della classe
+    corrente non è voluto, allora
+    possono essere invece usate le
+    <link linkend="functions.anonymous-functions.static">funzioni anonime statiche</link>.
+   </para>
+
+   <sect2 xml:id="functions.anonymous-functions.static">
+    <title>Funzioni anonime statiche</title>
+    <para>
+     Le funzioni anonime possono essere dichiarate staticamente. Questo
+     impedisce loro di avere la classe corrente automaticamente legata ad
+     esse. Gli oggetti possono anche non essere legati a loro in fase di esecuzione.
+    </para>
+    <para>
+     <example>
+      <title>Tentativo di utilizzo di <literal>$this</literal> all'interno di una funzione anonima statica</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+class Foo
+{
+    function __construct()
+    {
+        $func = static function() {
+            var_dump($this);
+        };
+        $func();
+    }
+};
+new Foo();
+
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Notice: Undefined variable: this in %s on line %d
+NULL
+]]>
+      </screen>
+     </example>
+    </para>
+
+    <para>
+     <example>
+      <title>Tentativo di legare un oggetto ad una funzione anonima statica</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$func = static function() {
+    // function body
+};
+$func = $func->bindTo(new StdClass);
+$func();
+
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Warning: Cannot bind an instance to a static closure in %s on line %d
+]]>
+      </screen>
+     </example>
+    </para>
+   </sect2>
+   
+   <sect2 role="changelog">
+    &reftitle.changelog;
+    <para>
+     <informaltable>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>&Version;</entry>
+         <entry>&Description;</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>7.1.0</entry>
+         <entry>
+          Le funzioni anonime non possono catturare &link.superglobals;,
+          <varname>$this</varname>, o qualsiasi variabile con lo stesso nome di un
+          parametro nel contesto in cui sono definite.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </informaltable>
+    </para>
+   </sect2>
+
+   <sect2 role="notes">
+    &reftitle.notes;
+    <note>
+     <simpara>
+      È possibile usare <function>func_num_args</function>,
+      <function>func_get_arg</function> e <function>func_get_args</function>
+      all'interno di una chiusura.
+     </simpara>
+    </note>
+   </sect2>
+
+  </sect1>
+  <sect1 xml:id="functions.arrow">
+   <title>Le arrow Function</title>
+
+   <simpara>
+    Le arrow function sono state introdotte in PHP 7.4 come sintassi più concisa per le 
+    <link linkend="functions.anonymous">funzioni anonime</link>.
+   </simpara>
+   <simpara>
+    Sia le funzioni anonime che le arrow function sono implementate usando la 
+    classe <link linkend="class.closure"><classname>Closure</classname></link>.
+   </simpara>
+
+   <simpara>
+    Le arrow function hanno la forma base 
+    <code>fn (argument_list) =&gt; expr</code>.
+   </simpara>
+
+   <simpara>
+    Le arrow function supportano le stesse funzionalità delle 
+    <link linkend="functions.anonymous">funzioni anonime</link>, 
+    eccetto che l'uso delle variabili dallo scope padre è sempre automatico.
+   </simpara>
+
+   <simpara>
+    Quando una variabile usata nell'espressione è definita nello scope padre 
+    essa sarà implicitamente catturata per valore.
+    Nel seguente esempio, le funzioni <varname>$fn1</varname> e 
+    <varname>$fn2</varname> si comportano allo stesso modo. 
+   </simpara>
+
+   <para>
+    <example>
+     <title>Le arrow function catturano variabili per valore automaticamente</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$y = 1;
+ 
+$fn1 = fn($x) => $x + $y;
+// equivalent all'utilizzo di $y per valore:
+$fn2 = function ($x) use ($y) {
+    return $x + $y;
+};
+
+var_export($fn1(3));
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+4
+]]>
+      </screen>
+    </example>
+   </para>
+   <simpara>
+    Questo funziona anche se le arrow function sono nidificate: 
+   </simpara>
+   <para>
+    <example>
+     <title>Le arrow function catturano variabili per valore automaticamente, anche quando nidificate</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$z = 1;
+$fn = fn($x) => fn($y) => $x * $y + $z;
+// Produce 51
+var_export($fn(5)(10));
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <simpara>
+    Analogamente alle funzioni anonime, 
+    la sintassi delle arrow function permette firme di funzioni arbitrarie,
+    inclusi parametri e tipi di ritorno, valori di default, variadiche,
+    così come passaggio di parametri e ritorno per riferimento.
+    Tutti i seguenti sono esempi validi di arrow function: 
+   </simpara>
+   <para>
+    <example>
+     <title>Esempi di arrow function</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+fn(array $x) => $x;
+static fn(): int => $x;
+fn($x = 42) => $x;
+fn(&$x) => $x;
+fn&($x) => $x;
+fn($x, ...$rest) => $rest;
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <simpara>
+    Le arrow function usano il binding della variabili per valore.
+    Questo è grossomodo equivalente ad eseguire uno <code>use($x)</code> per ogni 
+    variabile <varname>$x</varname> usata all'interno della arrow function.
+    Un binding per valore significa che non è possibile modificare qualsiasi valore 
+    dallo scope esterno. 
+    Le <link linkend="functions.anonymous">funzioni anonime</link> 
+    possono invece essere usate per il binding per riferimento.
+   </simpara>
+   <para>
+    <example>
+     <title>I valori dello scope esterno non possono essere modificati dalle arrow function</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$x = 1;
+$fn = fn() => $x++; // Non ha effetto
+$fn();
+var_export($x);  // Produce 1
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   
+   <sect2 role="changelog">
+    &reftitle.changelog;
+    <para>
+     <informaltable>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>&Version;</entry>
+         <entry>&Description;</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>7.4.0</entry>
+         <entry>
+          Le arrow function sono diventate disponibili.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </informaltable>
+    </para>
+   </sect2>
+
+   <sect2 role="notes">
+    &reftitle.notes;
+    <note>
+     <simpara>
+      È possibile usare <function>func_num_args</function>,
+      <function>func_get_arg</function>, e <function>func_get_args</function>
+      dall'interno di una arrow function.
+     </simpara>
+    </note>
+   </sect2>
+  </sect1>
+
+ </chapter>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351112 Maintainer: yannick Status: ready -->
+<!-- Reviewed: yes -->
+
+<sect1 xml:id="control-structures.goto" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title><literal>goto</literal></title>
+ <?phpdoc print-version-for="goto"?>
+ <para>
+  <mediaobject>
+   <alt>Quelle est la chose la plus bizarre lors de l'utilisation de goto ?</alt>
+   <imageobject>
+    <imagedata fileref="en/language/figures/xkcd-goto.png" format="PNG"/>
+   </imageobject>
+  </mediaobject>
+  Image fournie par <link xlink:href="&url.xkcd;292">xkcd</link>
+ </para>
+ <para>
+  L'opérateur <literal>goto</literal> peut être utilisé pour 
+  continuer l'exécution du script à un autre point du programme. 
+  La cible est spécifiée par un label, suivi de deux-point, et 
+  l'instruction <literal>goto</literal> est ensuite suivie de ce label.
+  <literal>goto</literal> n'est pas totalement sans limitations. 
+  L'étiquette cible doit être dans le même contexte et fichier, ce qui signifie
+  qu'il n'est pas possible de changer de méthode ou de fonction,
+  ni de se rendre dans une autre fonction. Vous pouvez sortir d'une
+  fonction, et l'utilisation courante est alors de se servir de
+  <literal>goto</literal> comme un <literal>break</literal>. 
+ </para>
+ <para>
+  <example>
+   <title>Exemple avec <literal>goto</literal></title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+goto a;
+echo 'Foo';
+ 
+a:
+echo 'Bar';
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+Bar
+]]>
+   </screen>
+  </example>
+ </para>
+ <para>
+  <example>
+   <title>Exemple de boucle avec <literal>goto</literal></title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+for($i=0,$j=50; $i<100; $i++) {
+  while($j--) {
+    if($j==17) goto end; 
+  }  
+}
+echo "i = $i";
+end:
+echo 'j hit 17';
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+j hit 17
+]]>
+   </screen>
+  </example>
+ </para>
+ <para>
+  <example>
+   <title>Ce <literal>goto</literal> ne fonctionne pas</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+goto loop;
+for($i=0,$j=50; $i<100; $i++) {
+  while($j--) {
+    loop:
+  }
+}
+echo "$i = $i";
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+Fatal error: 'goto' into loop or switch statement is disallowed in
+script on line 2
+]]>
+   </screen>
+  </example>
+ </para>
+
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

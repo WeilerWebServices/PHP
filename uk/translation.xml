@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE translation SYSTEM "../doc-base/phpbook/phpbook-xsml/translation.dtd">
+
+<translation>
+ <intro>
+  Дану інформацію згенеровано файлом
+  /repository/phpdoc/doc-base/trunk/scripts/revcheck.php, що дає змогу
+  швидко переглянути файли, які потрібно оновити, а також людей,
+  які з ними працювали.
+   
+  Якщо ви хочете допомогти з перекладом документації, чи повідомити про знайдену
+  помилку, напишіть лист на групу розсилки doc-uk@lists.php.net
+ </intro>
+
+ <translators>
+  <person name="Kostya Tretyak" email="ktretyak@php.net" nick="ktretyak" vcs="yes" />
+  <person name="Mykola Pukhalskyi" email="sens@ukrdub.net" nick="iSensetivity" vcs="no" />
+ </translators>
+
+</translation>

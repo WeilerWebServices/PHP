@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 351133 Maintainer: hirokawa Status: ready -->
+<!-- CREDITS: takagi,mumumu -->
+<section xml:id="info.configuration" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.runtime;
+ &extension.runtime;
+ <para>
+  <table>
+   <title>PHP オプション/情報設定オプション</title>
+   <tgroup cols="4">
+    <thead>
+     <row>
+      <entry>&Name;</entry>
+      <entry>&Default;</entry>
+      <entry>&Changeable;</entry>
+      <entry>&Changelog;</entry>
+     </row>
+    </thead>
+    <tbody>
+    <row>
+     <entry><link linkend="ini.assert.active">assert.active</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.assert.bail">assert.bail</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.assert.warning">assert.warning</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.assert.callback">assert.callback</link></entry>
+     <entry>NULL</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.assert.quiet-eval">assert.quiet_eval</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.assert.exception">assert.exception</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 7.0.0 以降で利用可能。</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.enable-dl">enable_dl</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_SYSTEM</entry>
+     <entry>&removed.php.future;</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.max-execution-time">max_execution_time</link></entry>
+     <entry>"30"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.max-input-time">max_input_time</link></entry>
+     <entry>"-1"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.max-input-nesting-level">max_input_nesting_level</link></entry>
+     <entry>"64"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>PHP 5.2.3 以降で有効。</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.max-input-vars">max_input_vars</link></entry>
+     <entry>1000</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>PHP 5.3.9 以降で有効</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_PERDIR</entry>
+     <entry>PHP 5.4.0 で削除。</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link></entry>
+     <entry>"0"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 5.4.0 で削除。</entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.zend.enable-gc">zend.enable_gc</link></entry>
+     <entry>"1"</entry>
+     <entry>PHP_INI_ALL</entry>
+     <entry>PHP 5.3.0 以降で有効。</entry>
+    </row>
+    </tbody>
+   </tgroup>
+  </table>
+  &ini.php.constants;
+ </para>
+ 
+ &ini.descriptions.title;
+ 
+ <para>
+  <variablelist>
+   <varlistentry xml:id="ini.assert.active">
+    <term>
+     <parameter>assert.active</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      <function>assert</function> の評価を有効にします。
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.assert.bail">
+    <term>
+     <parameter>assert.bail</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      assertion が失敗した時にスクリプトの実行を終了します。
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.assert.warning">
+    <term>
+     <parameter>assert.warning</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      assertion が失敗する度に PHP 警告を発行します。
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.assert.callback">
+    <term>
+     <parameter>assert.callback</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      assertion が失敗した時にコールされるユーザー関数
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.assert.quiet-eval">
+    <term>
+     <parameter>assert.quiet_eval</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      assertion 式の評価時に <function>error_reporting</function> の現在の
+      設定を使用します。有効な場合、評価時にエラーは表示されません。
+      (暗黙のうちに error_reporting(0) とします)
+      無効な場合、エラーは、<function>error_reporting</function> の設定に
+      基づき設定されます。
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.assert.exception">
+    <term>
+     <parameter>assert.exception</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      アサーションに失敗した場合に <classname>AssertionError</classname> 例外を発行します。
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.enable-dl">
+    <term>
+      <parameter>enable_dl</parameter>
+      <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      このディレクティブは、Apacheモジュール版のPHPを使用した場合にのみ
+      有用です。PHPの動的ロード拡張機能を<function>dl</function>で
+      仮想サーバー毎またはディレクトリ毎にオンまたはオフに変更することが
+      できます。
+     </para>
+     <para>
+      動的ロード機能をオフにするのは主としてセキュリティ上の理由によります。
+      動的ロード機能により、
+      <link linkend="ini.open-basedir">open_basedir</link> の拘束を全て
+      無視することが可能になります。
+      デフォルトでは、動的ロードが可能です。
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.max-execution-time">
+    <term>
+     <parameter>max_execution_time</parameter>
+      <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      スクリプトがパーサにより強制終了されるまでに許容される最大の
+      時間を秒単位で指定します。この命令は、いい加減に書かれた
+      スクリプトがサーバーの負荷を上げることを防止するのに役立ちます。
+      デフォルトでは、<literal>30</literal> に設定されています。
+      PHP を <link linkend="features.commandline">コマンドライン
+      </link> から実行する場合のデフォルト設定は <literal>0</literal>
+      です。
+     </para>
+     <para>
+      最大実行時間は、システムコール、ストリーム操作等の
+      影響を受けません。より詳細な情報については、
+      <function>set_time_limit</function> 関数の説明を参照ください。
+     </para>
+     <para>
+      Web サーバー側でもタイムアウトの設定項目を持ち、
+      その設定で PHP の実行が中断されることもあります。
+      Apache には <literal>Timeout</literal> ディレクティブ、IIS には
+      CGI タイムアウト関数があり、どちらもデフォルトで 300 秒に設定されています。
+      これらの意味については、Web サーバーのドキュメントを参照ください。
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.max-input-time">
+    <term>
+     <parameter>max_input_time</parameter>
+      <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      スクリプトが POST、GET などの入力を
+      パースする最大の時間を、秒単位で指定します。
+      これは、サーバー側で PHP が起動してからスクリプトの実行を開始するまでの時間です。
+      デフォルトの設定は <literal>-1</literal> です。
+      これは <link linkend="ini.max-execution-time">max_execution_time</link>
+      が代わりに使われることを意味しています。
+      無制限にするには、<literal>0</literal> を設定してください。
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.max-input-nesting-level">
+    <term>
+     <parameter>max_input_nesting_level</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      <link linkend="language.variables.external">外部からの入力変数</link>
+      (<varname>$_GET</varname> や <varname>$_POST</varname> など)
+      のネストの深さの最大値を設定します。
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.max-input-vars">
+    <term>
+     <parameter>max_input_vars</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      <link linkend="language.variables.external">入力変数</link>
+      を最大で何個まで受け付けるかを指定します
+      (この制限は、スーパーグローバル $_GET、$_POST そして $_COOKIE
+      にそれぞれ個別に適用されます)。
+      このディレクティブを使うと、ハッシュの衝突を悪用したサービス不能攻撃を受ける可能性を軽減できます。
+      このディレクティブで設定した数を超える入力変数があった場合は
+      <constant>E_WARNING</constant> が発生し、
+      それ以降の入力変数はリクエストから削除されます。
+     </para>
+    </listitem>
+   </varlistentry>
+   
+   <varlistentry xml:id="ini.magic-quotes-gpc">
+    <term>
+     <parameter>magic_quotes_gpc</parameter>
+     <type>bool</type>
+    </term>
+     <listitem>
+     &warn.deprecated.feature-5-3-0.removed-5-4-0;
+     <para>
+      GPC(Get/Post/Cookie) 処理に関する magic_quotes の設定を行います。
+      magic_quotes が on の場合、'(シングルクオート)、&quot;
+      (ダブルクオート)、\(バックスラッシュ) 、NULL には全て自動的に
+      バックスラッシュでエスケープ処理が行われます。magic_quotes_sybase
+      も on の場合、シングルクオートは、バックスラッシュではなく
+      シングルクオートでエスケープされます。
+     </para>
+     <para>
+      <function>get_magic_quotes_gpc</function> も参照してください。
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.magic-quotes-runtime">
+    <term>
+     <parameter>magic_quotes_runtime</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     &warn.deprecated.feature-5-3-0.removed-5-4-0;
+     <para>
+      <parameter>magic_quotes_runtime</parameter> が有効の場合、
+      データベースおよびテクストファイルを含む外部ソースから
+      データを返す全ての関数のクオートは、バックスラッシュで
+      エスケープされます。
+     </para>
+     <para>
+      <parameter>magic_quotes_runtime</parameter> の影響を受ける関数は次のとおりです
+      (PECL の関数は除きます)。
+      <simplelist>
+       <member><function>get_meta_tags</function></member>
+       <member><function>file_get_contents</function></member>
+       <member><function>file</function></member>
+       <member><function>fgets</function></member>
+       <member><function>fwrite</function></member>
+       <member><function>fread</function></member>
+       <member><function>fputcsv</function></member>
+       <member><function>stream_socket_recvfrom</function></member>
+       <member><function>exec</function></member>
+       <member><function>system</function></member>
+       <member><function>passthru</function></member>
+       <member><function>stream_get_contents</function></member>
+       <member><function>bzread</function></member>
+       <member><function>gzfile</function></member>
+       <member><function>gzgets</function></member>
+       <member><function>gzwrite</function></member>
+       <member><function>gzread</function></member>
+       <member><function>exif_read_data</function></member>
+       <member><function>dba_insert</function></member>
+       <member><function>dba_replace</function></member>
+       <member><function>dba_fetch</function></member>
+       <member><function>ibase_fetch_row</function></member>
+       <member><function>ibase_fetch_assoc</function></member>
+       <member><function>ibase_fetch_object</function></member>
+       <member><function>mssql_fetch_row</function></member>
+       <member><function>mssql_fetch_object</function></member>
+       <member><function>mssql_fetch_array</function></member>
+       <member><function>mssql_fetch_assoc</function></member>
+       <member><function>mysqli_fetch_row</function></member>
+       <member><function>mysqli_fetch_array</function></member>
+       <member><function>mysqli_fetch_assoc</function></member>
+       <member><function>mysqli_fetch_object</function></member>
+       <member><function>pg_fetch_row</function></member>
+       <member><function>pg_fetch_assoc</function></member>
+       <member><function>pg_fetch_array</function></member>
+       <member><function>pg_fetch_object</function></member>
+       <member><function>pg_fetch_all</function></member>
+       <member><function>pg_select</function></member>
+       <member><function>sybase_fetch_object</function></member>
+       <member><function>sybase_fetch_array</function></member>
+       <member><function>sybase_fetch_assoc</function></member>
+       <member><function>SplFileObject::fgets</function></member>
+       <member><function>SplFileObject::fgetcsv</function></member>
+       <member><function>SplFileObject::fwrite</function></member>
+      </simplelist>
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.zend.enable-gc">
+    <term>
+     <parameter>zend.enable_gc</parameter>
+     <type>bool</type>
+    </term>
+    <listitem>
+     <para>
+      循環参照コレクタを有効あるいは無効にします。
+     </para>
+    </listitem>
+   </varlistentry>
+
+  </variablelist>
+ </para>
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

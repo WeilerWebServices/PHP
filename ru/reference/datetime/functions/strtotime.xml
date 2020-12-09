@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 351196 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+<!-- $Revision$ -->
+<!-- splitted from ./en/functions/datetime.xml, last change in rev 1.8 -->
+<refentry xml:id="function.strtotime" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>strtotime</refname>
+  <refpurpose>Преобразует текстовое представление даты на английском языке в метку времени Unix</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>strtotime</methodname>
+   <methodparam><type>string</type><parameter>datetime</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>now</parameter><initializer>time()</initializer></methodparam>
+  </methodsynopsis>
+  <simpara>
+   Первым параметром функции должна быть строка с датой на английском языке, которая
+   будет преобразована в метку времени Unix (количество секунд, прошедших с 1 января 1970
+   года 00:00:00 UTC) относительно метки времени, переданной в
+   <parameter>now</parameter>, или текущего времени, если аргумент
+   <parameter>now</parameter> опущен.
+  </simpara>
+  <warning>
+   <para>
+    Временная метка Unix, которую возвращает эта функция, не содержит информацию 
+    о часовых поясах. Для выполнения расчетов с информацией о дате/времени 
+    вы должны использовать более подходящий <classname>DateTimeImmutable</classname>.
+   </para>
+  </warning>
+  <para>
+   Каждый параметр функции использует временную метку по умолчанию, пока она не указана
+   в этом параметре напрямую. Будьте внимательны и не используйте различные временные
+   метки в параметрах, если на то нет прямой необходимости. Обратите внимание на
+   <function>date_default_timezone_get</function> для задания временной зоны различными
+   способами.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>datetime</parameter></term>
+     <listitem>
+      <para>&date.formats.parameter;</para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>now</parameter></term>
+     <listitem>
+      <para>
+       Временная метка, используемая в качестве базы для вычисления
+       относительных дат.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Возвращает временную метку в случае успеха, иначе возвращается &false;.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="errors">
+  &reftitle.errors;
+  
+  &date.timezone.errors.description;
+  
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования функции <function>strtotime</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo strtotime("now"), "\n";
+echo strtotime("10 September 2000"), "\n";
+echo strtotime("+1 day"), "\n";
+echo strtotime("+1 week"), "\n";
+echo strtotime("+1 week 2 days 4 hours 2 seconds"), "\n";
+echo strtotime("next Thursday"), "\n";
+echo strtotime("last Monday"), "\n";
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Проверка ошибок</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$str = 'Not Good';
+
+// до PHP 5.1.0 вместо false необходимо было сравнивать со значением -1
+if (($timestamp = strtotime($str)) === false) {
+    echo "Строка ($str) недопустима";
+} else {
+    echo "$str == " . date('l dS \o\f F Y h:i:s A', $timestamp);
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Если количество лет указано двумя цифрами, то значения 00-69 будут считаться 2000-2069,
+    а 70-99 - 1970-1999. Смотрите также замечания ниже о возможных различиях на 32-битных
+    системах (допустимые даты заканчиваются 2038-01-19 03:14:07).
+   </para>
+  </note>
+  <note>
+   <para>
+    Корректным диапазоном временных меток обычно являются даты с 13 декабря
+    1901 20:45:54 UTC по 19 января 2038 03:14:07 UTC. (Эти даты
+    соответствуют минимальному и максимальному значению 32-битового
+    знакового целого).
+   </para>
+   <para>
+    Кроме того, до PHP 5.1.0, не все платформы поддерживают отрицательные метки времени,
+    поэтому поддерживаемый диапазон дат может быть ограничен эпохой Unix. Это означает, что
+    даты ранее 1 января 1970 г. не будут работать в Windows, некоторых дистрибутивах Linux и
+    нескольких других операционных системах.
+   </para>
+   <para>
+    В 64-битных версиях PHP корректный диапазон временных меток фактически бесконечен,
+    так как 64 битов хватит для представления приблизительно 293 миллиарда лет в обоих
+    направлениях.
+   </para>
+  </note>
+  <note>
+   <para>
+    Даты в формате <literal>m/d/y</literal> или <literal>d-m-y</literal>
+    разрешают неоднозначность с помощью анализа разделителей их элементов:
+    если разделителем является слеш (<literal>/</literal>), то дата
+    интерпретируется в американском формате <literal>m/d/y</literal>,
+    если же разделителем является дефис (<literal>-</literal>) или точка
+    (<literal>.</literal>), то подразумевается использование европейского
+    формата <literal>d-m-y</literal>.
+    
+    Однако, если, год указан в двухзначном формате,
+    а разделителем является дефис (<literal>-</literal>),
+    строка даты интерпретируется как <literal>y-m-d</literal>.
+   </para>
+   <para>
+    Чтобы избежать потенциальной неоднозначности, рекомендуется
+    использовать даты в формате стандарта ISO 8601
+    (<literal>YYYY-MM-DD</literal>), либо пользоваться функцией
+    <methodname>DateTime::createFromFormat</methodname> там, где это
+    возможно.
+   </para>
+  </note>
+  <note>
+   <para>
+    Не рекомендуется использовать эту функцию для математических операций.
+    Целесообразно использовать <methodname>DateTime::add</methodname> и
+    <methodname>DateTime::sub</methodname> начиная с PHP 5.3, или
+    <methodname>DateTime::modify</methodname> в PHP 5.2.
+   </para>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><link linkend="datetime.formats">Форматы даты и времени</link></member>
+    <member><methodname>DateTime::createFromFormat</methodname></member>
+    <member><function>checkdate</function></member>
+    <member><function>strptime</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

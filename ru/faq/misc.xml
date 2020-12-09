@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 297028 Maintainer: shein Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+<!-- $Id -->
+ <chapter xml:id="faq.misc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Разные вопросы</title>
+  <titleabbrev>Разные вопросы</titleabbrev>
+
+   <para>
+    Некоторые вопросы могут не подходить для других категорий.
+    Вы можете найти их здесь.
+   </para>
+
+  <qandaset>
+   <qandaentry xml:id="faq.misc.bz2">
+    <question>
+     <para>
+      Как обращаться со сжатыми bz2 руководствами под Windows?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Если у вас нет архиватора для работы с файлами bz2, то
+      <link xlink:href="&url.bzip2;">скачайте</link> утилиту для
+      командной строки от Redhat (пожалуйста, ищите подробности ниже).
+     </para>
+     <para>
+      Если вы не хотите использовать утилиту командной строки, вы можете
+      попробовать бесплатные средства, такие как
+      <link xlink:href="&url.stuffit;">Stuffit Expander</link>,
+      <link xlink:href="&url.ultimatezip;">UltimateZip</link>,
+      <link xlink:href="&url.7zip;">7-Zip</link> или
+      <link xlink:href="&url.quickzip;">Quick Zip</link>.
+      Если у вас есть такие утилиты как <link xlink:href="&url.winrar;">WinRAR</link>
+      или <link xlink:href="&url.powerarchiver;">Power Archiver</link>, то
+      с их помощью вы можете легко распаковать  файлы bz2.
+      Если вы пользуетесь Total Commander (бывший Windows Commander),
+      подключаемый модуль bz2 для этой программы доступен бесплатно с
+      сайта <link xlink:href="&url.wincmd;">Total Commander</link>.
+     </para>
+     <para>
+      Утилита командной строки bzip2 от Redhat:
+     </para>
+     <para>
+      Пользователи Win2K Sp2 должны взять последнюю версию 1.0.2,
+      пользователи всех других Windows должны взять версию 1.00.
+      После загрузки переименуйте исполняемый файл в bzip2.exe.
+      Для удобства положите его в директорию в вашем пути, например C:\Windows,
+      где C соответствует диску, на котором установлен ваш Windows.
+     </para>
+     <para>
+      Замечание: lang обозначает ваш язык и x - желаемый формат, например pdf.
+      Чтобы распаковать php_manual_lang.x.bz2, следуйте этим простым
+      инструкциям:
+      <itemizedlist>
+       <listitem>
+        <simpara>откройте окно c командной строкой (command prompt)</simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         перейдите в директорию (команда cd), куда вы сохранили скачанный php_manual_lang.x.bz2
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         вызовите bzip2 -d php_manual_lang.x.bz2 для извлечения
+         php_manual_lang.x в ту же директорию
+        </simpara>
+       </listitem>
+      </itemizedlist>
+     </para>
+     <para>
+      В случае, если вы скачали  php_manual_lang.tar.bz2, содержащий множество
+      html файлов, процедура точно такая же. Единственное отличие заключается в том,
+      что вы получили файл php_manual_lang.tar. Известно, что формат tar
+      обрабатывается большинством распространенных архиваторов под Windows,
+      например такими как <link xlink:href="&url.winzip;">WinZip</link>.
+     </para>
+    </answer>
+   </qandaentry>
+   
+   <qandaentry xml:id="faq.misc.arguments.references">
+    <question>
+     <para>
+      Что означает &amp; рядом с аргументом в объявлении функции, например
+      <function>asort</function>?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Это означает, что аргумент
+      <link linkend="language.references.pass">передается по ссылке</link>
+      и функция, вероятно, изменит его согласно документации.
+      Таким путем вы можете передать только переменные и вам не обязательно
+      задавать &amp; при вызове функции (и это даже
+      <link linkend="ini.allow-call-time-pass-reference">не рекомендуется</link>).
+     </para>
+    </answer>
+   </qandaentry>
+   
+   <qandaentry xml:id="faq.misc.registerglobals">
+    <question>
+     <para>
+      Как обращаться с <literal>register_globals</literal>?
+     </para>
+    </question>
+    <answer>
+     <para>
+      Для информации по проблемам безопасности, связанных с
+      <literal>register_globals</literal>, читайте
+      <link linkend="security.globals">Использование register_globals</link>
+      в главе "Безопасность".
+     </para>
+     <para>
+      Предпочтительнее использовать
+      <link linkend="language.variables.superglobals">суперглобальные переменные</link>,
+      чем полагаться на то, что <literal>register_globals</literal>
+      установлена в On.
+     </para>
+     <para>
+      Если вы пользуетесь виртуальным (shared) хостингом с выключенной
+      <literal>register_globals</literal> и вам надо использовать некоторые
+      существующие приложения, которые требуют, чтобы эта опция была включена;
+      или вы на каком-либо сервере, где эта возможность включена, но вы хотите
+      эмулировать проблему по безопасности, то возможно вам надо эмулировать
+      противоположную установку с помощью PHP.
+      Всегда лучше сначала спросить, если можно каким-либо образом изменить опцию
+      в конфигурации PHP, но если это невозможно, то вы можете воспользоваться
+      следующими совместимыми кусками кода.
+     </para>
+     <para>
+      <example>
+       <title>Эмулирование Register Globals</title>
+        <para>
+        Следующее эмулирует register_globals установленную в On. Если вы
+        меняли директиву <link linkend="ini.variables-order">variables_order</link>,
+        измените соответственно и <varname>$superglobals</varname>.
+       </para>
+       <programlisting role="php">
+<![CDATA[
+<?php
+// Эмулировать включенный register_globals
+if (!ini_get('register_globals')) {
+    $superglobals = array($_SERVER, $_ENV,
+        $_FILES, $_COOKIE, $_POST, $_GET);
+    if (isset($_SESSION)) {
+        array_unshift($superglobals, $_SESSION);
+    }
+    foreach ($superglobals as $superglobal) {
+        extract($superglobal, EXTR_SKIP);
+    }
+}
+?>
+]]>
+       </programlisting>
+       <para>
+        Следующее эмулирует register_globals, установленную в Off. Помните,
+        что этот код должен вызываться в самом начале вашего скрипта, или
+        после вызова <function>session_start</function>, если вы используете
+        сессии.
+       </para>
+       <programlisting role="php">
+<![CDATA[
+<?php
+// Эмулировать отключенный register_globals
+function unregister_GLOBALS()
+{
+    if (!ini_get('register_globals')) {
+        return;
+    }
+
+    // Возможно, вы захотите изменить это на более приятный вывод ошибки
+    if (isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS'])) {
+        die('Обнаружена попытка перезаписи GLOBALS');
+    }
+
+    // Переменные, которые не должны быть удалены
+    $noUnset = array('GLOBALS',  '_GET',
+                     '_POST',    '_COOKIE',
+                     '_REQUEST', '_SERVER',
+                     '_ENV',     '_FILES');
+
+    $input = array_merge($_GET,    $_POST,
+                         $_COOKIE, $_SERVER,
+                         $_ENV,    $_FILES,
+                         isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array());
+
+    foreach ($input as $k => $v) {
+        if (!in_array($k, $noUnset) && isset($GLOBALS[$k])) {
+            unset($GLOBALS[$k]);
+        }
+    }
+}
+
+unregister_GLOBALS();
+
+?>
+]]>
+       </programlisting>
+      </example>
+     </para>
+    </answer>
+   </qandaentry>
+  </qandaset>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

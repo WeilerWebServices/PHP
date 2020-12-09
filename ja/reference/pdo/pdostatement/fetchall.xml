@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 342140 Maintainer: takagi Status: ready -->
+<!-- CREDITS: shimooka -->
+<refentry xml:id="pdostatement.fetchall" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>PDOStatement::fetchAll</refname>
+  <refpurpose>
+   全ての結果行を含む配列を返す
+  </refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <modifier>public</modifier> <type>array</type><methodname>PDOStatement::fetchAll</methodname>
+   <methodparam choice="opt"><type>int</type><parameter>fetch_style</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>fetch_argument</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>ctor_args</parameter><initializer>array()</initializer></methodparam>
+  </methodsynopsis>
+
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>fetch_style</parameter></term>
+     <listitem>
+      <para>
+       <function>PDOStatement::fetch</function> に文章化されているような
+       返される配列の内容を制御します。
+       デフォルトは <constant>PDO::ATTR_DEFAULT_FETCH_MODE</constant> の値
+       (そのデフォルトは <constant>PDO::FETCH_BOTH</constant>) です。
+      </para>
+      <para>
+       結果セットから単一カラムの全ての値を含む配列を返す場合、
+       <constant>PDO::FETCH_COLUMN</constant> を指定します。
+       <parameter>fetch_argument</parameter> パラメータにどのカラムを返すかを
+       指定することができます。
+      </para>
+      <para>
+       結果セットから単一カラムの一意な値のみ取得する場合、
+       <constant>PDO::FETCH_UNIQUE</constant> をビット OR した
+       <constant>PDO::FETCH_COLUMN</constant> を指定します。
+      </para>
+      <para>
+       指定したカラムの値によってグループ化した連想配列を返す場合、
+       <constant>PDO::FETCH_GROUP</constant> をビット OR した
+       <constant>PDO::FETCH_COLUMN</constant> を指定します。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>fetch_argument</parameter></term>
+     <listitem>
+      <para>
+       この引数は、<parameter>fetch_style</parameter> の値によって意味が異なります。
+       <itemizedlist>
+        <listitem>
+         <para>
+          <constant>PDO::FETCH_COLUMN</constant>: ここで指定した、
+           0 から始まる番号のカラムを返します。
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>PDO::FETCH_CLASS</constant>:
+           ここで指定したクラスのインスタンスを返します。各行のカラムがクラスのプロパティ名にマッピングされます。
+         </para>
+        </listitem>
+        <listitem>
+         <para>
+          <constant>PDO::FETCH_FUNC</constant>:
+          ここで指定した関数をコールした結果を返します。各行のカラムを関数コール時のパラメータとします。
+         </para>
+        </listitem>
+       </itemizedlist>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>ctor_args</parameter></term>
+     <listitem>
+      <para>
+       <parameter>fetch_style</parameter> が
+       <constant>PDO::FETCH_CLASS</constant>
+       のときに使う、独自のクラスコンストラクタへの引数。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <function>PDOStatement::fetchAll</function> は、
+   結果セットに残っている全ての行を含む配列を返します。
+   この配列は、カラム値の配列もしくは各カラム名に対応するプロパティを持つオブジェクトとして各行を表します。
+   取得結果がゼロ件だった場合は空の配列を返し、
+   失敗した場合は &false; を返します。
+  </para>
+  <para>
+   大きな結果セットをフェッチするためにこのメソッドを使用することは、
+   システムとネットワークリソースに大量の要求を行うことになります。
+   PHP で全てのデータ処理と操作を行うよりも、データベースサーバー側で
+   結果セットを操作することを検討してください。例えば、PHP で処理を行う前に
+   SQL で WHERE 句や ORDER BY 句を使用し、結果を制限することです。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example><title>結果セットに残っている全ての行をフェッチする</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$sth = $dbh->prepare("SELECT name, colour FROM fruit");
+$sth->execute();
+
+/* 結果セットに残っている全ての行をフェッチする */
+print("Fetch all of the remaining rows in the result set:\n");
+$result = $sth->fetchAll();
+print_r($result);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Fetch all of the remaining rows in the result set:
+Array
+(
+    [0] => Array
+        (
+            [name] => apple
+            [0] => apple
+            [colour] => red
+            [1] => red
+        )
+
+    [1] => Array
+        (
+            [name] => pear
+            [0] => pear
+            [colour] => green
+            [1] => green
+        )
+
+    [2] => Array
+        (
+            [name] => watermelon
+            [0] => watermelon
+            [colour] => pink
+            [1] => pink
+        )
+
+)
+]]>
+    </screen>
+   </example>
+   <example><title>結果セットから単一カラムの全ての値を取得する</title>
+    <para>
+     以下の例は、
+     SQL ステートメント自身が行毎に複数のカラムを返す場合において、
+     どのように結果セットから単一カラムの全ての値を取得するかを
+     例示しています。
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$sth = $dbh->prepare("SELECT name, colour FROM fruit");
+$sth->execute();
+
+/* 最初のカラムの全ての値を取得する */
+$result = $sth->fetchAll(PDO::FETCH_COLUMN, 0);
+var_dump($result);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Array(3)
+(
+    [0] =>
+    string(5) => apple
+    [1] =>
+    string(4) => pear
+    [2] =>
+    string(10) => watermelon
+)
+]]>
+    </screen>
+   </example>
+   <example><title>単一カラムによる全ての値のグループ化</title>
+    <para>
+     以下の例は、どのように結果セット中の特定のカラムの値によって
+     グループ化された連想配列を返すかを例示しています。
+     その配列は 3 つのキーを有します。値 <literal>apple</literal>、
+     <literal>pear</literal> は異なる 2
+     つの異なる色を有する配列として返され、
+     一方 <literal>watermelon</literal> は 1
+     つの色のみ有する配列として返されます。
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$insert = $dbh->prepare("INSERT INTO fruit(name, colour) VALUES (?, ?)");
+$insert->execute(array('apple', 'green'));
+$insert->execute(array('pear', 'yellow'));
+
+$sth = $dbh->prepare("SELECT name, colour FROM fruit");
+$sth->execute();
+
+/* 最初のカラムの値によってグループ化する */
+var_dump($sth->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP));
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+array(3) {
+  ["apple"]=>
+  array(2) {
+    [0]=>
+    string(5) "green"
+    [1]=>
+    string(3) "red"
+  }
+  ["pear"]=>
+  array(2) {
+    [0]=>
+    string(5) "green"
+    [1]=>
+    string(6) "yellow"
+  }
+  ["watermelon"]=>
+  array(1) {
+    [0]=>
+    string(5) "pink"
+  }
+}
+
+]]>
+    </screen>
+   </example>
+   <example><title>各結果用のクラスのインスタンス作成</title>
+    <para>
+     次の例は、
+     <constant>PDO::FETCH_CLASS</constant> の振る舞いを示すものです。
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class fruit {
+    public $name;
+    public $colour;
+}
+
+$sth = $dbh->prepare("SELECT name, colour FROM fruit");
+$sth->execute();
+
+$result = $sth->fetchAll(PDO::FETCH_CLASS, "fruit");
+var_dump($result);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+array(3) {
+  [0]=>
+  object(fruit)#1 (2) {
+    ["name"]=>
+    string(5) "apple"
+    ["colour"]=>
+    string(5) "green"
+  }
+  [1]=>
+  object(fruit)#2 (2) {
+    ["name"]=>
+    string(4) "pear"
+    ["colour"]=>
+    string(6) "yellow"
+  }
+  [2]=>
+  object(fruit)#3 (2) {
+    ["name"]=>
+    string(10) "watermelon"
+    ["colour"]=>
+    string(4) "pink"
+  }
+  [3]=>
+  object(fruit)#4 (2) {
+    ["name"]=>
+    string(5) "apple"
+    ["colour"]=>
+    string(3) "red"
+  }
+  [4]=>
+  object(fruit)#5 (2) {
+    ["name"]=>
+    string(4) "pear"
+    ["colour"]=>
+    string(5) "green"
+  }
+}
+]]>
+    </screen>
+   </example>
+   <example><title>各結果に対する関数コール</title>
+    <para>
+     次の例は、
+     <constant>PDO::FETCH_FUNC</constant> の振る舞いを示すものです。
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function fruit($name, $colour) {
+    return "{$name}: {$colour}";
+}
+
+$sth = $dbh->prepare("SELECT name, colour FROM fruit");
+$sth->execute();
+
+$result = $sth->fetchAll(PDO::FETCH_FUNC, "fruit");
+var_dump($result);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+array(3) {
+  [0]=>
+  string(12) "apple: green"
+  [1]=>
+  string(12) "pear: yellow"
+  [2]=>
+  string(16) "watermelon: pink"
+  [3]=>
+  string(10) "apple: red"
+  [4]=>
+  string(11) "pear: green"
+}
+]]>
+    </screen>
+   </example>
+
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>PDO::query</function></member>
+    <member><function>PDOStatement::fetch</function></member>
+    <member><function>PDOStatement::fetchColumn</function></member>
+    <member><function>PDO::prepare</function></member>
+    <member><function>PDOStatement::setFetchMode</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

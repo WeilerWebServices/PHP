@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 338152 Maintainer: takagi Status: ready -->
+
+<part xml:id="mongo.core" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+ <title>コアクラス群</title>
+ <partintro>
+  <warning>
+   &mongo.deprecated.note;
+  </warning>
+  <para>
+   これらのクラスは、ドライバの最も重要な部分です。
+  </para>
+ </partintro>
+
+ &reference.mongo.mongoclient;
+ &reference.mongo.mongodb;
+ &reference.mongo.mongocollection;
+ &reference.mongo.mongocursor;
+ &reference.mongo.mongocursorinterface;
+ &reference.mongo.mongocommandcursor;
+
+</part>

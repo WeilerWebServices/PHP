@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 343899 Maintainer: yuw Status: ready -->
+<refentry xml:id="function.get-meta-tags" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>get_meta_tags</refname>
+  <refpurpose>ファイル上のすべてのメタタグ情報を配列に展開する</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>get_meta_tags</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>use_include_path</parameter><initializer>&false;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <parameter>filename</parameter> 内の各行をパースし &lt;meta&gt;
+   タグ内の情報を配列として返します。
+   <literal>&lt;/head&gt;</literal> でパースを終了します。
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filename</parameter></term>
+     <listitem>
+      <para>
+       HTML ファイルへのパスを表す文字列。
+       ローカルファイルのほか <acronym>URL</acronym> も指定できます。
+      </para>
+      <para>
+       <example>
+        <title><function>get_meta_tags</function> が何をパースするのか</title>
+        <programlisting role="html">
+<![CDATA[
+<meta name="author" content="name">
+<meta name="keywords" content="php documentation">
+<meta name="DESCRIPTION" content="a php manual">
+<meta name="geo.position" content="49.33;-86.59">
+</head> <!-- ここでパースを終了します -->
+]]>
+        </programlisting>
+       </example>
+       (改行コードに注意してください。PHP は入力をパースするためにネイティブ関数を使用するため、
+       Macintosh のファイルは Unix 上では動作しません)。
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>use_include_path</parameter></term>
+     <listitem>
+      <para>
+       <parameter>use_include_path</parameter> を &true; に指定すると、
+       <link linkend="ini.include-path">include_path</link>
+       ディレクティブの内容にしたがってファイルを探します。
+       これはローカルファイルにのみ有効で、URL の場合は使用できません。
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   パースされたメタタグを含む配列を返します。
+  </para>
+  <para>
+   name 属性の値が配列のキーとなります。content 属性の値が配列の要素となります。
+   標準の配列関数を利用することでこれらの値に簡単にアクセスすることができます。
+   name 属性で特別な文字が使われている場合は '_' で代用されます。
+   それ以外は小文字に変換されます。もしも同じ名前のメタタグがある場合には
+   最後のもののみが返されます。
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>get_meta_tags</function> が何を返すのか</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// 上のタグは www.example.com 上のものだと仮定します
+$tags = get_meta_tags('http://www.example.com/');
+
+// すべてのキーが小文字であり、. (ピリオド) が _ に
+// 置換されていることに注目してください。
+echo $tags['author'];       // name
+echo $tags['keywords'];     // php documentation
+echo $tags['description'];  // a php manual
+echo $tags['geo_position']; // 49.33;-86.59
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    name 属性がついているメタタグのみがパースの対象となります。
+    クォートは不要です。
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>htmlentities</function></member>
+    <member><function>urlencode</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

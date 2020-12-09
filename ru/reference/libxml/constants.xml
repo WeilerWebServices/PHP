@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 351133 Maintainer: tmn Status: ready -->
+<!-- Reviewed: yes -->
+<!-- $Revision$ -->
+<appendix xml:id="libxml.constants" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.constants;
+ &extension.constants;
+ <variablelist>
+  <varlistentry xml:id="constant.libxml-biglines">
+   <term>
+    <constant>LIBXML_BIGLINES</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Позволяет корректно сообщать о номерах строк больше 65535.
+    </simpara>
+    <note>
+     <para>
+      Доступно начиная с PHP 7.0.0 с Libxml &gt;= 2.9.0
+     </para>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-compact">
+   <term>
+    <constant>LIBXML_COMPACT</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Активирует оптимизацию выделения памяти для небольших узлов. Это может
+     повысить быстродействие приложения без внесения изменений в коде.
+    </simpara>
+    <note>
+     <para>
+      Доступна только в Libxml &gt;= 2.6.21
+     </para>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-dtdattr">
+   <term>
+    <constant>LIBXML_DTDATTR</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     DTD-атрибуты по умолчанию
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-dtdload">
+   <term>
+    <constant>LIBXML_DTDLOAD</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Загрузка внешнего подмножества
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-dtdvalid">
+   <term>
+    <constant>LIBXML_DTDVALID</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Проверка корректности документа с помощью DTD
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-html-noimplied">
+   <term>
+    <constant>LIBXML_HTML_NOIMPLIED</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Устанавливает флаг HTML_PARSE_NOIMPLIED, который отключает
+     автоматическое добавление недостающих html/body... элементов.
+    </simpara>
+    <note>
+     <para>
+      Доступно только в Libxml &gt;= 2.7.7 (начиная с PHP &gt;= 5.4.0)
+     </para>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-html-nodefdtd">
+   <term>
+    <constant>LIBXML_HTML_NODEFDTD</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Устанавливает флаг HTML_PARSE_NODEFDTD, который предотвращает добавление
+     стандартного doctype, если он не был найден.
+    </simpara>
+    <note>
+     <para>
+      Доступно только в Libxml &gt;= 2.7.8 (начиная с &gt;= 5.4.0)
+     </para>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-noblanks">
+   <term>
+    <constant>LIBXML_NOBLANKS</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Удаление пустых узлов
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-nocdata">
+   <term>
+    <constant>LIBXML_NOCDATA</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Объединить CDATA как текстовые узлы
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-noemptytag">
+   <term>
+    <constant>LIBXML_NOEMPTYTAG</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Разворачивать пустые теги (например, <literal>&lt;br/&gt;</literal> в
+     <literal>&lt;br&gt;&lt;/br&gt;</literal>)
+    </simpara>
+    <note>
+     <para>
+      Эта настройка доступна на данный момент только в функциях
+      <xref linkend="domdocument.save" /> и
+      <xref linkend="domdocument.savexml" />.
+     </para>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-noent">
+   <term>
+    <constant>LIBXML_NOENT</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Замещение сущностей
+    </simpara>
+    <caution>
+     <simpara>
+      Включение замещения объекта может облегчить атаки на внешний объект XML (XXE).
+     </simpara>
+    </caution>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-noerror">
+   <term>
+    <constant>LIBXML_NOERROR</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Запретить отчеты об ошибках
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-nonet">
+   <term>
+    <constant>LIBXML_NONET</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Отключить доступ к сети во время загрузки документов
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-nowarning">
+   <term>
+    <constant>LIBXML_NOWARNING</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Запретить предупреждения
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-noxmldecl">
+   <term>
+    <constant>LIBXML_NOXMLDECL</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Убрать объявление XML при сохранении документа
+    </simpara>
+    <note>
+     <para>
+      Доступна только в Libxml &gt;= 2.6.21
+     </para>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-nsclean">
+   <term>
+    <constant>LIBXML_NSCLEAN</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Удалить лишние объявления пространств имен
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-parsehuge">
+   <term>
+    <constant>LIBXML_PARSEHUGE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Установить флаг XML_PARSE_HUGE, который отключает жестко заданный лимит в парсере.
+     Это затрагивает как лимиты максимальной глубины документа или рекурсии элементов,
+     так и лимиты размеров текстовых элементов.
+    </simpara>
+    <note>
+     <para>
+      Доступно только в Libxml &gt;= 2.7.0 (начиная с PHP &gt;= 5.3.2 и PHP &gt;= 5.2.12)
+     </para>
+    </note>    
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-pedantic">
+   <term>
+    <constant>LIBXML_PEDANTIC</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Устанавливает флаг XML_PARSE_PEDANTIC, который включает педантичный отчет об ошибках.
+    </simpara>
+    <note>
+     <para>
+      Доступно с PHP &gt;= 5.4.0
+     </para>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-xinclude">
+   <term>
+    <constant>LIBXML_XINCLUDE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Реализовать замещение XInclude
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-err-error">
+   <term>
+    <constant>LIBXML_ERR_ERROR</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Устранимая ошибка
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-err-fatal">
+   <term>
+    <constant>LIBXML_ERR_FATAL</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Фатальная ошибка
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-err-none">
+   <term>
+    <constant>LIBXML_ERR_NONE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Нет ошибок
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-err-warning">
+   <term>
+    <constant>LIBXML_ERR_WARNING</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Простое предупреждение
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-version">
+   <term>
+    <constant>LIBXML_VERSION</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Версия libxml в виде 20605 или 20617
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-dotted-version">
+   <term>
+    <constant>LIBXML_DOTTED_VERSION</constant>
+     (<type>string</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Версия libxml в виде 2.6.5 или 2.6.17
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.libxml-schema-create">
+   <term>
+    <constant>LIBXML_SCHEMA_CREATE</constant>
+     (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Создает со значением по умолчанию или фиксированные узлы при проверке схемы XSD
+    </simpara>
+    <note>
+     <para>
+      Доступно только в Libxml &gt;= 2.6.14 (в PHP &gt;= 5.5.2)
+     </para>
+    </note>    
+   </listitem>
+  </varlistentry>
+ </variablelist>
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

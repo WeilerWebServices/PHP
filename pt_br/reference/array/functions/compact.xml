@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 297028 Maintainer: felipe Status: ready --><!-- CREDITS: narigone, lucasr -->
+<refentry xml:id="function.compact" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>compact</refname>
+  <refpurpose>Cria um array contendo variáveis e seus valores</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>compact</methodname>
+   <methodparam><type>mixed</type><parameter>varname</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Cria um array contendo variáveis e seus valores.
+  </para>
+  <para>
+   Para cada um dos parâmetros passados, <function>compact</function> procura
+   uma variável com o nome especificado na tabela de símbolos e a adiciona
+   no array de saída de forma que o nome da variável será a chave e o seu
+   conteúdo será o valor para esta chave.
+   Em resumo, ela faz o oposto de <function>extract</function>.
+  </para>
+  <para>
+   Qualquer string com nome de uma variável que não exista será simplesmente
+   ignorada.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>varname</parameter></term>
+     <listitem>
+      <para>
+       <function>compact</function> recebe um número variável de parâmetros.
+       Cada parâmetro pode ser ou uma string contendo o nome da variável, ou
+       um array de nomes de variáveis. O array pode conter outros arrays de
+       nomes de variáveis; <function>compact</function> o manipula
+       recursivamente.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Retorna a saída do array com todas as variáveis adicionadas a ele.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Exemplo de <function>compact</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$cidade = "Sao Paulo";
+$estado = "SP";
+$evento = "SIGGRAPH";
+
+$localidade = array("cidade", "estado");
+
+$result = compact("evento", "nada_aqui", $localidade);
+print_r($result);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen role="php">
+<![CDATA[
+Array
+(
+    [evento] => SIGGRAPH
+    [cidade] => Sao Paulo
+    [estado] => SP
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <title>Gotcha</title>
+   <para>
+    Devido a <link linkend="language.variables.variable">variáveis
+    variável</link> não poderem ser usadas com <link 
+    linkend="language.variables.superglobals">arrays superglobais</link> do PHP 
+    dentro de funções, os arrays superglobais não podem ser passados
+    na <function>compact</function>.
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>extract</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

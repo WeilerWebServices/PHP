@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.7 $ -->
+<classentry id="gtk.gtkfontselection">
+ <classmeta>
+  <classtitle>GtkFontSelection</classtitle>
+  <classparent>GtkVBox</classparent>
+  <shortdesc>
+   A widget for selecting a font from a list of available fonts.
+  </shortdesc>
+  <desc>
+   <para>
+    The GtkFontSelection widget lists the available fonts, styles and
+    sizes, allowing the user to select a font. It is used in the
+    <classname>GtkFontSelectionDialog</classname> widget to provide a
+    dialog box for selecting fonts.
+   </para>
+   <para>
+    To set the font which is initially selected, use
+    <function class="GtkFontSelection">set_font_name</function>.
+   </para>
+   <para>
+    To get the selected font use
+    <function class="GtkFontSelection">get_font_name</function>.
+   </para>
+   <para>
+    To change the text which is shown in the preview area, use
+    <function class="GtkFontSelection">set_preview_text</function>.
+   </para>
+  </desc>
+ </classmeta>
+
+ <constructors>
+  <constructor id="gtk.gtkfontselection.constructor">
+   <funcsynopsis>
+    <funcprototype>
+    <funcdef> <function>GtkFontSelection</function></funcdef>
+    <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Creates a new font selection widget.
+   </shortdesc>
+   <desc>
+    <para>
+     Creates a new font selection widget.
+    </para>
+   </desc>
+  </constructor>
+ </constructors>
+
+
+ <methods>
+  <method id="gtk.gtkfontselection.method.get_font">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef><classname>GdkFont</classname> <function>get_font</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    &deprecated; Returns the selected font.
+   </shortdesc>
+   <desc>
+    <para>
+     &deprecated.method;
+     Use <function class="GtkFontSelection">get_font_name</function>
+     instead.
+    </para>
+    <para>
+     Returns the selected font, or <literal>null</literal> if no font
+     is selected.
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontselection.method.get_font_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_font_name</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the currently-selected font name.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the currently-selected font name.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontSelection">set_font_name</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontselection.method.get_preview_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>string <function>get_preview_text</function></funcdef>
+     <paramdef>void</paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Gets the text displayed in the preview area.
+   </shortdesc>
+   <desc>
+    <para>
+     Gets the text displayed in the preview area.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontSelection">set_preview_text</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontselection.method.set_font_name">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>bool <function>set_font_name</function></funcdef>
+     <paramdef>string <parameter>fontname</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the currently-selected font.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the currently-selected font.
+    </para>
+    <para>
+     Returns <literal>true</literal> if the font was found.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontSelection">get_font_name</function>
+    </para>
+   </desc>
+  </method>
+
+  <method id="gtk.gtkfontselection.method.set_preview_text">
+   <funcsynopsis>
+    <funcprototype>
+     <funcdef>void <function>set_preview_text</function></funcdef>
+     <paramdef>string <parameter>text</parameter></paramdef>
+    </funcprototype>
+   </funcsynopsis>
+   <shortdesc>
+    Sets the text displayed in the preview area.
+   </shortdesc>
+   <desc>
+    <para>
+     Sets the text displayed in the preview area.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontSelection">get_preview_text</function>
+    </para>
+   </desc>
+  </method>
+ </methods>
+ 
+ 
+ <properties>
+  <prop id="gtk.gtkfontselection.property.font" type="ro">
+   <propname>font</propname>
+   <proptype><classname>GdkFont</classname></proptype>
+   <shortdesc>
+    The GdkFont that is currently selected.
+   </shortdesc>
+   <desc>
+    <para>
+     The GdkFont that is currently selected.
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkfontselection.property.font-name" type="rw">
+   <propname>font-name</propname>
+   <proptype>string</proptype>
+   <shortdesc>
+    The string that represents this font.
+   </shortdesc>
+   <desc>
+    <para>
+     The string that represents this font.
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontSelection">get_font_name</function>,
+     <function class="GtkFontSelection">set_font_name</function>
+    </para>
+    <para>
+     Default: <literal>NULL</literal>
+    </para>
+   </desc>
+  </prop>
+
+  <prop id="gtk.gtkfontselection.property.preview-text" type="rw">
+   <propname>preview-text</propname>
+   <proptype/>
+   <shortdesc>
+    The text to display in order to demonstrate the selected font.
+   </shortdesc>
+   <desc>
+    <para>
+     The text to display in order to demonstrate the selected font.
+    </para>
+    <para>
+     Default: <literal>abcdefghijk ABCDEFGHIJK</literal>
+    </para>
+    <para>
+     &seealso;
+     <function class="GtkFontSelection">get_preview_text</function>,
+     <function class="GtkFontSelection">set_preview_text</function>
+    </para>
+   </desc>
+  </prop>
+ </properties>
+
+</classentry>

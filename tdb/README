@@ -1,0 +1,12 @@
+It looks like Trivial DB is shipped only with Samba itself nowadays and there is no separate project for it.
+This means to compile TDB you need to download Samba sources and do the following:
+
+1) run Samba's main ./configure;
+2) run autogen.sh and ./configure in sources/tdb/ dir;
+
+For some reason I also had to tweak Makefile manually in order to move "-I../include" to the beginning of CPPFLAGS,
+otherwise wrong config.h was used (we need the global one).
+After that `make` succeeded, but libtdb.a was NOT installed by `make install`, so I had to put it in place manually.
+
+That's it, no more magic, --with-tdb=<TDB install prefix> should work after that.
+

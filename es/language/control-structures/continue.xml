@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision$ -->
+<!-- EN-Revision: 338501 Maintainer: seros Status: ready -->
+<!-- Reviewed: no Maintainer: seros -->
+
+<sect1 xml:id="control-structures.continue" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title><literal>continue</literal></title>
+ <?phpdoc print-version-for="continue"?>
+ <simpara>
+  <literal>continue</literal> se utiliza dentro de las estructuras iterativas para
+  saltar el resto de la iteración actual del bucle y continuar la ejecución
+  en la evaluación de la condición, para luego comenzar la siguiente iteración.
+ </simpara>
+ <note>
+  <simpara>
+   En PHP, la sentencia 
+   <link linkend="control-structures.switch">switch</link> se
+   considera una estructura iterativa para los propósitos de
+   <literal>continue</literal>. <literal>continue</literal> se comporta igual que
+   <literal>break</literal> (cuando no se proporcionan argumentos). Si un
+   <literal>switch</literal> está dentro de un bucle,
+   <literal>continue 2</literal> continurá con la siguiente iteración
+   del bucle externo.
+  </simpara>
+ </note>
+ <simpara>
+  <literal>continue</literal> acepta un argumento numérico opcional,
+  que indica a cuántos niveles de bucles encerrados se ha de saltar
+  al final. El valor por omisión es <literal>1</literal>, por lo que salta
+  al final del bucle actual.
+ </simpara>
+ <para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+while (list($clave, $valor) = each($arr)) {
+    if (!($clave % 2)) { // saltar los miembros pares
+        continue;
+    }
+    hacer_algo($valor);
+}
+
+$i = 0;
+while ($i++ < 5) {
+    echo "Exterior<br />\n";
+    while (1) {
+        echo "Medio<br />\n";
+        while (1) {
+            echo "Interior<br />\n";
+            continue 3;
+        }
+        echo "Esto nunca se imprimirá.<br />\n";
+    }
+    echo "Ni esto tampoco.<br />\n";
+}
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <para>
+  Omitir el punto y coma después del <literal>continue</literal> puede llevar a 
+  confusión. He aquí un ejemplo de lo que no se debe hacer.
+ </para>
+ <para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+for ($i = 0; $i < 5; ++$i) {
+    if ($i == 2)
+        continue
+    print "$i\n";
+}
+?>
+]]>
+   </programlisting>
+   <para>
+    Se esperaría que el resultado fuera:
+   </para>
+   <screen>
+<![CDATA[
+0
+1
+3
+4
+]]>
+   </screen>
+   <para>
+    pero, en versiones de PHP anteriores a la 5.4.0, la salida de este script será:
+   </para>
+   <screen>
+<![CDATA[
+2
+]]>
+   </screen>
+   <para>
+    debido a que <literal>continue print "$i\n";</literal> se evalúa completo
+    como una sola expresión, y así <function>print</function> se llama solamente
+    cuando <literal>$i == 2</literal> es verdadero. (El valor de retorno de
+    <literal>print</literal> es pasado a <literal>continue</literal> como el
+    argumento numérico.)
+   </para>
+   <note>
+    <para>
+     A partir de PHP 5.4.0, el ejemplo anterior emitirá un
+     error <constant>E_COMPILE_ERROR</constant>.
+    </para>
+   </note>
+  </informalexample>
+ </para>
+ <para>
+  <table>
+   <title>Registro de cambios para <literal>continue</literal></title>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>5.4.0</entry>
+      <entry>
+       <literal>continue 0;</literal> ya no es válido. En versiones anteriores era interpretado
+       de la misma manera que <literal>continue 1;</literal>.
+      </entry>
+     </row>
+     <row>
+      <entry>5.4.0</entry>
+      <entry>
+       Se eliminó la posibilidad de pasar variables (por ejemplo, <literal>$num = 2; continue $num;</literal>)
+       como el argumento numérico.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+ </para>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

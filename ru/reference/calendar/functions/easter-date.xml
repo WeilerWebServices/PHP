@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 347874 Maintainer: tmn Status: ready -->
+<!-- Reviewed: yes Maintainer: lex -->
+<!-- $Revision$ -->
+<refentry xml:id="function.easter-date" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>easter_date</refname>
+  <refpurpose>
+   Получить метку времени Unix, соответствующую полуночи на Пасху в заданном году
+  </refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>easter_date</methodname>
+   <methodparam choice="opt"><type>int</type><parameter>year</parameter><initializer>date("Y")</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>method</parameter><initializer>CAL_EASTER_DEFAULT</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Возвращает метку времени Unix, соответствующую полуночи 
+   на Пасху в заданном году.
+  </para>
+  <warning>
+   <para>
+    Функция выдаст предупреждение, если заданный год будет выходить 
+    за пределы диапазона меток времени Unix (меньше 1970, либо больше 2037 для 32-битных систем).
+   </para>
+  </warning>
+  <para>
+   Дата Пасхального дня была введена Консулом Никеи в 325 году до н.э.
+   Это первое воскресенье, следующее за первым полнолунием после 
+   весеннего равноденствия. Днем весеннего равноденствия принято считать 
+   21 марта, так что расчет дня Пасхи сводится к определению даты 
+   полнолуния и следующего за ней воскресенья. Используемый здесь 
+   алгоритм введен Дионисием Малым в 532 году. В юлианском летоисчислении 
+   (до 1753 года) для отслеживания фаз луны использовался простой 
+   19-летний цикл. В григорианском календаре (годы после 1753 - 
+   разработан Христофором Клавиусом и Алоизием Лилиусом и введен 
+   Папой Григорием XIII в октябре 1582 г., а в Великобритании и ее 
+   колониях в сентябре 1752 г.) было добавлено 2 поправочных 
+   коэффициента, увеличивающих точность расчета дат.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>year</parameter></term>
+     <listitem>
+      <para>
+       Год - число между 1970 и 2037. Если не указан, то
+       по умолчанию равен текущему года, согласно местному времени.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>method</parameter></term>
+     <listitem>
+      <para>
+       Позволяет рассчитывать даты Пасхи на основе юлианского календаря,
+       если установлено значение 
+       <constant>CAL_EASTER_ALWAYS_JULIAN</constant>. Смотрите
+       также <link
+        linkend="calendar.constants">константы календаря</link>.
+       </para>
+     </listitem>
+    </varlistentry> 
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Дата Пасхи в виде метки времени Unix.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Пример использования <function>easter_date</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+echo date("M-d-Y", easter_date(1999));        // Apr-04-1999
+echo date("M-d-Y", easter_date(2000));        // Apr-23-2000
+echo date("M-d-Y", easter_date(2001));        // Apr-15-2001
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Функция <function>easter_date</function> зависит от вашей системной библиотеки C функций 
+    работы со временем, а не от внутренних функций PHP. Как следствие,
+    функция <function>easter_date</function> использует переменную
+    окружения <literal>TZ</literal> для определения временной зоны, а не заданную
+    в PHP <link linkend="ini.date.timezone">временную зону по умолчанию</link>.
+    Это может привести к неожиданному поведению при использовании этой функции
+    совместно с другими функциями для работы с датами в PHP.
+   </para>
+   <para>
+    В качестве обходного решения может быть использование функции <function>easter_days</function> с
+    объектами <classname>DateTime</classname> и <classname>DateInterval</classname> для
+    подсчета начала Пасхи в вашей временной зоне, как в этом примере:
+   </para>
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function get_easter_datetime($year) {
+    $base = new DateTime("$year-03-21");
+    $days = easter_days($year);
+
+    return $base->add(new DateInterval("P{$days}D"));
+}
+
+foreach (range(2012, 2015) as $year) {
+    printf("Пасха в %d году приходится на %s\n",
+           $year,
+           get_easter_datetime($year)->format('F j'));
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Пасха в 2012 году приходится на April 8
+Пасха в 2013 году приходится на March 31
+Пасха в 2014 году приходится на April 20
+Пасха в 2015 году приходится на April 5
+]]>
+    </screen>
+   </informalexample>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member>
+     Функция <function>easter_days</function> длч расчета дня Пасхи
+     до 1970 или после 2037
+    </member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
